@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Develop a detailed plan to address the user's query utilizing the tools at your disposal. For each step, provide the corresponding evidence value.\n\nTools Available:\nWikiLookup[input]: Searches Wikipedia for information related to the input string.\nQAEngine[input]: Answers questions based on common knowledge or given context. The input must be a question that references a #E[index] variable.\nGoogleMaps[input]: Provides geographical data related to the input location.\nWeatherAPI[input]: Gives current weather conditions for the input location.\n\nOutput Format:\nPlan: [Initial action]\n#E1 = [Tool with input parameters]\nPlan: [Subsequent action, based on outcome of #E1]\n#E2 = [Next tool with input parameters, possibly referencing prior evidence]\n...\nFinal Answer: #E[n]\n\nQuestion: What is the population of the capital city of France and what is its current weather condition?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: First, I need to determine the capital city of France. I can use the QAEngine for this since it's a straightforward piece of information.\n\n#E1 = QAEngine[What is the capital city of France?]\n\nPlan: Once I have the capital city, I need to find its population. I can use WikiLookup to get detailed information about the city, including its population.\n\n#E2 = WikiLookup[#E1]\n\nPlan: After obtaining the population, I need to check the current weather condition in the capital city. For that, I can use the WeatherAPI tool, providing it with the name of the capital city.\n\n#E3 = WeatherAPI[#E1]\n\nPlan: Finally, I will compile the population and weather information into a single response for the user.\n\nFinal Answer: The capital city of France is #E1, which has a population of [extract population from #E2]. The current weather condition in #E1 is [extract weather from #E3].\n"
+    }
+]
