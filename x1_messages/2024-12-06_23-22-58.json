@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a Python script that implements the merge sort algorithm on a given list of numbers. PLAINFORMAT"
+    },
+    {
+        "role": "assistant",
+        "content": "Sure! Below is a Python script that implements the merge sort algorithm on a given list of numbers:\n\n```python\ndef merge_sort(arr):\n    if len(arr) <= 1:\n        return arr\n\n    # Find the middle point to divide the array into two halves\n    mid = len(arr) // 2\n    left_half = arr[:mid]\n    right_half = arr[mid:]\n\n    # Recursively sort both halves\n    left_sorted = merge_sort(left_half)\n    right_sorted = merge_sort(right_half)\n\n    # Merge the sorted halves\n    return merge(left_sorted, right_sorted)\n\ndef merge(left, right):\n    merged = []\n    left_index = 0\n    right_index = 0\n\n    # Compare each element and merge them into a single list in sorted order\n    while left_index < len(left) and right_index < len(right):\n        if left[left_index] < right[right_index]:\n            merged.append(left[left_index])\n            left_index += 1\n        else:\n            merged.append(right[right_index])\n            right_index += 1\n\n    # If there are remaining elements in left or right, append them\n    merged.extend(left[left_index:])\n    merged.extend(right[right_index:])\n\n    return merged\n\n# Example usage:\nif __name__ == \"__main__\":\n    sample_list = [38, 27, 43, 3, 9, 82, 10]\n    sorted_list = merge_sort(sample_list)\n    print(\"Original list:\", sample_list)\n    print(\"Sorted list:\", sorted_list)\n```\n\nThis script defines a `merge_sort` function that recursively splits the input list into smaller sublists until each sublist contains a single element, and then merges those sublists in a sorted manner to produce the final sorted list. The `merge` function is used to combine two sorted lists into one sorted list. The example usage demonstrates sorting a sample list of integers."
+    }
+]
