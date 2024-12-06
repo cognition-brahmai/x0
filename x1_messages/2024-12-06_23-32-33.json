@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Generate a plan to respond to the user's query using the provided tools. Each step of the plan will have a corresponding evidence variable.\n\nHere are the tools available to be called:\nBingSearch[input]: A tool that uses Bing search engine to find relevant information online.\nPageParser[input]: A tool that extracts text from a webpage.\nQueryResponder[input]: A tool that answers questions based on an input passage of text.\n\nThe output should be in format:\nPlan: [first action to take based on input question]\n@Evidence1 = [function to call with input parameter]\nPlan: [next action to take, based on result of @Evidence1]\n...\nFinal answer: @Evidence[n]\n\nQuestion: What is the population of Tokyo and what is it known for?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for the latest population of Tokyo.\n@Evidence1 = BingSearch[\"latest population of Tokyo\"]\nPlan: Parse the search results to find the population figure.\n@Evidence2 = PageParser[@Evidence1]\nPlan: Use the parsed information to answer the population query.\n@Evidence3 = QueryResponder[\"What is the population of Tokyo?\" based on @Evidence2]\nPlan: Now, search for what Tokyo is known for.\n@Evidence4 = BingSearch[\"what is Tokyo known for\"]\nPlan: Parse the search results to find key points.\n@Evidence5 = PageParser[@Evidence4]\nPlan: Summarize what Tokyo is known for from the parsed information.\n@Evidence6 = QueryResponder[\"What is Tokyo known for?\" based on @Evidence5]\nFinal answer: The population of Tokyo is @Evidence3, and it is known for @Evidence6."
+    }
+]
