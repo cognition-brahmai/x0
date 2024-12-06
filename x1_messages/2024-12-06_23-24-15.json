@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Develop a plan to answer the following query using the tools provided. Each step should specify the tool used and its input. Store the outputs in variables named :evidenceN:, where N is the index number.\n\nAvailable Tools:\n1. DuckDuckGo[input]: A tool that uses the DuckDuckGo search engine to gather information. It provides a list of potential sources but does not directly answer the question.\n2. SiteLoader[input]: Loads the content of specified websites into plain text. Input is one or more URLs separated by newlines.\n3. URLExtractor[input]: Extracts URLs from plain text and returns them as a newline-separated list.\n4. AskIt[input]: A tool that answers questions based on provided context. The input is a question that refers to an :evidenceN: variable.\n\nOutput Format:\nPlan: [First Action]\n:evidence0: = [Function Call with Input Parameter]\nPlan: [Next Action Based on Result of :evidence0:]\n:evidence1: = [Next Function Call with Input Parameter Referencing Previous Evidence]\n...\nAnswer: [:evidenceN: Containing Final Answer]\n\nQuestion: Who was the first woman to win a Nobel Prize and what field was it in?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for general information about the first woman to win a Nobel Prize.\n\n:evidence0: = DuckDuckGo[\"first woman Nobel Prize\"]\n\nPlan: Extract relevant URLs from the search results for deeper research.\n\n:evidence1: = URLExtractor[:evidence0:]\n\nPlan: Load the content of these URLs into plain text for analysis.\n\n:evidence2: = SiteLoader[:evidence1:]\n\nPlan: Use the loaded text to answer the specific question about who the first woman was and in which field she won the Nobel Prize.\n\n:evidence3: = AskIt[\"Who was the first woman to win a Nobel Prize and what field was it in?\", :evidence2:]\n\nAnswer: :evidence3:"
+    }
+]
