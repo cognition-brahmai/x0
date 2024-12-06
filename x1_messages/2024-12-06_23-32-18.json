@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a comprehensive plan to solve the user query using the provided tools. For each step in the plan, assign an evidence value corresponding to the output of the called function.\n\nAvailable Tools:\nDuckDuckGo[input]: Allows users to conduct a web search using DuckDuckGo search engine. Useful for generating a list of potential sources containing answers.\nPageLoader[input]: Loads one or more webpages from an input string containing newline separated URLs and returns plain text output containing the webpage contents.\nURLGrabber[input]: Extracts URLs from a block of plain text and outputs them as a newline-separated list.\nAskAI[input]: An AI-powered tool capable of answering questions based on a supplied context. The input should be a question referencing an :evidence[n]: variable.\n\nOutput Format:\nPlan: [Initial action based on the input question]\n:evidence0: = [Function to call with its input]\nPlan: [Subsequent action depending on the outcome of :evidence0:]\n:evidence1: = [Next function to call with its input, possibly referencing earlier evidence]\n...\nFinal Answer: [:evidence[n]: Containing the ultimate solution]\n\nQuestion: Who invented the telephone and what were the key developments leading to its invention?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for information about who invented the telephone.\n:evidence0: = DuckDuckGo[\"Who invented the telephone?\"]\n\nPlan: From the search results, identify the inventor and key developments. Extract relevant URLs for more detailed information.\n:evidence1: = URLGrabber[:evidence0:]\n\nPlan: Load the content from the extracted URLs to gather detailed information.\n:evidence2: = PageLoader[:evidence1:]\n\nPlan: Use the loaded page content to answer the question about the inventor and key developments.\n:evidence3: = AskAI[\"Who invented the telephone and what were the key developments leading to its invention?\" + \" Context: \" + :evidence2:]\n\nFinal Answer: :evidence3:"
+    }
+]
