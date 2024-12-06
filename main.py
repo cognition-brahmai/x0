@@ -72,7 +72,7 @@ def process_entry(entry):
     global seq_len    
     seq_len += 1
 
-with ThreadPoolExecutor(max_workers=20) as executor:
+with ThreadPoolExecutor(max_workers=4) as executor:
     list(tqdm(executor.map(process_entry, train_split), total=len(train_split), desc="Processing conversations"))
 
 
