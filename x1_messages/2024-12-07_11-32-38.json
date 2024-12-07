@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Develop a plan to answer the following question using the provided tools. Each step should correspond to an evidence variable representing the output of a specific function, given an input string derived from the user's question, previous evidence variables, or both.\n\nAvailable Tools:\n1. GoogleScholar[input]: Searches academic papers and articles using Google Scholar. Provides a list of scholarly works that may contain the answer.\n2. PaperReader[input]: Reads academic papers and extracts key findings and conclusions. Input is a URL or DOI of a paper.\n3. AcademicQA[input]: Answers complex academic questions based on an input passage of text.\n\nOutput Format:\nPlan: [Initial action based on input question]\n#Evidence1 = [Function to call with input parameter]\nPlan: [Subsequent action based on #Evidence1]\n#Evidence2 = [Next function to call with input parameter, possibly referring to earlier evidence]\n...\nFinal Answer: #Evidence[n]\n\nQuestion: What are the main causes of climate change according to recent scientific studies?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for recent scientific studies on the causes of climate change using GoogleScholar.\n#Evidence1 = GoogleScholar[\"recent scientific studies on causes of climate change\"]\n\nPlan: Select the most relevant papers from #Evidence1 and use PaperReader to extract key findings.\n#Evidence2 = PaperReader[#Evidence1[0].url, #Evidence1[1].url, ...]\n\nPlan: Summarize the main causes of climate change based on the extracted information from #Evidence2.\n#Evidence3 = AcademicQA[\"What are the main causes of climate change according to the following studies? \" + #Evidence2]\n\nFinal Answer: #Evidence3"
+    }
+]
