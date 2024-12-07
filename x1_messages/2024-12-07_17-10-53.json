@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Design a plan to answer the question: \"Who wrote the novel 'Pride and Prejudice'?\"\n\nHere are the tools available:\nBookLookup[input]: Tool that provides information about books and their authors.\nQA[input]: Tool that can answer questions either directly from common sense and general world knowledge, as well as answering questions given input context that may contain the answer.\nAuthorInfo[input]: Provides information about authors and their works.\nLitAnalysis[input]: Analyses literary texts and extracts key details.\nLLM[input]: Question answering language model.\n\nThe output should be in format:\nPlan: first action to take based in input question\n#E1 = function to call with input parameter\nPlan: next action to take, based on result of #E1\n#E2 = next function to call and input parameter, which may include reference to previous evidence, e.g. \"Given context #E1\"\n...\nFinal answer: #E[n]"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by using the BookLookup tool to find information about the novel 'Pride and Prejudice'.\n\n#E1 = BookLookup['Pride and Prejudice']\n\nPlan: If #E1 provides the author's name directly, use QA to confirm the accuracy of the information. If not, use AuthorInfo to find the author based on the details provided in #E1.\n\n#E2 = If author in #E1 then QA['Is the author of Pride and Prejudice correctly identified as [author name]?'] else AuthorInfo[#E1]\n\nPlan: If #E2 confirms the author or provides a new name, use LitAnalysis to verify the authorship by analyzing the novel's text or background information.\n\n#E3 = LitAnalysis['Analyze the novel \"Pride and Prejudice\" to determine its author.']\n\nPlan: Cross-verify the information from #E1, #E2, and #E3 using the LLM to ensure consistency and accuracy.\n\n#E4 = LLM['Considering the information from BookLookup, AuthorInfo, and LitAnalysis, who is the confirmed author of \"Pride and Prejudice\"?']\n\nFinal answer: #E4"
+    }
+]
