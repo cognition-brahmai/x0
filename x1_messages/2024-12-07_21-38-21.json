@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Develop a Golang function that accepts a string as input and returns a boolean indicating whether the string contains balanced parentheses (i.e., every opening parenthesis has a corresponding closing parenthesis)."
+    },
+    {
+        "role": "assistant",
+        "content": "Here's a simple Golang function that checks if a string has balanced parentheses:\n\n```go\npackage main\n\nimport (\n\t\"fmt\"\n)\n\nfunc isBalanced(s string) bool {\n\tvar stack []rune\n\tfor _, char := range s {\n\t\tswitch char {\n\t\tcase '(':\n\t\t\tstack = append(stack, char)\n\t\tcase ')':\n\t\t\tif len(stack) == 0 || stack[len(stack)-1] != '(' {\n\t\t\t\treturn false\n\t\t\t}\n\t\t\tstack = stack[:len(stack)-1]\n\t\t}\n\t}\n\treturn len(stack) == 0\n}\n\nfunc main() {\n\tfmt.Println(isBalanced(\"(hello)(world)\")) // true\n\tfmt.Println(isBalanced(\"((hello)world\"))  // false\n\tfmt.Println(isBalanced(\"hello(world)\"))   // true\n\tfmt.Println(isBalanced(\"hello(world\"))    // false\n}\n```\n\nThis function uses a stack to keep track of opening parentheses. For every opening parenthesis encountered, it is pushed onto the stack. For every closing parenthesis, the function checks if the stack is empty or the top of the stack is not an opening parenthesis; if either condition is true, the string is not balanced. If the entire string is processed and the stack is empty, the string is balanced."
+    }
+]
