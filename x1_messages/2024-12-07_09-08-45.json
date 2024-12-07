@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Write a Python function to implement the Sieve of Eratosthenes algorithm for finding all prime numbers up to a given limit. The function should return a list of prime numbers.\nPLAINFORMAT"
+    },
+    {
+        "role": "assistant",
+        "content": "Sure, I can help with that! The Sieve of Eratosthenes is an ancient algorithm used to find all prime numbers up to any given limit. It works by iteratively marking the multiples of each prime starting from 2, and the remaining unmarked numbers are primes.\n\nHere's how you can implement it in Python:\n\n```python\ndef sieve_of_eratosthenes(limit):\n    if limit < 2:\n        return []\n    \n    # Initialize a boolean list to track prime status of numbers\n    is_prime = [True] * (limit + 1)\n    is_prime[0] = is_prime[1] = False  # 0 and 1 are not primes\n    \n    p = 2\n    while p * p <= limit:\n        if is_prime[p]:\n            for i in range(p * p, limit + 1, p):\n                is_prime[i] = False\n        p += 1\n    \n    # Collect all prime numbers\n    primes = [num for num in range(2, limit + 1) if is_prime[num]]\n    return primes\n\n# Example usage:\nprint(sieve_of_eratosthenes(30))\n```\n\n### Explanation:\n1. **Initialization**:\n   - Create a list `is_prime` of size `limit + 1` and initialize all entries to `True`.\n   - Set `is_prime[0]` and `is_prime[1]` to `False` since 0 and 1 are not prime numbers.\n\n2. **Sieve Process**:\n   - Start with the first prime number, which is 2.\n   - Mark all multiples of 2 as not prime.\n   - Move to the next unmarked number (which is a prime) and repeat the process of marking its multiples as not prime.\n   - Continue this process up to the square root of the limit because a larger factor of the number would have already been marked by a smaller factor.\n\n3. **Collect Primes**:\n   - Iterate through the list and collect all numbers that are still marked as `True`.\n\nThis algorithm is efficient for finding all primes up to a limit and is widely used due to its simplicity and effectiveness."
+    }
+]
