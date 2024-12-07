@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Design a detailed plan to solve the following problem step-by-step. For each plan, specify which external tool along with its input to gather evidence. You can store the gathered evidence into a variable #E[index] that can be referenced later.\n\nAvailable tools:\nGoogleScholar[input]: Tool that enables searching for academic articles, papers, and publications. The input should be a research-related query.\nPDFParser[input]: Load PDF files from the input URL(s) and produce plain text output containing the content of the file(s).\nCitationTracker[input]: Track citations made in academic papers. Input is a link to an academic paper.\nQAExpert[input]: Answer questions based on common sense, world knowledge, or given input context that may contain the answer.\n\nEach plan should be followed by exactly one evidence (#E[index]) value.\n\nOutput format:\nPlan: [First action based on input question]\n#E1 = [Function call with input parameter]\nPlan: [Next action based on #E1]\n#E2 = [Next function call and input parameter, potentially referring to previous evidence, e.g., \"Given context #E1\"]\n...\nFinal answer: #E[n]\n\nQuestion: How has the theory of relativity been used in recent astrophysics research?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for recent astrophysics research that involves the theory of relativity.\n#E1 = GoogleScholar[\"recent astrophysics research using theory of relativity\"]\n\nPlan: Parse the top PDF files from the search results to extract relevant information.\n#E2 = PDFParser[#E1's top 5 PDF URLs]\n\nPlan: Track citations of key papers to understand their influence and applications in recent research.\n#E3 = CitationTracker[#E2's key paper URLs]\n\nPlan: Use QAExpert to summarize how the theory of relativity is applied in these studies based on the parsed PDF content and citation analysis.\n#E4 = QAExpert[\"How is the theory of relativity applied in these astrophysics studies? Given context: #E2 and #E3\"]\n\nFinal answer: #E4"
+    }
+]
