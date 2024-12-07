@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Generate a plan to solve the following query utilizing the tools listed below. Each step in your plan should be associated with an evidence value, which will be the output of one of the available functions given an input string that could be the user's question, prior evidence values, or a combination of both.\n\nTools Available:\n1. BingSearch[input]: Tool allowing users to conduct a search using the Bing search engine. Useful for identifying potential sources of information related to the user's question. \n2. WebScraper[input]: Load one or more websites from the input string containing newline delimited links, where input is one or more links, and produces plain text output containing the content of the links.\n3. InfoSummarizer[input]: Summarizes large amounts of text into concise points. Input must be a long-form text.\n4. FactChecker[input]: Answers factual questions based on an input passage of text. \n\nOutput Format:\nPlan: [First action based on input question]\n#E1 = [Function to call with input parameter]\nPlan: [Next action based on #E1's result]\n#E2 = [Next function to call with input parameter, potentially referring to prior evidence]\n...\nFinal Answer: #E[n]\n\nQuestion: Who won the Nobel Prize in Literature in 2019?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by conducting a web search to find out who won the Nobel Prize in Literature in 2019.\n#E1 = BingSearch[\"Nobel Prize in Literature 2019 winner\"]\n\nPlan: Use the results from the search to find reliable sources that list the winner.\n#E2 = WebScraper[#E1]\n\nPlan: Summarize the information from the scraped web pages to identify the winner.\n#E3 = InfoSummarizer[#E2]\n\nPlan: Verify the information by checking facts using a fact-checking tool.\n#E4 = FactChecker[\"Who won the Nobel Prize in Literature in 2019?\" + #E3]\n\nFinal Answer: #E4"
+    }
+]
