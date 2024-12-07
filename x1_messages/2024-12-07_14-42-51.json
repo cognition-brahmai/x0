@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a plan to answer the following question using the tools provided. For each step in your plan, provide an evidence variable that corresponds to the output of the function used in that step.\n\nHere are the tools available to be called:\nGoogleSearch[input]: Tool that allows the user to search for information using Google's search engine.\nTextAnalyzer[input]: Analyzes text and extracts key pieces of information such as names, dates, places, etc.\nLinkExtractor[input]: Extracts links from plain text.\nWebScraper[input]: Scrapes web pages for content.\nAnswerBot[input]: Answers questions based on input context. The input must be a text question that references an #E[n] variable.\n\nThe output should be in format:\nPlan: [first action to take based in input question]\n#E1 = [function to call with input parameter]\nPlan: [next action to take, based on result of #E1]\n#E2 = [next function to call and input parameter, which may include reference to previous evidence, e.g. \"Given context #E1\"]\n...\nFinal answer: #E[n]\n\nQuestion: Who won the Nobel Prize in Literature in 2010 and what is their most famous work?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for who won the Nobel Prize in Literature in 2010.\n#E1 = GoogleSearch[\"Nobel Prize in Literature 2010 winner\"]\n\nPlan: Analyze the search results to extract the name of the laureate.\n#E2 = TextAnalyzer[#E1]\n\nPlan: Once we have the name, search for their most famous work.\n#E3 = GoogleSearch[\"{#E2}'s most famous work\"]\n\nPlan: Extract relevant links from the search results for more detailed information.\n#E4 = LinkExtractor[#E3]\n\nPlan: Scrape the content from the extracted links.\n#E5 = WebScraper[#E4]\n\nPlan: Analyze the scraped content to find the most famous work of the laureate.\n#E6 = TextAnalyzer[#E5]\n\nPlan: Summarize the findings to provide a concise answer.\n#E7 = AnswerBot[\"Who is the most famous work of {#E2}? Given context: #E6\"]\n\nFinal answer: #E7"
+    }
+]
