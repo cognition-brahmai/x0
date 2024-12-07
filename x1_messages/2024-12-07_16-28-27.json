@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Construct a sequential plan to answer the following user question using the tools provided. Each step in your plan should produce an evidence output that informs the next step. \n\nTools Available:\nInfoSeeker[input]: Searches the internet broadly for information related to the input string.\nTextAnalyzer[input]: Analyzes a body of text and answers questions based on the content.\nLinkGatherer[input]: Gathers all URLs linked within a piece of text.\n\nOutput Format:\nPlan: [Initial action based on user question]\n:E1: = [Tool to use with specific input]\nPlan: [Subsequent action informed by prior evidence]\n:E2: = [Next tool to use with specific input, potentially referencing earlier evidence]\n...\nFinal Answer: :En:\n\nQuestion: When was the Eiffel Tower built and who was its architect?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by seeking general information about the Eiffel Tower to get an overview.\n:E1: = InfoSeeker[\"Eiffel Tower\"]\n\nPlan: Analyze the retrieved information to find details about when it was built and who the architect was.\n:E2: = TextAnalyzer[:E1:, \"When was the Eiffel Tower built and who was its architect?\"]\n\nPlan: If the initial search doesn't provide clear answers, look for specific links that might have detailed historical information.\n:E3: = LinkGatherer[:E1:]\n\nPlan: Select a reputable link from the gathered list, such as a museum or official site, and retrieve information from there.\n:E4: = InfoSeeker[\"Eiffel Tower official site history\"]\n\nPlan: Analyze the content from the official site or a reputable source to confirm the construction date and architect.\n:E5: = TextAnalyzer[:E4:, \"Construction date and architect of the Eiffel Tower\"]\n\nPlan: Cross-verify the information from another independent source to ensure accuracy.\n:E6: = InfoSeeker[\"Eiffel Tower construction history\"]\n\nPlan: Analyze this additional source to confirm the details obtained earlier.\n:E7: = TextAnalyzer[:E6:, \"Who designed the Eiffel Tower and when was it constructed?\"]\n\nFinal Answer: :E7:"
+    }
+]
