@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Formulate a plan to address the following inquiry using the provided tools. For each plan, assign an evidence variable.\n\nTools:\nYahooSearch[input]: Function that searches Yahoo for information. Provides a list of potential sources containing the answer.\nSiteLoader[input]: Takes one or more links as input and returns the textual content of those links.\nHyperlinkGatherer[input]: Gathers hyperlinks from any given plain text and returns them in a line-separated format.\nQAModel[input]: An AI model capable of answering questions when provided with contextual information.\n\nOutput Format:\nPlan: [Initial action]\n$Evidence1 = [Tool invocation with input]\nPlan: [Subsequent action]\n$Evidence2 = [Next tool invocation with input, potentially referencing $Evidence1]\n...\nFinal Answer: $EvidenceN\n\nQuestion: Who is the founder of SpaceX and what was their primary reason for starting the company?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for information about the founder of SpaceX.\n$Evidence1 = YahooSearch[\"founder of SpaceX\"]\n\nPlan: Use the QAModel to identify the founder's name from the search results.\n$Evidence2 = QAModel[\"Who is the founder of SpaceX?\", $Evidence1]\n\nPlan: Conduct another search to find the primary reason behind starting SpaceX.\n$Evidence3 = YahooSearch[\"why did \" + $Evidence2 + \" start SpaceX\"]\n\nPlan: Extract relevant information from the search results using the QAModel.\n$Evidence4 = QAModel[\"What was the primary reason for starting SpaceX?\", $Evidence3]\n\nPlan: Combine the founder's name and the primary reason for starting SpaceX in the final answer.\n$Evidence5 = $Evidence2 + \" started SpaceX primarily because \" + $Evidence4\n\nFinal Answer: $Evidence5"
+    }
+]
