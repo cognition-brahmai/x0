@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Develop a systematic plan to address the user's inquiry using the provided tools. Each step should correspond to an evidence value (:info[n]:), which will be the outcome of one of the accessible functions given an input string that could be the user's question, prior evidence values, or both.\n\nAvailable tools:\nDuckDuckGo[input]: A tool that enables users to perform a web search using DuckDuckGo. Useful for locating potential resources that might hold answers to the user's query.\nSiteLoader[input]: Takes one or more website URLs from the input string (newline separated) and outputs plain text containing the content of those pages.\nURLGrabber[input]: Extracts URLs from plain text and yields a plain text, newline-separated list of URLs.\nBotQnA[input]: An AI-driven question-answering model, skilled at providing responses based on an input text excerpt. The input needs to be a textual question that refers to an :info[n]: variable, such as \"What is the tallest mountain, given :info1:?\"\n\nOutput format:\nPlan: [Initial action based on the input question]\n:info1: = [Function to invoke with input parameter]\nPlan: [Subsequent action, depending on the outcome of :info1:]\n:info2: = [Next function to invoke and input parameter, potentially referring to earlier evidence like \"Given context :info1:\"]\n...\nFinal Answer: :info[n]:\n\nQuestion: Who invented the Rubik's Cube and what were their motivations?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for information about who invented the Rubik's Cube.\n:info1: = DuckDuckGo[\"Who invented the Rubik's Cube?\"]\n\nPlan: Extract relevant URLs from the search results to find detailed information.\n:info2: = URLGrabber[:info1:]\n\nPlan: Load the content from the extracted URLs for analysis.\n:info3: = SiteLoader[:info2:]\n\nPlan: Use the loaded content to answer who invented the Rubik's Cube and their motivations.\n:info4: = BotQnA[\"Who invented the Rubik's Cube and what were their motivations? Given context: :info3:\"]\n\nFinal Answer: :info4:"
+    }
+]
