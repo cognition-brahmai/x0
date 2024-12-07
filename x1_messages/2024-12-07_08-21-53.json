@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Generate a plan to answer the following question using these available tools. Each tool should be used with an input and will produce an output that can be stored in a variable :evidence[n]: for further use.\n\nAvailable Tools:\nBing[input]: A search engine tool useful for finding relevant websites based on the input query.\nWebReader[input]: This tool takes one or more URLs as input, reads the content of the webpage(s), and produces plain text output containing the information from the page(s).\nLinkPicker[input]: Extracts links from plain text and outputs them in a list format.\nAskAI[input]: An AI model capable of answering questions based on given context (text). The input must be a text question referencing an :evidence[n]: variable.\n\nThe output should follow this format:\nPlan: [first action]\n:evidence0: = [function call with input parameter]\nPlan: [next action based on result of :evidence0:]\n:evidence1: = [next function call with possible reference to previous evidence]\n...\nAnswer: [:evidence[n]: containing the final answer.]\n\nQuestion: What are some notable accomplishments of Elon Musk?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for information about Elon Musk's accomplishments.\n:evidence0: = Bing[\"Elon Musk accomplishments\"]\n\nPlan: Extract relevant links from the search results for more detailed information.\n:evidence1: = LinkPicker[:evidence0:]\n\nPlan: Use WebReader to extract information from the top relevant links.\n:evidence2: = WebReader[:evidence1:[0:3]]  # Assuming we take the first three links\n\nPlan: Use AskAI to summarize the accomplishments from the extracted information.\n:evidence3: = AskAI[\"What are some notable accomplishments of Elon Musk, based on :evidence2:?\"]\n\nAnswer: :evidence3:"
+    }
+]
