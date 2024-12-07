@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a step-by-step plan to respond to the user query utilizing the provided tools. Each step should correspond to an evidence value which would be the output of the chosen function. The input could be a user query, prior evidence values, or a combination of both.\n\nAvailable tools:\nWikiSearch[input]: A tool that lets users retrieve information from Wikipedia. It is handy when seeking knowledge about various topics such as historical events, personalities, places, etc. \nContextQA[input]: A tool that answers queries directly based on common sense, general world knowledge, or given context that might contain the answer.\n\nOutput Format:\nPlan: [First action based on the input query]\n#E1 = [Function to invoke with input parameters]\nPlan: [Next action depending on #E1]\n#E2 = [Subsequent function invocation with input parameters, possibly referencing earlier evidence like \"Given context #E1\"]\n...\nFinal Answer: #E[n]\n\nQuestion: Who founded Microsoft and what were their initial products?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by identifying who founded Microsoft.\n#E1 = WikiSearch[input=\"Microsoft founders\"]\n\nPlan: Once we have the founders' names, find out what their initial products were.\n#E2 = WikiSearch[input=\"Microsoft initial products\"]\n\nPlan: If #E2 doesn't provide enough details, use ContextQA to elaborate or confirm the information.\n#E3 = ContextQA[input=\"What were the initial products of Microsoft?\"]\n\nFinal Answer: Combine information from #E1 and #E2 (or #E3 if needed)."
+    }
+]
