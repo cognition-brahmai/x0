@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Using SQL, write a query to find the top 3 employees with the highest salaries in each department from an \"Employee\" table. Assume the table has columns \"Id\", \"Name\", \"Salary\", and \"Department\". PLAINFORMAT"
+    },
+    {
+        "role": "assistant",
+        "content": "To find the top 3 employees with the highest salaries in each department from an \"Employee\" table, you can use a combination of window functions and common table expressions (CTEs). Here's how you can structure your SQL query:\n\n```sql\nWITH RankedEmployees AS (\n    SELECT\n        Id,\n        Name,\n        Salary,\n        Department,\n        DENSE_RANK() OVER (PARTITION BY Department ORDER BY Salary DESC) AS SalaryRank\n    FROM\n        Employee\n)\nSELECT\n    Id,\n    Name,\n    Salary,\n    Department\nFROM\n    RankedEmployees\nWHERE\n    SalaryRank <= 3\nORDER BY\n    Department,\n    Salary DESC;\n```\n\n### Explanation:\n\n1. **Common Table Expression (CTE):**\n   - The `WITH RankedEmployees AS` clause creates a CTE named `RankedEmployees`.\n   \n2. **Window Function:**\n   - Inside the CTE, the `DENSE_RANK() OVER (PARTITION BY Department ORDER BY Salary DESC) AS SalaryRank` assigns a rank to each employee within their department based on their salary in descending order. This means the highest earner in each department gets rank 1, the next highest gets rank 2, and so on.\n\n3. **Selecting Top 3:**\n   - The main `SELECT` statement retrieves records from the CTE where `SalaryRank <= 3`, ensuring that only the top 3 employees in each department are selected.\n\n4. **Ordering:**\n   - The results are ordered first by `Department` and then by `Salary` in descending order within each department to maintain the ranking visibility.\n\nThis approach ensures that you get the top 3 highest-paid employees from each department efficiently using SQL's window functions."
+    }
+]
