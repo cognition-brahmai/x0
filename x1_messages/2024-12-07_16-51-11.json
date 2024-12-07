@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a step-by-step plan to answer the following question using the available tools. Each tool will generate an evidence value that can be used in subsequent steps.\n\nAvailable Tools:\nSearchEngine[input]: This tool allows you to search for information on the internet. The input is a string query and the output is a list of websites that may contain relevant information.\nTextExtractor[input]: Extracts text from a website given its URL. The input is a string containing the URL, and the output is plain text content of the webpage.\nQA[input]: Can answer questions based on common sense, general world knowledge or given context. The input should be a question string which may reference previous evidence variables as context.\nDataAnalyzer[input]: Analyzes data and extracts key points. Particularly useful when dealing with large amounts of text or data. Input must be a text string referencing an evidence variable.\n\nThe output format should be:\nPlan: [first action]\n#E1 = [function call with input parameter]\nPlan: [next action based on #E1]\n#E2 = [next function call with input parameter, possibly referencing #E1]\n...\nFinal Answer: #E[n]\n\nQuestion: What are some of the main tourist attractions in Paris?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for information about tourist attractions in Paris.\n#E1 = SearchEngine[\"main tourist attractions in Paris\"]\n\nPlan: Extract text from the top search results to get detailed information.\n#E2 = TextExtractor[#E1[0]]  // Assuming #E1[0] is the URL of the first search result\n\nPlan: Use the DataAnalyzer to extract key points about tourist attractions from the extracted text.\n#E3 = DataAnalyzer[#E2]\n\nPlan: Finally, use QA to summarize the main tourist attractions based on the analyzed data.\n#E4 = QA[\"Based on #E3, what are the main tourist attractions in Paris?\"]\n\nFinal Answer: #E4"
+    }
+]
