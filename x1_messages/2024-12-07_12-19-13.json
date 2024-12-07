@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Write a Python script that calculates the nth Fibonacci number using memoization. The user should be able to input the value of n, and the script should output the corresponding Fibonacci number.\nPLAINFORMAT"
+    },
+    {
+        "role": "assistant",
+        "content": "Sure! Below is a Python script that calculates the nth Fibonacci number using memoization. Memoization is a technique where you store the results of expensive function calls and return the cached result when the same inputs occur again. This significantly improves the performance for large values of n.\n\n```python\ndef fibonacci(n, memo={}):\n    if n in memo:\n        return memo[n]\n    if n <= 1:\n        return n\n    memo[n] = fibonacci(n-1, memo) + fibonacci(n-2, memo)\n    return memo[n]\n\nif __name__ == \"__main__\":\n    n = int(input(\"Enter the value of n: \"))\n    print(f\"The {n}th Fibonacci number is: {fibonacci(n)}\")\n```\n\n### Explanation:\n1. **Function Definition**: The `fibonacci` function takes two parameters: `n` (the position in the Fibonacci sequence) and `memo` (a dictionary to store previously computed Fibonacci numbers).\n2. **Base Case**: If `n` is 0 or 1, it returns `n` because the Fibonacci sequence starts with 0 and 1.\n3. **Memoization Check**: Before computing the Fibonacci number, it checks if it's already in the `memo` dictionary. If it is, it returns the stored value.\n4. **Recursive Calculation**: If the value is not in the `memo`, it calculates it by recursively calling itself for `n-1` and `n-2`, stores the result in `memo`, and returns the result.\n5. **User Input**: The script prompts the user to enter the value of `n` and then prints the nth Fibonacci number.\n\nThis approach ensures that each Fibonacci number is calculated only once, making it efficient even for large values of n."
+    }
+]
