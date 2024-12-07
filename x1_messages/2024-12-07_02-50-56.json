@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Implement a Bash script that renames all files in a directory by adding a timestamp prefix."
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! Below is a Bash script that renames all files in the current directory by adding a timestamp prefix to each file name. This script uses the `date` command to generate the current timestamp and then renames each file accordingly.\n\n```bash\n#!/bin/bash\n\n# Get the current timestamp in YYYY-MM-DD_HH-MM-SS format\ntimestamp=$(date +%Y-%m-%d_%H-%M-%S)\n\n# Loop through all files in the current directory\nfor file in *; do\n    # Skip directories\n    if [ -d \"$file\" ]; then\n        continue\n    fi\n\n    # Construct the new file name with timestamp prefix\n    new_name=\"${timestamp}_$file\"\n\n    # Rename the file\n    mv \"$file\" \"$new_name\"\n    echo \"Renamed '$file' to '$new_name'\"\ndone\n```\n\n### Explanation:\n1. **Timestamp Generation**: The script starts by capturing the current timestamp in the format `YYYY-MM-DD_HH-MM-SS` using the `date` command.\n2. **File Loop**: It then loops through all items in the current directory using a `for` loop.\n3. **Directory Skip**: Inside the loop, it checks if the item is a directory using `[-d \"$file\"]`. If it is a directory, the script skips to the next item.\n4. **New Name Construction**: For each file, it constructs a new name by prepending the timestamp to the original file name.\n5. **File Renaming**: It renames the file using the `mv` command and prints a message indicating the rename operation.\n\n### Usage:\n- Save the script to a file, for example, `add_timestamp.sh`.\n- Make the script executable by running `chmod +x add_timestamp.sh`.\n- Navigate to the directory containing the files you want to rename.\n- Run the script using `./add_timestamp.sh`.\n\nThis script will add a timestamp prefix to all files in the current directory, excluding subdirectories. If you need to include subdirectories or handle files with specific extensions, additional modifications can be made to the script.\n"
+    }
+]
