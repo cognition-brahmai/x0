@@ -10,9 +10,9 @@ print("Loading dataset...")
 ds = load_dataset("brahmairesearch/OpenHermes-2.5-Formatted-OpenAI-Compatible", cache_dir="./.cache", token=HF_TOKEN)
 train_split = ds["train"]
 # remove first 720 messages
-#train_split = train_split.select(range(720, len(train_split)))
+train_split = train_split.select(range(6157, len(train_split)))
 # create a list of only 100000 messages
-#train_split = train_split.select(range(100000))
+train_split = train_split.select(range(100000))
 print("Loaded dataset.")
 
 
