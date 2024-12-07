@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a step-by-step plan to answer the following question using the available tools. Each tool should be used with an input string that can be the user's query, one or more previous evidence values, or both.\n\nHere are the tools available to be called:\nGoogleSearch[input]: A tool that allows you to search for information using Google. This tool is useful in finding a list of sites that may contain the answer to your question.\nWebScraper[input]: Loads one or more websites from the input string containing newline delimited links and produces plain text output containing the content of the links.\nLinkExtractor[input]: Extracts links from plain text and produces a plain text, newline delimited response of links.\nQA_Tool[input]: Question answering tool that can answer questions based on common sense, general world knowledge, as well as given input context that may contain the answer.\n\nThe output should be in format:\nPlan: [first action to take based in input question]\n#E1 = [function to call with input parameter]\nPlan: [next action to take, based on result of #E1]\n#E2 = [next function to call and input parameter, which may include reference to previous evidence, e.g. \"Given context #E1\"]\n...\nFinal answer: #E[n]\n\nQuestion: What are some of the most significant contributions made by Nikola Tesla?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for information about Nikola Tesla's contributions.\n#E1 = GoogleSearch[\"most significant contributions by Nikola Tesla\"]\n\nPlan: Extract relevant links from the search results for a deeper dive.\n#E2 = LinkExtractor[#E1]\n\nPlan: Scrape the content from these links to get detailed information.\n#E3 = WebScraper[#E2]\n\nPlan: Use the QA tool to summarize the most significant contributions from the scraped data.\n#E4 = QA_Tool[\"What are some of the most significant contributions made by Nikola Tesla? Given context: #E3\"]\n\nFinal answer: #E4"
+    }
+]
