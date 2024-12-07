@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Write a Python script that connects to a MySQL database, creates a table called 'employees' with columns id (integer), name (varchar), and position (varchar), and inserts sample data into the table.\nPLAINFORMAT"
+    },
+    {
+        "role": "assistant",
+        "content": "import mysql.connector\n\n# Establish a connection to the MySQL database\ndb = mysql.connector.connect(\n    host=\"localhost\",\n    user=\"your_username\",\n    password=\"your_password\",\n    database=\"your_database\"\n)\n\n# Create a cursor object using the cursor() method\ncursor = db.cursor()\n\n# Create the 'employees' table\ncursor.execute(\"\"\"\nCREATE TABLE employees (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    name VARCHAR(100),\n    position VARCHAR(100)\n)\n\"\"\")\n\n# Insert sample data into the 'employees' table\nsample_data = [\n    (\"John Doe\", \"Manager\"),\n    (\"Jane Smith\", \"Developer\"),\n    (\"Alice Johnson\", \"Designer\")\n]\n\nfor data in sample_data:\n    cursor.execute(\"\"\"\n    INSERT INTO employees (name, position) VALUES (%s, %s)\n    \"\"\", data)\n\n# Commit the changes\ndb.commit()\n\n# Close the cursor and connection\ncursor.close()\ndb.close()\n\nprint(\"Table created and sample data inserted successfully.\")"
+    }
+]
