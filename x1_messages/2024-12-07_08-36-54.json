@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a plan to answer the following question using the tools provided. For each step, provide an action and the tool used with its input parameter. Store the output of each tool in a variable :evidence[index]: that can be referenced by subsequent steps.\n\nHere are the tools available:\nBing[input]: A search engine that provides a list of websites relevant to the input query.\nReadText[input]: Reads text from a given website URL and produces plain text output containing the content of the page.\nLinkExtractor[input]: Extracts links from plain text and produces a newline-delimited response of links.\nQA[input]: Answers questions based on common sense, general world knowledge, or given context that may contain the answer.\n\nThe output should follow this format:\nPlan: [first action]\n:evidence0: = [function call with input]\nPlan: [next action based on result of :evidence0:]\n:evidence1: = [next function call with input, possibly referencing previous evidence]\n...\nFinal Answer: [:evidence[n]:]\n\nQuestion: What is the history behind the creation of the Eiffel Tower and who were the key people involved?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for general information about the Eiffel Tower's history and key people involved.\n:evidence0: = Bing[\"history of Eiffel Tower creation and key people involved\"]\n\nPlan: Extract relevant links from the search results for deeper research.\n:evidence1: = LinkExtractor[:evidence0:]\n\nPlan: Read the content from the extracted links to gather detailed information.\n:evidence2: = ReadText[:evidence1:]\n\nPlan: Use the gathered information to answer the user's question.\n:evidence3: = QA[\"What is the history behind the creation of the Eiffel Tower and who were the key people involved?\" Given :evidence2:]\n\nFinal Answer: :evidence3:"
+    }
+]
