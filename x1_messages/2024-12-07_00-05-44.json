@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Generate a step-by-step plan to answer the following question using the tools provided. Assign an evidence variable to each step.\n\nTools Available:\nNetSearch[input]: Searches the internet for websites containing information related to the input.\nSiteScraper[input]: Scrapes the website at the provided URL and returns its text content.\nLinkCollector[input]: Collects all URLs contained within the provided text.\nInfoAssistant[input]: Answers questions using the context provided in the input.\n\nOutput Format:\nPlan: [first action]\n$Evidence1 = [tool with input]\nPlan: [next action]\n$Evidence2 = [next tool with input]\n...\nFinal Answer: $EvidenceN\n\nQuestion: What are some famous paintings by Vincent van Gogh?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching the internet for information about famous paintings by Vincent van Gogh.\n$Evidence1 = NetSearch[\"famous paintings by Vincent van Gogh\"]\n\nPlan: Collect the URLs from the search results to look for relevant websites.\n$Evidence2 = LinkCollector[$Evidence1]\n\nPlan: Choose one of the URLs to scrape for more detailed information.\n$Evidence3 = SiteScraper[$Evidence2[0]]\n\nPlan: Use the scraped information to identify and list the famous paintings.\n$Evidence4 = InfoAssistant[\"What are some famous paintings by Vincent van Gogh? Given context: \" + $Evidence3]\n\nFinal Answer: $Evidence4"
+    }
+]
