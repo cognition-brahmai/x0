@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Formulate a plan to respond to the user instruction by employing the set of tools at hand. For every step in the plan, there should be an accompanying evidence value which is the outcome of a specific function based on an input string.\n\nThe available tools include:\n1. DuckDuckGo[input]: A tool that allows users to conduct a search using the DuckDuckGo search engine. The result is a list of sites that may contain the answer to the user's query.\n2. TextScraper[input]: Retrieves plain text from one or more websites given newline separated links.\n3. LinkParser[input]: Parses plain text and generates a list of links.\n4. AIQA[input]: An artificial intelligence-based question-answering model that provides answers based on a given passage of text.\n\nThe output should follow this structure:\nPlan: [initial action]\n:evidence0: = [function with corresponding input]\nPlan: [subsequent action based on :evidence0:]\n:evidence1: = [next function and input parameter, potentially referring to prior evidence]\n...\nAnswer: [:evidence[n]: containing the ultimate response.]\n\nQuestion: Who was Albert Einstein and what are his most significant contributions to physics?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for information about Albert Einstein to understand who he was and his contributions to physics.\n:evidence0: = DuckDuckGo[Albert Einstein]\n\nPlan: Parse the search results to extract relevant links that can provide detailed information about his life and work.\n:evidence1: = LinkParser[:evidence0:]\n\nPlan: Use the extracted links to scrape text from these websites for a comprehensive overview.\n:evidence2: = TextScraper[:evidence1:]\n\nPlan: With the scraped text, use an AI-based question-answering model to formulate a concise response about who Albert Einstein was and his most significant contributions to physics.\n:evidence3: = AIQA[Who was Albert Einstein and what are his most significant contributions to physics? Given :evidence2:]\n\nAnswer: :evidence3:"
+    }
+]
