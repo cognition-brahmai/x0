@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a step-by-step plan to answer the user's question, using the available tools. Each tool has its own unique function and input parameters. The output of each tool can be stored in a variable named :evidence[n]: which can then be used as an input for other tools.\n\nHere are the tools that you can use:\n\n1. WebSearch[input]: This tool allows users to search for information on the internet. It returns a list of websites that may contain the answer to the user's query.\n2. TextExtractor[input]: This tool extracts text from a given website link. The input should be one or more links separated by newlines.\n3. LinkFinder[input]: This tool finds all the hyperlinks present in a given piece of text.\n4. KnowledgeBase[input]: A powerful question answering tool that can provide answers based on common sense, world knowledge, or context provided through an :evidence[n]: variable.\n\nThe output format should be as follows:\nPlan: [First action]\n:evidence0: = [Tool with input parameter]\nPlan: [Next action based on result of :evidence0:]\n:evidence1: = [Next tool with input parameter, possibly referencing previous evidence]\n...\nAnswer: [:evidence[n]: containing the final answer]\n\nQuestion: Who is the author of the book \"To Kill a Mockingbird\" and what are some of their other works?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by identifying the author of \"To Kill a Mockingbird.\"\n\n:evidence0: = KnowledgeBase[Who is the author of \"To Kill a Mockingbird\"?]\n\nPlan: Use the author's name from :evidence0: to find other works by the same author.\n\n:evidence1: = WebSearch[Other books by [author's name from :evidence0:]]\n\nPlan: Extract relevant information from the search results to list other works.\n\n:evidence2: = TextExtractor[[links from :evidence1:]]\n\nPlan: Identify and list the other works from the extracted text.\n\n:evidence3: = KnowledgeBase[What are some other works by [author's name from :evidence0:], given :evidence2:?]\n\nAnswer: :evidence3:"
+    }
+]
