@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Generate a plan to solve the problem presented in the following task. For each step in your plan, indicate which external tool will be used along with the necessary input parameters. You can store the outputs into variables named #E[index] that can be referenced later.\n\nAvailable tools:\nWikiSearch[input]: Searches Wikipedia for information related to the input query.\nDataParser[input]: Parses structured data (like tables) from a provided Wikipedia page.\nQueryBot[input]: Can answer questions based on the given context. The input should be a question referencing a previously stored evidence variable (#E[n]).\n\nEach plan should be followed by exactly one evidence (#E[index]) value.\n\nOutput format:\nPlan: [first action]\n#E1 = [function with input parameter]\nPlan: [next action, based on result of #E1]\n#E2 = [next function with input parameter, which may include reference to previous evidence]\n...\nFinal Answer: #E[n]\n\nQuestion: Who won the FIFA World Cup in 2006 and who was the top scorer?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: First, I need to find out who won the FIFA World Cup in 2006. I can use WikiSearch to look up \"FIFA World Cup 2006 winner.\"\n\n#E1 = WikiSearch[\"FIFA World Cup 2006 winner\"]\n\nPlan: Next, I need to find out who was the top scorer in the same tournament. I can use QueryBot to ask for the top scorer based on the information from #E1.\n\n#E2 = QueryBot[\"Who was the top scorer in the 2006 FIFA World Cup?\" + #E1]\n\nFinal Answer: #E2"
+    }
+]
