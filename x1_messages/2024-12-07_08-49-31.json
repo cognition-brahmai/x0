@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Generate a step-by-step execution plan to respond to the user query using the provided tools. Each step must correspond to an evidence variable which represents the output of the called function.\n\nAvailable tools:\nGoogleSearch[input]: Performs a Google search for the specified input and returns a list of potential websites.\nExtractText[input]: Retrieves the main body of text from a given website URL.\nQAmodel[input]: Answers questions based on its training data or given context. It needs a question as input and can utilize prior evidence variables for contextual reference.\nGetLinks[input]: Returns a list of URLs from a given block of text.\n\nThe final output should follow this structure:\nPlan: [initial action]\n:Evidence0: = [tool with corresponding input]\nPlan: [subsequent action]\n:Evidence1: = [next tool with corresponding input, potentially referencing :Evidence0:]\n...\nAnswer: [:EvidenceN:, where N is the last evidence variable.]\n\nQuestion: Who won the Nobel Prize in Literature in 2019 and what were their notable works?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for who won the Nobel Prize in Literature in 2019.\n\n:Evidence0: = GoogleSearch[\"Nobel Prize in Literature 2019 winner\"]\n\nPlan: Extract the name of the winner from the search results.\n\n:Evidence1: = QAmodel[\"Who won the Nobel Prize in Literature in 2019?\", context=:Evidence0:]\n\nPlan: Now, search for the notable works of the winner.\n\n:Evidence2: = GoogleSearch[:Evidence1: + \" notable works\"]\n\nPlan: Extract the list of notable works from the search results.\n\n:Evidence3: = QAmodel[\"What are the notable works of \" + :Evidence1: + \"?\", context=:Evidence2:]\n\nPlan: Compile the final answer with both the winner's name and their notable works.\n\nAnswer: :Evidence1: won the Nobel Prize in Literature in 2019, and their notable works include :Evidence3:."
+    }
+]
