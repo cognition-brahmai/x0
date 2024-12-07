@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a plan to answer the following question using the available tools. Each step in your plan should have an associated evidence variable that will be used as input for subsequent steps.\n\nAvailable Tools:\nWebSearch[input]: This tool allows you to search the web for information related to the input string.\nTextAnalyzer[input]: Analyzes a block of text and extracts key pieces of information such as names, dates, places, etc.\nQA[input]: A tool that can answer questions based on common sense, general world knowledge, or given context.\nImageFinder[input]: Searches the web for images related to the input string.\nImageAnalyzer[input]: Analyzes an image and provides a description of what it contains.\n\nThe output should follow this format:\nPlan: [first action]\n#E1 = [function call with input parameter]\nPlan: [next action]\n#E2 = [function call with input parameter]\n...\nFinal Answer: #E[n]\n\nQuestion: Who won the 2019 Tour de France and where is he from?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching the web to find out who won the 2019 Tour de France.\n#E1 = WebSearch[\"2019 Tour de France winner\"]\n\nPlan: Use the QA tool to interpret the search results and identify the winner's name.\n#E2 = QA[\"Who won the 2019 Tour de France according to #E1?\"]\n\nPlan: Once we have the winner's name, search again to find out where he is from.\n#E3 = WebSearch[\"Where is [winner's name] from?\"]. Replace [winner's name] with the name obtained from #E2.\n\nPlan: Use the QA tool again to extract the winner's nationality or place of origin from the search results.\n#E4 = QA[\"Where is [winner's name] from according to #E3?\"]. Again, replace [winner's name] with the name from #E2.\n\nFinal Answer: #E4"
+    }
+]
