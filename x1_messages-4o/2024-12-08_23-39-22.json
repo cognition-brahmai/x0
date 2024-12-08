@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Suppose we have a table called \"foods\" with the following data:\n| Food           | Meal       |\n|----------------|------------|\n| Cheeseburger   | Lunch/Dinner |\n| Kale Salad     | Lunch/Dinner |\n| Scrambled Eggs | Breakfast   |\nHow can we sort the foods by what time of day they should be consumed?"
+    },
+    {
+        "role": "assistant",
+        "content": "To sort the foods by the time of day they should be consumed, you need to define a custom order for the meals: Breakfast, Lunch, and Dinner. Since SQL doesn't inherently understand the order of meals, you can use a CASE statement to specify this custom sorting order. Here's an example query assuming you're using a SQL-based database:\n\n```sql\nSELECT Food, Meal\nFROM foods\nORDER BY\n  CASE\n    WHEN Meal = 'Breakfast' THEN 1\n    WHEN Meal = 'Lunch/Dinner' THEN 2\n    ELSE 3\n  END;\n```\n\nThis query assigns a number to each meal type based on the time of day it should be consumed, with Breakfast being the earliest, followed by Lunch/Dinner. The `ORDER BY` clause then sorts the rows based on these numbers."
+    }
+]
