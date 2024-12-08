@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Generate a plan to answer the following question using the tools at your disposal. For each step in your plan, create an evidence variable to capture the output of the tool used in that step.\n\nAvailable tools:\n1. WikiSearch[input]: This tool performs a Wikipedia search using the input string. It returns a verbose output that might contain the required information.\n2. QAEngine[input]: This tool can answer questions directly or using a given context. The input should be a question that refers to an #E[index] variable, such as \"Who wrote Pride and Prejudice, given context #E1?\"\n3. SiteScraper[input]: This tool scrapes the content of one or more websites specified by newline-separated URLs in the input.\n\nOutput format:\nPlan: [first action]\n#E1 = [function to call with input parameter]\nPlan: [next action based on result of #E1]\n#E2 = [next function to call with input parameter, which may include reference to previous evidence]\n...\nFinal Answer: #E[n]\n\nQuestion: Who was Nikola Tesla's mentor and what were his major contributions to science?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for information about Nikola Tesla's mentor.\n\n#E1 = WikiSearch[Nikola Tesla's mentor]\n\nPlan: Use the QAEngine to interpret the search results and identify Tesla's mentor.\n\n#E2 = QAEngine[Who was Nikola Tesla's mentor, given context #E1?]\n\nPlan: Once we have the name of the mentor, search for detailed information about their life and contributions.\n\n#E3 = WikiSearch[#E2]\n\nPlan: Use the QAEngine again to extract the major contributions of the mentor from the Wikipedia page.\n\n#E4 = QAEngine[What were #E2's major contributions to science, given context #E3?]\n\nPlan: If necessary, scrape additional sites for more information about the mentor's contributions.\n\n#E5 = SiteScraper[URLs related to #E2's contributions]\n\nPlan: Use the QAEngine to summarize the contributions from the scraped sites.\n\n#E6 = QAEngine[Summarize #E2's major contributions to science, given context #E5?]\n\nFinal Answer: #E4 and #E6"
+    }
+]
