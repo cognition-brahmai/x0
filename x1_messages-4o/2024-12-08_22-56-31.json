@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In addition to the requirements in #The Given Prompt#, can you also provide the total number of awards won by each film and sort the list in descending order based on the total number of awards? Use the SQL code provided in #The Given Prompt# to extract the list. The data in the SQL database includes films, festivals, and festival_awards tables with columns such as title, name, year, language, level, and number_of_awards."
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve the desired result, we need to modify the SQL query to calculate the total number of awards won by each film and sort the list in descending order based on the total number of awards. Here's how you can structure the SQL query:\n\n```sql\nSELECT \n    f.title, \n    SUM(fa.number_of_awards) AS total_awards\nFROM \n    films f\nJOIN \n    festival_awards fa ON f.film_id = fa.film_id\nGROUP BY \n    f.title\nORDER BY \n    total_awards DESC;\n```\n\nIn this query:\n\n- We are selecting the film title and the sum of the number of awards from the `festival_awards` table.\n- We join the `films` table with the `festival_awards` table on the `film_id`.\n- We group the results by film title to aggregate the total number of awards for each film.\n- Finally, we sort the results in descending order based on the total number of awards. \n\nThis will give you a list of films along with the total number of awards they have won, sorted from most to least awards."
+    }
+]
