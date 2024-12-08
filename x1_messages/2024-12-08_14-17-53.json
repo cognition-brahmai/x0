@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Formulate a comprehensive plan to solve the following user inquiry using the set of tools at your disposal. Store the output of each tool in a variable labeled @Evidence[index], which can subsequently be referenced by other tools.\n\nTools Available:\nDuckDuckGo[input]: Allows the user to conduct a search via the DuckDuckGo search engine. \nWebCrawler[input]: Takes one or more URLs (separated by new lines) from the input string and generates a plain text output containing the content of those links.\nHyperlinkHarvester[input]: Gathers all the hyperlinks embedded within a given text.\nAIAgent[input]: A sophisticated question-answering AI that can generate responses based on common knowledge or given a particular context that may include the answer.\n\nOutput Format:\nPlan: [Initial action based on the input question]\n@Evidence1 = [Function to invoke with corresponding input parameter]\nPlan: [Subsequent action based on the outcome of @Evidence1]\n@Evidence2 = [Next function to invoke with appropriate input parameter, potentially referring to prior evidence such as \"Considering context @Evidence1\"]\n...\nFinal Response: @Evidence[n]\n\nQuestion: Who invented the telephone and when was it first patented?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for information on who invented the telephone and when it was first patented.\n\n@Evidence1 = DuckDuckGo[\"Who invented the telephone and when was it first patented?\"]\n\nPlan: Extract relevant links from the search results to gather more detailed information.\n\n@Evidence2 = HyperlinkHarvester[@Evidence1]\n\nPlan: Crawl the extracted links to obtain the content from these web pages.\n\n@Evidence3 = WebCrawler[@Evidence2]\n\nPlan: Use the AI agent to analyze the crawled data and identify the inventor of the telephone and the patent date.\n\n@Evidence4 = AIAgent[\"Who invented the telephone and when was it first patented? Considering context @Evidence3\"]\n\nFinal Response: @Evidence4"
+    }
+]
