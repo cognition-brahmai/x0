@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Please provide a detailed plan to solve the following problem using the tools provided. For each step, indicate the tool used along with its input to retrieve evidence. Store the evidence into a variable #E[index] that can be referred later.\n\nAvailable Tools:\nDuckDuckGo[input]: A tool that allows users to perform internet searches using DuckDuckGo search engine.\nWebScraper[input]: Loads websites from the input string containing newline separated links and provides their content as plain text.\nLinkFilter[input]: Filters relevant links from plain text and gives a plain text, newline separated list of links.\nAIQA[input]: An AI-powered tool that answers questions using general world knowledge or context provided.\n\nOutput Format:\nPlan: [action based on input question]\n#E1 = [function to call with input parameter]\nPlan: [subsequent action, based on result of #E1]\n...\nFinal Answer: #E[n]\n\nQuestion: Who won the Nobel Prize in Literature in 2020 and what was it awarded for?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for who won the Nobel Prize in Literature in 2020.\n#E1 = DuckDuckGo[\"Nobel Prize in Literature 2020 winner\"]\n\nPlan: Use the AIQA tool to interpret the search results and identify the winner.\n#E2 = AIQA[\"Who won the Nobel Prize in Literature in 2020? Given context: \" + #E1]\n\nPlan: Now, search for the reason behind the award for the identified winner.\n#E3 = DuckDuckGo[#E2 + \" Nobel Prize in Literature 2020 reason\"]\n\nPlan: Extract relevant links from the search results for more detailed information.\n#E4 = LinkFilter[#E3]\n\nPlan: Use the WebScraper tool to extract information from the relevant links.\n#E5 = WebScraper[#E4]\n\nPlan: Finally, use the AIQA tool to summarize why the Nobel Prize in Literature was awarded to the winner in 2020, based on the scraped information.\n#E6 = AIQA[\"Why was \" + #E2 + \" awarded the Nobel Prize in Literature in 2020? Given context: \" + #E5]\n\nFinal Answer: #E2 + \" was awarded the Nobel Prize in Literature in 2020 for \" + #E6"
+    }
+]
