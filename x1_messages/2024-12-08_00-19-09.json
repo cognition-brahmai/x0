@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a step-by-step plan to answer the following user query using the tools provided. Each tool should be used at least once and each plan should have an associated evidence value.\n\nAvailable Tools:\n1. DuckDuckGo[input]: A search engine that can be used to find information on any topic. The input is a string of text, which it uses to return relevant web pages.\n2. TextParser[input]: This tool takes in a large amount of text and extracts key pieces of information from it. It's useful for summarizing or extracting specific details from lengthy texts.\n3. AskJeeves[input]: This is a question-answering tool that can provide answers to direct questions based on common knowledge or given context.\n4. LinkCollector[input]: Extracts all links from a piece of text. Useful when you want to further explore resources mentioned in a document or webpage.\n\nThe output format should be as follows:\nPlan: [first action]\n#E1 = [function with input parameter]\nPlan: [next action]\n#E2 = [next function with input parameter]\n...\nFinal Answer: #En\n\nQuestion: Who won the Nobel Prize in Literature in 2020 and what are their most famous works?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for who won the Nobel Prize in Literature in 2020.\n#E1 = DuckDuckGo[\"Nobel Prize in Literature 2020 winner\"]\n\nPlan: Use TextParser to extract the name of the winner from the search results.\n#E2 = TextParser[#E1]\n\nPlan: Once we have the name of the winner, use AskJeeves to find out their most famous works.\n#E3 = AskJeeves[\"Who is #E2 and what are their most famous works?\"]\n\nPlan: If there are any links in the response from AskJeeves, use LinkCollector to extract them for further reading.\n#E4 = LinkCollector[#E3]\n\nPlan: Finally, compile the information gathered to provide a complete answer to the user's question.\nFinal Answer: In 2020, the Nobel Prize in Literature was awarded to #E2. Their most famous works include [list provided by #E3]. For more information, you can refer to the following links: #E4."
+    }
+]
