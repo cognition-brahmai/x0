@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Please create a step-by-step plan to generate an ideal response to the user instruction, making use of a set of available tools.  Each plan will have a corresponding evidence value, which will be the output of one of the available functions given an input string\n that can be the user question, one or more previous evidence values, or a mixture of both.\n\nHere are the tools available to be called:\nDuckDuckGo[input]: Tool that allows the user to search for information using the DuckDuckGo search engine.  \nPageLoader[input]: Load one or more websites from the input string containing newline delimited links, where input is one or more links, and produces plain text output containing the content of the links.\nUrlExtractor[input]: Extract URLs from plain text and produces a plain text, newline delimited response of URLs.\nAIM[input]: Artificial Intelligence Model for answering questions based on an input passage of text.  \n\nThe output should be in format:\nPlan: [first action to take based in input question]\n#E1 = [function to call with input parameter]\nPlan: [next action to take, based on result of #E1]\n#E2 = [next function to call and input parameter, which may include reference to previous evidence, e.g. \"Given context #E1\"]\n...\nFinal answer: #E[n]\n\nQuestion: Who won the Nobel Prize in Literature in 2020 and what was their most famous work?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for the winner of the 2020 Nobel Prize in Literature.\n\n#E1 = DuckDuckGo[\"Nobel Prize in Literature 2020 winner\"]\n\nPlan: Extract the name of the winner from the search results.\n\n#E2 = AIM[\"Who won the Nobel Prize in Literature in 2020? Given context: #E1\"]\n\nPlan: Now, find out the most famous work of this winner.\n\n#E3 = DuckDuckGo[\"Most famous work of #E2\"]\n\nPlan: Extract and summarize the information about the most famous work.\n\n#E4 = AIM[\"What is the most famous work of #E2? Given context: #E3\"]\n\nFinal answer: #E2 + \" won the Nobel Prize in Literature in 2020, and their most famous work is \" + #E4."
+    }
+]
