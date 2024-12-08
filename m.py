@@ -37,41 +37,44 @@ x1_messages = []
 from concurrent.futures import ThreadPoolExecutor
 
 def process_entry(entry):
-    conversations = entry["openai_compatible_conversation_threads"]
-    user_messages = []
-    for m in conversations:
-        if m["role"] == "user":
-            user_messages.append(m["content"])
+    try:
+        conversations = entry["openai_compatible_conversation_threads"]
+        user_messages = []
+        for m in conversations:
+            if m["role"] == "user":
+                user_messages.append(m["content"])
 
-    messages = [{
+        messages = [{
         "role": "system",
         "content": SYSTEM_INSTRUCTION
-    }]
-    for message in user_messages:
-        messages.append({"role": "user", "content": message})
-        while True:
-            response = client.chat.completions.create(
-                model="Qwen/QwQ-32B-Preview",
+        }]
+        for message in user_messages:
+            messages.append({"role": "user", "content": message})
+            while True:
+                response = client.chat.completions.create(
+                model="gpt-4o",
                 temperature=0.7,
                 messages=messages,
                 stream=False
             )
 
-            messages.append({"role": "assistant", "content": response.choices[0].message.content})
-            break
-    messages = messages[1:]
-    x1_messages.append(messages)
-    temp_file = str(datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
-    with open(f"x1_messages-4o/{temp_file}.json", "w", encoding="utf-8") as f:
-        json.dump(messages, f, indent=4)
+                messages.append({"role": "assistant", "content": response.choices[0].message.content})
+                break
+        messages = messages[1:]
+        x1_messages.append(messages)
+        temp_file = str(datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
+        with open(f"x1_messages-4o/{temp_file}.json", "w", encoding="utf-8") as f:
+            json.dump(messages, f, indent=4)
     
     # Git operations
     #os.system("git add .")
     #os.system(f'git commit -m "Added conversation {temp_file}"')
     #os.system(f"git push origin main")
     
-    global seq_len    
-    seq_len += 1
+        global seq_len    
+        seq_len += 1
+    except Exception as e:
+        print(e)
 
 with ThreadPoolExecutor(max_workers=6) as executor:
     list(tqdm(executor.map(process_entry, train_split), total=len(train_split), desc="Processing conversations"))
