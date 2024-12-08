@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Develop a strategy to respond to the user's query using the tools provided below. For each step, there should be a matching evidence value, derived from one of the functions' outputs given an input string.\n\nTools Available:\n1. BingSearch[input]: A tool that uses the Bing search engine to locate information related to the input query.\n2. SiteLoader[input]: Loads a website from the input URL and produces plain text content from the site.\n3. UrlCollector[input]: Collects URLs from a given plain text input.\n4. KnowledgeQnA[input]: Answers questions based on an input text. The input must be a question that refers to an :evidence[n]: variable.\n\nOutput Format:\nPlan: [Initial action]\n:evidence0: = [Function to call with input parameter]\nPlan: [Subsequent action]\n:evidence1: = [Next function to call with input parameter, possibly referencing prior evidence]\n...\nAnswer: [:evidence[n]:]\n\nQuestion: Who won the Nobel Prize in Literature in 2019 and what was their notable work?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for who won the Nobel Prize in Literature in 2019.\n\n:evidence0: = BingSearch[\"Nobel Prize in Literature 2019 winner\"]\n\nPlan: Check the search results to find the name of the laureate.\n\n:evidence1: = KnowledgeQnA[\"Who won the Nobel Prize in Literature in 2019?:evidence0:\"]\n\nPlan: Once the laureate's name is known, search for their notable works.\n\n:evidence2: = BingSearch[:evidence1: + \" notable works\"]\n\nPlan: Collect relevant URLs from the search results for more detailed information.\n\n:evidence3: = UrlCollector[:evidence2:]\n\nPlan: Load the content from the top URLs to gather information about the notable works.\n\n:evidence4: = SiteLoader[:evidence3:[0]]\n\nPlan: Use the loaded content to answer what the notable work of the laureate is.\n\n:evidence5: = KnowledgeQnA[\"What are the notable works of :evidence1:?:evidence4:\"]\n\nAnswer: :evidence5:"
+    }
+]
