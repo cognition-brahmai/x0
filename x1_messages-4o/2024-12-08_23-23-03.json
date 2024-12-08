@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In a database table called \"numbers\", there is a column called \"sequence\" that contains the following values:\n1\n1\n2\n3\n5\n8\n13\n34\nBut one number is missing in the sequence. Can you write an SQL query to find the missing number?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! From the sequence you provided, it seems to resemble the Fibonacci sequence, which typically begins as 1, 1, 2, 3, 5, 8, 13, 21, 34. It looks like the number 21 is missing from your sequence.\n\nTo find the missing number using SQL, you can write a query that checks the expected Fibonacci sequence and identifies the missing value. However, SQL itself doesn't have built-in support for generating Fibonacci sequences, so we'll have to manually include the known sequence and then find the missing number.\n\nHere\u2019s a step-by-step approach using a temporary table to represent the expected sequence:\n\n```sql\nWITH expected_sequence AS (\n    SELECT 1 AS seq UNION ALL\n    SELECT 1 UNION ALL\n    SELECT 2 UNION ALL\n    SELECT 3 UNION ALL\n    SELECT 5 UNION ALL\n    SELECT 8 UNION ALL\n    SELECT 13 UNION ALL\n    SELECT 21 UNION ALL\n    SELECT 34\n)\nSELECT es.seq\nFROM expected_sequence es\nLEFT JOIN numbers n ON es.seq = n.sequence\nWHERE n.sequence IS NULL;\n```\n\nThis query creates a common table expression (CTE) called `expected_sequence` that contains the expected Fibonacci numbers. It then performs a `LEFT JOIN` with your `numbers` table and selects the numbers from `expected_sequence` that are not present in the `numbers` table, effectively identifying the missing number(s). In this case, it should return 21."
+    }
+]
