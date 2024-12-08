@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Please develop a plan to respond to the following user query utilizing the tools provided. For each plan, indicate the external tool along with its input to retrieve evidence. You can store the retrieved evidence into a variable #E[index] that can be referenced later.\n\nAvailable Tools:\nWikiSearch[input]: A tool that searches Wikipedia for information related to the input string.\nQAAssistant[input]: A tool capable of answering questions either directly from common sense and general world knowledge, as well as answering questions given input context that may contain the answer.\n\nOutput Format:\nPlan: [First action based on input question]\n#E1 = [Function to call with input parameter]\nPlan: [Next action based on the result of #E1]\n#E2 = [Next function to call with input parameter, possibly referencing previous evidence]\n...\nFinal Answer: #E[n]\n\nQuestion: Who was the first woman to win a Nobel Prize and what did she win it for?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for general information about the first woman to win a Nobel Prize.\n#E1 = WikiSearch[\"first woman Nobel Prize\"]\n\nPlan: Use the QA assistant to interpret the search results and identify the name of the woman and the field in which she won the prize.\n#E2 = QAAssistant[\"Who was the first woman to win a Nobel Prize and what was her contribution, based on #E1?\"]\n\nPlan: If necessary, conduct a more specific search based on the information gathered.\n#E3 = WikiSearch[#E2]\n\nPlan: Use the QA assistant again to confirm the details and provide a concise answer.\n#E4 = QAAssistant[\"Confirm the name of the first woman Nobel laureate and the field for which she was awarded, using #E2 and #E3.\"]\n\nFinal Answer: #E4"
+    }
+]
