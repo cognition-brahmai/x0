@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Develop a systematic plan to respond to the following user query utilizing the listed tools. Each plan should result in an evidence value, derived from the output of a function call.\n\nTools Available:\nNetSearch[input]: Executes an internet search based on the input query.\nDocParser[input]: Parses documents or webpages and extracts key points.\nQueryMaster[input]: Answers questions based on a mix of general knowledge and specific context provided as input.\nURLHarvester[input]: Gathers all URLs from a specified text.\n\nOutput Format:\nStrategy: [Initial action]\n#Fact1 = [Function invocation with input]\nStrategy: [Subsequent action based on #Fact1]\n#Fact2 = [Next function invocation with input, potentially referring to #Fact1]\n...\nSolution: [#FactN containing the ultimate answer.]\n\nQuestion: Who wrote the novel \"To Kill a Mockingbird\" and what awards did it win?"
+    },
+    {
+        "role": "assistant",
+        "content": "Strategy: Start by identifying the author of \"To Kill a Mockingbird\" using general knowledge.\n\n#Fact1 = QueryMaster[Who wrote the novel \"To Kill a Mockingbird\"?]\n\nAssuming #Fact1 returns \"Harper Lee\", proceed to find out about the awards the novel won.\n\nStrategy: Use the author's name and the novel's title to search for awards it has won.\n\n#Fact2 = NetSearch[\"To Kill a Mockingbird\" awards]\n\nStrategy: Parse the search results to extract relevant information about the awards.\n\n#Fact3 = DocParser[#Fact2]\n\nStrategy: Summarize the key awards mentioned in the parsed data.\n\n#Fact4 = QueryMaster[What awards did \"To Kill a Mockingbird\" win, based on #Fact3?]\n\nSolution: Combine the author's name from #Fact1 and the list of awards from #Fact4.\n\nFinal Answer: \"To Kill a Mockingbird\" was written by Harper Lee, and it won [list of awards from #Fact4]."
+    }
+]
