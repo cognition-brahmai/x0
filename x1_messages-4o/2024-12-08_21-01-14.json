@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I use XML data to convert the text \"This is an example text\" to uppercase?\n[XML data]\n<text>This is an example text</text>\n[XML data] code:\n<xsl:stylesheet version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">\n  <xsl:output method=\"text\"/>\n  <xsl:template match=\"/\">\n    <xsl:value-of select=\"upper-case(text)\"/>\n  </xsl:template>\n</xsl:stylesheet>"
+    },
+    {
+        "role": "assistant",
+        "content": "To convert the text \"This is an example text\" to uppercase using XML and XSLT, you need to make sure that your XSLT code uses the correct function for transforming text to uppercase. In XSLT 1.0, there isn't a built-in `upper-case()` function, but you can achieve this by using XSLT 2.0 or later, which includes the `upper-case()` function. Here's how you can update your XSLT code to work correctly:\n\n```xml\n<xsl:stylesheet version=\"2.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">\n  <xsl:output method=\"text\"/>\n  <xsl:template match=\"/\">\n    <xsl:value-of select=\"upper-case(/text)\"/>\n  </xsl:template>\n</xsl:stylesheet>\n```\n\n### Explanation:\n\n1. **Version**: The XSLT version is set to 2.0 to support the `upper-case()` function.\n   \n2. **XPath Expression**: The expression `/text` selects the content of the `<text>` element from the XML input.\n\n3. **Function**: The `upper-case()` function converts the string to uppercase.\n\nMake sure your XSLT processor supports XSLT 2.0 or later to use this functionality. If you are restricted to XSLT 1.0, you would typically need to use a different approach, such as a recursive template or external processing, to achieve case conversion."
+    }
+]
