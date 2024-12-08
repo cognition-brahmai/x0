@@ -61,13 +61,13 @@ def process_entry(entry):
     messages = messages[1:]
     x1_messages.append(messages)
     temp_file = str(datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
-    with open(f"x1_messages/{temp_file}.json", "w", encoding="utf-8") as f:
+    with open(f"x1_messages-4o/{temp_file}.json", "w", encoding="utf-8") as f:
         json.dump(messages, f, indent=4)
     
     # Git operations
-    os.system("git add .")
-    os.system(f'git commit -m "Added conversation {temp_file}"')
-    os.system(f"git push origin main")
+    #os.system("git add .")
+    #os.system(f'git commit -m "Added conversation {temp_file}"')
+    #os.system(f"git push origin main")
     
     global seq_len    
     seq_len += 1
