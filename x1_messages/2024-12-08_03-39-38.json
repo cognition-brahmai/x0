@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a plan to answer the following question using the tools provided. For each step, indicate which tool you will use and what input you will provide it. Store the output of each tool in a variable #E[index] that can be referenced by later steps.\n\nThe available tools are as follows:\n\nBing[input]: This tool allows you to search for information on Bing. It's useful for finding lists of websites that may contain answers to your questions.\nWebReader[input]: This tool loads one or more websites from an input string containing newline delimited links. The input is one or more links, and the output is plain text content from those links.\nLinkCollector[input]: This tool extracts links from plain text and produces a plain text, newline delimited response of links.\nAIQA[input]: This is a question answering AI model. It can answer questions based on an input passage of text. The input must be a text question that references a #E[n] variable, e.g., What color is the dog, given #E1?\n\nOutput should be formatted as follows:\nPlan: [first action]\n#E1 = [function call with input parameter]\nPlan: [next action, based on result of #E1]\n#E2 = [next function call and input parameter, referencing previous evidence if necessary]\n...\nFinal Answer: #E[n]\n\nQuestion: Who won the Nobel Prize in Literature in 2010 and what is their most famous work?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for who won the Nobel Prize in Literature in 2010.\n\n#E1 = Bing[\"Nobel Prize in Literature 2010 winner\"]\n\nPlan: Extract the name of the laureate from the search results.\n\n#E2 = AIQA[\"Who won the Nobel Prize in Literature in 2010, given #E1?\"]\n\nPlan: Now, find out what their most famous work is.\n\n#E3 = Bing[\"Most famous work by #E2\"]\n\nPlan: Extract the title of the most famous work from the search results.\n\n#E4 = AIQA[\"What is the most famous work by #E2, given #E3?\"]\n\nFinal Answer: #E2 won the Nobel Prize in Literature in 2010, and their most famous work is #E4."
+    }
+]
