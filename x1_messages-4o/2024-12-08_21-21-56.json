@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Suppose I have a list of numbers as shown below:\n5, 37, 18, 90, 23\nWhat is the SQL query to sort these numbers in ascending order?"
+    },
+    {
+        "role": "assistant",
+        "content": "To sort a list of numbers in ascending order using SQL, you would typically insert them into a temporary table or use a common table expression (CTE) if you're working within a database environment. Here's a simple example using a temporary table:\n\n```sql\n-- Create a temporary table\nCREATE TEMPORARY TABLE numbers (\n    value INT\n);\n\n-- Insert the numbers into the temporary table\nINSERT INTO numbers (value) VALUES (5), (37), (18), (90), (23);\n\n-- Query to sort the numbers in ascending order\nSELECT value\nFROM numbers\nORDER BY value ASC;\n```\n\nIf you're using a database that supports Common Table Expressions (CTEs), you could use a CTE instead:\n\n```sql\nWITH numbers AS (\n    SELECT 5 AS value\n    UNION ALL\n    SELECT 37\n    UNION ALL\n    SELECT 18\n    UNION ALL\n    SELECT 90\n    UNION ALL\n    SELECT 23\n)\n\nSELECT value\nFROM numbers\nORDER BY value ASC;\n```\n\nBoth of these queries will return the numbers sorted in ascending order: 5, 18, 23, 37, 90. Make sure to adjust the syntax if necessary based on the SQL dialect you're using, as some databases have different syntax for temporary tables or CTEs."
+    }
+]
