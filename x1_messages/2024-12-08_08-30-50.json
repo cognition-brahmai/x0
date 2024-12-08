@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Please generate a plan to answer the following question using the available tools. Each step in your plan should be followed by an evidence variable that can be referenced in later steps.\n\nAvailable Tools:\nWebSearch[input]: A tool that allows you to search for information on the internet. The input is a string query, and the output is a list of relevant websites.\nTextExtractor[input]: Extracts plain text from a given website URL. The input is a single URL, and the output is the text content of the webpage.\nQAEngine[input]: Can answer questions based on general knowledge or given context. The input must be a question string, which may reference previous evidence variables.\nImageAnalyzer[input]: Analyzes images from a given URL and provides descriptions of what it sees. The input is a single image URL, and the output is a description of the image.\n\nOutput Format:\nPlan: [first action]\n#E1 = [function call with input]\nPlan: [next action]\n#E2 = [function call with input, possibly referencing #E1]\n...\nFinal Answer: #En\n\nQuestion: What is the main ingredient in Tiramisu and where does it originate?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for information about Tiramisu to find out its main ingredient and origin.\n#E1 = WebSearch[\"Tiramisu recipe and origin\"]\n\nPlan: Extract text from the top search result to get detailed information.\n#E2 = TextExtractor[#E1[0]]\n\nPlan: Use the QA engine to identify the main ingredient from the extracted text.\n#E3 = QAEngine[\"What is the main ingredient in Tiramisu?\", context: #E2]\n\nPlan: Use the QA engine again to find out where Tiramisu originates from.\n#E4 = QAEngine[\"Where does Tiramisu originate?\", context: #E2]\n\nPlan: If there are images related to Tiramisu, analyze them to confirm the main ingredient visually.\n#E5 = ImageAnalyzer[\"Tiramisu image\"]\n\nPlan: Summarize the findings from both the text and image analysis.\n#E6 = QAEngine[\"Summarize the main ingredient and origin of Tiramisu based on #E3, #E4, and #E5.\"]\n\nFinal Answer: #E6"
+    }
+]
