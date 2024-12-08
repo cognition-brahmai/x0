@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Write a C program that sorts an array of integers using the quicksort algorithm. The size of the array and its elements should be entered by the user at runtime. PLAINFORMAT"
+    },
+    {
+        "role": "assistant",
+        "content": "#include <stdio.h>\n\n// Function to swap two elements\nvoid swap(int* a, int* b) {\n    int t = *a;\n    *a = *b;\n    *b = t;\n}\n\n// Partition function for quicksort\nint partition(int arr[], int low, int high) {\n    int pivot = arr[high];\n    int i = (low - 1);\n\n    for (int j = low; j <= high - 1; j++) {\n        if (arr[j] < pivot) {\n            i++;\n            swap(&arr[i], &arr[j]);\n        }\n    }\n    swap(&arr[i + 1], &arr[high]);\n    return (i + 1);\n}\n\n// Quicksort function\nvoid quickSort(int arr[], int low, int high) {\n    if (low < high) {\n        int pi = partition(arr, low, high);\n        quickSort(arr, low, pi - 1);\n        quickSort(arr, pi + 1, high);\n    }\n}\n\n// Function to print an array\nvoid printArray(int arr[], int size) {\n    for (int i = 0; i < size; i++)\n        printf(\"%d \", arr[i]);\n    printf(\"\\n\");\n}\n\n// Main function\nint main() {\n    int n;\n    printf(\"Enter the number of elements: \");\n    scanf(\"%d\", &n);\n\n    int arr[n];\n    printf(\"Enter the elements:\\n\");\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &arr[i]);\n    }\n\n    quickSort(arr, 0, n - 1);\n    printf(\"Sorted array: \\n\");\n    printArray(arr, n);\n    return 0;\n}"
+    }
+]
