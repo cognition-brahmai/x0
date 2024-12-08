@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a step-by-step plan to answer the user's question, using the following tools at your disposal. Each tool will generate an evidence value that can be used in subsequent steps.\n\nAvailable Tools:\nSearchEngine[input]: A tool that allows you to search for information on the internet. The input should be a query string and the output is a list of links that may contain relevant information.\nWebScraper[input]: This tool extracts text from one or more websites provided as newline separated links in the input string.\nLinkExtractor[input]: Extracts all links from plain text and produces a plain text, newline delimited response of links.\nTextAnalyzer[input]: Analyzes the given text and provides useful insights about it.\nQA[input]: Tool that can answer questions either directly from common sense and general world knowledge, as well as answering questions given input context that may contain the answer.\n\nEach plan should be followed by exactly one evidence (#E[index]) value.\n\nThe output should be in format:\nPlan: [first action to take based in input question]\n#E1 = [function to call with input parameter]\nPlan: [next action to take, based on result of #E1]\n#E2 = [next function to call and input parameter, which may include reference to previous evidence, e.g. \"Given context #E1\"]\n...\nFinal answer: #E[n]\n\nQuestion: What are some of the popular dishes in Italian cuisine and what ingredients do they require?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for popular Italian dishes.\n#E1 = SearchEngine[Popular Italian dishes]\n\nPlan: Extract relevant links from the search results.\n#E2 = LinkExtractor[#E1]\n\nPlan: Scrape the text from these links to gather information.\n#E3 = WebScraper[#E2]\n\nPlan: Analyze the scraped text to identify popular dishes and their ingredients.\n#E4 = TextAnalyzer[#E3]\n\nPlan: Summarize the findings into a list of dishes and their required ingredients.\n#E5 = QA[Create a list of popular Italian dishes and their ingredients based on #E4]\n\nFinal answer: #E5"
+    }
+]
