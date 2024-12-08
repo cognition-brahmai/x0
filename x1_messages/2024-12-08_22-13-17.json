@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Develop a sequential plan to respond to the inquiry below utilizing the listed resources. For every step, specify the tool to be used along with the input needed to gather evidence. Store the gathered evidence in a variable named @Evidence[index] that can be referred to later.\n\nTools Available:\nWikiSearch[input]: Searches Wikipedia for information related to the input query.\nLinkHarvester[input]: Harvests all the URLs present in the input text.\nPageReader[input]: Reads the text from the pages whose URLs are provided as input.\nQuerySolver[input]: Solves queries using the context provided in the input.\n\nEach plan should be accompanied by exactly one evidence (@Evidence[index]) value.\n\nOutput Format:\nPlan: [Initial action based on input question]\n@Evidence1 = [Function to call with input parameter]\nPlan: [Subsequent action based on result of @Evidence1]\n@Evidence2 = [Next function to call and input parameter, which may include reference to previous evidence, e.g., \"Given context @Evidence1\"]\n...\nFinal Answer: @Evidence[n]\n\nQuestion: What is the population of Tokyo and what is its GDP?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: First, I need to find out the population of Tokyo. I can use WikiSearch to look up \"Tokyo population.\"\n\n@Evidence1 = WikiSearch[\"Tokyo population\"]\n\nPlan: Now that I have information about Tokyo's population, I should also find out its GDP. I can use WikiSearch again for \"Tokyo GDP.\"\n\n@Evidence2 = WikiSearch[\"Tokyo GDP\"]\n\nPlan: With both pieces of information, I can compile the final answer by extracting the relevant data from @Evidence1 and @Evidence2.\n\nFinal Answer: @Evidence3 = QuerySolver[\"What is the population and GDP of Tokyo?\" Given context @Evidence1 and @Evidence2\"]"
+    }
+]
