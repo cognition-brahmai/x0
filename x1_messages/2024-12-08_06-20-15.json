@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Develop a comprehensive plan to respond to the user's inquiry using the tools listed below. Each step in your plan should have an associated outcome stored in a variable named :evidenceN:.\n\nTools Available:\nWebCrawler[input]: Crawls the web for information related to the input string.\nURLCollector[input]: Collects all URLs from the provided text.\nTextExtractor[input]: Extracts all text from the pages of the provided URLs.\nAIResponder[input]: Responds to questions using either common sense, general world knowledge, or given context.\n\nOutput Format:\nPlan: [Initial Step]\n:evidence0: = [Call to Function with Input]\nPlan: [Subsequent Step Based on Outcome of :evidence0:]\n:evidence1: = [Next Call to Function with Input Possibly Referring to Prior Evidence]\n...\nAnswer: [:evidenceN: containing the final response]\n\nQuestion: What are the health benefits of regular exercise and how does it affect mental health?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by gathering general information about the health benefits of regular exercise.\n:evidence0: = WebCrawler[\"health benefits of regular exercise\"]\n\nPlan: Collect specific URLs from the crawled data that discuss both physical and mental health benefits.\n:evidence1: = URLCollector[:evidence0:]\n\nPlan: Extract text from these URLs to get detailed information.\n:evidence2: = TextExtractor[:evidence1:]\n\nPlan: Analyze the extracted text to summarize the health benefits, focusing on mental health aspects.\n:evidence3: = AIResponder[\"Summarize the health benefits of regular exercise, particularly how it affects mental health, based on the following text: \" + :evidence2:]\n\nAnswer: :evidence3:"
+    }
+]
