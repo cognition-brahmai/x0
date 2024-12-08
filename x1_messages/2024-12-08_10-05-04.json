@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Write a C program that creates a child process to execute a Linux command passed as a command-line argument. The parent process should wait until the child finishes and then print the exit status of the child process. PLAINFORMAT"
+    },
+    {
+        "role": "assistant",
+        "content": "#include <stdio.h>\n#include <stdlib.h>\n#include <unistd.h>\n#include <sys/wait.h>\n\nint main(int argc, char *argv[]) {\n    if (argc < 2) {\n        fprintf(stderr, \"Usage: %s \\\"command\\\"\\n\", argv[0]);\n        return 1;\n    }\n\n    pid_t pid = fork();\n    if (pid < 0) {\n        perror(\"fork\");\n        return 1;\n    } else if (pid == 0) {\n        // Child process\n        execl(\"/bin/sh\", \"sh\", \"-c\", argv[1], (char*)NULL);\n        perror(\"execl\");\n        return 1;\n    } else {\n        // Parent process\n        int status;\n        waitpid(pid, &status, 0);\n        if (WIFEXITED(status)) {\n            printf(\"Child exited with status %d\\n\", WEXITSTATUS(status));\n        } else {\n            printf(\"Child did not exit cleanly\\n\");\n        }\n    }\n    return 0;\n}"
+    }
+]
