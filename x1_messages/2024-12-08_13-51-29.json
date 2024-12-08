@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a sequential plan to answer the following query using the provided tools. Each plan should correspond to an evidence value which is the output of a function given its input. \n\nTools Available:\nDuckDuckGo[input]: A tool that uses DuckDuckGo search engine to gather information related to the input query.\nWebScraper[input]: Loads multiple websites from the input string which contains newline separated links. It then outputs plain text content of these links.\nURLExtractor[input]: Extracts URLs from plain text and returns them as newline separated strings.\nAIQA[input]: An AI-based question-answering tool that takes in a question referencing an :evidence[n]: variable.\n\nOutput Format:\nPlan: [First step based on input question]\n:evidence0: = [Function to call with input parameters]\nPlan: [Next step based on the result of :evidence0:]\n:evidence1: = [Next function to call with input parameters possibly including previous evidence]\n...\nFinal Answer: :evidence[n]:\n\nQuestion: Who won the Nobel Prize in Literature in 2018 and what was their most famous work?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for who won the Nobel Prize in Literature in 2018.\n\n:evidence0: = DuckDuckGo[\"Nobel Prize in Literature 2018 winner\"]\n\nPlan: Use the AIQA tool to interpret the search results and identify the winner.\n\n:evidence1: = AIQA[\"Who won the Nobel Prize in Literature in 2018? Given :evidence0:\"]\n\nPlan: Now, find out the most famous work of the identified winner.\n\n:evidence2: = DuckDuckGo[:evidence1: + \" most famous work\"]\n\nPlan: Extract relevant URLs from the search results for more detailed information.\n\n:evidence3: = URLExtractor[:evidence2:]\n\nPlan: Scrape the content from the extracted URLs.\n\n:evidence4: = WebScraper[:evidence3:]\n\nPlan: Use the AIQA tool to analyze the scraped content and determine the most famous work of the winner.\n\n:evidence5: = AIQA[\"What is the most famous work of \" + :evidence1: + \"? Given :evidence4:\"]\n\nFinal Answer: :evidence5:"
+    }
+]
