@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a step-by-step plan to respond to the user query utilizing the following tools. Each plan will correspond to an evidence value, which will be the output of one of the available functions given an input string that could be the user query, one or more previous evidence values, or a combination of both.\n\nAvailable tools:\nBingSearch[input]: A tool allowing users to perform searches via Bing. Useful for locating potential sources of answers.\nWebReader[input]: Loads a website specified in the input string and outputs its textual contents.\nLinkSelector[input]: Takes in a plain text string and outputs a list of hyperlinks found within it.\nAnswerBot[input]: An AI model capable of answering questions when provided with context. It requires a text-based question referencing a #E[index] variable.\n\nOutput format:\nPlan: [First action]\n#E1 = [Function to call with input]\nPlan: [Subsequent action based on #E1's result]\n#E2 = [Next function to call with input, potentially referencing #E1]\n...\nFinal Answer: #E[n]\n\nQuestion: Who won the 2020 Nobel Prize in Literature and what is their most famous work?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for who won the 2020 Nobel Prize in Literature.\n#E1 = BingSearch[\"2020 Nobel Prize in Literature winner\"]\n\nPlan: Use AnswerBot to interpret the search results and identify the laureate.\n#E2 = AnswerBot[\"Who won the 2020 Nobel Prize in Literature? Given context: #E1\"]\n\nPlan: Conduct another search to find the most famous work of the identified laureate.\n#E3 = BingSearch[\"most famous work of \" + #E2]\n\nPlan: Extract relevant links from the search results for more detailed information.\n#E4 = LinkSelector[#E3]\n\nPlan: Use WebReader to extract text from the most promising link.\n#E5 = WebReader[#E4[0]]\n\nPlan: Finally, use AnswerBot to identify and summarize the most famous work from the extracted text.\n#E6 = AnswerBot[\"What is the most famous work of \" + #E2 + \"? Given context: #E5\"]\n\nFinal Answer: #E6"
+    }
+]
