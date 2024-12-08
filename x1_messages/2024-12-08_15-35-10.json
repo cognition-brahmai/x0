@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Implement a Python function that takes a list of numbers as input and sorts them using the merge sort algorithm. The function should return the sorted list.\nPLAINFORMAT"
+    },
+    {
+        "role": "assistant",
+        "content": "Sure! I can help you with that. Merge sort is a divide-and-conquer algorithm that divides the input list into two halves, sorts them separately, and then merges them back together. Here's an implementation of merge sort in Python:\n\ndef merge_sort(arr):\nif len(arr) <= 1:\nreturn arr\n\nmid = len(arr) // 2\nleft = arr[:mid]\nright = arr[mid:]\n\nleft = merge_sort(left)\nright = merge_sort(right)\n\nreturn merge(left, right)\n\ndef merge(left, right):\nresult = []\ni = j = 0\n\nwhile i < len(left) and j < len(right):\nif left[i] < right[j]:\nresult.append(left[i])\ni += 1\nelse:\nresult.append(right[j])\nj += 1\n\nresult.extend(left[i:])\nresult.extend(right[j:])\n\nreturn result\n\n# Example usage:\narr = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\nsorted_arr = merge_sort(arr)\nprint(sorted_arr)\nIn this code, the merge_sort function takes an input list arr and recursively divides it into two halves until the base case is reached (when the list has only one element or is empty). Then, it merges the sorted halves using the merge function.\n\nThe merge function takes two sorted lists, left and right, and merges them into a single sorted list. It uses two pointers, i and j, to track the current positions in the left and right lists, respectively. It compares the elements at these positions and appends the smaller one to the result list. Finally, it appends any remaining elements from either list.\n\nYou can test this implementation with the example usage provided. Just create a list of numbers and pass it to the merge_sort function. The sorted list will be printed as output.\n\nI hope this helps! Let me know if you have any further questions."
+    }
+]
