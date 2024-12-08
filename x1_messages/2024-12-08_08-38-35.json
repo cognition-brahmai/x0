@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a binary search tree class in Python with insert, delete, and search methods."
+    },
+    {
+        "role": "assistant",
+        "content": "Here's a simple implementation of a binary search tree in Python:\n\nclass Node:\n\ndef __init__(self, key):\n\nself.left = None\n\nself.right = None\n\nself.val = key\n\nclass BST:\n\ndef __init__(self):\n\nself.root = None\n\ndef insert(self, key):\n\nif self.root is None:\n\nself.root = Node(key)\n\nelse:\n\nself._insert_recursive(self.root, key)\n\ndef _insert_recursive(self, node, key):\n\nif key < node.val:\n\nif node.left is None:\n\nnode.left = Node(key)\n\nelse:\n\nself._insert_recursive(node.left, key)\n\nelif key > node.val:\n\nif node.right is None:\n\nnode.right = Node(key)\n\nelse:\n\nself._insert_recursive(node.right, key)\n\ndef delete(self, key):\n\nself.root = self._delete_recursive(self.root, key)\n\ndef _delete_recursive(self, root, key):\n\nif root is None:\n\nreturn root\n\nif key < root.val:\n\nroot.left = self._delete_recursive(root.left, key)\n\nelif key > root.val:\n\nroot.right = self._delete_recursive(root.right, key)\n\nelse:\n\nif root.left is None:\n\nreturn root.right\n\nelif root.right is None:\n\nreturn root.left\n\ntemp = self._min_value_node(root.right)\n\nroot.val = temp.val\n\nroot.right = self._delete_recursive(root.right, temp.val)\n\nreturn root\n\ndef _min_value_node(self, node):\n\ncurrent = node\n\nwhile current.left is not None:\n\ncurrent = current.left\n\nreturn current\n\ndef search(self, key):\n\nreturn self._search_recursive(self.root, key)\n\ndef _search_recursive(self, node, key):\n\nif node is None or node.val == key:\n\nreturn node\n\nif key < node.val:\n\nreturn self._search_recursive(node.left, key)\n\nreturn self._search_recursive(node.right, key)\n\n# Example usage:\n\nbst = BST()\n\nbst.insert(50)\n\nbst.insert(30)\n\nbst.insert(20)\n\nbst.insert(40)\n\nbst.insert(70)\n\nbst.insert(60)\n\nbst.insert(80)\n\nprint(bst.search(20).val) # Output: 20\n\nbst.delete(20)\n\nprint(bst.search(20)) # Output: None"
+    }
+]
