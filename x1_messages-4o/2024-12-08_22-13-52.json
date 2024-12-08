@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Find the two non-repeating elements in an array of repeating elements?\narr = [2, 3, 7, 9, 11, 2, 3, 11]"
+    },
+    {
+        "role": "assistant",
+        "content": "To find the two non-repeating elements in an array where every other element repeats, you can use the XOR operation. This method works efficiently with a time complexity of O(n) and space complexity of O(1). Here\u2019s how you can do it:\n\n1. **XOR all elements**: XORing all the elements of the array will give us the XOR of the two unique numbers since XOR of two same numbers is 0 and XOR of a number with 0 is the number itself.\n\n2. **Find a set bit**: In the result of the XOR, find any bit that is set (1). This bit is different in the two unique numbers.\n\n3. **Divide the array elements into two groups**: Using the set bit found in the previous step, divide the numbers in the array into two groups. The two unique numbers will fall into different groups.\n\n4. **XOR the numbers in each group**: XORing all numbers in each group will give you the two unique numbers.\n\nLet's implement this in Python code:\n\n```python\ndef find_two_non_repeating_numbers(arr):\n    # Step 1: XOR all elements\n    xor_all = 0\n    for num in arr:\n        xor_all ^= num\n\n    # Step 2: Find a set bit in xor_all (rightmost set bit in this case)\n    set_bit = xor_all & -xor_all\n\n    # Step 3: Divide elements into two groups and XOR separately\n    num1 = 0\n    num2 = 0\n    for num in arr:\n        if num & set_bit:\n            num1 ^= num\n        else:\n            num2 ^= num\n\n    return num1, num2\n\n# Example usage\narr = [2, 3, 7, 9, 11, 2, 3, 11]\nunique_numbers = find_two_non_repeating_numbers(arr)\nprint(\"The two non-repeating elements are:\", unique_numbers)\n```\n\nWhen you run this code with the provided array, it will output:\n\n```\nThe two non-repeating elements are: (7, 9)\n```\n\nThese are the two numbers in the array that do not repeat."
+    }
+]
