@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Provide a detailed execution plan to respond to the following user query. You have access to various tools, each having a specific functionality. You can store the output of these tools into a variable called #E[index] which can later be referred to by subsequent tools.\n\nAvailable Tools:\nBing[input]: Tool that enables the user to perform a search operation over Bing search engine. \nSiteReader[input]: Load one or more websites from the input string containing newline delimited links, where input is one or more links, and produces plain text output containing the content of the links.\nLinkCollector[input]: Extracts links from plain text and produces a plain text, newline delimited response of links.\nAIQA[input]: An AI-based question-answering model that provides answers either directly from general world knowledge or given input context that may contain the answer.\n\nYour output should follow this structure:\nPlan: [first action based on input question]\n#E1 = [function to call with input parameter]\nPlan: [next action based on the result of #E1]\n#E2 = [next function to call with input parameter, which might refer to previous evidence like \"Given context #E1\"]\n...\nFinal Answer: #E[n]\n\nQuestion: What are the main ingredients in a traditional Italian lasagna recipe?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for a traditional Italian lasagna recipe to find the main ingredients.\n#E1 = Bing[\"traditional Italian lasagna recipe\"]\n\nPlan: From the search results, extract the relevant links that provide recipe information.\n#E2 = LinkCollector[#E1]\n\nPlan: Load the content from the extracted links to get the recipe details.\n#E3 = SiteReader[#E2]\n\nPlan: Use the AI-based question-answering model to identify and list the main ingredients from the loaded recipe content.\n#E4 = AIQA[\"What are the main ingredients in a traditional Italian lasagna recipe?\", Given context: #E3]\n\nFinal Answer: #E4"
+    }
+]
