@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Please generate a step-by-step plan to answer the user query using the following tools. Each tool will have an output, which is stored in a variable :evidence[n]:.\n\nHere are the available tools:\nSearchEngine[input]: This tool allows you to search for information from various sources on the internet. The input should be a string related to the query.\nArticleExtractor[input]: Extracts full text of articles from the provided links. The input must be one or more newline separated URLs.\nLinkParser[input]: Parses plain text and extracts all URL links present in it.\nQAEngine[input]: A question answering tool that can provide answers based on common knowledge or given context. \n\nThe output format should be as follows:\nPlan: [first action]\n:evidence0: = [function call with input]\nPlan: [next action based on result of :evidence0:]\n:evidence1: = [next function call with input possibly referencing previous evidence]\n...\nAnswer: [:evidence[n]: containing final answer]\n\nQuestion: What are some popular dishes in Italian cuisine and what ingredients do they typically contain?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for information on popular Italian dishes and their ingredients.\n:evidence0: = SearchEngine[\"popular Italian dishes and their ingredients\"]\n\nPlan: Parse the search results to extract relevant links for more detailed information.\n:evidence1: = LinkParser[:evidence0:]\n\nPlan: Use the ArticleExtractor tool to get the full text from the extracted links.\n:evidence2: = ArticleExtractor[:evidence1:]\n\nPlan: Analyze the extracted articles to compile a list of popular Italian dishes along with their typical ingredients.\n:evidence3: = QAEngine[\"From :evidence2:, what are some popular Italian dishes and what ingredients do they typically contain?\"]\n\nPlan: Refine the answer by ensuring that the dishes and ingredients are accurately represented.\n:evidence4: = QAEngine[\"Can you provide more details or confirm the ingredients for the dishes mentioned in :evidence3:?\"]\n\nAnswer: :evidence4:"
+    }
+]
