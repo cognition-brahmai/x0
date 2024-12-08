@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a step-by-step plan to answer the following question using the available tools. Each tool can be called with an input string and will produce an output that can be stored in a variable :evidence[n]: for later use.\n\nAvailable Tools:\nSearchEngine[input]: This tool allows you to search for information on the internet. The input should be a query related to your question.\nWikiTool[input]: A tool that searches Wikipedia for information related to the input query.\nLinkCollector[input]: Extracts links from a given text. Useful when you need to find more sources of information.\nTextAnalyzer[input]: Analyzes a text and extracts key pieces of information based on the input query.\nQA_Tool[input]: Can answer questions directly or using provided context (from previous evidence).\n\nThe output format should be as follows:\nPlan: [Action to take]\n:evidence1: = [Function call with input parameter]\n...\nAnswer: [:evidence[n]: containing the final answer]\n\nQuestion: What is the history of the Eiffel Tower and who were its main architects?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for general information about the Eiffel Tower to understand its history.\n:evidence1: = SearchEngine[\"history of the Eiffel Tower\"]\n\nPlan: Use the WikiTool to get detailed information from Wikipedia about the Eiffel Tower.\n:evidence2: = WikiTool[\"Eiffel Tower history\"]\n\nPlan: Collect links from the search engine results for more in-depth information.\n:evidence3: = LinkCollector[:evidence1:]\n\nPlan: Analyze the text from Wikipedia to extract key points about the history and architects.\n:evidence4: = TextAnalyzer[:evidence2:, \"history and architects of the Eiffel Tower\"]\n\nPlan: Use the QA tool to summarize the information gathered and answer the question directly.\n:evidence5: = QA_Tool[\"What is the history of the Eiffel Tower and who were its main architects?\", context=:evidence4:]\n\nAnswer: :evidence5:"
+    }
+]
