@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Write SQL queries to perform the following tasks on a database:\n- Select all records from a table named 'orders' where the order date is within the last 30 days.\n- Update the 'customers' table to set the 'active' column to false for customers who haven't placed an order in the last six months.\n- Delete all records from the 'logs' table that are older than one year. PLAINFORMAT"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! Here are the SQL queries to perform the tasks you've described:\n\n1. **Select all records from a table named 'orders' where the order date is within the last 30 days.**\n\n```sql\nSELECT * FROM orders\nWHERE order_date >= CURRENT_DATE - INTERVAL '30 days';\n```\n\nThis query selects all columns from the 'orders' table where the 'order_date' is within the last 30 days from the current date.\n\n2. **Update the 'customers' table to set the 'active' column to false for customers who haven't placed an order in the last six months.**\n\n```sql\nUPDATE customers\nSET active = FALSE\nWHERE customer_id NOT IN (\n    SELECT DISTINCT customer_id FROM orders\n    WHERE order_date >= CURRENT_DATE - INTERVAL '6 months'\n);\n```\n\nThis query updates the 'active' column to false for those customers in the 'customers' table who do not have any orders in the 'orders' table within the last six months.\n\n3. **Delete all records from the 'logs' table that are older than one year.**\n\n```sql\nDELETE FROM logs\nWHERE log_date < CURRENT_DATE - INTERVAL '1 year';\n```\n\nThis query deletes records from the 'logs' table where the 'log_date' is older than one year from the current date.\n\nThese queries assume that the date columns ('order_date' and 'log_date') are in a date or timestamp format that can be compared directly with the current date. If the date formats are different, you might need to adjust the queries accordingly."
+    }
+]
