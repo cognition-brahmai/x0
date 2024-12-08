@@ -20,6 +20,7 @@ print("Loaded dataset.")
 client = AzureOpenAI(
     base_url="https://deepnight-ai.openai.azure.com/",
     api_key="6b8028d8573f4bc1aa63e5f28801d3c0",
+    api_version="2024-05-01-preview",
     timeout=10000
 )
 
