@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "What is the Scala code that can be used to sort a list of numbers in descending order using only the digits of each number? For example, if the list is (14, 22, 9, 6, 2), the sorted list should be (92, 64, 22, 14, 9). Remember that each digit can only be used once and no external tools or resources can be used. Good luck! \n[Scala code] \nval nums = List(14, 22, 9, 6, 2)\nval sortedNums = nums.sortBy(num => num.toString.map(_.asDigit).reverse)\nprintln(sortedNums.reverse)"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve the task of sorting a list of numbers in descending order using only the digits of each number, you'll need to transform the list by creating new numbers from the available digits. Then, sort these numbers in descending order. Here is a Scala code snippet that demonstrates this:\n\n```scala\n// Define the list of numbers\nval nums = List(14, 22, 9, 6, 2)\n\n// Convert each number to a string, then extract the digits\nval digits = nums.flatMap(_.toString.map(_.asDigit))\n\n// Create a new number by sorting the digits in descending order\nval sortedNumber = digits.sorted(Ordering[Int].reverse).mkString.toInt\n\n// Create a list of numbers from the sorted digits\ndef createNumbers(digits: List[Int]): List[Int] = {\n  if (digits.isEmpty) List()\n  else {\n    val num = digits.mkString.toInt\n    num :: createNumbers(digits.dropWhile(_ == digits.head))\n  }\n}\n\nval result = createNumbers(digits.sorted(Ordering[Int].reverse))\n\n// Print the result\nprintln(result)\n```\n\nThis code first extracts the digits from all the numbers and sorts them in descending order. Then, it creates new numbers from these sorted digits. Note that the result may vary according to the rules you've set for how to create new numbers, such as whether to allow duplicate numbers or how to handle any remaining digits."
+    }
+]
