@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a regular expression that identifies a password containing a minimum of two uppercase letters and two lowercase letters, prohibiting the use of any special characters or numbers. It should also be able to differentiate between letters of similar case and ensure that the two lowercase and two uppercase letters are not consecutive."
+    },
+    {
+        "role": "assistant",
+        "content": "To create a regular expression that matches a password containing a minimum of two uppercase letters and two lowercase letters, with no special characters or numbers allowed, and ensuring that the two lowercase and two uppercase letters are not consecutive, you can use the following regex:\n\n```regex\n^(?=(?:.*[A-Z].*[A-Z])|(?:.*[A-Z][^A-Z]*[A-Z]))(?=(?:.*[a-z].*[a-z])|(?:.*[a-z][^a-z]*[a-z]))[A-Za-z]+$\n```\n\n### Explanation:\n- `^` and `$`: Assert the start and end of the string, respectively.\n- `(?=...)`: Positive lookahead to assert that the string contains the patterns specified inside.\n  - `(?:.*[A-Z].*[A-Z])|(?:.*[A-Z][^A-Z]*[A-Z])`: This part ensures there are at least two uppercase letters, with the second option ensuring they are not consecutive.\n  - `(?:.*[a-z].*[a-z])|(?:.*[a-z][^a-z]*[a-z])`: This part ensures there are at least two lowercase letters, with the second option ensuring they are not consecutive.\n- `[A-Za-z]+`: Matches one or more uppercase or lowercase letters, ensuring no special characters or numbers are present.\n\nThis regex ensures the password meets the specified criteria while maintaining the order and separation of uppercase and lowercase letters."
+    }
+]
