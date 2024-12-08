@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Develop a strategy to solve the problem at hand using the provided tools. For each step, indicate which external tool along with its input would be used to gather evidence. Store this evidence into a variable #E[index] that can be referred to later.\n\nAvailable tools:\nFactFinder[input]: Tool that enables the user to retrieve factual information about people, places, companies, historical events, etc. It uses a database of facts instead of searching the entire internet. The input should be a specific fact-related query.\nAskMe[input]: A tool that can answer questions either directly from common sense and general world knowledge, as well as answering questions given input context that may contain the answer.\n\nEach plan should be followed by exactly one evidence (#E[index]) value.\n\nOutput format:\nPlan: [first action to take based on input question]\n#E1 = [function to call with input parameter]\nPlan: [next action to take, based on result of #E1]\n#E2 = [next function to call and input parameter, which may include reference to previous evidence, e.g. \"Given context #E1\"]\n...\nFinal answer: #E[n]\n\nQuestion: Who won the Nobel Prize in Literature in 2019 and what was their most famous work?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: First, I need to find out who won the Nobel Prize in Literature in 2019. I can use the FactFinder tool for this since it's a factual query about a specific event.\n#E1 = FactFinder[\"Nobel Prize in Literature 2019 winner\"]\n\nPlan: Now that I have the name of the winner from #E1, I need to find out their most famous work. I can use AskMe for this, providing the winner's name as context.\n#E2 = AskMe[\"Who is the most famous work of \" + #E1]\n\nFinal answer: #E2"
+    }
+]
