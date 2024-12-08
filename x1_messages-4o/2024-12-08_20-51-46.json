@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In the following Python code, there is a sentence \"I want to want to buy a car\" and a function to remove the redundant words. However, the current implementation is not efficient. Can you provide a more optimized solution that can handle large inputs? Please consider using specific Python libraries or algorithms to achieve this."
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! To remove redundant words efficiently from a sentence, especially when dealing with large inputs, you can use Python's `collections.OrderedDict` to maintain the order of words while removing duplicates. This approach is optimized for both speed and memory usage when handling large datasets. Here\u2019s how you can do it:\n\n```python\nfrom collections import OrderedDict\n\ndef remove_redundant_words(sentence):\n    # Split the sentence into words\n    words = sentence.split()\n    \n    # Use OrderedDict to remove duplicates while preserving order\n    unique_words = list(OrderedDict.fromkeys(words))\n    \n    # Join the unique words back into a sentence\n    result = ' '.join(unique_words)\n    \n    return result\n\n# Example usage\nsentence = \"I want to want to buy a car\"\noptimized_sentence = remove_redundant_words(sentence)\nprint(optimized_sentence)  # Output: \"I want to buy a car\"\n```\n\n### Explanation:\n\n- **OrderedDict**: This data structure retains the order of the keys as they are added. By converting the list of words into an `OrderedDict`, we can efficiently remove duplicates while preserving the word order.\n\n- **Efficiency**: The transformation to an `OrderedDict` is done in O(n) time complexity, where n is the number of words, making it suitable for large inputs.\n\nThis method should handle large inputs efficiently while maintaining the original order of words in the sentence."
+    }
+]
