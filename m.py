@@ -1,4 +1,4 @@
-from openai import OpenAI
+from openai import AzureOpenAI
 from datasets import load_dataset
 import datetime
 import os
@@ -17,9 +17,9 @@ print("Loaded dataset.")
 
 
 
-client = OpenAI(
-    base_url="http://localhost:8000/v1",
-    api_key="slxDev@69750009",
+client = AzureOpenAI(
+    base_url="https://deepnight-ai.openai.azure.com/",
+    api_key="6b8028d8573f4bc1aa63e5f28801d3c0",
     timeout=10000
 )
 
