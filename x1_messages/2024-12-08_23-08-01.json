@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Generate a step-by-step execution plan to solve the user's query using the following tools. Each plan should correspond to an evidence value (#E[index]).\n\nTools:\nDuckDuckGo[input]: Allows users to search for information via DuckDuckGo. Finds websites that might have the answer.\nWebParser[input]: Loads websites from an input string (newline delimited links) and outputs the content in plain text.\nURLExtractor[input]: Extracts URLs from plain text and provides a newline-delimited list of links.\nAIQA[input]: AI-based question answering system. Can answer questions given context from prior evidence variables.\n\nOutput Format:\nPlan: [First action]\n#E1 = [Function call with input]\nPlan: [Next action]\n#E2 = [Next function call with input, possibly referencing #E1]\n...\nFinal Answer: #E[n]\n\nQuestion: Who invented the Python programming language and what were his motivations?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for information about who invented the Python programming language.\n#E1 = DuckDuckGo[Python programming language inventor]\n\nPlan: Parse the search results to extract relevant information.\n#E2 = WebParser[#E1]\n\nPlan: Use the extracted information to answer who invented Python.\n#E3 = AIQA[Who invented the Python programming language? Given context: #E2]\n\nPlan: Now, find out the motivations behind creating Python.\n#E4 = AIQA[What were the motivations behind creating Python? Given context: #E2]\n\nPlan: If needed, extract specific URLs from the initial search for deeper research.\n#E5 = URLExtractor[#E1]\n\nPlan: Load additional information from these URLs if necessary.\n#E6 = WebParser[#E5]\n\nPlan: Use the additional information to refine the answer about motivations.\n#E7 = AIQA[What were the motivations behind creating Python? Given context: #E6]\n\nFinal Answer: Combining the information from #E3 and #E7 to provide a comprehensive answer about who invented Python and their motivations."
+    }
+]
