@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a step-by-step plan to generate an ideal response to the user instruction, using a set of available tools. Each plan will have a corresponding evidence value, which will be the output of one of the available functions given an input string that can be the user question, one or more previous evidence values, or a mixture of both.\n\nHere are the tools available to be called:\nGoogleMaps[input]: Tool that allows the user to search for geographical information and location-based data.\nWikiSearch[input]: A tool that searches Wikipedia for relevant articles based on the input query.\nLinkExtractor[input]: Extracts links from plain text and produces a plain text, newline delimited response of links.\nWebScraper[input]: Load one or more websites from the input string containing newline delimited links, where input is one or more links, and produces plain text output containing the content of the links.\nAIQA[input]: An artificial intelligence tool that answers questions either directly from common sense and general world knowledge, as well as answering questions given input context that may contain the answer.\n\nThe output should be in format:\nPlan: [first action to take based in input question]\n#E1 = [function to call with input parameter]\nPlan: [next action to take, based on result of #E1]\n#E2 = [next function to call and input parameter, which may include reference to previous evidence, e.g. \"Given context #E1\"]\n...\nFinal answer: #E[n]\n\nQuestion: What is the population density of the capital city of Japan?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: First, I need to identify the capital city of Japan. I can use WikiSearch for this purpose.\n#E1 = WikiSearch[\"capital city of Japan\"]\n\nPlan: Once I have the name of the capital city, I can use GoogleMaps to find its population density.\n#E2 = GoogleMaps[\"population density of \" + #E1]\n\nFinal answer: #E2"
+    }
+]
