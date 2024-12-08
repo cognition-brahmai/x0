@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a plan to answer the following question using the available tools. Each step of your plan should be associated with an evidence variable that stores the output from one of the functions. \n\nHere are the tools you can use:\nSearchEngine[input]: This tool allows you to search for information on the internet. The input is a query string, and the output is a list of web pages that may contain the answer.\nWebScraper[input]: This tool extracts text content from a given URL. It takes as input a URL and returns the plain text content of the page.\nLinkExtractor[input]: This tool extracts all URLs from a given piece of text. The input is a block of text, and the output is a list of URLs found in that text.\nAnswerBot[input]: This tool answers questions based on a provided context. The input is a question and a context (the latter being optional), and the output is the answer to the question.\n\nThe output format should be:\nPlan: [description of the first action]\n#E1 = [function call with input parameter]\nPlan: [description of the next action, based on #E1]\n#E2 = [next function call with input parameter, which might reference #E1]\n...\nFinal Answer: #En\n\nQuestion: Who won the Nobel Prize in Literature in 2010 and what is their most famous work?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for who won the Nobel Prize in Literature in 2010.\n#E1 = SearchEngine[\"Nobel Prize in Literature 2010 winner\"]\n\nPlan: Extract the name of the laureate from the search results.\n#E2 = AnswerBot[\"Who won the Nobel Prize in Literature in 2010?\", context=#E1]\n\nPlan: Now, find out the most famous work of this laureate.\n#E3 = SearchEngine[#E2 + \" most famous work\"]\n\nPlan: Extract the title of the most famous work from the search results.\n#E4 = AnswerBot[\"What is the most famous work by \" + #E2 + \"?\", context=#E3]\n\nFinal Answer: #E4"
+    }
+]
