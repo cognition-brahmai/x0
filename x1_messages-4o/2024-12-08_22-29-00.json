@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In addition to replacing \"quick\" with \"fast\" and \"lazy\" with \"inactive\" in the given paragraph, can you provide Ruby code to replace all occurrences of these words in a larger text corpus? Additionally, can the code be modified to only replace the words if they appear as whole words and not as part of another word (e.g., \"quickly\")?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! To achieve this, you can use Ruby's regular expression capabilities to replace whole words. Here's a Ruby script that replaces \"quick\" with \"fast\" and \"lazy\" with \"inactive\" only when they appear as whole words:\n\n```ruby\ndef replace_words(text)\n  # Define a hash with the words to replace and their replacements\n  replacements = {\n    'quick' => 'fast',\n    'lazy' => 'inactive'\n  }\n  \n  # Use gsub with a regular expression to replace whole words\n  replacements.each do |old_word, new_word|\n    # \\b ensures that we match whole words only\n    text.gsub!(/\\b#{old_word}\\b/, new_word)\n  end\n  \n  text\nend\n\n# Example usage\nparagraph = \"The quick brown fox jumps over the lazy dog. He quickly realized that the laziness was contagious.\"\nupdated_paragraph = replace_words(paragraph)\nputs updated_paragraph\n```\n\n### Explanation:\n\n- **Hash for Replacements**: A hash is used to store pairs of old words and their replacements.\n- **Regular Expression**: `\\b` is a word boundary anchor in regular expressions, which ensures that the word is matched as a whole word. This prevents partial matches, like \"quickly\" or \"laziness\".\n- **`gsub!` Method**: This method is used to perform the substitution in place on the string.\n\nWhen you run this script, it will replace \"quick\" with \"fast\" and \"lazy\" with \"inactive\" only when they appear as standalone words."
+    }
+]
