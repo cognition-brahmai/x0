@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Design a step-by-step plan to answer the following user query using the tools provided. Each tool can be invoked with an input string and provides an output that can be stored in a variable #E[index]. Subsequent tools can reference these variables.\n\nHere are the tools available:\nDuckDuckGo[input]: A tool that uses the DuckDuckGo search engine to find potential sources of information.\nURLPicker[input]: This tool extracts URLs from a block of text and returns them as a newline-separated list.\nSiteLoader[input]: This tool loads the content of one or more websites specified by newline-separated URLs.\nInfoExtractor[input]: A question-answering tool that generates answers based on a given context. The input should be a question that refers to a #E[index] variable.\n\nThe output should follow this format:\nPlan: [First action]\n#E1 = [Function to call with input]\nPlan: [Next action based on #E1]\n#E2 = [Next function to call with input, possibly referring to #E1]\n...\nFinal Answer: #E[n]\n\nQuestion: Who was the first woman to win a Nobel Prize and what did she discover?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for information about the first woman to win a Nobel Prize.\n#E1 = DuckDuckGo[\"first woman Nobel Prize winner\"]\n\nPlan: Extract relevant URLs from the search results to find detailed information.\n#E2 = URLPicker[#E1]\n\nPlan: Load the content from the extracted URLs.\n#E3 = SiteLoader[#E2]\n\nPlan: Use the loaded content to find out who the first woman Nobel Prize winner was and what she discovered.\n#E4 = InfoExtractor[\"Who was the first woman to win a Nobel Prize and what did she discover?\" given #E3]\n\nFinal Answer: #E4"
+    }
+]
