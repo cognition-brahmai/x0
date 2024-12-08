@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a sequential plan to solve the following problem. For each step, specify the external tool to be used along with the input parameters. Store the outputs into variables #E[index] that can be referenced later.\n\nAvailable Tools:\nBingSearch[input]: Searches for information using Bing's search engine. \nPDFReader[input]: Reads PDF files from provided URLs and extracts their text content.\nURLFinder[input]: Finds URLs in the provided text.\nKnowledgeBase[input]: Answers questions based on common knowledge and specific context provided as input.\n\nOutput Format:\nPlan: [First action based on input question]\n#E1 = [Function to call with input parameter]\nPlan: [Next action based on #E1]\n#E2 = [Next function to call with input, possibly referencing #E1]\n...\nFinal Answer: #E[n]\n\nQuestion: What are the safety precautions mentioned in the \"XYZ Company Safety Manual\" found online?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Search for the \"XYZ Company Safety Manual\" online.\n\n#E1 = BingSearch[\"XYZ Company Safety Manual PDF\"]\n\nPlan: Find the URL of the PDF from the search results.\n\n#E2 = URLFinder[#E1]\n\nPlan: Read the content of the PDF.\n\n#E3 = PDFReader[#E2]\n\nPlan: Extract safety precautions from the PDF content.\n\n#E4 = KnowledgeBase[\"What are the safety precautions mentioned in this document?\" + #E3]\n\nFinal Answer: #E4"
+    }
+]
