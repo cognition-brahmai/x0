@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to calculate the element-wise average of a numpy ndarray. I have three arrays, a, b, and c, with respective values as follows:\n\n```python\na = np.array([10, 20, 30])\nb = np.array([30, 20, 20])\nc = np.array([50, 20, 40])\n```\nI would like to get the output as:\n\n```python\n[30, 20, 30]\n```\nIs there any built-in function in numpy to accomplish this, without using vectorized sum and then dividing?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! While there isn't a direct built-in function in NumPy that computes the element-wise average of multiple arrays in a single call without using arithmetic operations like summing and dividing, you can achieve this using the `numpy.mean` function along a specific axis after stacking the arrays together. Here's how you can do it:\n\n```python\nimport numpy as np\n\na = np.array([10, 20, 30])\nb = np.array([30, 20, 20])\nc = np.array([50, 20, 40])\n\n# Stack the arrays along a new axis\nstacked_arrays = np.stack((a, b, c))\n\n# Compute the mean along the axis 0 (which is the axis along which you've stacked them)\nelement_wise_average = np.mean(stacked_arrays, axis=0)\n\nprint(element_wise_average)\n```\n\nThis will give you the desired output:\n\n```python\n[30. 20. 30.]\n```\n\nThe `np.stack` function combines the arrays into a single 2D array, and then `np.mean` calculates the mean across the specified axis (axis 0 in this case), resulting in the element-wise average."
+    }
+]
