@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to connect to public S3 buckets using boto3 without supplying credentials, similar to how I used to do it in boto by passing the 'anon=' keyword argument like so: \n\n```python\ns3 = boto.connect_s3(anon=True)\n```\nIs it possible to use boto3 anonymously?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can access public S3 buckets anonymously using boto3. Boto3 does not have a direct equivalent of the `anon=True` parameter from boto, but you can achieve the same result by using a `Session` with no credentials. Here's how you can do it:\n\n```python\nimport boto3\n\n# Create an anonymous S3 client\ns3 = boto3.client('s3', config=boto3.session.Config(signature_version='unsigned'))\n\n# Now you can interact with the public S3 bucket\nbucket_name = 'your-public-bucket-name'\nobject_key = 'path/to/your/object'\n\n# Example: List objects in a bucket\nresponse = s3.list_objects_v2(Bucket=bucket_name)\nfor obj in response.get('Contents', []):\n    print(obj['Key'])\n\n# Example: Download an object\ns3.download_file(bucket_name, object_key, 'local-filename')\n```\n\nIn this example, we create a client with the `signature_version` set to `'unsigned'`, which allows you to interact with public S3 buckets without providing credentials. You can list objects, download files, and perform other actions available on public buckets."
+    }
+]
