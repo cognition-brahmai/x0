@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, when using a Session from the requests library, I seem to have to provide the full URL every time I make a request. This can get a bit tedious when making multiple requests to the same base URL. For example, my code currently looks like this:\n\n```python\nsession = requests.Session()\nsession.get('http://myserver/getstuff')\nsession.get('http://myserver/getstuff2')\n```\n\nIs there a way to define a base URL for the session so I can just provide the endpoint when making a request? I would like to do something like this:\n\n```python\nsession = requests.Session(url_base='http://myserver')\nsession.get('/getstuff')\nsession.get('/getstuff2')\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "The `requests` library in Python doesn't natively support setting a base URL for a session. However, you can easily create a custom wrapper around the `Session` class to achieve this functionality. Here's how you can do it:\n\n```python\nimport requests\n\nclass BaseUrlSession(requests.Session):\n    def __init__(self, base_url=None, *args, **kwargs):\n        super().__init__(*args, **kwargs)\n        self.base_url = base_url\n\n    def request(self, method, url, *args, **kwargs):\n        # Concatenate the base URL and the given URL\n        if self.base_url:\n            url = requests.compat.urljoin(self.base_url, url)\n        return super().request(method, url, *args, **kwargs)\n\n# Usage\nsession = BaseUrlSession(base_url='http://myserver')\nresponse1 = session.get('/getstuff')\nresponse2 = session.get('/getstuff2')\n\nprint(response1.status_code)\nprint(response2.status_code)\n```\n\nIn this custom class `BaseUrlSession`, we override the `request` method to prepend the base URL to the endpoint URL. We use `requests.compat.urljoin` to correctly handle URL joining, making sure the paths are concatenated properly.\n\nNow, you can create a session with a base URL and make requests using just the endpoint paths."
+    }
+]

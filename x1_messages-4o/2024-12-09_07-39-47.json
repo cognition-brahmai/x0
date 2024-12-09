@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I set axes.linewidth in matplotlib without changing the rcParams global dictionary? I tried the following method which raises an error since axes does not have a set_linewidth method:\n```python\naxes_style = {'linewidth':5}\naxes_rect = [0.1, 0.1, 0.9, 0.9]\n\naxes(axes_rect, **axes_style)\n```\nI have been using the following workaround instead:\n```python\nrcParams['axes.linewidth'] = 5 # set the value globally\n\n... # some code\n\nrcdefaults() # restore [global] defaults\n```\nIs there a more straightforward or clean way to set the linewidth, such as setting the x and y axes parameters individually?"
+    },
+    {
+        "role": "assistant",
+        "content": "To set the `linewidth` for the axes in Matplotlib without altering the global `rcParams` dictionary, you can directly use the `set_linewidth` method for each axis object individually. Here's a step-by-step approach to achieving this:\n\n1. Create your plot as usual.\n2. Access the axes object.\n3. Use the `set_linewidth` method for both the x-axis and y-axis.\n\nHere's an example to demonstrate this:\n\n```python\nimport matplotlib.pyplot as plt\n\n# Create a new figure and axis\nfig, ax = plt.subplots()\n\n# Set the linewidth for the axes\nax.spines['top'].set_linewidth(5)\nax.spines['right'].set_linewidth(5)\nax.spines['bottom'].set_linewidth(5)\nax.spines['left'].set_linewidth(5)\n\n# Example plot\nax.plot([0, 1], [0, 1])\n\n# Display the plot\nplt.show()\n```\n\nIn this example, `ax.spines` is used to get the spines of the axes (the lines around the plot). By setting `set_linewidth` for each spine, you can control the linewidth without changing the global `rcParams`. This method is straightforward and doesn't require restoring global defaults afterward."
+    }
+]
