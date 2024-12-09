@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to share the x axes of two subplots in matplotlib after they have been created. I have the following code:\n```python\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nt = np.arange(1000)/100.\nx = np.sin(2*np.pi*10*t)\ny = np.cos(2*np.pi*10*t)\n\nfig = plt.figure()\nax1 = plt.subplot(211)\nplt.plot(t,x)\nax2 = plt.subplot(212)\nplt.plot(t,y)\n\n# some code to share both x axes\n\nplt.show()\n```\nIn the above code, I want to replace the comment with some code that will share both x axes. When I check the figure axis using `fig.get_axes()`, I see some attributes like `_shared_x_axes` and `_shared_y_axes` but I don't know how to use them to share the x axes. Can you guide me on how to do this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To share the x-axes of two subplots in Matplotlib after they have been created, you can use the `sharex` parameter when you create the subplots. However, since your subplots are already created, you can directly manipulate the axes to share the x-axis using their `get_shared_x_axes()` method. Here's how you can do it:\n\n```python\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nt = np.arange(1000) / 100.\nx = np.sin(2 * np.pi * 10 * t)\ny = np.cos(2 * np.pi * 10 * t)\n\nfig = plt.figure()\nax1 = plt.subplot(211)\nplt.plot(t, x)\nax2 = plt.subplot(212)\nplt.plot(t, y)\n\n# Share the x-axis\nax2.get_shared_x_axes().join(ax1, ax2)\n\nplt.show()\n```\n\nIn this code, `ax2.get_shared_x_axes().join(ax1, ax2)` ensures that both `ax1` and `ax2` share the same x-axis. Now, when you zoom or pan the x-axis on one subplot, it will automatically be reflected in the other subplot."
+    }
+]
