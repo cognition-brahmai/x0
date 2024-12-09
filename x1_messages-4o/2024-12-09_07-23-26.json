@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Django Python, I have a datetime object from my Django model that can be at any time of the day, and I need to set the time to 00:00:00. For instance, I have the following code:\n\n```python\nend_date = lastItem.pub_date\n```\n\nThe current end date is set to '2002-01-11 12:34:56'. How can I change the time to '00:00:00'? I've tried using `end_date.hour = '00'` but I get the error \"datetime.datetime' object attribute 'time' is read-only\". How can I solve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To set the time of a `datetime` object to `00:00:00`, you need to create a new `datetime` object with the same date but with the time set to midnight. The `datetime` object is immutable, meaning you cannot change its properties directly, which is why you encountered the error. Here's how you can achieve this:\n\n```python\nfrom datetime import datetime\n\n# Assume end_date is the datetime object you have\nend_date = lastItem.pub_date\n\n# Create a new datetime object with the same date but time set to midnight\nend_date_midnight = datetime.combine(end_date.date(), datetime.min.time())\n\n# Now end_date_midnight will be '2002-01-11 00:00:00'\nprint(end_date_midnight)\n```\n\nIn this code, `end_date.date()` extracts the date part of the original `datetime` object, and `datetime.min.time()` provides a `time` object set to `00:00:00`. The `datetime.combine()` function then combines these to create a new `datetime` object with the desired time set to midnight."
+    }
+]

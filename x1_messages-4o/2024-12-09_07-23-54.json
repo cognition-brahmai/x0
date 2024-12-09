@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm using Python 3 and when I use the `format()` function in my logger statements like `logger.debug('message: {}'.format('test'))`, I get a warning from `pylint` that reads \"logging-format-interpolation (W1202): Use % formatting in logging functions and pass the % parameters as arguments.\" The detailed warning message is: \"Used when a logging statement has a call form of 'logging.(format_string.format(format_args...))'. Such calls should use % formatting instead, but leave interpolation to the logging function by passing the parameters as arguments.\" I'm confused because I thought using `format()` was the preferred way to print out statements in Python 3. Why is this not the case for logger statements and how can I correct this?"
+    },
+    {
+        "role": "assistant",
+        "content": "The warning you're seeing from `pylint` is due to the way logging should be handled in Python to take advantage of the logging module's features, such as deferred string interpolation and performance optimizations.\n\nIn Python's logging module, the recommended practice is to use `%`-style formatting rather than `str.format()` or f-strings. This is because when you use `%`-style formatting, the actual string interpolation is deferred until it is necessary. If the log level is not enabled, then the interpolation is never performed, which can lead to performance improvements, especially in applications with a lot of logging.\n\nHere's how you can modify your logging statements to follow this best practice:\n\nInstead of using:\n```python\nlogger.debug('message: {}'.format('test'))\n```\n\nUse:\n```python\nlogger.debug('message: %s', 'test')\n```\n\nIn the corrected version, the string `'message: %s'` is passed to the logger, and the argument `'test'` is passed separately. The logger will handle the interpolation internally, but only if the message is actually going to be logged.\n\nThis approach is more efficient because it avoids the overhead of string formatting when the log level is such that the message won't be output. This is why `pylint` encourages this pattern for logging."
+    }
+]

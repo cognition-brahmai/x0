@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there a built-in method to use `read_csv` in pandas to read only the first `n` lines of a file without knowing the length of the lines ahead of time? I have a large file that takes a long time to read, and occasionally only want to use the first, say, 20 lines to get a sample of it. I would prefer not to load the entire file and then extract the head of it. If I knew the total number of lines I could do something like `footer_lines = total_lines - n` and pass this to the `skipfooter` keyword argument. Currently, I am manually grabbing the first `n` lines with python and StringIO it to pandas as shown below:\n\n```python\nimport pandas as pd\nfrom StringIO import StringIO\n\nn = 20\nwith open('big_file.csv', 'r') as f:\n    head = ''.join(f.readlines(n))\n\ndf = pd.read_csv(StringIO(head))\n```\nIs there a more concise way in pandas to achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, there is a more concise way to read only the first `n` lines of a CSV file using the `pandas` library. You can use the `nrows` parameter in the `read_csv` function, which allows you to specify the number of rows to read from the beginning of the file. This approach is efficient and avoids the need to manually read and manipulate the file contents.\n\nHere's how you can achieve this:\n\n```python\nimport pandas as pd\n\nn = 20\ndf = pd.read_csv('big_file.csv', nrows=n)\n```\n\nBy setting `nrows=n`, `pandas` will only read the first `n` lines of the file, making it a more efficient and straightforward solution for your use case."
+    }
+]
