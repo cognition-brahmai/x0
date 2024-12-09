@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a pandas dataframe in Python with many columns, some of which have identical values in all rows. How can I drop these columns, such as \"value\", \"value2\", \"value3\" etc. up to \"value200\", using one or a few commands? The dataframe looks like this:\n\n```\n  index id   name  value  value2  value3  data1  val5\n    0  345  name1    1      99      23     3      66\n    1   12  name2    1      99      23     2      66\n    5    2  name6    1      99      23     7      66\n```\n\nI want my output to look like this:\n\n```\n   index    id  name   data1\n       0   345  name1    3\n       1    12  name2    2\n       5     2  name6    7\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To remove columns from a pandas DataFrame where all the values are identical, you can use the `nunique()` function to determine the number of unique values in each column. If a column has only one unique value, it can be dropped. Here\u2019s how you can achieve this:\n\n```python\nimport pandas as pd\n\n# Sample DataFrame\ndata = {\n    'index': [0, 1, 5],\n    'id': [345, 12, 2],\n    'name': ['name1', 'name2', 'name6'],\n    'value': [1, 1, 1],\n    'value2': [99, 99, 99],\n    'value3': [23, 23, 23],\n    'data1': [3, 2, 7],\n    'val5': [66, 66, 66]\n}\n\ndf = pd.DataFrame(data)\n\n# Drop columns with the same value in all rows\ndf_filtered = df.loc[:, df.nunique() > 1]\n\nprint(df_filtered)\n```\n\nThis code will output:\n\n```\n   index   id   name  data1\n0      0  345  name1      3\n1      1   12  name2      2\n2      5    2  name6      7\n```\n\nExplanation:\n- `df.nunique()` returns a Series with the count of unique values for each column.\n- `df.nunique() > 1` returns a boolean Series, where `True` indicates that the column has more than one unique value.\n- `df.loc[:, df.nunique() > 1]` filters the DataFrame to only include columns with more than one unique value."
+    }
+]
