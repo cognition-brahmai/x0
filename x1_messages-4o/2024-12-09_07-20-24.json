@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am currently coding Neural Network models on Google Colab and the training sessions take quite a bit of time to run. Is there a way to set up an audio notification for when a cell has finished running? I already know that the Tab Icon changes color to indicate this - it's grey when busy and turns yellow when done - but I haven't found any information on how to set up audio notifications."
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! You can set up audio notifications in Google Colab by using the `IPython.display.Audio` module to play a sound once a cell finishes running. Here's how you can do it:\n\n1. First, you need to have an audio file that you want to play as a notification. You can either upload a local file to your Colab session or use a URL of an audio file.\n\n2. Use the following code snippet to play the audio file once your cell execution is complete:\n\n```python\nfrom IPython.display import Audio, display\nimport time\n\n# Function to play audio notification\ndef play_sound():\n    sound_file = 'path/to/your/soundfile.mp3'  # Specify the path to your audio file\n    display(Audio(filename=sound_file, autoplay=True))\n\n# Example of a long-running task\ndef long_running_task():\n    # Simulating a long task with sleep\n    time.sleep(10)  # Replace this with your actual task code\n    play_sound()\n\n# Run the long-running task\nlong_running_task()\n```\n\n3. If you prefer to use a sound file from a URL, you can modify the `play_sound` function as follows:\n\n```python\ndef play_sound():\n    sound_url = 'https://example.com/soundfile.mp3'  # Replace with your sound file URL\n    display(Audio(url=sound_url, autoplay=True))\n```\n\nThis code will play the specified audio file once the long-running task (or any other code you place before `play_sound()`) is complete. Make sure your browser tab has permission to play audio for this to work correctly.\n\nYou can replace the `time.sleep(10)` with your actual neural network training code to be notified when the training is complete."
+    }
+]
