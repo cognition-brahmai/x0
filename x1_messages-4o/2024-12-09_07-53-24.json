@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to extend the bool type in Python by creating a subclass called BOOL. However, when I attempt to do this, I encounter a TypeError stating that 'bool' is not an acceptable base type. Specifically, the code I'm trying to run is:\n```python\nclass BOOL(bool):\n    print(\"why?\")\n```\nThe traceback I receive is:\n```\nTraceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\nTypeError: Error when calling the metaclass bases\n    type 'bool' is not an acceptable base type\n```\nI am confused by this error as I was under the impression that Python trusts the programmer. Why can't I extend the bool type in Python?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, the `bool` type is one of several built-in types that are immutable and not designed to be subclassed. This is a design choice made by the Python developers to maintain consistency and integrity within the language. The `bool` type is essentially a subclass of `int`, and it has only two instances: `True` and `False`. Allowing subclassing of these fundamental types could lead to unexpected behavior and complications in the language's type system.\n\nIf you want to extend the behavior of `bool` or create a custom boolean-like type, you can instead create a new class that wraps around `bool` and provides additional functionality. Here's an example of how you might do this:\n\n```python\nclass BOOL:\n    def __init__(self, value):\n        if isinstance(value, bool):\n            self.value = value\n        else:\n            raise ValueError(\"Value must be a boolean\")\n\n    def __bool__(self):\n        return self.value\n\n    def __repr__(self):\n        return f'BOOL({self.value})'\n\n    # Add any custom methods or properties here\n    \n# Example usage:\nb = BOOL(True)\nprint(b)          # Output: BOOL(True)\nprint(bool(b))    # Output: True\n```\n\nIn this example, the `BOOL` class encapsulates a `bool` value and provides a way to extend its functionality without directly subclassing `bool`. You can add custom methods and properties to this class as needed."
+    }
+]
