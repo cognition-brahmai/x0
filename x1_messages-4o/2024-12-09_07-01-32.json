@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "What is the pythonic way to split a string before the occurrences of any uppercase letter? For instance, if I have a string 'TheLongAndWindingRoad', I want to split it at every occurrence of an uppercase letter (except the first one) and obtain ['The', 'Long', 'And', 'Winding', 'Road']. Additionally, it should also split single occurrences of uppercase letters. For example, from 'ABC' I would like to obtain ['A', 'B', 'C']."
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve this, you can use the `re` module in Python, which provides support for regular expressions. Specifically, you can use a regular expression to split the string at every uppercase letter, except the first one, and also handle cases where there are consecutive uppercase letters. Here's a pythonic way to do it:\n\n```python\nimport re\n\ndef split_on_uppercase(s):\n    # Use a regular expression to split the string\n    parts = re.findall(r'[A-Z][^A-Z]*', s)\n    return parts\n\n# Example usage\nstring1 = 'TheLongAndWindingRoad'\nresult1 = split_on_uppercase(string1)\nprint(result1)  # Output: ['The', 'Long', 'And', 'Winding', 'Road']\n\nstring2 = 'ABC'\nresult2 = split_on_uppercase(string2)\nprint(result2)  # Output: ['A', 'B', 'C']\n```\n\n### Explanation:\n- `re.findall(r'[A-Z][^A-Z]*', s)`:\n  - `[A-Z]` matches any uppercase letter.\n  - `[^A-Z]*` matches any sequence of characters that are not uppercase letters, following an uppercase letter.\n  - This regular expression effectively captures each segment of the string that starts with an uppercase letter and is followed by zero or more non-uppercase letters.\n  \nThis approach handles both cases: splitting at uppercase letters while keeping them at the start of each segment and handling consecutive uppercase letters by treating each as a separate segment."
+    }
+]
