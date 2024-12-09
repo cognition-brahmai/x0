@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm trying to set a cookie in Python Flask using the following code:\n\n```python\n@app.route('/')\ndef index():\n    res = flask.make_response()\n    res.set_cookie(\"name\", value=\"I am cookie\")\n```\n\nHowever, when I print `res`, it only shows `<Response 0 bytes [200 OK]>` and does not set the cookie. How can I successfully set the cookie in Flask?"
+    },
+    {
+        "role": "assistant",
+        "content": "To set a cookie in Flask, you need to ensure that the response object is properly constructed and returned from the view function. Your current code doesn't return the response object, which is why the cookie isn't being set. Here's how you can modify your code to correctly set a cookie:\n\n```python\nfrom flask import Flask, make_response\n\napp = Flask(__name__)\n\n@app.route('/')\ndef index():\n    # Create a response object\n    res = make_response(\"This is the response body\")\n    \n    # Set the cookie\n    res.set_cookie(\"name\", value=\"I am cookie\")\n    \n    # Return the response object\n    return res\n\nif __name__ == '__main__':\n    app.run(debug=True)\n```\n\n### Key Points:\n\n1. **Create a Response Object**: Use `make_response` to create a response object. You can pass the response body content as an argument to `make_response`.\n\n2. **Set the Cookie**: Use `set_cookie` method on the response object to set your cookie.\n\n3. **Return the Response**: Make sure to return the response object from the view function.\n\nBy following these steps, the cookie should be set correctly, and you will see it when you inspect the headers of the response in your browser's developer tools."
+    }
+]
