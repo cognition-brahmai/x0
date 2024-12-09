@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, I am creating my own class and I want to override the 'in' operator. What function should I define to allow the use of the 'in' operator? For instance, I have the following class:\n```python\nclass MyClass(object):\n    ...\n\nm = MyClass()\n\nif 54 in m:\n    ...\n```\nIn this case, how can I make the 'in' operator work with my custom class?"
+    },
+    {
+        "role": "assistant",
+        "content": "To override the `in` operator in your custom Python class, you need to define the `__contains__` method. This method should return `True` if the item is considered to be in the object, and `False` otherwise. Here is an example of how you can implement this in your `MyClass`:\n\n```python\nclass MyClass(object):\n    def __init__(self, elements):\n        self.elements = elements\n\n    def __contains__(self, item):\n        return item in self.elements\n\n# Example usage\nm = MyClass([54, 23, 45])\n\nif 54 in m:\n    print(\"54 is in m\")\nelse:\n    print(\"54 is not in m\")\n```\n\nIn this example, the `__contains__` method checks if the `item` is present in the `elements` attribute of the class. You can customize the logic inside `__contains__` to suit your needs, allowing the `in` operator to behave as desired for your custom class."
+    }
+]
