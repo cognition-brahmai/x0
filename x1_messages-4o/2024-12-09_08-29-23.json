@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have defined a tensor in Tensorflow with the following code: `x = tf.get_variable(\"x\", [100])`. However, when I try to print the shape of the tensor with `print( tf.shape(x) )`, I get `Tensor(\"Shape:0\", shape=(1,), dtype=int32)`. Why is the output not displaying as `shape=(100)`?"
+    },
+    {
+        "role": "assistant",
+        "content": "The behavior you're observing is due to how TensorFlow works with symbolic tensors. When you create a variable or a tensor in TensorFlow using `tf.get_variable`, you're defining a part of the computational graph that will be executed later, typically within a session. The `tf.shape()` function returns a tensor that represents the shape of `x`, rather than the actual shape value. This is why you see `Tensor(\"Shape:0\", shape=(1,), dtype=int32)` instead of the actual shape `(100,)`.\n\nTo get the actual shape of the tensor, you need to evaluate it within a TensorFlow session. Here's how you can do it:\n\n```python\nimport tensorflow as tf\n\n# Create a variable\nx = tf.get_variable(\"x\", [100])\n\n# Get the shape tensor\nshape_tensor = tf.shape(x)\n\n# Start a session and evaluate the shape\nwith tf.Session() as sess:\n    # Initialize variables\n    sess.run(tf.global_variables_initializer())\n    # Evaluate the shape\n    shape_value = sess.run(shape_tensor)\n    print(shape_value)  # This will print [100]\n```\n\nAlternatively, if you just want to know the static shape of the variable, you can use the `shape` attribute directly without needing a session:\n\n```python\nprint(x.shape)  # This will print (100,)\n```\n\nUsing `x.shape` gives you the static shape information that was specified when the variable was created. It doesn't require a session because it's part of the graph's definition, not part of its runtime execution."
+    }
+]
