@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Can you provide a code that determines if there is a unique solution for a system of linear equations given a matrix?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! To determine if a system of linear equations has a unique solution, you can use the concept of linear algebra. Specifically, you can check if the matrix of coefficients is invertible. A square matrix is invertible if and only if its determinant is non-zero. Here's a Python code snippet that uses NumPy to check for a unique solution by determining if the matrix is invertible:\n\n```python\nimport numpy as np\n\ndef has_unique_solution(matrix):\n    # Convert the list of lists into a NumPy array\n    A = np.array(matrix)\n    \n    # Check if the matrix is square\n    if A.shape[0] != A.shape[1]:\n        return False, \"The matrix is not square, so it cannot have a unique solution.\"\n\n    # Compute the determinant\n    det = np.linalg.det(A)\n    \n    # Check if the determinant is non-zero\n    if det != 0:\n        return True, \"The matrix is invertible, so there is a unique solution.\"\n    else:\n        return False, \"The determinant is zero, so there is no unique solution.\"\n\n# Example usage:\nmatrix = [\n    [2, 1, -1],\n    [-3, -1, 2],\n    [-2, 1, 2]\n]\n\nhas_solution, message = has_unique_solution(matrix)\nprint(message)\n```\n\n### Explanation:\n- The `has_unique_solution` function takes a 2D list (which represents the matrix of coefficients) as input.\n- It checks if the matrix is square because only square matrices can be invertible.\n- It computes the determinant using `np.linalg.det`.\n- If the determinant is non-zero, the matrix is invertible, and there is a unique solution.\n- If the determinant is zero, the matrix is not invertible, and there isn't a unique solution.\n\nYou can replace the `matrix` variable with your matrix of coefficients to check if the corresponding system of linear equations has a unique solution."
+    }
+]
