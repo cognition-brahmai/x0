@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In TensorFlow, when using `Session.run(fetches, feed_dict)`, is the execution of its `fetches` arguments guaranteed to be performed in order? The official documentation seems to be silent on this matter. For example, when executing `sess.run([accuracy, train_op], feed_dict=feed_dict)`, the order of execution is crucial because `train_op` updates parameters that affect `accuracy`. Does TensorFlow guarantee that the operations will be executed in the order they are listed?"
+    },
+    {
+        "role": "assistant",
+        "content": "In TensorFlow, when you use `Session.run(fetches, feed_dict)`, the order of execution for the operations specified in the `fetches` argument is not guaranteed to be sequential as listed. Instead, TensorFlow optimizes the execution based on the dependencies between operations.\n\nIn the example you provided, `sess.run([accuracy, train_op], feed_dict=feed_dict)`, the operations will be executed based on their dependencies. If `accuracy` depends on the results of `train_op` (for instance, if `train_op` updates the model parameters that `accuracy` relies on), TensorFlow will ensure that `train_op` is executed before `accuracy`.\n\nHowever, if there are no dependencies, TensorFlow may execute the operations in parallel or in any order it deems most efficient. \n\nTo ensure a specific order of execution when it is crucial (like ensuring `train_op` happens before evaluating `accuracy`), you can structure your graph with control dependencies or fetch the results in separate `sess.run` calls. For example, you could first run `train_op` and then run `accuracy` in a separate session call:\n\n```python\nsess.run(train_op, feed_dict=feed_dict)\naccuracy_value = sess.run(accuracy, feed_dict=feed_dict)\n```\n\nThis will ensure that the training operation is completed before calculating the accuracy."
+    }
+]
