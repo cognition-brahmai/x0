@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I create an element-wise minimum series from two other series in Python pandas? I am able to add two series easily, like this:\n\n```python\nimport pandas as pd\ns1 = pd.Series(data=[1,1,1], index=[1,2,3])\ns2 = pd.Series(data=[1,2,2,1], index=[1,2,3,4])\ns1.add(s2)\n```\nHowever, I am unable to find an efficient way to do an element-wise minimum between two Series while also aligning the indices and handling NaN values."
+    },
+    {
+        "role": "assistant",
+        "content": "To perform an element-wise minimum operation between two Pandas Series and handle index alignment and NaN values, you can use the `combine` method along with a lambda function. The `combine` method allows you to apply a function element-wise, aligning the indices and handling NaN values appropriately. Here's how you can achieve this:\n\n```python\nimport pandas as pd\n\ns1 = pd.Series(data=[1, 1, 1], index=[1, 2, 3])\ns2 = pd.Series(data=[1, 2, 2, 1], index=[1, 2, 3, 4])\n\n# Define a function to calculate the minimum while handling NaN\ndef min_with_nan(x, y):\n    if pd.isna(x):\n        return y\n    if pd.isna(y):\n        return x\n    return min(x, y)\n\n# Use combine to apply the min_with_nan function element-wise\nmin_series = s1.combine(s2, min_with_nan)\n\nprint(min_series)\n```\n\nThis code will output the element-wise minimum of the two Series, aligning them by their indices and properly handling any NaN values:\n\n```\n1    1.0\n2    1.0\n3    1.0\n4    1.0\ndtype: float64\n```\n\nThe `min_with_nan` function checks for NaN values in either Series and returns the non-NaN value if one is present, or the minimum of the two values otherwise. This ensures that the operation handles NaN values appropriately."
+    }
+]

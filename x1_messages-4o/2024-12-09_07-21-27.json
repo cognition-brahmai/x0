@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a table in my Pyramid app with a class 'User', which includes a boolean attribute 'is_active'. When I create a new user and run a test to check if 'is_active' is True, it returns None. Why is 'is_active' set to None when creating a new row in my SQLAlchemy table?\n\nHere is the code for my table:\n\n```python\nclass User(Base):\n    __tablename__ = 'users'\n    id = Column(Integer, primary_key=True)\n    .....\n    is_active = Column(Boolean, unique=False)\n    def __init__(self, name, raw_password):\n        is_active = True\n```\nAnd here is the code for my test:\n\n```python\ndef test_register_user(self):\n    user = User('user1', '1234')\n    self.sess.add(user)\n    self.sess.flush()\n\n    #print user\n    #self.assertTrue(user.is_active, True)\n    user_db_record = self.sess.query(User).filter_by(name=user.name).first()\n    self.assertEqual(user_db_record.is_active, True)\n```\nFrom my logs, I can see that when we are creating the row, 'is_active' is set to None. Why is this happening?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering is due to the fact that in your `__init__` method, you're not actually setting the instance attribute `self.is_active`. Instead, you're creating a local variable `is_active` which doesn't affect the attribute of the `User` instance. \n\nHere's how you can fix it:\n\nChange the `__init__` method to properly set the `self.is_active` attribute:\n\n```python\ndef __init__(self, name, raw_password):\n    self.name = name\n    self.raw_password = raw_password\n    self.is_active = True\n```\n\nBy using `self.is_active`, you are ensuring that the instance attribute is set, rather than just creating a local variable that's scoped to the `__init__` method. This will ensure that when the `User` instance is created, the `is_active` attribute is set to `True`, and it should no longer be `None` when you check it in your test. \n\nAlso, ensure that other necessary attributes like `name` and `raw_password` are also defined in the class to avoid any potential errors when creating a `User` instance."
+    }
+]
