@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to urlencode a dictionary in Python using urllib.urlencode. However, I am encountering a problem when I have to encode an array. The expected result should be as follows:\n\ncriterias%5B%5D=member&amp;criterias%5B%5D=issue\n#unquoted: criterias[]=member&amp;criterias[]=issue\n\nBut, the output that I am getting is:\n\ncriterias=%5B%27member%27%2C+%27issue%27%5D\n#unquoted: criterias=['member',+'issue']\n\nHere is the code I am using:\n\n```python\nimport urllib\ncriterias = ['member', 'issue']\nparams = {\n    'criterias[]': criterias,\n}\nprint urllib.urlencode(params)\n```\n\nWhen I use cgi.parse_qs to decode a correct query string, I get {'criterias[]': ['member', 'issue']} as a result. However, when I try to encode that result back, I am not getting the expected output. Is there a way to produce the correct result?"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve the desired URL encoding format for array elements in a query string, you can use the `urllib.parse.urlencode` function with the `doseq` parameter. This parameter is specifically designed to handle sequences like lists and tuples, encoding each element separately with the same key. Here's how you can modify your code to get the expected result:\n\n```python\nimport urllib.parse\n\ncriterias = ['member', 'issue']\nparams = {\n    'criterias[]': criterias,\n}\n\n# Use urlencode with doseq=True\nencoded_params = urllib.parse.urlencode(params, doseq=True)\nprint(encoded_params)\n```\n\nOutput:\n```\ncriterias%5B%5D=member&criterias%5B%5D=issue\n```\n\nThis will correctly encode each element of the list with the same key `criterias[]`, resulting in the desired query string format."
+    }
+]
