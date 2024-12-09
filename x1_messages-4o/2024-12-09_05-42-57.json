@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, how can I log an exception with traceback at a warning or info level using the logging framework? I have the following code:\n\n```python\ntry:\n   # Something...\nexcept Exception as excep:\n   logger = logging.getLogger(\"component\")\n   logger.warning(\"something raised an exception: \" + excep)\n   logger.info(\"something raised an exception: \" + excep)\n```\nIn my specific use case, I do not want to log it at the error level because it is not an error."
+    },
+    {
+        "role": "assistant",
+        "content": "To log an exception with its traceback at a warning or info level, you need to include the traceback information in your log message. The `logging` module provides a convenient way to do this using the `exc_info` parameter. When `exc_info=True`, the traceback information is included in the log message.\n\nHere's how you can modify your code to log the exception with traceback at the warning and info levels:\n\n```python\nimport logging\nimport traceback\n\ntry:\n    # Something...\n    raise ValueError(\"An example exception\")  # Example to raise an exception\nexcept Exception as excep:\n    logger = logging.getLogger(\"component\")\n    \n    # Log the warning with traceback\n    logger.warning(\"something raised an exception: %s\", excep, exc_info=True)\n    \n    # Log the info with traceback\n    logger.info(\"something raised an exception: %s\", excep, exc_info=True)\n```\n\n### Explanation:\n- `exc_info=True`: This tells the logger to include the traceback information in the log message.\n- Use `%s` formatting in the log message to safely include the exception message. This is a good practice to avoid any issues with string concatenation, especially when dealing with exceptions.\n\nMake sure you have configured your logger to handle the warning and info levels appropriately, and have set up any handlers you need (e.g., console handler, file handler) to see the output."
+    }
+]
