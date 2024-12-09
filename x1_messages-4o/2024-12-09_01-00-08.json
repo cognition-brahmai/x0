@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I've been trying to find a solution for automatically starting the Python debugger when an error is encountered, such as an IndexError. When I run a script and come across such an error, Python only prints the line, location, and a quick description of the error before exiting. Is there a way to automatically start pdb when an error is encountered? I'm open to adding an extra import statement at the top of the file or a few extra lines of code."
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can automatically start the Python debugger (pdb) when an error occurs by using a custom exception hook. This can be done by overriding the default exception handler with a function that starts pdb. Here's a way to do it:\n\n1. Import the necessary modules.\n2. Define a custom exception hook.\n3. Set it as the new exception hook.\n\nHere's a simple implementation:\n\n```python\nimport sys\nimport pdb\nimport traceback\n\ndef custom_excepthook(type, value, tb):\n    # Print the exception details\n    traceback.print_exception(type, value, tb)\n    print(\"\\nStarting the debugger...\\n\")\n    \n    # Start the debugger at the point where the exception occurred\n    pdb.post_mortem(tb)\n\n# Set the custom exception hook as the default exception handler\nsys.excepthook = custom_excepthook\n\n# Example code that raises an exception\ndef main():\n    lst = [1, 2, 3]\n    # This will raise an IndexError\n    print(lst[5])\n\nif __name__ == \"__main__\":\n    main()\n```\n\n### How It Works:\n- The `custom_excepthook` function is defined to handle exceptions. It first prints the exception details using `traceback.print_exception`.\n- Next, it starts the debugger using `pdb.post_mortem(tb)`, which begins the debugging session at the point where the exception occurred.\n- The `sys.excepthook` is then set to our custom exception handler.\n\nThis setup will allow you to automatically enter the pdb debugger whenever an unhandled exception occurs in your script. You can navigate through the code and inspect variables using the usual pdb commands."
+    }
+]
