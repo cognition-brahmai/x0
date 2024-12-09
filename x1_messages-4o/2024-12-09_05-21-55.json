@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I avoid sharing class data between instances in Python? Currently, my class `a` is structured so that all instances share the same list. The behaviour I am trying to achieve is that each instance of the class has its own unique list. Here is my current code:\n\n```\nclass a:\n    list = []\n\nx = a()\ny = a()\n\nx.list.append(1)\ny.list.append(2)\nx.list.append(3)\ny.list.append(4)\n\nprint(x.list) # I want this to print [1, 3]\nprint(y.list) # I want this to print [2, 4]\n```\n\nHowever, this is the current output:\n\n```\nprint(x.list) # prints [1, 2, 3, 4]\nprint(y.list) # prints [1, 2, 3, 4]\n```\n\nIt's clear they are sharing the data in class `a`. How can I modify my code to get the behavior I desire?"
+    },
+    {
+        "role": "assistant",
+        "content": "To ensure that each instance of your class has its own unique list, you need to define the list as an instance variable rather than a class variable. In Python, class variables are shared across all instances of the class, whereas instance variables are unique to each instance.\n\nHere's how you can modify your code to achieve the desired behavior:\n\n```python\nclass a:\n    def __init__(self):\n        self.list = []\n\nx = a()\ny = a()\n\nx.list.append(1)\ny.list.append(2)\nx.list.append(3)\ny.list.append(4)\n\nprint(x.list)  # This will print [1, 3]\nprint(y.list)  # This will print [2, 4]\n```\n\n### Explanation:\n- By defining `self.list` inside the `__init__` method, you're creating an instance variable. Each time a new instance of the class `a` is created, a new list is created specifically for that instance.\n- With this setup, modifications to `x.list` will not affect `y.list` and vice versa, ensuring that each instance maintains its own separate list."
+    }
+]

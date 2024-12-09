@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I write binary data to stdout in Python 3? I used to write binary data in Python 2.x using the following code:\n\n```python\nimport sys, array\na = array.array('B', range(100))\na.tofile(sys.stdout)\n```\n\nBut when I try this in Python 3, I encounter a 'TypeError: can't write bytes to text stream'. Is there a particular encoding that I should use to solve this issue?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python 3, the `sys.stdout` is a text stream by default, which means it expects strings rather than bytes. To write binary data to stdout, you need to access the underlying binary buffer of stdout. You can do this by using `sys.stdout.buffer`. Here's how you can modify your code to work in Python 3:\n\n```python\nimport sys\nimport array\n\na = array.array('B', range(100))\na.tofile(sys.stdout.buffer)\n```\n\nBy writing to `sys.stdout.buffer`, you can directly write binary data without encountering a `TypeError`. This approach bypasses the text encoding layer and allows you to handle raw bytes."
+    }
+]
