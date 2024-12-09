@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to implement a simple static site using Flask, but I am encountering an issue. When I try to run the site, the browser returns an error message stating \"template not found\", and the shell returned a 404 error. I am getting a \"jinja2.exceptions.TemplateNotFound: template.html\" error in my console. Here is the main python code I am using:\n\n```python\nfrom flask import Flask, render_template\napp = Flask(__name__)\n\n@app.route(\"/\")\ndef template_test():\n    return render_template('template.html', my_string=\"Wheeeee!\", my_list=[0,1,2,3,4,5])\n\nif __name__ == '__main__':\n    app.run(debug=True)\n```\n\nAnd my file structure is as follows:\n\n```bash\nflask_new_practice\n|--template/\n    |--template.html\n|--run.py\n```\n\nWhat could be causing this issue and how can I resolve it?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering is due to a small mistake in the directory structure for the templates. Flask expects templates to be located in a folder named `templates`, not `template`. So, your current directory structure is causing Flask to not find the `template.html` file, resulting in the `TemplateNotFound` error.\n\nTo resolve this issue, you should rename the directory from `template` to `templates`. Here's how your corrected file structure should look:\n\n```bash\nflask_new_practice\n|--templates/\n    |--template.html\n|--run.py\n```\n\nOnce you've renamed the directory, Flask should be able to locate `template.html` when you call `render_template('template.html')` in your code.\n\nAfter making this change, run your Flask application again, and it should work without any errors."
+    }
+]
