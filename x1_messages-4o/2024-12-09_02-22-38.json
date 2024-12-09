@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to send a POST request using Python's requests module, specifically using x-www-form-urlencoded specifications. I expect the request body to send a URL encoded param string. Here's the code I'm using:\n\n```python\ndata = json.dumps({'param1': 'value1', 'param2': 'value2'})\nRequests.post(url, data=data)\n```\n\nBut, on the receiving end, the body of the request appears as a JSON string:\n\n```python\n{\"param1\": \"value1\", \"param2\": \"value2\"}\n```\n\nI was expecting it to send the data in the form of `param1=value1&param2=value2`. How can I get the requests module to send the data in this form?"
+    },
+    {
+        "role": "assistant",
+        "content": "To send data in the `x-www-form-urlencoded` format using Python's `requests` module, you should pass a dictionary directly to the `data` parameter instead of converting it to a JSON string. The `requests` module will automatically encode the data in the `x-www-form-urlencoded` format for you.\n\nHere's how you can modify your code:\n\n```python\nimport requests\n\nurl = 'https://example.com/api'  # Replace with your actual URL\ndata = {'param1': 'value1', 'param2': 'value2'}\n\nresponse = requests.post(url, data=data)\n\nprint(response.text)  # This will print the response from the server\n```\n\nBy passing a dictionary to the `data` parameter, `requests` will automatically encode it as `param1=value1&param2=value2`, which is the format you're expecting. Make sure you replace `'https://example.com/api'` with the actual URL you are trying to send the request to."
+    }
+]
