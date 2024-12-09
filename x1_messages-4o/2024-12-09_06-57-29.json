@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I make a part of a matplotlib title bold and a different color? For instance, I have a title like this:\n\n```python\nplt.title(\"This is title number: \" + str(number))\n```\n\nI want to make the `str(number)` part bold. How can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To make part of a `matplotlib` title bold and a different color, you can use the `set_text` method with HTML-like syntax supported by `matplotlib`. Here's how you can achieve this:\n\n```python\nimport matplotlib.pyplot as plt\n\n# Your number\nnumber = 42\n\n# Create a plot\nplt.plot([1, 2, 3], [4, 5, 6])\n\n# Use HTML-like syntax to format the title\ntitle_text = \"This is title number: \" + r\"$\\bf{\" + str(number) + \"}$\"\nplt.title(title_text, fontsize=12, color='black')\n\n# Alternatively, you can use the Text object to further customize parts of the title\n# If you want the number to be a different color as well:\ntitle_text = \"This is title number: \" + r\"$\\bf{\" + r\"\\textcolor{red}{\" + str(number) + \"}}$\"\nplt.title(title_text, fontsize=12)\n\n# Show the plot\nplt.show()\n```\n\nIn this example, `$\\bf{...}$` is used to make the text bold, and `\\textcolor{red}{...}` is used to change the text color to red. Note that this method uses `matplotlib`'s support for LaTeX formatting, so you may need to have a LaTeX distribution installed on your system for it to render properly."
+    }
+]
