@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Does matplotlib provide a function to draw diagonal lines in axis coordinates similar to the `axhline` and `axvline` functions? If not, is there a workaround to draw a line of `y = x` on a scatterplot, but without having to grab the axis limits which could shift when more data is added?"
+    },
+    {
+        "role": "assistant",
+        "content": "Matplotlib does not have a direct function specifically for drawing diagonal lines like `axhline` or `axvline`. However, you can achieve this by using the `axline` function, which was introduced in Matplotlib 3.3. This function allows you to draw infinite lines specified by a point and a slope.\n\nIf you want to draw a line with the equation \\( y = x \\) on a scatterplot without manually adjusting for axis limits, you can do so using `axline`. Here's how you can do it:\n\n```python\nimport matplotlib.pyplot as plt\n\nfig, ax = plt.subplots()\n\n# Example scatter data\nax.scatter([1, 2, 3], [2, 3, 4])\n\n# Use axline to draw a line with slope 1 (y = x)\nax.axline((0, 0), slope=1, color='red', linestyle='--')\n\nplt.show()\n```\n\nIn this example, `ax.axline((0, 0), slope=1)` will draw an infinite line with the slope of 1 passing through the origin, which corresponds to the line \\( y = x \\). The line will automatically adjust to the axes limits, so you don't need to worry about manually setting them even if more data is added."
+    }
+]
