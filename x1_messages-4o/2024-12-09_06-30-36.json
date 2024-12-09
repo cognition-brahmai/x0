@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to use the latex computer modern font for labels in my plots using matplotlib. The only way I have found to make matplotlib use the latex font is by entering and exiting the math mode to write the actual string, which is not efficient. I am using the following code:\n\n```python\nimport matplotlib as mpl\nimport matplotlib.pyplot as plt\nimport numpy as np\n\n# use latex for font rendering\nmpl.rcParams['text.usetex'] = True\n\nx = np.linspace(-50,50,100)\ny = np.sin(x)**2/x\nplt.plot(x,y)\n\nplt.xlabel(r'$\\mathrm{xlabel\\;with\\;\\LaTeX\\;font}$')\nplt.ylabel(r'Not a latex font')\nplt.show()\n```\n\nThis results in the x-axis label appearing as I want, but the y-axis label is not in the latex font. How can I ensure all labels are rendered in latex by default, without having to constantly switch in and out of math mode?"
+    },
+    {
+        "role": "assistant",
+        "content": "To ensure that all text in your matplotlib plots is rendered using LaTeX fonts without constantly switching in and out of math mode, you can adjust the `mpl.rcParams` to use LaTeX for all text rendering. Here's how you can modify your code to achieve this:\n\n```python\nimport matplotlib as mpl\nimport matplotlib.pyplot as plt\nimport numpy as np\n\n# Set LaTeX rendering for all text\nmpl.rcParams['text.usetex'] = True\nmpl.rcParams['font.family'] = 'serif'\nmpl.rcParams['font.serif'] = ['Computer Modern Roman']\n\n# Sample data\nx = np.linspace(-50, 50, 100)\ny = np.sin(x)**2 / x\n\n# Plot\nplt.plot(x, y)\n\n# Labels\nplt.xlabel('xlabel with LaTeX font')\nplt.ylabel('ylabel with LaTeX font')\n\n# Show plot\nplt.show()\n```\n\nBy setting `mpl.rcParams['text.usetex'] = True` and specifying the font family to 'serif' and 'Computer Modern Roman', you instruct matplotlib to use LaTeX for all text elements, which will apply the LaTeX Computer Modern font throughout your plot, including axis labels and titles. This eliminates the need to enter and exit math mode manually for each string."
+    }
+]
