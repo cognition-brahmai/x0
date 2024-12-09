@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am currently using psycopg2 in Python to execute INSERT/UPDATE/DELETE statements. The method I am using is as follows:\n\n```python\ndef exec_statement(_cxn, _stmt):\n    try:\n        db_crsr = _cxn.cursor()\n        db_crsr.execute(_stmt)\n        _cxn.commit()\n        db_crsr.close()\n        return True\n    except:\n        return False\n```\n\nHowever, I want to modify this function so that instead of returning a boolean, it returns the number of rows affected by the transaction, or -1 if the operation fails. Is there a way to get the number of rows affected by the `_cxn.commit()` call? For example, for a single INSERT, it would always be 1, and for a DELETE or UPDATE, it would return the number of rows affected by the statement."
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! You can modify your function to return the number of rows affected by using the `rowcount` attribute of the cursor object. This attribute provides the number of rows that were affected by the last `execute()` call. Below is your modified function that returns the number of affected rows or `-1` if an error occurs:\n\n```python\ndef exec_statement(_cxn, _stmt):\n    try:\n        db_crsr = _cxn.cursor()\n        db_crsr.execute(_stmt)\n        affected_rows = db_crsr.rowcount  # Get the number of affected rows\n        _cxn.commit()\n        db_crsr.close()\n        return affected_rows\n    except Exception as e:\n        print(f\"An error occurred: {e}\")  # Optional: print the error for debugging purposes\n        return -1\n```\n\n### Key Points:\n- `db_crsr.rowcount`: This attribute will give you the number of rows affected by the last executed statement (INSERT, UPDATE, DELETE).\n- Exception Handling: It's generally a good idea to log or print the exception message to understand what went wrong, but you can remove the print statement if logging isn't desired.\n\nThis way, your function will return the actual number of rows affected by the operation or `-1` if an exception occurs during the execution."
+    }
+]
