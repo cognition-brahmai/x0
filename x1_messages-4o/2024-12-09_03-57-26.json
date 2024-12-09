@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to add a colorbar to my plot in matplotlib using Python 2.5.4. However, when I run the following code:\n```python\nfrom matplotlib import pylab as pl\nimport numpy as np\n\ndata = np.random.rand(6,6)\nfig = pl.figure(1)\nfig.clf()\nax = fig.add_subplot(1,1,1)\nax.imshow(data, interpolation='nearest', vmin=0.5, vmax=0.99)\npl.colorbar()\n\npl.show()\n```\nI receive the following AttributeError:\n```python\nC:\\temp&gt;python z.py\nTraceback (most recent call last):\n  File \"z.py\", line 10, in &lt;module&gt;\n    pl.colorbar()\n  File \"C:\\Python25\\lib\\site-packages\\matplotlib\\pyplot.py\", line 1369, in colorbar\n    ret = gcf().colorbar(mappable, cax = cax, ax=ax, **kw)\n  File \"C:\\Python25\\lib\\site-packages\\matplotlib\\figure.py\", line 1046, in colorbar\n    cb = cbar.Colorbar(cax, mappable, **kw)\n  File \"C:\\Python25\\lib\\site-packages\\matplotlib\\colorbar.py\", line 622, in __init__\n    mappable.autoscale_None() # Ensure mappable.norm.vmin, vmax\nAttributeError: 'NoneType' object has no attribute 'autoscale_None'\n```\nHow can I correctly add a colorbar to my plot?"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering is due to the fact that `pl.colorbar()` needs a mappable object to be explicitly passed to it, and it looks like it's not picking up the `imshow` object automatically in your version of Python and Matplotlib. \n\nTo fix this, you need to assign the result of the `imshow` call to a variable and then pass that variable to `pl.colorbar()`. Here's how you can modify your code:\n\n```python\nfrom matplotlib import pylab as pl\nimport numpy as np\n\ndata = np.random.rand(6, 6)\nfig = pl.figure(1)\nfig.clf()\nax = fig.add_subplot(1, 1, 1)\n\n# Assign the imshow result to a variable\nim = ax.imshow(data, interpolation='nearest', vmin=0.5, vmax=0.99)\n\n# Pass the imshow result to colorbar\npl.colorbar(im)\n\npl.show()\n```\n\nThis should resolve the `AttributeError` by ensuring that the `colorbar` function receives a valid mappable object."
+    }
+]
