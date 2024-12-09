@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is it possible to require that an argparse argument be one of a few preset values in Python? Currently, I'm manually examining the argument and if it's not one of the allowed values, I'm calling print_help() and exiting. Here's my current implementation:\n\n```python\n...\nparser.add_argument('--val', help='Special testing value')\nargs = parser.parse_args(sys.argv[1:])\nif args.val not in ['a', 'b', 'c']:\n    parser.print_help()\n    sys.exit(1)\n```\nThis approach seems a bit messy. Is there a better way to do this?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can achieve this more elegantly using the `choices` parameter provided by the `argparse` module. The `choices` parameter allows you to specify a list of valid values for an argument, and `argparse` will automatically handle the validation for you. If the provided argument is not one of the choices, `argparse` will display an error message and exit.\n\nHere's how you can modify your code to use the `choices` parameter:\n\n```python\nimport argparse\nimport sys\n\nparser = argparse.ArgumentParser(description='Process some special testing values.')\nparser.add_argument('--val', help='Special testing value', choices=['a', 'b', 'c'])\nargs = parser.parse_args()\n\n# Your logic here\nprint(f\"Selected value: {args.val}\")\n```\n\nWith this change, if a user provides a value for `--val` that is not one of 'a', 'b', or 'c', `argparse` will automatically print an error message and display the help message, similar to what `print_help()` does, and then exit the program. This makes your code cleaner and leverages the built-in functionality of `argparse`."
+    }
+]
