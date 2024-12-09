@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I divide all but the first columns in a DataFrame by the first column in pandas? I have tried using df[['B','C']] / df['A'] and df['A'].div(df[['B', 'C']]) but they are not working as expected. Here's the code I'm using currently:\n\n```python\ndf = pd.DataFrame(np.random.rand(10,3), columns=list('ABC'))\ndf[['B', 'C']] = (df.T.iloc[1:] / df.T.iloc[0]).T\n```\n\nIs there a more efficient or 'pandas' way to do this?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! You can achieve this more efficiently by using Pandas' broadcasting capabilities. Instead of transposing the DataFrame and performing the operation, you can directly divide all columns except the first one by the first column using DataFrame operations. Here's a more 'pandas' way to do it:\n\n```python\nimport pandas as pd\nimport numpy as np\n\n# Create the DataFrame\ndf = pd.DataFrame(np.random.rand(10, 3), columns=list('ABC'))\n\n# Divide all columns except the first by the first column\ndf.iloc[:, 1:] = df.iloc[:, 1:].div(df.iloc[:, 0], axis=0)\n\nprint(df)\n```\n\n### Explanation:\n- `df.iloc[:, 1:]` selects all columns except the first one.\n- `df.iloc[:, 1:].div(df.iloc[:, 0], axis=0)` divides each element in the selected columns by the corresponding element in the first column (`df.iloc[:, 0]`), using broadcasting along the rows (`axis=0`).\n\nThis approach is efficient and leverages Pandas' built-in operations, ensuring a clean and idiomatic solution."
+    }
+]
