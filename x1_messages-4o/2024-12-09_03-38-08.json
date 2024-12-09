@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using nosetests to run my test scripts in Python. However, I have noticed that nosetests is capturing the output of my print statements and I can only see them when a test fails. I want to see the print outputs even when all tests pass. Currently, I am forcing an assertion error to see the output like this:\n\n```python\nclass MyTest(TestCase):\n    def setUp(self):\n        self.debug = False\n\n    def test_0(self):\n        a = .... # construct an instance of something\n        # ... some tests statements\n        print a.dump()\n        if self.debug:\n            eq_(0,1)\n```\n\nThis solution feels hackish and I am looking for a better way to achieve this. Can you help me with a more efficient solution?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! If you want to see the output of your print statements while running tests with `nosetests`, you can use the `-s` or `--nocapture` option when running your tests. This option tells `nosetests` not to capture the standard output and error streams, allowing you to see the print statements as they are executed, regardless of whether a test passes or fails.\n\nHere\u2019s how you can run your tests with `nosetests` and see the print outputs:\n\n```bash\nnosetests -s\n```\n\nor\n\n```bash\nnosetests --nocapture\n```\n\nBy using this option, you won't need to force an assertion error or use any debug flags within your tests to see the output.\n\nAdditionally, if you frequently want to run your tests with this option, you can consider adding it to a configuration file such as `nose.cfg` or `setup.cfg`:\n\n```ini\n[nosetests]\nnocapture=1\n```\n\nThis way, you won\u2019t need to specify the `-s` option every time you run your tests. This should make your testing process more efficient and straightforward."
+    }
+]
