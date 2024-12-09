@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to add legends to each subplot in matplotlib. I have tried using plt.legend but it didn't work. In my code, I have three subplots and I want to add legends \"HHZ 1\", \"HHN\", and \"HHE\" to ax1, ax2, and ax3 respectively. Additionally, when I tried placing the legends at the upper right of each subplot using ax1.legend(\"HHZ 1\",loc=\"upper right\"), ax2.legend(\"HHN\",loc=\"upper right\"), and ax3.legend(\"HHE\",loc=\"upper right\"), each letter of the strings appear on a new line. How can I properly add and position the legends in each subplot?\n\n<pre><code>\nf, (ax1, ax2, ax3) = plt.subplots(3, sharex=True, sharey=True)\nax1.plot(xtr, color='r', label='Blue stars')\nax2.plot(ytr, color='g')\nax3.plot(ztr, color='b')\nax1.set_title('2012/09/15')\nplt.legend([ax1, ax2, ax3],[\"HHZ 1\", \"HHN\", \"HHE\"])\nplt.show()\n</code></pre>"
+    },
+    {
+        "role": "assistant",
+        "content": "To add legends to each subplot in Matplotlib and position them correctly, you need to set the legend for each axis individually after specifying the `label` parameter in the `plot` function for each subplot. Additionally, using `ax.legend()` for each subplot correctly positions and formats the legends. Here's how you can modify your code:\n\n```python\nimport matplotlib.pyplot as plt\n\n# Sample data\nxtr = [0, 1, 2, 3, 4]\nytr = [1, 3, 2, 4, 5]\nztr = [2, 3, 4, 5, 6]\n\n# Create subplots\nf, (ax1, ax2, ax3) = plt.subplots(3, sharex=True, sharey=True)\n\n# Plot data on each subplot and provide a label for the legend\nax1.plot(xtr, color='r', label='HHZ 1')\nax2.plot(ytr, color='g', label='HHN')\nax3.plot(ztr, color='b', label='HHE')\n\n# Set title for the first subplot\nax1.set_title('2012/09/15')\n\n# Add legends to each subplot and specify the location\nax1.legend(loc='upper right')\nax2.legend(loc='upper right')\nax3.legend(loc='upper right')\n\n# Show the plot\nplt.show()\n```\n\nThis code snippet correctly assigns a label to each plot command and places the legend in the upper right corner of each subplot. Each subplot now has its own legend with the specified label."
+    }
+]
