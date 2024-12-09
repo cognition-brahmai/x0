@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I check if I'm currently running my Python code in the Google App Engine SDK? I need to handle some things differently while developing, as compared to when the code is live on Google servers. Is there a quick test or check I can implement to distinguish if I'm in the SDK or live?"
+    },
+    {
+        "role": "assistant",
+        "content": "To determine whether your Python code is running in the Google App Engine development environment (SDK) or in the live production environment on Google servers, you can use environment variables set by Google App Engine. \n\nHere's a straightforward way to check this:\n\n```python\nimport os\n\ndef is_running_on_app_engine():\n    # Check for the 'SERVER_SOFTWARE' environment variable\n    server_software = os.getenv('SERVER_SOFTWARE', '')\n    if server_software.startswith('Development'):\n        # In the App Engine SDK (development)\n        return True\n    else:\n        # In the live production environment\n        return False\n\n# Usage\nif is_running_on_app_engine():\n    print(\"Running in the Google App Engine SDK (development environment).\")\nelse:\n    print(\"Running in the live production environment.\")\n```\n\nHere's how the check works:\n\n- The `SERVER_SOFTWARE` environment variable is set by App Engine. In the development environment (SDK), it usually starts with the string \"Development\". In the production environment, it typically contains a version string starting with \"Google App Engine\".\n\nBy using this check, you can conditionally execute code differently based on whether you're in the development or production environment, allowing you to tailor your application's behavior accordingly."
+    }
+]
