@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Can I pass a dictionary to Django models while creating them? Is there a way to extend it by adding extra parameters like the following:\n\n```python\ndata_dict = {\n    'title' : 'awesome title',\n    'body' : 'great body of text',\n}\nModel.objects.create(data_dict, extra='hello', extra2='world')\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "In Django, you cannot directly pass a dictionary with additional keyword arguments to the `create` method like in your example. However, you can unpack the dictionary and then pass additional keyword arguments separately. Here\u2019s how you can achieve it:\n\n```python\ndata_dict = {\n    'title': 'awesome title',\n    'body': 'great body of text',\n}\n\n# Use the ** syntax to unpack the dictionary\nModel.objects.create(**data_dict, extra='hello', extra2='world')\n```\n\nIn this example, the `**` operator is used to unpack the `data_dict` dictionary into keyword arguments, and then you can add additional keyword arguments (`extra='hello'`, `extra2='world'`) directly in the `create` method call.\n\nMake sure that all fields you are passing (either from the dictionary or as separate arguments) are defined in your Django model. If `extra` and `extra2` are not fields in your model, you\u2019ll need to handle them separately or store them in a way that fits your model design."
+    }
+]
