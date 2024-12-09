@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "What is the best practice for setting the default value of a parameter that is supposed to be a list in Python? I have a Python function that takes a list as a parameter. I tried setting the parameter's default value to an empty list like this:\n\n```python\ndef func(items=[]):\n    print(items)\n```\n\nHowever, Pylint would warn me that it's a \"Dangerous default value [] as argument\". What should I do?"
+    },
+    {
+        "role": "assistant",
+        "content": "The warning from Pylint is due to the fact that using a mutable default value such as a list (or a dictionary) can lead to unexpected behavior. This is because default parameter values are evaluated only once when the function is defined, not each time the function is called. As a result, if you modify the list (or dictionary) within the function, the default value will be modified as well, and this change will persist across subsequent calls to the function.\n\nA common best practice to avoid this issue is to use `None` as the default value and then check for it within the function to assign a new list. Here's how you can do it:\n\n```python\ndef func(items=None):\n    if items is None:\n        items = []\n    print(items)\n```\n\nBy using `None` as the default value, you ensure that a new list is created each time the function is called without an argument, thus avoiding the pitfalls associated with mutable default arguments."
+    }
+]
