@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using seaborn primarily for its distplot function. However, upon importing seaborn, I've noticed that it changes the default settings of my matplotlib figures automatically. How can I utilize seaborn functions without altering the default appearance of my plots?"
+    },
+    {
+        "role": "assistant",
+        "content": "When you import Seaborn, it automatically adjusts the default settings of Matplotlib to improve the aesthetics of the plots. However, if you want to use Seaborn functions like `distplot` without altering the default appearance of your Matplotlib plots, you can use Seaborn's context management to temporarily change the plot settings.\n\nHere's how you can do it:\n\n1. Use `seaborn.plotting_context()` to temporarily set the context to \"none\" or another desired context for your Seaborn plots.\n2. Use `seaborn.set_style()` to temporarily change the style if needed.\n\nBelow is an example of how you can achieve this:\n\n```python\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n# Preserve the original Matplotlib settings\noriginal_rc = plt.rcParams.copy()\n\n# Use Seaborn context and style temporarily\nwith sns.plotting_context(\"notebook\", rc=original_rc), sns.axes_style(\"whitegrid\"):\n    sns.distplot([1, 2, 2, 2, 3, 4, 5, 5, 5, 5, 6, 7], kde=False)\n\n# Restore the original Matplotlib settings\nplt.rcParams.update(original_rc)\n\n# Now you can plot with Matplotlib using the original settings\nplt.plot([1, 2, 3], [1, 4, 9])\nplt.show()\n```\n\nIn this example, the `sns.plotting_context()` and `sns.axes_style()` are applied only within the `with` block. Outside of this block, the original Matplotlib settings are restored, ensuring that your Matplotlib figures retain their default appearance."
+    }
+]

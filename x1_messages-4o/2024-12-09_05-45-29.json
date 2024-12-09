@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I merge two pandas data frames using two columns? I am using the following code:\n\n```\nnew_df = pd.merge(A_df, B_df,  how='left', left_on='[A_c1,c2]', right_on = '[B_c1,c2]')\n```\n\nBut when I run this, I encounter the following error:\n\n```\npandas/index.pyx in pandas.index.IndexEngine.get_loc (pandas/index.c:4164)()\n\npandas/index.pyx in pandas.index.IndexEngine.get_loc (pandas/index.c:4028)()\n\npandas/src/hashtable_class_helper.pxi in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:13166)()\n\npandas/src/hashtable_class_helper.pxi in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:13120)()\n\nKeyError: '[B_1, c2]'\n```\n\nWhat would be the right way to perform this operation?"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering is due to incorrect syntax for specifying the columns you want to merge on. The `left_on` and `right_on` parameters should be provided with a list of column names, not a string that looks like a list. Here's how you can correctly merge two pandas DataFrames on multiple columns:\n\n```python\nnew_df = pd.merge(A_df, B_df, how='left', left_on=['A_c1', 'c2'], right_on=['B_c1', 'c2'])\n```\n\nMake sure that the lists you provide to `left_on` and `right_on` contain the actual column names from `A_df` and `B_df`. The columns `A_c1` and `c2` should exist in `A_df`, and `B_c1` and `c2` should exist in `B_df`. If the column names are mismatched or do not exist, you will encounter errors such as `KeyError`.\n\nIf the columns are correctly specified and exist in your DataFrames, this code should work without issues."
+    }
+]
