@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I set the 'tight' axis property only to the x-axis in matplotlib? I have a plot where the left and right sides are a waste of space, so I tried setting 'plt.axis('tight')'. However, this makes the ylim too tight for my plot. I know I can manually set the xlim using 'plt.gca().set_xlim(left=-10, right=360)', but I'm looking for a more elegant solution."
+    },
+    {
+        "role": "assistant",
+        "content": "To set the 'tight' axis property only to the x-axis in Matplotlib, you can use the `set_xlim` method in conjunction with the `get_xlim` method to obtain the tight limits for the x-axis, while leaving the y-axis limits unchanged. Here's how you can do it in a more elegant way:\n\n```python\nimport matplotlib.pyplot as plt\n\n# Your plotting code here\n# For example:\nx = range(-20, 400)\ny = [value**2 for value in x]\nplt.plot(x, y)\n\n# Get the current y-limits\ncurrent_ylim = plt.gca().get_ylim()\n\n# Set the x-axis limits to 'tight'\nplt.gca().set_xlim(auto=True)\n\n# Restore the original y-limits\nplt.gca().set_ylim(current_ylim)\n\n# Show plot\nplt.show()\n```\n\nIn this code, `plt.gca().set_xlim(auto=True)` computes the tight limits for the x-axis automatically. By capturing the current y-limits with `get_ylim()` before setting the x-limits and then restoring them with `set_ylim()`, you ensure that only the x-axis is adjusted to be tight, while the y-axis remains with its original limits."
+    }
+]
