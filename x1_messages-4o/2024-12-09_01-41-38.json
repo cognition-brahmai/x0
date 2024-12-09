@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I include and use external Python code from another file in my current file without having to prefix the function name with the file name? For example, if I have a file named `Math.py` with a function called `Calculate`, how can I call this function in another file `Tool.py` like `Calculate(i)` instead of `Math.Calculate(i)`?\n\n```python\n[Math.py]\ndef Calculate ( num )\n```\n\nI want to use it in `Tool.py` as follows:\n\n```python\n[Tool.py]\nusing Math.py\n\nfor i in range ( 5 ) :\n    Calculate ( i )\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To use a function from another file without prefixing it with the file name, you can use the `from ... import ...` syntax in Python. This allows you to import specific functions or classes directly into your current namespace. Here's how you can achieve this:\n\n1. Ensure your `Math.py` file contains the correct function definition.\n2. In your `Tool.py` file, import the `Calculate` function directly using `from Math import Calculate`.\n\nHere's how you can structure your files:\n\n**Math.py**\n```python\ndef Calculate(num):\n    # Your implementation here\n    print(f\"Calculating for {num}\")\n```\n\n**Tool.py**\n```python\nfrom Math import Calculate\n\nfor i in range(5):\n    Calculate(i)\n```\n\nWith this setup, you can call `Calculate(i)` directly in `Tool.py` without needing to prefix it with `Math.`. This is because you've imported the `Calculate` function directly into the namespace of `Tool.py`."
+    }
+]
