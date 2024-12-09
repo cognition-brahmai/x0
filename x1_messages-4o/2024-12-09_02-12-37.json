@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, is it possible to continue executing the remainder of a `try` block after an exception has occurred? For instance, in the following code, is there a way to proceed to `do_smth2()` if there's an exception in `do_smth1` within the same `try` block?\n\n```python\ntry:\n    do_smth1()\n    do_smth2()\nexcept:\n    ??? # magic word to proceed to do_smth2() if there was exception in do_smth1\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, the `try` block is designed to be exited immediately when an exception is raised, so you cannot directly continue executing the remainder of the block after an exception has occurred. However, you can handle this by restructuring your code to separate the operations that might raise exceptions. Here's one way to achieve the behavior you described:\n\n```python\ntry:\n    do_smth1()\nexcept Exception as e:\n    print(f\"Exception occurred in do_smth1: {e}\")\n\n# do_smth2() will be executed regardless of whether an exception occurred in do_smth1\ndo_smth2()\n```\n\nIn this code, `do_smth2()` will still be executed even if `do_smth1()` raises an exception, because `do_smth2()` is not inside the `try` block. If you want to handle exceptions separately for each function, you can use separate `try-except` blocks:\n\n```python\ntry:\n    do_smth1()\nexcept Exception as e:\n    print(f\"Exception occurred in do_smth1: {e}\")\n\ntry:\n    do_smth2()\nexcept Exception as e:\n    print(f\"Exception occurred in do_smth2: {e}\")\n```\n\nThis way, each function call is wrapped in its own `try-except` block, allowing you to handle exceptions for each function individually while ensuring that both functions are attempted."
+    }
+]
