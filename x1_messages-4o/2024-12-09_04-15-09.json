@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to change the text alignment to the center of 2 merged cells using openpyxl. Below is the code I've attempted:\n\n```python\ncurrentCell = ws.cell('A1')\ncurrentCell.style.alignment.horizontal = 'center' #TypeError: cannot set horizontal attribute\n#or\ncurrentCell.style.alignment.vertical = Alignment.HORIZONTAL_CENTER #AttributeError: type object 'Alignment' has no attribute 'HORIZONTAL_CENTER'\n```\nBoth attempts resulted in errors. The first one gives a TypeError saying \"cannot set horizontal attribute\" and the second one gives an AttributeError that says \"type object 'Alignment' has no attribute 'HORIZONTAL_CENTER'\". Is there any other way to align text to the center of merged cells?"
+    },
+    {
+        "role": "assistant",
+        "content": "To center text in merged cells using `openpyxl`, you need to apply the `Alignment` class from `openpyxl.styles` to the cell. Here's how you can achieve this:\n\n1. Import the necessary classes.\n2. Merge the cells.\n3. Apply the `Alignment` with `horizontal='center'` and `vertical='center'` to the desired cell.\n\nHere's an example of how to do it:\n\n```python\nfrom openpyxl import Workbook\nfrom openpyxl.styles import Alignment\n\n# Create a workbook and select the active worksheet\nwb = Workbook()\nws = wb.active\n\n# Merge cells A1 and B1\nws.merge_cells('A1:B1')\n\n# Set the value of the merged cell\nws['A1'] = \"Centered Text\"\n\n# Align the text to the center of the merged cells\ncenter_alignment = Alignment(horizontal='center', vertical='center')\nws['A1'].alignment = center_alignment\n\n# Save the workbook if needed\nwb.save('example.xlsx')\n```\n\nMake sure to use the `Alignment` class and set the `horizontal` and `vertical` attributes to `'center'`. This will properly center the text in the merged cells `A1:B1`."
+    }
+]
