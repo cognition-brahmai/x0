@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a pandas dataframe created as follows:\n\n```python\nimport pandas as pd\ndf = pd.DataFrame({'name': ['jon','sam','jane','bob'],\n                   'age': [30,25,18,26],\n                   'sex':['male','male','female','male']})\n```\nThis gives me a dataframe that looks like this:\n\n```\n   age  name     sex\n0   30   jon    male\n1   25   sam    male\n2   18  jane  female\n3   26   bob   male\n```\n\nNow, I would like to add a new row at the top of the dataframe. The values for the new row are as follows: name: dean, age: 45, sex: male. My desired output is:\n\n```\n   age  name     sex\n0   45  dean    male\n1   30   jon    male\n2   25   sam    male\n3   18  jane  female\n4   26   bob   male\n```\n\nWhat is the most efficient way to accomplish this in pandas?"
+    },
+    {
+        "role": "assistant",
+        "content": "To add a new row at the top of a pandas DataFrame, you can create a new DataFrame with the row you want to add and then concatenate it with the original DataFrame. Here's how you can do it:\n\n```python\nimport pandas as pd\n\n# Original DataFrame\ndf = pd.DataFrame({'name': ['jon','sam','jane','bob'],\n                   'age': [30,25,18,26],\n                   'sex': ['male','male','female','male']})\n\n# New row to be added\nnew_row = pd.DataFrame({'name': ['dean'], 'age': [45], 'sex': ['male']})\n\n# Concatenate the new row with the original DataFrame\ndf = pd.concat([new_row, df], ignore_index=True)\n\n# Display the updated DataFrame\nprint(df)\n```\n\nThis will give you the desired output:\n\n```\n   age  name     sex\n0   45  dean    male\n1   30   jon    male\n2   25   sam    male\n3   18  jane  female\n4   26   bob   male\n```\n\nBy using `pd.concat`, you efficiently add the new row to the top of your DataFrame. The `ignore_index=True` parameter ensures that the index is reset, which is typically desirable when altering the structure of the DataFrame."
+    }
+]
