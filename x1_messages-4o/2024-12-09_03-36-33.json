@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I annotate a heatmap plotted using matplotlib's pcolor function with the actual numbers? To clarify, I want the value corresponding to each cell in the 5x5 matrix passed to pcolor to be displayed in each cell of the plotted heatmap. Here's the code I'm currently using:\n\n```\nplt.pcolor(rand(5,5))\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To annotate a heatmap created with `matplotlib`'s `pcolor` function, you can use the `text` function to add the actual numbers to each cell. Here's how you can modify your code to achieve that:\n\n```python\nimport matplotlib.pyplot as plt\nimport numpy as np\n\n# Generate a random 5x5 matrix\ndata = np.random.rand(5, 5)\n\n# Create the heatmap\nplt.pcolor(data, cmap='viridis', edgecolors='k', linewidths=2)\n\n# Add the value of each cell to the heatmap\nfor i in range(data.shape[0]):\n    for j in range(data.shape[1]):\n        plt.text(j + 0.5, i + 0.5, f'{data[i, j]:.2f}',\n                 horizontalalignment='center',\n                 verticalalignment='center',\n                 color='white' if data[i, j] < 0.5 else 'black')\n\n# Adjust the axes\nplt.gca().invert_yaxis()\nplt.gca().xaxis.tick_top()\n\n# Show color bar\nplt.colorbar()\n\n# Display the plot\nplt.show()\n```\n\n### Explanation:\n- **`np.random.rand(5, 5)`**: Generates a 5x5 matrix with random values between 0 and 1.\n- **`plt.pcolor()`**: Plots the heatmap. The `cmap='viridis'` is a colormap, and `edgecolors='k'`, `linewidths=2` are used to make the grid lines black and visible.\n- **`plt.text()`**: Places the text annotation in each cell. The position `(j + 0.5, i + 0.5)` centers the text inside the cell. The color of the text is adjusted for visibility, depending on the background color.\n- **`plt.gca().invert_yaxis()` and `plt.gca().xaxis.tick_top()`**: Adjust the axes to ensure the heatmap is displayed correctly.\n- **`plt.colorbar()`**: Adds a color bar for reference.\n\nThis code will display the heatmap with the values of the 5x5 matrix annotated in each cell."
+    }
+]
