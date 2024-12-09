@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am attempting to append objects to the end of a list in a loop as shown in the code below:\n\n```python\nlist1 = []\nn = 3\nfor i in range(0, n):\n    list1 = list1.append([i])\n```\nHowever, I encounter an `AttributeError: 'NoneType' object has no attribute 'append'` error. Does this error occur because I am starting with an empty list? How can I solve this issue?"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering is due to the way you're using the `append()` method. In Python, the `append()` method modifies the list in place and returns `None`. Therefore, when you do `list1 = list1.append([i])`, you're effectively setting `list1` to `None` because `append()` returns `None`.\n\nTo fix the issue, you should simply call `append()` without trying to assign its result back to `list1`. Here's the corrected code:\n\n```python\nlist1 = []\nn = 3\nfor i in range(0, n):\n    list1.append([i])\n\nprint(list1)\n```\n\nThis will correctly append each element to `list1`. After the loop, `list1` will contain:\n\n```\n[[0], [1], [2]]\n```\n\nIf you intended to append the integers themselves instead of lists containing integers, you should remove the square brackets:\n\n```python\nlist1 = []\nn = 3\nfor i in range(0, n):\n    list1.append(i)\n\nprint(list1)\n```\n\nThis will result in:\n\n```\n[0, 1, 2]\n```"
+    }
+]
