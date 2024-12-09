@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I yield results from a nested generator function in Python? I have a function which yields results as it downloads them. I yield a string once every second but I want a convenience function to wrap my generator. Here's my code:\n\n```python\nimport time\n\ndef GeneratorFunction(max_val):\n    for i in range(0,5):\n        time.sleep(1)\n        yield \"String %d\"%i\n\ndef SmallGenerator():\n    yield GeneratorFunction(3)\n\nfor s in SmallGenerator():\n    print s\n```\nHowever, instead of printing the 5 strings I'm expecting, it appears to return the generator function:\n\n```python\n<generator object GeneratorFunction at 0x020649B8>\n```\nHow can I modify my code to yield the strings as a normal generator function would?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering is because the `SmallGenerator` function is yielding the generator object returned by `GeneratorFunction`, instead of yielding the individual strings produced by `GeneratorFunction`. To fix this, you need to iterate over the generator produced by `GeneratorFunction` within `SmallGenerator` and yield each item individually. Here's how you can modify your code:\n\n```python\nimport time\n\ndef GeneratorFunction(max_val):\n    for i in range(0, 5):\n        time.sleep(1)\n        yield \"String %d\" % i\n\ndef SmallGenerator():\n    # Iterate over the generator and yield each item\n    for value in GeneratorFunction(3):\n        yield value\n\n# Using the generator in a loop to print each yielded value\nfor s in SmallGenerator():\n    print(s)\n```\n\nWith this modification, `SmallGenerator` will yield each string produced by `GeneratorFunction` one by one, and your loop will print them as expected."
+    }
+]
