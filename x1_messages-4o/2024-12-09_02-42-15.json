@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Django Admin, how can I use a custom widget for only one specific DateTimeField in my model? I have created a custom form widget and want to apply it to this one field only, not all fields of the DateTimeField type as suggested in the Django documentation."
+    },
+    {
+        "role": "assistant",
+        "content": "To use a custom widget for a specific `DateTimeField` in Django Admin, you'll need to create a custom form for your model and specify the widget for that particular field. Here\u2019s how you can do it:\n\n1. **Create a Custom Form:**\n\n   First, create a custom form for your model. You can do this by subclassing `forms.ModelForm` and specifying the widget for your particular `DateTimeField`.\n\n   ```python\n   from django import forms\n   from .models import YourModel\n   from .widgets import YourCustomWidget  # Import your custom widget\n\n   class YourModelForm(forms.ModelForm):\n       class Meta:\n           model = YourModel\n           fields = '__all__'\n           widgets = {\n               'your_datetime_field': YourCustomWidget(),  # Use your custom widget here\n           }\n   ```\n\n   Replace `your_datetime_field` with the actual field name of your `DateTimeField` in the model, and `YourCustomWidget` with the widget class you created.\n\n2. **Integrate the Custom Form with the Admin:**\n\n   Next, tell the Django Admin to use this custom form for your model.\n\n   ```python\n   from django.contrib import admin\n   from .models import YourModel\n   from .forms import YourModelForm\n\n   class YourModelAdmin(admin.ModelAdmin):\n       form = YourModelForm\n\n   admin.site.register(YourModel, YourModelAdmin)\n   ```\n\nBy doing this, your custom widget will only be applied to the specific `DateTimeField` you specified in your model form, and not to all fields of the `DateTimeField` type. This allows you to maintain the default behavior for other fields while customizing only the field you\u2019re interested in."
+    }
+]
