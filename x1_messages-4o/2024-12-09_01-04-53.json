@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I split a list of product codes by the first occurrence of a number? The product codes have a structure where they are made up of letters followed by numbers and other characters. An example list of product codes is: \"abcd2343 abw34324 abc3243-23A\"."
+    },
+    {
+        "role": "assistant",
+        "content": "To split a list of product codes by the first occurrence of a number, you can use a regular expression in Python. Here\u2019s how you can do it:\n\n```python\nimport re\n\ndef split_by_first_number(code):\n    # Use a regular expression to find the first occurrence of a number\n    match = re.search(r'\\d', code)\n    if match:\n        # Split the code at the position of the first number\n        index = match.start()\n        return code[:index], code[index:]\n    return code, ''\n\nproduct_codes = [\"abcd2343\", \"abw34324\", \"abc3243-23A\"]\n\n# Split each product code\nsplit_codes = [split_by_first_number(code) for code in product_codes]\n\n# Print the results\nfor original, (letters, rest) in zip(product_codes, split_codes):\n    print(f\"Original: {original} -> Letters: {letters}, Rest: {rest}\")\n```\n\nThis script will output:\n\n```\nOriginal: abcd2343 -> Letters: abcd, Rest: 2343\nOriginal: abw34324 -> Letters: abw, Rest: 34324\nOriginal: abc3243-23A -> Letters: abc, Rest: 3243-23A\n```\n\nIn this code, the `re.search(r'\\d', code)` function searches for the first occurrence of any digit in the product code. If a digit is found, it splits the string into two parts: the letters before the digit and the rest of the string starting from the digit."
+    }
+]
