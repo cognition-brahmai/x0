@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In SQLAlchemy, what is the best way to intentionally create an empty query? For instance, I have several functions that build up the query by adding WHERE clauses and at certain points, I am aware that the result will be empty. How can I create a query that won't return any rows, similar to Django's QuerySet.none() function?"
+    },
+    {
+        "role": "assistant",
+        "content": "In SQLAlchemy, if you want to create a query that is guaranteed to return no results, similar to Django's `QuerySet.none()`, you can achieve this by using a condition that is always false in the `WHERE` clause. Here's one way to do it:\n\n```python\nfrom sqlalchemy import select, text\n\n# Assuming you have a table object, for example:\n# my_table = Table('my_table', metadata, autoload_with=engine)\n\n# Create an empty query\nempty_query = select(my_table).where(text('1=0'))\n```\n\nThe condition `1=0` is always false, so this query will not return any rows. You can use this `empty_query` as a starting point or return it directly when you need to indicate that no results should be retrieved.\n\nAlternatively, if you're using the ORM, you can achieve the same with a similar approach:\n\n```python\nfrom sqlalchemy.orm import Session\nfrom sqlalchemy import false\n\n# Assuming you have a mapped class, for example:\n# class MyModel(Base):\n#     __tablename__ = 'my_table'\n\n# Create a session\nsession = Session()\n\n# Create an empty query\nempty_query = session.query(MyModel).filter(false())\n```\n\nThe `filter(false())` ensures that the query will not return any results, as the condition is always false. This approach is clean and conveys the intention clearly."
+    }
+]
