@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Django Template, I have noticed that there is a built-in add filter. However, I am not able to find a similar filter for divide operation. Being new to Django, I am unsure if such a filter exists. Can someone advise if there is a divide filter in Django Template?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Django templates, there isn't a built-in divide filter like there is for addition with the `add` filter. However, you can create a custom template filter to perform division.\n\nHere's how you can create a custom divide filter:\n\n1. **Create a `templatetags` directory** in one of your Django apps (if it doesn\u2019t already exist) and add an `__init__.py` file to make it a Python package.\n\n2. **Create a new Python file** within the `templatetags` directory, for example, `math_filters.py`.\n\n3. **Define the custom filter** in `math_filters.py`:\n\n   ```python\n   from django import template\n\n   register = template.Library()\n\n   @register.filter\n   def divide(value, arg):\n       try:\n           return float(value) / float(arg)\n       except (ValueError, ZeroDivisionError):\n           return None\n   ```\n\n4. **Load the custom filter** in your template and use it:\n\n   ```html\n   {% load math_filters %}\n\n   {% with result=value|divide:arg %}\n       The result is: {{ result }}\n   {% endwith %}\n   ```\n\nMake sure that you handle division by zero or invalid values gracefully, as shown in the example above. This custom filter will allow you to perform division in your Django templates just like the built-in filters."
+    }
+]
