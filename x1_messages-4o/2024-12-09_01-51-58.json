@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I make a thick plus sign (or a cross) in Matplotlib? The one provided in the marker set is too thin, and increasing its size only stretches it without making it thicker. For example, in the lines of code drawing the red plus sign:\n\n```python\n# Draw median marker.\nif plot_opts.get('bean_show_median', True):\n    ax.plot(pos, np.median(pos_data),\n            marker=plot_opts.get('bean_median_marker', '+'),\n            color=plot_opts.get('bean_median_color', 'r'))\n```\n\nIf I add an extra parameter `markersize=20`, the marker only stretches. How can I make it thicker?"
+    },
+    {
+        "role": "assistant",
+        "content": "To create a thicker plus sign (or cross) in Matplotlib, you need to use a different approach since the `marker` parameter in `plot` doesn't allow for control over the thickness of the markers. Instead, you can use the `Line2D` class from Matplotlib and manually draw the plus sign with a specified thickness. Here's how you can do it:\n\n```python\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport matplotlib.lines as mlines\n\n# Sample data\npos_data = np.random.rand(10)\npos = 1\n\n# Create a plot\nfig, ax = plt.subplots()\n\n# Draw median marker as a thick plus sign\nmedian_value = np.median(pos_data)\n\n# Define the thickness of the cross\nline_width = 2\n\n# Add horizontal line\nax.add_line(mlines.Line2D([pos - 0.1, pos + 0.1], [median_value, median_value], color='r', linewidth=line_width))\n\n# Add vertical line\nax.add_line(mlines.Line2D([pos, pos], [median_value - 0.1, median_value + 0.1], color='r', linewidth=line_width))\n\n# Plot the rest of your data or other elements here\nax.plot(pos, pos_data, 'o', color='b')  # Example of plotting your data\n\nplt.show()\n```\n\nIn this code, we use `Line2D` to create two line segments: one horizontal and one vertical, forming a plus sign. You can adjust the `line_width` variable to set the thickness of the lines. Adjust the coordinates in the `Line2D` constructor to change the size and position of the plus sign relative to your data point."
+    }
+]
