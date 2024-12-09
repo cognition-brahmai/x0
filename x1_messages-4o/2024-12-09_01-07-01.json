@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I had a misunderstanding that f-strings always invoke the __str__ method and thus, f'{x}' would always be the same as str(x). However, with a class like this:\n```python\nclass Thing(enum.IntEnum):\n    A = 0\n```\nI found out that f'{Thing.A}' is '0' while str(Thing.A) is 'Thing.A'. And this example doesn't work if I use enum.Enum as the base class. Can someone explain what functionality do f-strings invoke?"
+    },
+    {
+        "role": "assistant",
+        "content": "The behavior you're observing with f-strings and the `str()` function in the context of `enum.IntEnum` is indeed interesting. To understand this, let's break it down:\n\n1. **`enum.IntEnum`**: This is a special kind of enumeration where the members are also subclasses of `int`. This means that instances of `IntEnum` can be used anywhere an `int` can be used, and they will behave like integers in those contexts.\n\n2. **`str()` Function**: When you call `str()` on an `enum.IntEnum` member, it uses the `__str__` method defined for the `enum` class. By default, this method returns the member's name, which is why `str(Thing.A)` returns `'Thing.A'`.\n\n3. **f-strings**: When you use an f-string with an `enum.IntEnum`, like `f'{Thing.A}'`, it doesn't directly invoke the `__str__` method. Instead, it checks if the object is a subclass of a built-in type that has a specific string representation, such as `int` in this case. Since `IntEnum` members are also integers, the f-string uses the `int` representation, which is `'0'` for `Thing.A`.\n\n4. **Difference with `enum.Enum`**: When you use a regular `enum.Enum`, the members don't have this dual nature of being both the enumeration and a built-in type like `int`. Therefore, both `str()` and f-strings will use the `__str__` method of the `enum` class, resulting in `'Thing.A'`.\n\nIn summary, the difference arises because `IntEnum` members act like integers, so f-strings output their integer value. This distinction doesn't apply to regular `enum.Enum` members, which do not have an inherent numeric representation."
+    }
+]

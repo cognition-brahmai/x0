@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I use ORDER BY `descending` in a SQLAlchemy query? I have a query that works, but it returns them in ascending order:\n\n```python\nquery = (model.Session.query(model.Entry)\n        .join(model.ClassificationItem)\n        .join(model.EnumerationValue)\n        .filter_by(id=c.row.id)\n        .order_by(model.Entry.amount) #\u00a0This row :)\n        ) \n```\n\nWhen I try to order by descending with `.order_by(desc(model.Entry.amount))`, I receive a `NameError: global name 'desc' is not defined`. How can I fix this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To resolve the `NameError: global name 'desc' is not defined`, you need to ensure that you've imported the `desc` function from SQLAlchemy. The `desc` function is used to specify descending order in SQLAlchemy queries. You can import it from `sqlalchemy` like this:\n\n```python\nfrom sqlalchemy import desc\n```\n\nOnce you've imported `desc`, you can use it in your query to order the results in descending order. Here's how you can modify your query:\n\n```python\nfrom sqlalchemy import desc\n\nquery = (model.Session.query(model.Entry)\n        .join(model.ClassificationItem)\n        .join(model.EnumerationValue)\n        .filter_by(id=c.row.id)\n        .order_by(desc(model.Entry.amount))  # Use desc here\n        )\n```\n\nBy adding `from sqlalchemy import desc` at the beginning of your script, you should be able to use the `desc` function without encountering the `NameError`. This will order the results by `model.Entry.amount` in descending order."
+    }
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a Python code example that I want to share. This code should behave differently depending on whether it is executed in the terminal Python / IPython or in the IPython notebook. How can I check from within my Python code if it's being executed in the IPython notebook?"
+    },
+    {
+        "role": "assistant",
+        "content": "To determine whether your Python code is being executed in an IPython notebook, you can check the environment using the `get_ipython()` function, which is available when running in IPython environments. Here\u2019s a simple way to check if the code is running in an IPython notebook:\n\n```python\ntry:\n    # Check if IPython is available\n    from IPython import get_ipython\n    # Get the IPython instance\n    ipython_instance = get_ipython()\n    # Check if the IPython instance is a ZMQInteractiveShell, which is typical for Jupyter notebooks\n    if 'IPKernelApp' in ipython_instance.config:\n        print(\"Running in an IPython Notebook\")\n    else:\n        print(\"Running in a terminal IPython instance\")\nexcept ImportError:\n    # If IPython is not available, it's a regular Python script execution\n    print(\"Running in a standard Python environment\")\n```\n\nThis code checks if the `IPKernelApp` is present in the configuration, which indicates that the code is running in a Jupyter notebook. If not, it checks for a terminal IPython environment. If the `get_ipython()` function is not available, it assumes that the code is running in a standard Python environment like a terminal or a script."
+    }
+]

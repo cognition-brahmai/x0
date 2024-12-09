@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I escape special HTML characters in Python? For instance, I have a string like this:\n\n```python\nstring = \"\"\" Hello \"XYZ\" this 'is' a test & so on \"\"\"\n```\n\nI want to be able to automatically escape every special character, so that I end up with a string that looks like this:\n\n```python\nstring = \" Hello &quot;XYZ&quot; this &#39;is&#39; a test &amp; so on \"\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To escape special HTML characters in a Python string, you can use the `html` module, which provides a function called `escape` that can be used for this purpose. The `escape` function converts characters like `&`, `\"`, `'`, and others into their corresponding HTML entities.\n\nHere's how you can use it:\n\n```python\nimport html\n\nstring = \"\"\" Hello \"XYZ\" this 'is' a test & so on \"\"\"\nescaped_string = html.escape(string)\n\n# Replace single quotes since html.escape doesn't handle them by default\nescaped_string = escaped_string.replace(\"'\", \"&#39;\")\n\nprint(escaped_string)\n```\n\nThe `html.escape()` function automatically converts `&`, `<`, and `>` characters to `&amp;`, `&lt;`, and `&gt;` respectively. However, it does not convert single quotes to `&#39;` by default, so you need to manually replace them as shown above. The double quotes will be converted to `&quot;` by default."
+    }
+]
