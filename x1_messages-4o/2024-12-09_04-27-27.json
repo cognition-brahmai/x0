@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, specifically CPython, I understand that function definitions are compiled into function objects at parse time. I'm curious about inner functions. Are they also compiled into function objects at parse time or are they compiled or interpreted each time the function is called? Is there any performance penalty associated with using inner functions?"
+    },
+    {
+        "role": "assistant",
+        "content": "In CPython, when you define a function, including inner functions, they are compiled into function objects at parse time. This means that the code for an inner function is compiled when the containing function is defined, not every time the containing function is called. \n\nHowever, the function object for the inner function is created each time the outer function is called. This is because the inner function can capture local variables from the outer function's scope, and these captured variables (also known as \"free variables\") are specific to each call of the outer function. As a result, while the code object for the inner function is created once, the function object itself is recreated on each call to the outer function to ensure the correct environment is captured.\n\nRegarding performance, there is a slight overhead associated with creating the function object each time the outer function is called, but this is typically negligible unless the outer function is called a large number of times in a performance-critical section of code. Inner functions can be quite useful for encapsulating logic and maintaining clean, readable code, and any performance penalty is generally outweighed by these benefits. However, if you are in a situation where performance is critical and the overhead of creating inner function objects is significant, you might consider alternative approaches."
+    }
+]
