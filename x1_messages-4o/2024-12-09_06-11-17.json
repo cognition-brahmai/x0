@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How do I convert a column from data type 'float64' to 'int64' in a pandas dataframe? I tried to use the astype() function as shown below but I encountered an error saying 'NameError: name 'int64' is not defined'. The column contains numbers representing people but they are formatted as '7500000.0'. How can I change this 'float64' data type into 'int64'?\n\n```python\ndf['column name'].astype(int64)\n```\n\nError:\n\n```python\nNameError: name 'int64' is not defined\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering is due to the fact that `int64` should be passed as a string to the `astype()` function, not as a standalone variable. Additionally, you need to ensure that your data can be safely converted from `float64` to `int64` without losing information. Here's how you can convert the column from `float64` to `int64`:\n\n```python\n# Convert the column to 'int64' using the correct syntax\ndf['column name'] = df['column name'].astype('int64')\n```\n\nAlternatively, you can use `numpy` to specify the data type:\n\n```python\nimport numpy as np\n\n# Convert the column to 'int64' using numpy\ndf['column name'] = df['column name'].astype(np.int64)\n```\n\nBoth methods should work correctly and convert your column from `float64` to `int64`. If there are any NaN values in your column, you might encounter errors during the conversion. To handle NaN values, you can fill them with a default value before converting:\n\n```python\n# Fill NaN values with a default value, for example, 0\ndf['column name'] = df['column name'].fillna(0).astype('int64')\n```\n\nEnsure that this conversion makes sense for your data, especially if truncating the decimal part might affect the accuracy or integrity of the data."
+    }
+]

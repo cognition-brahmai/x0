@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I use tqdm in parallel execution with joblib to run a function in parallel and wait until all parallel nodes are completed? For instance, I have the following code which uses joblib to execute a square root operation in parallel. However, I'd also like to include a single progress bar like tqdm to show how many jobs have been completed. How can this be achieved?\n\n```python\nfrom math import sqrt\nfrom joblib import Parallel, delayed\nParallel(n_jobs=2)(delayed(sqrt)(i ** 2) for i in range(10))\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To use `tqdm` with `joblib` for parallel execution while displaying a progress bar, you can utilize `tqdm`'s `tqdm` function to wrap the iterable. This will allow you to track the progress of the jobs being executed. Below is an example of how you can achieve this:\n\n```python\nfrom math import sqrt\nfrom joblib import Parallel, delayed\nfrom tqdm import tqdm\n\n# Define the number of jobs you want to run in parallel\nn_jobs = 2\n\n# Create a list of inputs you want to process\ninputs = range(10)\n\n# Use Parallel and delayed with tqdm to show progress\nresults = Parallel(n_jobs=n_jobs)(\n    delayed(sqrt)(i ** 2) for i in tqdm(inputs, desc=\"Processing\")\n)\n\nprint(results)\n```\n\n### Explanation:\n- `tqdm(inputs, desc=\"Processing\")`: This wraps the `inputs` iterable with `tqdm`, which will display a progress bar with the description \"Processing\".\n- The progress bar will update as each job completes, showing the number of completed tasks out of the total.\n- `Parallel` and `delayed` are used as before to execute the square root operation in parallel.\n\nThis setup will provide you with a visual indication of the progress of your parallel tasks."
+    }
+]
