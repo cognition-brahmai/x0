@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am utilizing iPython/Jupyter Notebook and Pandas to plot multiple graphs using a for loop. Here is the code I'm currently using:\n\n```python\nfrom pandas import *\n%matplotlib inline\n\nys = [[0,1,2,3,4],[4,3,2,1,0]]\nx_ax = [0,1,2,3,4]\n\nfor y_ax in ys:\n    ts = Series(y_ax,index=x_ax)\n    ts.plot(kind='bar', figsize=(15,5))\n```\n\nI expected to see two separate plots as output. However, I'm getting the two series merged in one single plot. Why is this happening and how can I modify my code to produce two separate plots while retaining the use of the for loop?"
+    },
+    {
+        "role": "assistant",
+        "content": "The behavior you're experiencing is due to how Jupyter Notebook handles plotting. By default, Jupyter tries to plot everything on the same figure unless you explicitly specify otherwise. To create separate plots for each series in your loop, you need to call `plt.figure()` at the start of each iteration to create a new figure. Here\u2019s how you can modify your code:\n\n```python\nimport matplotlib.pyplot as plt\nfrom pandas import Series\n\n%matplotlib inline\n\nys = [[0, 1, 2, 3, 4], [4, 3, 2, 1, 0]]\nx_ax = [0, 1, 2, 3, 4]\n\nfor y_ax in ys:\n    plt.figure(figsize=(15, 5))  # Create a new figure for each plot\n    ts = Series(y_ax, index=x_ax)\n    ts.plot(kind='bar')\n    plt.show()  # Display the plot\n```\n\nWith this code, each iteration through your `for` loop will create a new figure, ensuring that each series is plotted separately. The `plt.show()` command is used to display each plot immediately after it is created."
+    }
+]
