@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I chunk a list in Python 3? I have the following code that is compatible with Python 2, but it is not working with Python 3. Here is the code:\n\n```python\nfrom itertools import izip_longest\n\ndef grouper(n, iterable, padvalue=None):\n  \"grouper(3, 'abcdefg', 'x') --> ('a','b','c'), ('d','e','f'), ('g','x','x')\"\n  return izip_longest(*[iter(iterable)]*n, fillvalue=padvalue)\n```\n\nWhen I try to run this in Python 3, I get an ImportError: `ImportError: cannot import name izip_longest`. I would like to convert my list of `[1,2,3,4,5,6,7,8,9]` to `[[1,2,3],[4,5,6],[7,8,9]]`. Could someone help me adapt this code to Python 3?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python 3, the `izip_longest` function has been renamed to `zip_longest`. You can modify your code to work with Python 3 by importing `zip_longest` instead. Here is the updated code:\n\n```python\nfrom itertools import zip_longest\n\ndef grouper(n, iterable, padvalue=None):\n    \"grouper(3, 'abcdefg', 'x') --> ('a','b','c'), ('d','e','f'), ('g','x','x')\"\n    return zip_longest(*[iter(iterable)]*n, fillvalue=padvalue)\n\n# Convert the result to a list of lists\ndata = [1, 2, 3, 4, 5, 6, 7, 8, 9]\nchunked_data = [list(filter(lambda x: x is not None, group)) for group in grouper(3, data)]\nprint(chunked_data)\n```\n\n### Explanation:\n\n- **`zip_longest`**: This function is similar to `izip_longest` from Python 2 and can be found in the `itertools` module. It allows you to zip iterables and fill missing values with a specified value.\n  \n- **`filter(lambda x: x is not None, group)`**: This line is used to remove any `None` values that might be introduced if the length of the iterable is not a multiple of `n`.\n\nThis will output:\n\n```\n[[1, 2, 3], [4, 5, 6], [7, 8, 9]]\n```\n\nThis should work correctly in Python 3 and achieve the desired chunking of your list."
+    }
+]
