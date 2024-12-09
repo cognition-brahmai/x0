@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am writing a module for Salt and according to the documentation, it adds the `__salt__` object into `builtins`. However, when I run `prospector`, `pyflake` warns me that `__salt__` is undefined and `mypy` also reports the same issue. I am aware that I can ignore either `pyflake` with `# noqa: F821` or `mypy` with `# type: ignore` on that particular line. My question is, how can I ignore this for both `pyflake` and `mypy`?"
+    },
+    {
+        "role": "assistant",
+        "content": "To ignore the undefined variable warnings from both `pyflake` and `mypy`, you can use a combination of comments that cater to both tools. Here's how you can do it:\n\n1. Use `# noqa: F821` to ignore the warning from `pyflake`.\n2. Use `# type: ignore` to ignore the warning from `mypy`.\n\nYou can place both of these comments on the same line where `__salt__` is used. Here's an example:\n\n```python\nresult = __salt__['some_function']()  # noqa: F821  # type: ignore\n```\n\nBy adding both comments, you're instructing `pyflake` to ignore the undefined variable warning with `# noqa: F821` and `mypy` to ignore the type checking issue with `# type: ignore`.\n\nThis way, you can suppress warnings from both tools for the specific line where `__salt__` is used."
+    }
+]
