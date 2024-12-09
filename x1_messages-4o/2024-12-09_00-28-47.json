@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I handle specific error codes in Python, for instance, `[Errno 111] Connection refused`? Specifically, I want to capture this error in the socket module and print a custom message."
+    },
+    {
+        "role": "assistant",
+        "content": "To handle specific error codes in Python, such as `[Errno 111] Connection refused`, you can use a `try`...`except` block. The `socket` module raises exceptions of type `socket.error`, which is an alias to `OSError`, and you can capture specific error codes by checking the `errno` attribute of the exception.\n\nHere is an example of how you can handle the `[Errno 111] Connection refused` error:\n\n```python\nimport socket\nimport errno\n\ndef connect_to_server(host, port):\n    try:\n        # Create a socket object\n        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n        # Try to connect to the server\n        sock.connect((host, port))\n    except socket.error as e:\n        # Check if the error is a 'Connection refused' error\n        if e.errno == errno.ECONNREFUSED:\n            print(\"Connection refused: The server might be down or not accepting connections.\")\n        else:\n            # Handle other socket errors\n            print(f\"Socket error: {e}\")\n    else:\n        print(\"Connected successfully!\")\n        # Perform any other operations with the socket\n        sock.close()\n\n# Example usage\nconnect_to_server('localhost', 8080)\n```\n\nIn this example, the `connect_to_server` function attempts to connect to a server using a socket. If a connection attempt raises a `socket.error`, the code checks if the `errno` attribute of the exception is `errno.ECONNREFUSED`, which corresponds to `[Errno 111] Connection refused`. If it matches, a custom message is printed. Otherwise, it handles other socket errors with a generic message."
+    }
+]
