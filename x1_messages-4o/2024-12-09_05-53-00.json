@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working with a dataframe in Python using the Pandas library. The dataframe has 5 columns and thousands of entries. I want to find all the rows where all the values across all columns are NaN. I tried using the following code `nan = pd.isnull(df.all)`, but it just returns false because it is logically implying that not all values in the dataframe are null. How can I find and pull the indices where all of the columns are NaN without having to loop through and check each entry?"
+    },
+    {
+        "role": "assistant",
+        "content": "To find all the rows where all the values across all columns are NaN in a pandas DataFrame, you can use the `isna()` function along with the `all()` function. Here's how you can do it:\n\n```python\nimport pandas as pd\nimport numpy as np\n\n# Sample DataFrame\ndata = {\n    'A': [1, np.nan, 3, np.nan],\n    'B': [4, np.nan, 6, np.nan],\n    'C': [7, np.nan, 9, np.nan],\n    'D': [10, np.nan, 12, np.nan],\n    'E': [13, np.nan, 15, np.nan]\n}\n\ndf = pd.DataFrame(data)\n\n# Find rows where all columns are NaN\nnan_rows = df[df.isna().all(axis=1)]\n\n# Get the indices of these rows\nnan_indices = nan_rows.index.tolist()\n\nprint(\"Indices where all columns are NaN:\", nan_indices)\nprint(\"Rows where all columns are NaN:\\n\", nan_rows)\n```\n\nHere's a breakdown of what the code does:\n\n1. `df.isna()` creates a boolean DataFrame where each entry is `True` if the corresponding entry in `df` is NaN, and `False` otherwise.\n2. `df.isna().all(axis=1)` checks if all values in each row are `True` (i.e., all values are NaN) and returns a Series of boolean values.\n3. `df[df.isna().all(axis=1)]` filters the DataFrame to return only the rows where all values are NaN.\n4. `nan_rows.index.tolist()` extracts the indices of these rows and converts them to a list.\n\nThis code will give you the indices of the rows where all the values across all columns are NaN, as well as the rows themselves."
+    }
+]
