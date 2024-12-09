@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am developing an FTP downloader and I'm facing an issue with the output part of my code. Currently, each time I print the progress of the download, it gets printed on a new line as shown below:\n\n<pre><code>1784  KB / KB 1829 downloaded!\n1788  KB / KB 1829 downloaded!\netc...   \n</code></pre>\n\nThe code I'm using to achieve this is:\n\n<pre><code>ftp.retrbinary(\"RETR \" + file_name, process)\n</code></pre>\n\nAnd I'm calling a function named 'process' to handle the callback:\n\n<pre><code>def process(data):\n    print os.path.getsize(file_name)/1024, 'KB / ', size, 'KB downloaded!'\n    file.write(data)\n</code></pre>\n\nHowever, I want to update the progress on the same line instead of printing it on a new line each time. How can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To update the progress on the same line, you can use carriage return (CR) to move the cursor back to the beginning of the line each time you print the progress. This way, the new output will overwrite the previous output on the same line. Here's how you can modify your `process` function to achieve this:\n\n```python\nimport os\nimport sys\n\ndef process(data):\n    file.write(data)\n    downloaded_size = os.path.getsize(file_name) / 1024\n    sys.stdout.write(f'\\r{downloaded_size} KB / {size} KB downloaded!')\n    sys.stdout.flush()\n```\n\n### Key Points:\n- **`sys.stdout.write()`**: This is used instead of `print` because `print` automatically appends a newline at the end of the output. By using `sys.stdout.write()`, you can control the output more precisely.\n- **`\\r` (Carriage Return)**: It returns the cursor to the beginning of the line, allowing you to overwrite the current line with new output.\n- **`sys.stdout.flush()`**: This ensures that the output buffer is flushed, and the text is immediately output to the screen.\n\nWith these changes, your progress will be updated on the same line, providing a cleaner and more professional-looking output."
+    }
+]
