@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to create a GUI application using Tkinter where I want to close the window by pressing a button labeled \"Good-bye\". However, my current code is not working as expected and the window is not closing upon clicking the button. Can anyone help me to rectify my code? Here is what I have so far:\n\n```python\nfrom Tkinter import *\n\nwindow = Tk()\n\ndef close_window (root): \n    root.destroy()\n\nframe = Frame(window)\nframe.pack()\nbutton = Button (frame, text = \"Good-bye.\", command = close_window)\nbutton.pack()\n\nwindow.mainloop()\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue in your code is related to how you are passing the `root` argument to the `close_window` function. In your current setup, the `close_window` function expects an argument, but you are not providing it in the `command` parameter of the `Button`. To fix this, you need to modify the `command` so that it can call the function without requiring arguments. Here's an updated version of your code:\n\n```python\nfrom tkinter import *  # Note: Use 'tkinter' with lowercase 't' for Python 3\n\ndef close_window():\n    window.destroy()\n\nwindow = Tk()\n\nframe = Frame(window)\nframe.pack()\n\nbutton = Button(frame, text=\"Good-bye\", command=close_window)\nbutton.pack()\n\nwindow.mainloop()\n```\n\n### Key Changes:\n1. **Import Statement**: In Python 3, the package is `tkinter` (lowercase), not `Tkinter`.\n2. **Function Argument**: Removed the `root` parameter from the `close_window` function since it's not necessary. You can directly call `window.destroy()` within that function.\n3. **Command Parameter**: The `command` parameter in the `Button` constructor now correctly calls the `close_window` function without needing any arguments.\n\nThis code should now correctly close the window when the \"Good-bye\" button is clicked."
+    }
+]
