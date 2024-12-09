@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working with Python lists and I am looking to find a way to rotate a list by an arbitrary number of items either to the right or left. The left rotation should be done by using a negative argument. Here are some examples of what I am trying to achieve:\n```\n>>> l = [1,2,3,4]\n>>> l.rotate(0)\n[1,2,3,4]\n>>> l.rotate(1)\n[4,1,2,3]\n>>> l.rotate(-1)\n[2,3,4,1]\n>>> l.rotate(4)\n[1,2,3,4]\n```\nCould you suggest how I might go about doing this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve list rotation in Python, you can define a custom method to rotate the list either to the right or left based on the given argument. Below is a simple way to implement this functionality:\n\n```python\nclass RotatableList(list):\n    def rotate(self, n):\n        # Handle negative rotations and rotations larger than the list length\n        n = n % len(self)\n        return self[-n:] + self[:-n]\n\n# Example usage:\nl = RotatableList([1, 2, 3, 4])\n\nprint(l.rotate(0))   # Output: [1, 2, 3, 4]\nprint(l.rotate(1))   # Output: [4, 1, 2, 3]\nprint(l.rotate(-1))  # Output: [2, 3, 4, 1]\nprint(l.rotate(4))   # Output: [1, 2, 3, 4]\n```\n\n### Explanation:\n1. **Class Definition**: We define a class `RotatableList` that inherits from Python's built-in `list` class.\n2. **Rotate Method**: The `rotate` method takes an integer `n` which determines how many positions the list should be rotated. Positive `n` rotates the list to the right, while negative `n` rotates it to the left.\n3. **Modulo Operation**: We use the modulo operator `%` to handle cases where the rotation value `n` is greater than the length of the list. This helps in wrapping around the indices correctly.\n4. **Slicing the List**: The list is sliced into two parts: the last `n` elements and the rest of the list. These two slices are then concatenated in reverse order to achieve the desired rotation.\n\nThis approach provides a flexible way to rotate lists by any number of steps in either direction."
+    }
+]
