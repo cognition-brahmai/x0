@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I add a new column in a Pandas DataFrame in Python? I have an existing DataFrame like this:\n\n```\nCol1 Col2\nA     1 \nB     2\nC     3\n```\n\nI want to add a third column, 'Col3', whose value is based on 'Col2'. If 'Col2' is greater than 1, 'Col3' should be 0, otherwise it should be 1. So the output I want is:\n\n```\nCol1 Col2 Col3\nA    1    1\nB    2    0\nC    3    0\n```\n\nHow can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "You can achieve this by using the Pandas `apply` method along with a simple lambda function to create a new column 'Col3' based on the values in 'Col2'. Here's how you can do it:\n\n```python\nimport pandas as pd\n\n# Create the existing DataFrame\ndata = {'Col1': ['A', 'B', 'C'],\n        'Col2': [1, 2, 3]}\ndf = pd.DataFrame(data)\n\n# Add the new column 'Col3' based on the condition\ndf['Col3'] = df['Col2'].apply(lambda x: 0 if x > 1 else 1)\n\n# Display the updated DataFrame\nprint(df)\n```\n\nWhen you run this code, it will output the desired DataFrame:\n\n```\n  Col1  Col2  Col3\n0    A     1     1\n1    B     2     0\n2    C     3     0\n```\n\nThis code uses the `apply` method to iterate over each value in 'Col2', applying a lambda function that checks if the value is greater than 1 and assigns a corresponding value to 'Col3'."
+    }
+]

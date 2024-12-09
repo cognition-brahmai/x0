@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a Django model which includes a date time field as shown below:\n\n```python\ndate = models.DateField(_(\"Date\"), default=datetime.now())\n```\n\nHowever, when I check the application in the built-in Django admin, the `DateField` has the time appended to it. This causes an error when I try to save it. How can I set the default to just the date? I tried using `datetime.today()`, but it doesn't seem to work."
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're facing is because you're using `datetime.now()` as the default value for the `DateField`. `datetime.now()` includes both the date and time, which is not directly compatible with `DateField`, which expects only the date.\n\nTo fix this, you should use `datetime.date.today()` instead, which returns only the current date without any time component. Here's how you can modify your model:\n\n```python\nfrom datetime import date\nfrom django.db import models\nfrom django.utils.translation import gettext_lazy as _\n\nclass YourModel(models.Model):\n    date = models.DateField(_(\"Date\"), default=date.today)\n```\n\nNotice that `date.today` is passed without parentheses. This is because you want to pass the function itself as the default value, so that it is called each time a new instance of the model is created, rather than calling it once at the time the class is defined.\n\nThis should resolve the issue you are facing with the `DateField` in the Django admin."
+    }
+]
