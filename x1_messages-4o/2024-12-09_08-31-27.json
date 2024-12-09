@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working on a validator where I have to issue a lot of warnings using `warnings.warn()`. However, I want to suppress everything in stdout except the message that is supplied to `warnings.warn()`. For instance, currently I see this:\n\n```python\n./file.py:123: UserWarning: My looong warning message\nsome Python code\n```\n\nI would prefer to see only the warning message like this:\n\n```python\nMy looong warning message\n```\n\nCould anyone suggest how I can achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve the desired output where only the warning message is displayed, you can customize the format of warnings by modifying the warning's show function. Here's how you can do it:\n\n```python\nimport warnings\n\n# Define a custom function to show warnings\ndef custom_warning_format(message, category, filename, lineno, file=None, line=None):\n    # Only return the message, ignoring all other details\n    return f\"{message}\\n\"\n\n# Set the custom format function as the default warning format\nwarnings.formatwarning = custom_warning_format\n\n# Example usage\nwarnings.warn(\"My looong warning message\", UserWarning)\n```\n\nThis code sets a custom warning format function that only returns the warning message itself, without the file name, line number, or warning category. When you run this, you'll see only the message in the output as desired."
+    }
+]
