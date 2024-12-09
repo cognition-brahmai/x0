@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I add a placeholder attribute to a CharField in Django? I have a simple form like this:\n```python\nclass SearchForm(Form):\n    q = forms.CharField(label='search')\n```\nIt is rendered in the template as:\n```html\n<input type=\"text\" name=\"q\" id=\"id_q\" />\n```\nBut I want to add a placeholder attribute so that the HTML would look like:\n```html\n<input type=\"text\" name=\"q\" id=\"id_q\" placeholder=\"Search\" />\n```\nIdeally, I'd like to pass the placeholder value into the CharField in the form class through a dictionary or something similar:\n```python\nq = forms.CharField(label='search', placeholder='Search')\n```\nWhat is the best way to achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To add a placeholder attribute to a `CharField` in Django forms, you can use the `widget` argument to specify HTML attributes. You can achieve this by using the `attrs` dictionary in the widget. Here's how you can modify your form to include a placeholder:\n\n```python\nfrom django import forms\n\nclass SearchForm(forms.Form):\n    q = forms.CharField(\n        label='search',\n        widget=forms.TextInput(attrs={'placeholder': 'Search'})\n    )\n```\n\nIn this code snippet, the `widget` argument is used with `forms.TextInput` to pass the `attrs` dictionary containing the `placeholder` attribute.\n\nWhen you render this form in a template, the HTML will include the placeholder attribute as desired:\n\n```html\n<input type=\"text\" name=\"q\" id=\"id_q\" placeholder=\"Search\" />\n```\n\nThis is the standard way to add custom HTML attributes to form fields in Django."
+    }
+]
