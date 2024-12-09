@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm encountering a UserWarning when trying to install a PyPI package using the command `python setup.py install`. The warning states \"Unknown distribution option: 'install_requires'\". I'm aware that `install_requires` defines what the package requires and I've seen that many PyPI packages use this option. So, why is it being shown as an \"unknown distribution option\"?"
+    },
+    {
+        "role": "assistant",
+        "content": "The warning you're encountering is typically due to the use of an outdated or non-standard version of `distutils` instead of `setuptools`. The `install_requires` option is indeed a standard feature for specifying dependencies, but it is specific to `setuptools`, not `distutils`.\n\nHere's how you can resolve this issue:\n\n1. **Ensure `setuptools` is being used:**\n   - Make sure you are using `setuptools` in your `setup.py` file. Check the top of your `setup.py` file for the import statement. It should import `setuptools`, not `distutils`. Typically, it should look like this:\n     ```python\n     from setuptools import setup\n     ```\n\n2. **Install or upgrade `setuptools`:**\n   - Ensure `setuptools` is installed and up-to-date. You can do this by running:\n     ```sh\n     pip install --upgrade setuptools\n     ```\n\n3. **Use `pip` for installation:**\n   - Instead of using `python setup.py install`, try using `pip` which is the recommended approach. Run:\n     ```sh\n     pip install .\n     ```\n   - This method ensures that `setuptools` is properly used during the installation process.\n\nBy following these steps, the `install_requires` option should be recognized correctly, and the warning should no longer appear."
+    }
+]
