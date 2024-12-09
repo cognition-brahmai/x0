@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using virtualenvwrapper for managing my virtual environments. I have an environment named 'doors' and I want to rename it to 'django'. What I tried to do was rename the folder `~/.virtualenvs/doors` to `django`. Now, I am able to call `workon django` but the environment still displays as `(doors)hobbes3@hobbes3`. How can I properly rename this environment?"
+    },
+    {
+        "role": "assistant",
+        "content": "To properly rename a virtual environment managed by `virtualenvwrapper`, you need to manually rename the environment's folder and update the environment's prompt. Here\u2019s a step-by-step guide to doing this:\n\n1. **Rename the Environment Folder:**\n   You've already renamed the folder from `doors` to `django`, which is the first step. Just ensure it's correctly named in the `~/.virtualenvs/` directory.\n\n2. **Update the Virtual Environment's Prompt:**\n   The environment prompt is set when the virtual environment is created, and it's stored in the `bin/activate` script of the environment. You need to update this script to reflect the new name.\n\n   - Open the `activate` script in the renamed environment:\n     ```bash\n     nano ~/.virtualenvs/django/bin/activate\n     ```\n\n   - Look for a line that sets the `VIRTUAL_ENV_PROMPT` or directly sets the prompt, which typically looks like:\n     ```bash\n     VIRTUAL_ENV_PROMPT=\"(doors)\"\n     ```\n     or\n     ```bash\n     PS1=\"(doors) \"\n     ```\n\n   - Change `doors` to `django`:\n     ```bash\n     VIRTUAL_ENV_PROMPT=\"(django)\"\n     ```\n     or\n     ```bash\n     PS1=\"(django) \"\n     ```\n\n   - Save the file and exit the editor.\n\n3. **Reactivate the Environment:**\n   Now, deactivate and reactivate the environment to see the changes take effect.\n\n   ```bash\n   deactivate\n   workon django\n   ```\n\nBy following these steps, you should see the environment prompt correctly display as `(django)` when you activate the environment using `workon django`."
+    }
+]
