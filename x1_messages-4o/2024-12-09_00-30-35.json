@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, is there a built-in function that can remove the global left indentation from a multiline string? For example, if I have a string with a 4-space indentation on every line, and possibly more if the string was declared inside a function, is there a function that can return the same string but without the indentation?\n\n<pre><code>s = \"\"\"\n    Controller = require 'controller'\n\n    class foo\n        view: 'baz'\n        class: 'bar'\n\n        constructor: -&gt;\n            Controller.mix @\n\"\"\"\n</code></pre>\n\nI would like the output to be:\n\n<pre><code>Controller = require 'controller'\n\nclass foo\n    view: 'baz'\n    class: 'bar'\n\n    constructor: -&gt;\n        Controller.mix @\"\n</code></pre>"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, in Python, you can use the `textwrap.dedent` function from the `textwrap` module to remove common leading whitespace from each line in a multiline string. This is useful when you have a string with indentation that you want to strip to align it with the left margin.\n\nHere's how you can use `textwrap.dedent` to achieve the desired result:\n\n```python\nimport textwrap\n\ns = \"\"\"\n    Controller = require 'controller'\n\n    class foo\n        view: 'baz'\n        class: 'bar'\n\n        constructor: -&gt;\n            Controller.mix @\n\"\"\"\n\n# Use textwrap.dedent to remove common leading whitespace\ndedented_string = textwrap.dedent(s)\n\nprint(dedented_string)\n```\n\nThis will give you the output:\n\n```\nController = require 'controller'\n\nclass foo\n    view: 'baz'\n    class: 'bar'\n\n    constructor: -&gt;\n        Controller.mix @\n```\n\nThe `textwrap.dedent` function works by removing the minimal amount of indentation from all of the lines in the input string, so that at least one line is not indented. This is especially useful for cleaning up multiline strings that are indented to match the indentation level of the rest of your code."
+    }
+]
