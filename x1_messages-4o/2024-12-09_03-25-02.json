@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Bash, how can I check if a variable is set? More specifically, how can I determine if the user has provided the first parameter to a function?\n\n<pre><code>function a {\n    # How to check if $1 is set?\n}\n</code></pre>"
+    },
+    {
+        "role": "assistant",
+        "content": "In Bash, you can check if a variable is set by using parameter expansion. To specifically check if the first parameter (`$1`) to a function is set, you can use the following approach within your function:\n\n```bash\nfunction a {\n    if [ -z \"$1\" ]; then\n        echo \"First parameter is not set.\"\n    else\n        echo \"First parameter is set to: $1\"\n    fi\n}\n```\n\nHere's a breakdown of how this works:\n\n- `[ -z \"$1\" ]`: This tests whether the length of `$1` is zero, which means it is either unset or set to an empty string.\n- If `$1` is not set, the script will echo \"First parameter is not set.\"\n- If `$1` is set, the script will echo \"First parameter is set to: $1\".\n\nYou can call this function with or without a parameter to see how it behaves:\n\n```bash\na \"Hello\"\n# Output: First parameter is set to: Hello\n\na\n# Output: First parameter is not set.\n```\n\nThis is a simple and effective way to determine if a parameter has been provided to a Bash function."
+    }
+]
