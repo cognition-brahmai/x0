@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Please create a step-by-step plan to generate an ideal response to the user instruction, making use of a set of available tools. \n\nHere are the tools available to be called:\nBingSearch[input]: Tool that allows the user to search for information using Bing's search engine. \nTextAnalyzer[input]: Analyzes a block of text and extracts key phrases and topics.\nQAEngine[input]: Question answering engine, particularly useful in answering questions based on an input passage of text. \n\nThe output should be in format:\nPlan: [first action to take based in input question]\n#E1 = [function to call with input parameter]\nPlan: [next action to take, based on result of #E1]\n#E2 = [next function to call and input parameter, which may include reference to previous evidence]\n...\nFinal answer: #E[n]\n\nQuestion: Who won the Nobel Prize in Literature in 2020 and what was their most famous work?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for who won the Nobel Prize in Literature in 2020.\n\n#E1 = BingSearch[\"Nobel Prize in Literature 2020 winner\"]\n\nPlan: Once we have the winner's name, use another search to find their most famous work.\n\n#E2 = BingSearch[\"{#E1's name} most famous work\"]\n\nPlan: Analyze the search results to extract the key information.\n\n#E3 = TextAnalyzer[#E2]\n\nPlan: Use the QAEngine to summarize and present the information clearly.\n\n#E4 = QAEngine[\"Who is the most famous work of {#E1's name} according to these results? {#E3}\"]\n\nFinal answer: {#E1's name} won the Nobel Prize in Literature in 2020, and their most famous work is {#E4}."
+    }
+]
