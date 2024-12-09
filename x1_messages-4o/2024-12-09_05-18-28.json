@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working with graph theory in Python using the networkx package. I want to add the weights of the edges of my graph to the plot output. Given the following code, how can I modify it to display the edge weights (0.5 and 9.8) on the respective edges in the graph?\n\n```python\nimport networkx as nx\nimport matplotlib.pyplot as plt\n\nG=nx.Graph()\ni=1\nG.add_node(i,pos=(i,i))\nG.add_node(2,pos=(2,2))\nG.add_node(3,pos=(1,0))\nG.add_edge(1,2,weight=0.5)\nG.add_edge(1,3,weight=9.8)\npos=nx.get_node_attributes(G,'pos')\nnx.draw(G,pos)\nplt.savefig(\"path.png\")\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To display the edge weights on the graph plot using the NetworkX and Matplotlib libraries, you can use the `nx.draw_networkx_edge_labels` function. This function allows you to specify the positions of the nodes and the edge labels (weights) to display on the graph. Here's how you can modify your code to achieve that:\n\n```python\nimport networkx as nx\nimport matplotlib.pyplot as plt\n\nG = nx.Graph()\ni = 1\nG.add_node(i, pos=(i, i))\nG.add_node(2, pos=(2, 2))\nG.add_node(3, pos=(1, 0))\nG.add_edge(1, 2, weight=0.5)\nG.add_edge(1, 3, weight=9.8)\n\n# Get the positions of nodes\npos = nx.get_node_attributes(G, 'pos')\n\n# Draw the nodes and edges\nnx.draw(G, pos, with_labels=True)\n\n# Get the weights of the edges\nedge_labels = nx.get_edge_attributes(G, 'weight')\n\n# Draw the edge labels (weights)\nnx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)\n\n# Save the plot\nplt.savefig(\"path.png\")\nplt.show()\n```\n\nIn this modified version of your code:\n- The `nx.draw` function is used to draw the graph with node labels.\n- The `nx.get_edge_attributes` function retrieves the edge weights.\n- The `nx.draw_networkx_edge_labels` function is used to draw the weights on the respective edges, using the positions `pos` and passing `edge_labels` which contains the weights. \n- Finally, `plt.show()` is included to display the plot in case you're running the script interactively."
+    }
+]
