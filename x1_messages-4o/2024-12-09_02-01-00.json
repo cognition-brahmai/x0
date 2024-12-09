@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I cast a char to integer while performing a query in Django ORM? I recently started using Django ORM and I want to execute the following query: \n\n```sql\nselect student_id from students \nwhere student_id like \"%97318%\" \norder by CAST(student_id as UNSIGNED) desc;\n```\n\nHere, `student_id` is a CharField and I want to cast it to integer for the query. I have tried with \n\n```python\nstudents.objects.filter(student_id__contains \"97318\").order('-student_id')\n```\n\nand it works fine. However, I do not know how to cast `student_id` to int, similar to the MySQL query mentioned above, using Django ORM. Should I use raw query or is there a different solution?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Django ORM, you can achieve the equivalent of casting a `CharField` to an integer and ordering by it using the `annotate` and `order_by` features along with `Cast` from `django.db.models.functions`. You can avoid raw SQL queries for this task by using the following approach:\n\nFirst, import the necessary functions:\n\n```python\nfrom django.db.models import IntegerField\nfrom django.db.models.functions import Cast\n```\n\nThen, modify your query to cast `student_id` to an integer and order by it:\n\n```python\nstudents = Students.objects.filter(student_id__contains=\"97318\").annotate(\n    student_id_as_int=Cast('student_id', IntegerField())\n).order_by('-student_id_as_int')\n```\n\nHere's what's happening in this query:\n- `filter(student_id__contains=\"97318\")`: Filters the `Students` queryset for records where `student_id` contains \"97318\".\n- `annotate(student_id_as_int=Cast('student_id', IntegerField()))`: Adds an annotation to the queryset, creating a new field `student_id_as_int` by casting `student_id` to an integer.\n- `order_by('-student_id_as_int')`: Orders the queryset by the newly created integer field in descending order.\n\nThis approach allows you to perform operations similar to SQL's `CAST` within the Django ORM framework without resorting to raw SQL."
+    }
+]

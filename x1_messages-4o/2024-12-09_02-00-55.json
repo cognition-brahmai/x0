@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Why am I getting only one parameter from a statsmodels OLS fit instead of an array with two elements? Here is the code that I am using:\n\n```python\nimport statsmodels.api as sm\nimport numpy \n\nstatsmodels.__version__  # '0.5.0'\n\ny = numpy.array([1,2,3,4,5,6,7,8,9])\nX = numpy.array([1,1,2,2,3,3,4,4,5])\n\nres_ols = sm.OLS(y, X).fit()\nres_ols.params  # array([ 1.82352941])\n```\n\nI expected to get an array with two elements, the intercept and the slope coefficient. Why is this not the case?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering is related to how you are setting up your design matrix `X` for the Ordinary Least Squares (OLS) regression using `statsmodels`. In your current setup, you have not included a constant (intercept) in your model, which is why you are only getting one parameter.\n\nIn `statsmodels`, when you want to include an intercept in your model, you need to explicitly add a column of ones to your design matrix `X`. This column represents the intercept term in the regression model.\n\nHere's how you can modify your code to include the intercept:\n\n```python\nimport statsmodels.api as sm\nimport numpy \n\ny = numpy.array([1,2,3,4,5,6,7,8,9])\nX = numpy.array([1,1,2,2,3,3,4,4,5])\n\n# Add a constant (intercept) to the model\nX = sm.add_constant(X)\n\nres_ols = sm.OLS(y, X).fit()\nprint(res_ols.params)  # Now you should get an array with two elements: [intercept, slope]\n```\n\nBy using `sm.add_constant(X)`, you're adding a column of ones to `X`, which allows the model to estimate the intercept. After making this change, `res_ols.params` should provide you with an array containing both the intercept and the slope coefficient."
+    }
+]
