@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, is there an equivalent function to PHP's empty function (http://php.net/manual/en/function.empty.php) which checks if a variable is empty according to the following criteria:\n- \"\" (an empty string)\n- 0 (0 as an integer)\n- 0.0 (0 as a float)\n- \"0\" (0 as a string)\n- NULL\n- FALSE\n- array() (an empty array)"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, there isn't a direct equivalent to PHP's `empty()` function, but you can achieve similar functionality by defining your own function to check if a variable is considered \"empty\" according to the criteria you've provided. Here\u2019s a Python function that mimics PHP's `empty()`:\n\n```python\ndef is_empty(value):\n    if value is None:\n        return True\n    if isinstance(value, bool):\n        return not value\n    if isinstance(value, (int, float)):\n        return value == 0\n    if isinstance(value, str):\n        return value == \"\" or value == \"0\"\n    if isinstance(value, (list, dict, set, tuple)):\n        return len(value) == 0\n    return False\n\n# Test cases\nprint(is_empty(\"\"))    # True\nprint(is_empty(0))     # True\nprint(is_empty(0.0))   # True\nprint(is_empty(\"0\"))   # True\nprint(is_empty(None))  # True\nprint(is_empty(False)) # True\nprint(is_empty([]))    # True\n\n# Examples that should return False\nprint(is_empty(\"hello\"))  # False\nprint(is_empty(1))        # False\nprint(is_empty([1, 2]))   # False\n```\n\nThis function checks the type of the variable and applies the appropriate logic to determine whether it should be considered \"empty\" based on the criteria you listed. Note that Python treats `None` similarly to PHP's `NULL`, and empty collections (like lists, dictionaries, sets, or tuples) as `False` when evaluated in a boolean context."
+    }
+]
