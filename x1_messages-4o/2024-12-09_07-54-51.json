@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I set the same axis limits for all subplots in matplotlib? I have four subplots, and I want to set the same xlim and ylim for all of them. I have tried iterating over all subplots like this:\n\n```python\nf, axarr = plt.subplots(4)\nfor x in range(n):\n    axarr[x].set_xlim(xval1, xval2)\n    axarr[x].set_ylim(yval1, yval2)\n```\n\nHowever, this method doesn't seem pythonic, especially when dealing with 2x2 subplots. Is there a way to set the same xlim and ylim for all subplots without having to iterate over all of them? I want something like `plt.all_set_xlim(xval1, xval2)`. I don't want any other parameters like ticks and labels to change. I am using the `plt.subplots(2, 2)` wrapper. I have tried `plt.subplots(2, 2, sharex=True, sharey=True)`, but this approach removes the ticks except for the left and bottom row."
+    },
+    {
+        "role": "assistant",
+        "content": "To set the same axis limits for all subplots in a more concise and Pythonic way, you can use a loop or list comprehension with `flatten()` to iterate over all axes in a 2x2 grid. Here's how you can do it:\n\n```python\nimport matplotlib.pyplot as plt\n\n# Example data\nxval1, xval2 = 0, 10\nyval1, yval2 = 0, 100\n\n# Create 2x2 subplots\nfig, axarr = plt.subplots(2, 2)\n\n# Flatten the 2D array of axes to iterate over all of them\nfor ax in axarr.flatten():\n    ax.set_xlim(xval1, xval2)\n    ax.set_ylim(yval1, yval2)\n\n# Plot some example data\nfor ax in axarr.flatten():\n    ax.plot([1, 2, 3], [3, 2, 1])\n\nplt.show()\n```\n\n### Explanation:\n- `plt.subplots(2, 2)` creates a 2x2 grid of subplots and returns a figure and a 2D array of axes.\n- `axarr.flatten()` converts the 2D array of axes into a 1D array, making it easier to iterate over all subplots.\n- The loop iterates over each axis and sets the desired `xlim` and `ylim`.\n\nThis approach does not change tick labels or affect other parameters. It simply ensures consistent axis limits across all subplots."
+    }
+]
