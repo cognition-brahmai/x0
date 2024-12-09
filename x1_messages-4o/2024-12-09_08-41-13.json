@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to make a pairplot using Seaborn, but I want to hide the legend. The official documentation doesn't mention a keyword for 'legend'. I have also tried using 'plt.legend' but it didn't work. Here is my code:\n\n```python\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n%matplotlib inline\n\ntest = pd.DataFrame({\n    'id': ['1','2','1','2','2','6','7','7','6','6'],\n    'x': [123,22,356,412,54,634,72,812,129,110],\n    'y':[120,12,35,41,45,63,17,91,112,151]})\nsns.pairplot(x_vars='x', y_vars=\"y\", \n                 data=test,\n                 hue = 'id', \n                 height = 3)\n```\nWhat is the best way to hide the legend in a Seaborn pairplot?"
+    },
+    {
+        "role": "assistant",
+        "content": "To hide the legend in a Seaborn pairplot, you can access the legend using the Matplotlib API and then set its visibility to `False`. Here's how you can do it:\n\n```python\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nimport pandas as pd\n\n# Your data\ntest = pd.DataFrame({\n    'id': ['1','2','1','2','2','6','7','7','6','6'],\n    'x': [123,22,356,412,54,634,72,812,129,110],\n    'y':[120,12,35,41,45,63,17,91,112,151]\n})\n\n# Create the pairplot\npairplot = sns.pairplot(x_vars='x', y_vars='y', \n                        data=test,\n                        hue='id', \n                        height=3)\n\n# Access the legend and set its visibility to False\nfor ax in pairplot.axes.flat:\n    ax.get_legend().set_visible(False)\n\nplt.show()\n```\n\nThis code will create the pairplot without displaying the legend. By iterating over each axis in the pairplot's axes, you ensure that all legends are hidden regardless of the number of plots created."
+    }
+]
