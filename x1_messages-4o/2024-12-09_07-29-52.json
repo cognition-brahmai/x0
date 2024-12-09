@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm working with Python's type hinting feature and defining a method as follows:\n\n```python\ndef foo_my_class(my_class: ???, bar: str) -> None:\n    \"\"\" Operate on my_class \"\"\"\n```\n\nI am unsure about how to specify that a class should be passed as the first argument. What should I put instead of the `???` placeholder? I have provided additional code below for context:\n\n```python\nclass Base(object):\n    \"\"\"base class\"\"\"\n\nclass X(Base):\n    \"\"\"some class\"\"\"\n\nclass Y(Base):\n    \"\"\"some other class\"\"\"   \n\nfoo_my_class(X, \"foo\")    \nfoo_my_class(Y, \"bar\")\n```\n\nIn the above code, I want to be able to pass either the class `X` or `Y` as an argument to the function `foo_my_class`."
+    },
+    {
+        "role": "assistant",
+        "content": "In Python's type hinting system, when you want to indicate that a parameter should be a class (rather than an instance of a class), you can use `Type` from the `typing` module. This allows you to specify that the parameter should be a class that is a subclass of a particular type.\n\nFor your specific case, you want to allow any subclass of `Base` to be passed to the function `foo_my_class`. Here\u2019s how you can do it:\n\n```python\nfrom typing import Type\n\ndef foo_my_class(my_class: Type[Base], bar: str) -> None:\n    \"\"\" Operate on my_class \"\"\"\n    # You can now work with `my_class` knowing it's a class and has `Base` as its base\n    print(f\"Operating on class: {my_class.__name__} with bar: {bar}\")\n\nclass Base(object):\n    \"\"\"base class\"\"\"\n\nclass X(Base):\n    \"\"\"some class\"\"\"\n\nclass Y(Base):\n    \"\"\"some other class\"\"\"   \n\nfoo_my_class(X, \"foo\")    \nfoo_my_class(Y, \"bar\")\n```\n\nIn this example, `Type[Base]` specifies that `my_class` should be a class (not an instance) that is a subclass of `Base`. This is the correct way to specify that a class should be passed with type hinting in Python."
+    }
+]
