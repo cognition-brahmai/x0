@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm trying to merge two dataframes vertically. Both dataframes have the same columns - 'Col1' and 'Col2'. However, when I use the merge function with 'left' as the type of merge and 'Col1' and 'Col2' as the keys, I am only seeing rows from the first dataframe in the resultant dataframe. Why are rows from the second dataframe not appearing in the resultant dataframe?\n\nHere is the code I am using: \n```python\nnewdf = df.merge(df1,how='left',on=['Col1','Col2'])\n```\n\nFor example, let's consider the following dataframes:\n\ndf:\n\n```python\nCol1    Col2\nasd     1232\ncac     2324\n```\n\ndf1:\n\n```python\nCol1    Col2\nafaf    1213\nasas    4353\n```\n\nIdeally, I want the resultant dataframe to look like this:\n\n```python\nCol1   Col2\nasd     1232\ncac     2324\nafaf    1213\nasas    4353\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To vertically combine two dataframes, you should use the `concat` function instead of the `merge` function. The `merge` function is used for joining dataframes based on common columns or indices, typically when you're looking to combine information from the dataframes based on some keys. In your case, since you want to append one dataframe below the other, `concat` is the appropriate choice.\n\nHere\u2019s how you can achieve that:\n\n```python\nimport pandas as pd\n\n# Sample dataframes\ndf = pd.DataFrame({\n    'Col1': ['asd', 'cac'],\n    'Col2': [1232, 2324]\n})\n\ndf1 = pd.DataFrame({\n    'Col1': ['afaf', 'asas'],\n    'Col2': [1213, 4353]\n})\n\n# Concatenating the dataframes\nnewdf = pd.concat([df, df1], ignore_index=True)\n\nprint(newdf)\n```\n\nThis will produce the following output:\n\n```\n   Col1  Col2\n0   asd  1232\n1   cac  2324\n2  afaf  1213\n3  asas  4353\n```\n\nThe `ignore_index=True` parameter is used to reset the index in the resulting dataframe, providing a continuous index from 0. This will give you the desired vertical combination of both dataframes."
+    }
+]
