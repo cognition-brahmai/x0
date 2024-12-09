@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I modify my current regular expression in Python to match and remove all non-alphanumeric characters from a string, except for the hyphen character?\n\nHere is the regular expression I'm currently using:\n\n```python\nre.compile('[\\W_]')\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To modify your regular expression to match and remove all non-alphanumeric characters except for the hyphen character, you can adjust the character class in your regular expression. The `\\W` shorthand matches any non-word character, which includes anything that's not a letter, digit, or underscore. Since you want to keep the hyphen but remove other non-alphanumeric characters, you can explicitly specify the characters you want to exclude.\n\nHere's how you can modify your regular expression:\n\n```python\nimport re\n\n# This pattern matches any non-alphanumeric character except the hyphen\npattern = re.compile(r'[^a-zA-Z0-9-]')\n\n# Example usage\ninput_string = \"Hello, World! This is a test-string with numbers 123 and symbols #$%.\"\ncleaned_string = pattern.sub('', input_string)\n\nprint(cleaned_string)\n```\n\nIn this modified pattern:\n\n- `[^a-zA-Z0-9-]` is a character class that matches anything that is not an uppercase letter (`A-Z`), a lowercase letter (`a-z`), a digit (`0-9`), or a hyphen (`-`).\n- The `sub` method is used to replace all occurrences of the matched pattern with an empty string, effectively removing them from the input string. \n\nThis will ensure that all non-alphanumeric characters are removed except for hyphens."
+    }
+]

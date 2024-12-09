@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Django, where should I place my custom helper functions that I need to use in my app? Additionally, how can I make these functions callable within my views?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Django, it's common practice to place custom helper functions in a separate module, often named `utils.py`, within your app directory. This helps keep your code organized and modular. Here's how you can set it up and make these functions callable within your views:\n\n1. **Create a `utils.py` file**: In your Django app directory, create a file named `utils.py`. This is where you'll define your helper functions.\n\n   ```\n   myapp/\n   \u251c\u2500\u2500 __init__.py\n   \u251c\u2500\u2500 admin.py\n   \u251c\u2500\u2500 apps.py\n   \u251c\u2500\u2500 models.py\n   \u251c\u2500\u2500 tests.py\n   \u251c\u2500\u2500 urls.py\n   \u251c\u2500\u2500 views.py\n   \u251c\u2500\u2500 utils.py  # <- Your helper functions go here\n   \u2514\u2500\u2500 ...\n   ```\n\n2. **Define your helper functions**: In `utils.py`, define the helper functions you need. For example:\n\n   ```python\n   # utils.py\n\n   def my_custom_helper_function(param1, param2):\n       # Your logic here\n       result = param1 + param2  # Example logic\n       return result\n   ```\n\n3. **Import and use the functions in your views**: In your `views.py`, import the helper functions from `utils.py` and use them as needed.\n\n   ```python\n   # views.py\n\n   from django.shortcuts import render\n   from .utils import my_custom_helper_function\n\n   def my_view(request):\n       # Use the helper function\n       result = my_custom_helper_function(5, 10)\n       return render(request, 'my_template.html', {'result': result})\n   ```\n\nBy following these steps, you keep your Django app's code organized and maintain a clear separation of logic. Your helper functions in `utils.py` can be easily imported and used across different parts of your app whenever needed."
+    }
+]
