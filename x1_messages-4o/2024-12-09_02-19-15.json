@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using Pydantic to model the requests and responses to an API and I have defined a User class using Pydantic's BaseModel as follows:\n\n```python\nfrom pydantic import BaseModel\n\nclass User(BaseModel):\n  name: str\n  age: int\n```\n\nMy API returns a list of users which I retrieve with requests and convert into a dictionary like this:\n\n```python\nusers = [{\"name\": \"user1\", \"age\": 15}, {\"name\": \"user2\", \"age\": 28}]\n```\n\nNow, I want to convert this dictionary into a list of User instances. Currently, I am doing this by iterating over the list and appending User instances to another list:\n\n```python\nuser_list = []\nfor user in users:\n  user_list.append(User(**user))\n```\n\nIs there a more efficient way to parse a list of models with Pydantic?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can make the conversion more efficient and concise by using a list comprehension instead of a for loop. This approach is not only more pythonic but also easier to read. Here's how you can do it:\n\n```python\nuser_list = [User(**user) for user in users]\n```\n\nHowever, if you want to take advantage of Pydantic's built-in capabilities, you can define another Pydantic model specifically for handling a list of users. Pydantic provides a way to parse a list of models efficiently using its `parse_obj_as` method. Here's how you can achieve that:\n\n```python\nfrom pydantic import parse_obj_as\nfrom typing import List\n\nuser_list = parse_obj_as(List[User], users)\n```\n\nIn this example, `parse_obj_as` is used to parse the list of dictionaries into a list of `User` instances. This method can be especially useful if you're dealing with more complex nested structures or need to enforce additional validation rules."
+    }
+]
