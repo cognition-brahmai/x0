@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I execute a long running command in Bash, capture its exit status, and tee its output? When I try to do this with the following code:\n```\ncommand | tee out.txt\nST=$?\n```\nThe problem is that the variable ST captures the exit status of `tee` and not of the command. Given that the command is long running and redirecting the output to a file to view it later is not a suitable solution for me. How can I solve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "When you use the pipe (`|`) operator in Bash, the exit status captured by `$?` is that of the last command in the pipeline, which in your case is `tee`. To capture the exit status of the initial command while still using `tee`, you can use a temporary file or a process substitution. Here's a method using a temporary file to capture the exit status:\n\n```bash\n# Create a temporary file to store the exit status\ntmpfile=$(mktemp)\n\n# Run the command and tee its output, capturing the exit status\n{ command; echo $? > \"$tmpfile\"; } | tee out.txt\n\n# Read the exit status from the temporary file\nST=$(<\"$tmpfile\")\n\n# Remove the temporary file\nrm \"$tmpfile\"\n\n# Now, ST contains the exit status of the command\necho \"Exit status: $ST\"\n```\n\nAlternatively, you can use a process substitution which is a more elegant way to achieve the same result:\n\n```bash\n# Run the command in a subshell, capture its exit status, and tee its output\nST=$( ( command; echo $? >&3 ) | tee out.txt 3>&1 1>&2 )\n\n# Extract the exit status of the command from the output\nST=$(echo \"$ST\" | tail -n 1)\n\n# Now, ST contains the exit status of the command\necho \"Exit status: $ST\"\n```\n\nIn this method, the exit status of the command is passed through a file descriptor (`>&3`) and captured at the end. Both methods ensure you capture the correct exit status of your command while still being able to view its output in real time with `tee`."
+    }
+]
