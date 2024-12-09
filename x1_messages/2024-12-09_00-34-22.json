@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Generate a detailed plan to answer the following question using the provided tools. Each step of your plan should indicate which tool will be used and what input will be given to that tool. You can store the output of each tool into a variable :evidence[index]: for future references.\n\nAvailable Tools:\nWebSearch[input]: This tool enables users to perform an online search by providing a query string as input.\nArticleParser[input]: This tool takes a URL as input and returns a structured summary of the article at that URL.\nLLM[input]: Question answering language model, particularly useful in answering questions based on an input passage of text.  The input must be a text question that references an :evidence[n]: variable.\nURLExtractor[input]: This tool extracts URLs from a given piece of text.\n\nOutput Format:\nPlan: [First action based on the input question]\n:evidence0: = [Tool to call with input parameters]\nPlan: [Next action based on the result of :evidence0:]\n:evidence1: = [Next tool to call with input parameters, possibly referencing prior evidence variables]\n...\nAnswer: [:evidence[n]: containing the final answer.]\n\nQuestion: Who won the Nobel Prize in Literature in 2020?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by performing a web search to find out who won the Nobel Prize in Literature in 2020.\n:evidence0: = WebSearch[\"Nobel Prize in Literature 2020 winner\"]\nPlan: Extract the relevant URL from the search results for more detailed information.\n:evidence1: = URLExtractor[:evidence0:]\nPlan: Use the ArticleParser tool to summarize the content of the extracted URL.\n:evidence2: = ArticleParser[:evidence1:]\nPlan: Use the LLM to interpret the summary and identify the winner's name.\n:evidence3: = LLM[\"Who won the Nobel Prize in Literature in 2020 according to :evidence2:?\"]\nAnswer: :evidence3:"
+    }
+]
