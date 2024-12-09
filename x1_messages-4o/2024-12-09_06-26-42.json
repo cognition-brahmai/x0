@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I save UTF-8 texts using json.dumps as UTF-8 and not as a \\u escape sequence? I have an issue where the JSON dumps are not human readable. I am currently using the following sample code:\n```\nimport json\njson_string = json.dumps(\"\u05d1\u05e8\u05d9 \u05e6\u05e7\u05dc\u05d4\")\nprint(json_string)\n```\nThe output I get is \"\\u05d1\\u05e8\\u05d9 \\u05e6\\u05e7\\u05dc\\u05d4\". My users want to verify or even edit text files with JSON dumps, and I'd prefer not to use XML. Is it possible to serialize objects into UTF-8 JSON strings, rather than \\uXXXX?"
+    },
+    {
+        "role": "assistant",
+        "content": "To save UTF-8 texts in JSON without using the `\\u` escape sequences, you can make use of the `ensure_ascii` parameter provided by `json.dumps()`. By setting `ensure_ascii=False`, the JSON output will retain the UTF-8 encoding for non-ASCII characters, making it more human-readable.\n\nHere's how you can modify your code to achieve that:\n\n```python\nimport json\n\n# Your text containing UTF-8 characters\ntext = \"\u05d1\u05e8\u05d9 \u05e6\u05e7\u05dc\u05d4\"\n\n# Serialize the text to a JSON string with UTF-8 encoding\njson_string = json.dumps(text, ensure_ascii=False)\n\n# Print the JSON output\nprint(json_string)\n```\n\nWith `ensure_ascii=False`, the output will be the actual UTF-8 characters rather than their Unicode escape sequences:\n\n```\n\"\u05d1\u05e8\u05d9 \u05e6\u05e7\u05dc\u05d4\"\n```\n\nThis way, your JSON dumps will be more readable and easier for users to verify or edit."
+    }
+]
