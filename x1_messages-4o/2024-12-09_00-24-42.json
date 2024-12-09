@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to create a plot using pandas and matplotlib, however, I need to rotate the x-axis tick labels to 0 degrees. Here is the code I am currently using:\n\n```python\nimport matplotlib\nmatplotlib.style.use('ggplot')\nimport matplotlib.pyplot as plt\nimport pandas as pd\n\ndf = pd.DataFrame({ 'celltype':[\"foo\",\"bar\",\"qux\",\"woz\"], 's1':[5,9,1,7], 's2':[12,90,13,87]})\ndf = df[[\"celltype\",\"s1\",\"s2\"]]\ndf.set_index([\"celltype\"],inplace=True)\ndf.plot(kind='bar',alpha=0.75)\nplt.xlabel(\"\")\n```\n\nThis code produces the following plot:\n\n[Plot Image](https://i.stack.imgur.com/6pLLq.jpg)\n\nI tried adding the following line of code to rotate the x-axis tick labels, but it didn't work:\n\n```python\nplt.set_xticklabels(df.index,rotation=90)\n```\n\nHow can I solve this problem?"
+    },
+    {
+        "role": "assistant",
+        "content": "To rotate the x-axis tick labels in your plot to 0 degrees using matplotlib, you can use the `plt.xticks()` function. This function allows you to set the rotation of the tick labels. You can modify your code as follows:\n\n```python\nimport matplotlib\nmatplotlib.style.use('ggplot')\nimport matplotlib.pyplot as plt\nimport pandas as pd\n\ndf = pd.DataFrame({'celltype': [\"foo\", \"bar\", \"qux\", \"woz\"], 's1': [5, 9, 1, 7], 's2': [12, 90, 13, 87]})\ndf.set_index(\"celltype\", inplace=True)\n\nax = df.plot(kind='bar', alpha=0.75)\nplt.xlabel(\"\")\n\n# Rotate x-axis tick labels to 0 degrees\nplt.xticks(rotation=0)\n\nplt.show()\n```\n\nBy using `plt.xticks(rotation=0)`, you ensure that the x-axis tick labels are rotated to 0 degrees, as desired."
+    }
+]
