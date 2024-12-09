@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is it possible for Sphinx Napoleon to document a function that returns multiple arguments? I have a function that returns two arguments and I am attempting to use sphinx with the Napoleon extension for documentation. However, it appears that Napoleon may not support this. I have tried putting a newline between the two return arguments, but the HTML generated treats the two lines as part of a description for a single argument. Here is an example of the function:\n\n```python\ndef foo(a):\n'''one line summary\n\nlonger explanation\n\nArgs:\n  a (int): parameter description\n\nReturns:\n  servers (list): list of servers to use\n  msg (str): logging message string \n'''\npass\n```\n\nIs there a way to use Napoleon to document functions returning multiple arguments?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can document a function that returns multiple values using Sphinx's Napoleon extension by following a slightly different format. Although Napoleon does not directly support multiple return values in the `Returns:` section as separate items with their own descriptions, you can achieve this by returning a tuple and documenting the components of the tuple. Here\u2019s how you can structure your docstring:\n\n```python\ndef foo(a):\n    \"\"\"One line summary.\n\n    Longer explanation.\n\n    Args:\n        a (int): Parameter description.\n\n    Returns:\n        tuple: A tuple containing:\n        \n            - servers (list): List of servers to use.\n            - msg (str): Logging message string.\n    \"\"\"\n    pass\n```\n\nIn this format:\n\n- You document the return type as `tuple`.\n- Below, you use a bulleted list to describe each element of the tuple. Use indentation to ensure that the list items are properly recognized as part of the `Returns:` section.\n\nThis approach clearly communicates that the function returns a tuple containing specific elements, each with its own type and description."
+    }
+]
