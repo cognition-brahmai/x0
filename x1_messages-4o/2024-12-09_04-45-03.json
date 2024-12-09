@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there a way to automatically play a sound or beep when a cell finishes executing in an IPython notebook? I often run long-duration cells and I'd like to be notified when they complete. Is there a command that I can put at the end of a cell to achieve this? I am using the Chrome browser."
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can achieve this by using a simple command to play a sound when a cell finishes executing in an IPython (Jupyter) notebook. Here's how you can do it:\n\n1. **Using IPython's `Audio` class:**\n\n   You can use the `Audio` class from IPython's `display` module to play a sound. Here's an example:\n\n   ```python\n   from IPython.display import Audio, display\n\n   def beep():\n       # This is a simple beep sound\n       sound = [0, 1] * 4000\n       display(Audio(sound, autoplay=True))\n\n   # Your long-running code here\n   # ...\n\n   # Call the beep function at the end\n   beep()\n   ```\n\n2. **Using the `os` module to play a system beep:**\n\n   If you want a simple system beep, you can use the `os` module to send a bell character to the terminal:\n\n   ```python\n   import os\n\n   # Your long-running code here\n   # ...\n\n   # Play a beep sound\n   os.system('echo -n \"\\a\"; sleep 0.2; echo -n \"\\a\"')\n   ```\n\n3. **Using HTML5 Audio:**\n\n   You can also embed an HTML5 audio player using the `IPython.display.HTML` class:\n\n   ```python\n   from IPython.display import HTML\n\n   def play_sound():\n       sound = \"\"\"\n       <audio autoplay>\n           <source src=\"https://www.soundjay.com/button/sounds/beep-07.mp3\" type=\"audio/mpeg\">\n       </audio>\n       \"\"\"\n       return HTML(sound)\n\n   # Your long-running code here\n   # ...\n\n   # Call the play_sound function at the end\n   play_sound()\n   ```\n\nThese methods will notify you with a sound when a cell finishes executing. You can choose the one that best fits your needs. Note that some browsers might have restrictions on auto-playing media, so make sure to test it in your specific environment."
+    }
+]
