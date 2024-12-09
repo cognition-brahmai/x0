@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I get full precision for numerical values in Pandas DataFrame? By default, the numerical values in the DataFrame are stored up to 6 decimals only. For example, 34.98774564765 is stored as 34.987746 and 0.00000565 is stored as 0. Is there any global setting that helps in preserving the precision apart from applying formats to each DataFrame?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Pandas, the display precision of numerical values is typically controlled by the options settings, which affect how numbers are shown when you print a DataFrame, but not how they are stored internally. Internally, Pandas uses NumPy to store numerical data, and NumPy's floating-point numbers are typically stored with double precision (64 bits), which provides more than enough precision for most applications.\n\nIf you are seeing numbers rounded off in a Pandas DataFrame, it might be due to the default display settings. To ensure you see the full precision, you can change the display precision setting globally using `pd.set_option`. Here's how you can do it:\n\n```python\nimport pandas as pd\nimport numpy as np\n\n# Set display precision for floating-point numbers\npd.set_option('display.precision', 15)\n\n# Example DataFrame\ndata = {'A': [34.98774564765, 0.00000565]}\ndf = pd.DataFrame(data)\n\nprint(df)\n```\n\nThis will set the display precision to 15 decimal places, which should be sufficient for most use cases. Note that this only affects how numbers are displayed, not how they are stored or computed.\n\nIf you need even more precision (though it's rare to need beyond double precision for most applications), you would need to look into using data structures specifically designed for high precision arithmetic, such as the `Decimal` type from Python's `decimal` module, but this is outside the scope of typical Pandas operations.\n\nIf you want to maintain full precision in computations or storage, ensure that you're not unintentionally converting your numbers to lower precision types elsewhere in your code."
+    }
+]

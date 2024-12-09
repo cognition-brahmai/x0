@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working with Django and trying to create a table using values from a list. However, I keep encountering an error stating \"Could not parse the remainder: '[0]' from 'item[0]'\". The error occurs when I attempt to access an item inside a list which is within the main list. Here is the problematic section of my code:\n\n```python\n{% for item in lista_completa %}\n<tr>\n    <td>\n        {{ item[0] }}\n    </td>\n    <td>\n        {{ item[1] }}\n    </td>\n</tr>\n{% endfor %}\n```\nThe list I am working with looks like this: `lista_completa = [[1,'a'],[1,'b'],[3,'c']]`. I have also tried using `{% item[0] %}` but it resulted in the same error. How can I resolve this issue?"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering is due to the Django templating language, which does not support direct indexing of list elements using square brackets in the template. However, you can achieve the desired result using the `forloop.counter0` variable or by unpacking the list directly in the loop.\n\nSince you're working with a list of lists, you can unpack the inner lists directly in the `for` loop. Here's how you can modify your code to avoid the error:\n\n```html\n{% for item in lista_completa %}\n<tr>\n    <td>{{ item.0 }}</td>\n    <td>{{ item.1 }}</td>\n</tr>\n{% endfor %}\n```\n\nAlternatively, you can unpack the items directly in the loop, which makes it more readable:\n\n```html\n{% for first, second in lista_completa %}\n<tr>\n    <td>{{ first }}</td>\n    <td>{{ second }}</td>\n</tr>\n{% endfor %}\n```\n\nBoth methods should solve the issue you're facing and correctly render the table with the values from your list."
+    }
+]
