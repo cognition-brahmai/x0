@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "What is the most efficient way to perform an HTTP GET request in Python, if I already know that the content will be a string? I am looking for a fast one-liner like `contents = url.get(\"http://example.com/foo/bar\")`. I've looked into `httplib` and `urllib` but haven't found a shortcut in those libraries. Does standard Python 2.5 offer a shortcut like the one I described, or should I write a `url_get` function? I would prefer not to capture the output of running commands like `wget` or `curl`."
+    },
+    {
+        "role": "assistant",
+        "content": "In Python 2.5, there isn't a direct one-liner built into the standard library that performs an HTTP GET request as concisely as you've described. However, you can use the `urllib2` module to achieve this in a relatively compact way. Here's a simple one-liner using `urllib2`:\n\n```python\nimport urllib2\ncontents = urllib2.urlopen(\"http://example.com/foo/bar\").read()\n```\n\nThis line opens the URL and reads the content directly into a string variable named `contents`.\n\nIf you're open to using third-party libraries, you might consider using `requests`, which is a popular library for making HTTP requests in a more modern and user-friendly way. However, `requests` isn't included in Python 2.5 by default and would require installation, which might be a limitation depending on your environment.\n\nIf you install the `requests` library, you can achieve your goal with:\n\n```python\nimport requests\ncontents = requests.get(\"http://example.com/foo/bar\").text\n```\n\nThis is similarly concise and offers more functionality and better error handling than the standard library options."
+    }
+]
