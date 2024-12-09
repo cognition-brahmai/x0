@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm using matplotlib's matshow() function in a jupyter notebook and I'm having trouble changing the figure size. The following code works for changing the figure size for a plot:\n\n```python\n%matplotlib inline\nimport matplotlib.pyplot as plt\nimport pandas as pd\n\nd = pd.DataFrame({'one' : [1, 2, 3, 4, 5],\n                  'two' : [4, 3, 2, 1, 5]})\nplt.figure(figsize=(10,5))\nplt.plot(d.one, d.two)\n```\n\nHowever, when I try to use the same method with matshow(), it doesn't work:\n\n```python\n%matplotlib inline\nimport matplotlib.pyplot as plt\nimport pandas as pd\n\nd = pd.DataFrame({'one' : [1, 2, 3, 4, 5],\n                  'two' : [4, 3, 2, 1, 5]})\nplt.figure(figsize=(10,5))\nplt.matshow(d.corr())\n```\n\nHow can I change the figure size for matshow()?"
+    },
+    {
+        "role": "assistant",
+        "content": "When using `matshow()` in Matplotlib, it internally creates a new figure and axes, which can override the figure size set by `plt.figure()`. To control the figure size for `matshow()`, you should use `plt.subplots()` to create the figure and axes first, and then call `matshow()` on the created axes. Here's how you can do it:\n\n```python\n%matplotlib inline\nimport matplotlib.pyplot as plt\nimport pandas as pd\n\nd = pd.DataFrame({'one' : [1, 2, 3, 4, 5],\n                  'two' : [4, 3, 2, 1, 5]})\n\n# Create a figure and axes with the desired size\nfig, ax = plt.subplots(figsize=(10, 5))\n\n# Use matshow on the axes\ncax = ax.matshow(d.corr())\n\n# Optionally add a colorbar\nfig.colorbar(cax)\n\n# Display the plot\nplt.show()\n```\n\nBy creating the figure and axes with `plt.subplots()`, you can effectively manage the figure's size and have more control over the plot's layout."
+    }
+]
