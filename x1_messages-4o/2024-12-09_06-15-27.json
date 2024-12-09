@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using the `pd.to_csv()` function in pandas to save my dataframes into a csv-file. The problem is, this function overwrites the new file without checking if there's an existing one with the same name. Is there a way to check if the file already exists and if so, ask for a new filename? I am aware that adding the system's datetime to the filename can prevent overwriting, but I'd prefer a solution that lets me know when I'm about to overwrite a file."
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! To achieve this, you can use Python's built-in `os` module to check if a file already exists before saving your DataFrame. If the file exists, you can prompt the user for a new filename. Here's a simple way to implement this:\n\n```python\nimport os\nimport pandas as pd\n\ndef save_dataframe_to_csv(df, filename):\n    # Check if the file already exists\n    if os.path.isfile(filename):\n        print(f\"The file '{filename}' already exists.\")\n        # Prompt the user for a new filename\n        while True:\n            new_filename = input(\"Please enter a new filename (or type 'overwrite' to overwrite the existing file): \")\n            if new_filename.lower() == 'overwrite':\n                break\n            elif not os.path.isfile(new_filename):\n                filename = new_filename\n                break\n            else:\n                print(f\"The file '{new_filename}' also exists. Please choose another name.\")\n\n    # Save the DataFrame to CSV\n    df.to_csv(filename, index=False)\n    print(f\"DataFrame has been saved to '{filename}'.\")\n\n# Example usage:\n# df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})\n# save_dataframe_to_csv(df, 'output.csv')\n```\n\nThis function first checks if the specified filename already exists. If it does, it prompts the user to either provide a new filename or type 'overwrite' to overwrite the existing file. It continues to prompt the user for a new filename until a non-existing file name is provided or 'overwrite' is typed. Then, it saves the DataFrame to the specified file."
+    }
+]

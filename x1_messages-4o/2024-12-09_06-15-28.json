@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a large xlsx file (around 14 MB) that is difficult to open with OpenOffice. I am attempting to use openpyxl to read its content, with the following code:\n\n```python\nfrom openpyxl import load_workbook\nwb = load_workbook(filename = 'large_file.xlsx', use_iterators = True)\nws = wb.get_sheet_by_name(name = 'big_data') \n```\n\nThe issue I'm encountering is that I don't know the sheet names and using \"Sheet1/Sheet2\" etc. didn't work for me, as it returned NoneType object. Is there a way to get the sheet names for an xlsx file using openpyxl?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can easily retrieve the sheet names from an Excel file using `openpyxl`. To do this, you can access the `sheetnames` attribute of the workbook object. Here\u2019s how you can modify your code to get the sheet names:\n\n```python\nfrom openpyxl import load_workbook\n\n# Load the workbook\nwb = load_workbook(filename='large_file.xlsx', use_iterators=True)\n\n# Get all sheet names\nsheet_names = wb.sheetnames\nprint(\"Sheet names:\", sheet_names)\n\n# Access a specific sheet by name once you know them\n# For example, to access the first sheet\nws = wb[sheet_names[0]]\n```\n\nOnce you have the list of sheet names, you can select the sheet you want to work with by indexing into the `sheet_names` list or directly accessing the sheet by name. Note that `use_iterators` has been deprecated and should be replaced with `read_only=True` if you are dealing with large files and want to reduce memory usage.\n\nHere is the updated code with `read_only=True`:\n\n```python\nfrom openpyxl import load_workbook\n\n# Load the workbook in read-only mode\nwb = load_workbook(filename='large_file.xlsx', read_only=True)\n\n# Get all sheet names\nsheet_names = wb.sheetnames\nprint(\"Sheet names:\", sheet_names)\n\n# Access a specific sheet by name\nws = wb[sheet_names[0]]\n```\n\nThis will print out all the sheet names available in your Excel file, and you can choose which one you want to work with."
+    }
+]
