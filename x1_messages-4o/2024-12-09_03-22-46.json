@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have been working with Pandas for a few months now and I'm fairly familiar with accessing and querying dataframes. I have a requirement where I need to query the dataframe using the LIKE keyword, similar to SQL, in pandas.query(). I am trying to execute the command pandas.query(\"column_name LIKE 'abc%'\"), but it's failing. I am aware of an alternative approach which is to use str.contains(\"abc%\") but this doesn't meet my requirement. How can I use LIKE inside pandas.query()?"
+    },
+    {
+        "role": "assistant",
+        "content": "Pandas' `query()` method doesn't directly support SQL-like `LIKE` syntax. However, you can achieve similar functionality using the `str.contains()` method in combination with pandas' `query()`. Unfortunately, `str.contains()` does not directly mimic the SQL `LIKE` syntax, especially when it comes to wildcard matching with `%`. Instead, it uses regular expressions.\n\nHere's how you can mimic the `LIKE` functionality using `str.contains()`:\n\n```python\nimport pandas as pd\n\n# Sample DataFrame\ndata = {'column_name': ['abc123', 'abcd', 'xyz', 'abcxyz']}\ndf = pd.DataFrame(data)\n\n# Using str.contains() with regex for SQL-like 'abc%'\nresult = df.query(\"column_name.str.contains('^abc', regex=True)\", engine='python')\n\nprint(result)\n```\n\nIn this example, `^abc` is a regular expression pattern that matches any string that starts with `abc`, effectively mimicking the `LIKE 'abc%'` functionality. The `engine='python'` argument is necessary for using the string methods inside `query()`.\n\nIf you want to replicate other SQL `LIKE` patterns:\n- Use `^` to match the start of a string.\n- Use `$` to match the end of a string.\n- Use `.*` to match any sequence of characters.\n\nBy using regular expressions, you can cover most patterns you would typically handle with SQL `LIKE`."
+    }
+]
