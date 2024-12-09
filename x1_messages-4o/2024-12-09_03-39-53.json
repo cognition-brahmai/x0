@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "What is the correct way to use get_or_create in Django? I am trying to use this method for some fields in my forms but I'm encountering a 500 error. I have a line of code that looks like this: `customer.source = Source.objects.get_or_create(name=\"Website\")`. However, the error I receive for the above code is: `Cannot assign \"(<Source: Website>, False)\": \"Customer.source\" must be a \"Source\" instance`."
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering is due to the fact that `get_or_create()` returns a tuple containing two elements: the object and a boolean indicating whether the object was created. You need to extract the object from this tuple in order to assign it to `customer.source`.\n\nHere's the corrected line of code:\n\n```python\ncustomer.source, created = Source.objects.get_or_create(name=\"Website\")\n```\n\nIn this line, `customer.source` is assigned the `Source` instance, and `created` is a boolean that will be `True` if the object was created and `False` if it was retrieved from the database.\n\nMake sure that `customer` is an instance of a model that has a ForeignKey relationship to `Source`, and that you've saved `customer` if it's a new instance. Here's a more complete example:\n\n```python\n# Assuming you have a Customer model with a ForeignKey to Source\ncustomer = Customer.objects.get(pk=customer_id)  # or however you obtain the customer instance\nsource, created = Source.objects.get_or_create(name=\"Website\")\ncustomer.source = source\ncustomer.save()\n```\n\nThis should resolve the 500 error you're encountering."
+    }
+]
