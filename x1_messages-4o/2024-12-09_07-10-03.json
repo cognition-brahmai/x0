@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there a built-in function in Python that can convert an increasing list of integers into a range list? For example, given the set {0, 1, 2, 3, 4, 7, 8, 9, 11}, I want to get {{0,4}, {7,9}, {11,11}}."
+    },
+    {
+        "role": "assistant",
+        "content": "Python doesn't have a built-in function specifically designed to convert a list of integers into a range list as you've described. However, you can achieve this with a custom function. Here's one way to do it:\n\n```python\ndef convert_to_range_list(numbers):\n    if not numbers:\n        return []\n\n    numbers = sorted(numbers)\n    range_list = []\n    start = numbers[0]\n    end = numbers[0]\n\n    for num in numbers[1:]:\n        if num == end + 1:\n            end = num\n        else:\n            range_list.append((start, end))\n            start = num\n            end = num\n\n    range_list.append((start, end))\n    return range_list\n\n# Example usage\nnumbers = [0, 1, 2, 3, 4, 7, 8, 9, 11]\nrange_list = convert_to_range_list(numbers)\nprint(range_list)  # Output: [(0, 4), (7, 9), (11, 11)]\n```\n\nThis function works by iterating through the sorted list of numbers, maintaining the start and end of the current range. When a gap is found (i.e., the current number is not the immediate successor of the previous number), it closes the current range and starts a new one. Finally, it appends the last range to the result list."
+    }
+]
