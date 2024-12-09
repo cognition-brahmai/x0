@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I use Sphinx's Autodoc-extension to document private methods in my Python project? I have enabled the autodoc extension and included the following code in my docs:\n\n```python\n.. autoclass:: ClassName\n   :members:\n```\n\nHowever, it seems to only document the non-private methods in the class. How can I adjust this so it includes the private methods as well?"
+    },
+    {
+        "role": "assistant",
+        "content": "To include private methods in your Sphinx documentation using the Autodoc extension, you can adjust the directives in your `conf.py` file and the reStructuredText (.rst) files where you define the documentation structure.\n\nHere's a step-by-step guide:\n\n1. **Modify the `conf.py` file**: Add or modify the `autodoc_default_options` to include private members. You can set the `private-members` option to `True` or provide a list of specific private members you want to document.\n\n    ```python\n    # conf.py\n\n    # Add this dictionary to the conf.py file\n    autodoc_default_options = {\n        'members': True,\n        'private-members': True,\n    }\n    ```\n\n    This setting will ensure that all private members (methods and attributes that start with an underscore `_`) are included in the documentation.\n\n2. **Adjust the `.rst` files**: If you want to be more specific and include private members only for certain classes, you can modify your `.rst` files to specify `:private-members:` directly in the `autoclass` directive.\n\n    ```rst\n    .. autoclass:: ClassName\n       :members:\n       :private-members:\n    ```\n\n3. **Rebuild your documentation**: After making these changes, make sure to rebuild your Sphinx documentation to see the updated results.\n\nBy following these steps, your documentation should now include private methods along with the public ones. Keep in mind that documenting private methods can lead to exposing internal workings of your classes, so consider whether this is necessary for your audience."
+    }
+]
