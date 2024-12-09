@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I split a string into words using multiple word boundary delimiters in Python? I have a text with punctuation, and I want a list of the words. If I use a string such as \"Hey, you - what are you doing here!?\" I want the output to be ['hey', 'you', 'what', 'are', 'you', 'doing', 'here']. However, Python's str.split() only works with one argument, so I have all words with the punctuation after I split with whitespace. What can I do to achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To split a string into words using multiple word boundary delimiters in Python, you can use the `re` module, which provides support for regular expressions. This will allow you to split the string based on a variety of delimiters such as spaces, punctuation, etc.\n\nHere is a simple way to achieve your goal using `re.split()`:\n\n```python\nimport re\n\ntext = \"Hey, you - what are you doing here!?\"\n# Use re.split() to split the text based on non-word characters\nwords = re.split(r'\\W+', text)\n\n# Filter out any empty strings that may occur if there are multiple delimiters in a row\nwords = list(filter(None, words))\n\n# Optionally, convert all words to lowercase to match your expected output\nwords = [word.lower() for word in words]\n\nprint(words)\n```\n\n### Explanation\n- `re.split(r'\\W+', text)`: This splits the string `text` into a list where each word is separated by one or more non-word characters (`\\W+`). The `\\W` pattern matches any character that is not a word character (equivalent to `[^a-zA-Z0-9_]`).\n- `list(filter(None, words))`: This removes any empty strings from the list that may result from consecutive non-word characters.\n- `[word.lower() for word in words]`: This converts all words to lowercase to match your expected output.\n\nRunning the above code will give you the desired output:\n\n```\n['hey', 'you', 'what', 'are', 'you', 'doing', 'here']\n```"
+    }
+]
