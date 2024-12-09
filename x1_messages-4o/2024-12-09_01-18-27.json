@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I sort a list of lists by multiple attributes in Python? I have a list structured as follows:\n\n```python\n[[12, 'tall', 'blue', 1],\n[2, 'short', 'red', 9],\n[4, 'tall', 'blue', 13]]\n```\n\nI am aware of how to sort by a single attribute, such as the tall/short element, using `s = sorted(s, key = itemgetter(1))`. But, how can I sort by both the tall/short element and color simultaneously without having to sort twice?"
+    },
+    {
+        "role": "assistant",
+        "content": "To sort a list of lists by multiple attributes in Python, you can use the `sorted()` function with a `key` that returns a tuple of the elements by which you want to sort. The elements in the tuple define the order of sorting: the list is primarily sorted by the first element in the tuple, and then by the second element, and so on.\n\nHere's how you can sort your list by both the \"tall/short\" attribute and the \"color\" attribute simultaneously:\n\n```python\nfrom operator import itemgetter\n\ndata = [\n    [12, 'tall', 'blue', 1],\n    [2, 'short', 'red', 9],\n    [4, 'tall', 'blue', 13]\n]\n\n# Sort by the second element (tall/short) and then by the third element (color)\nsorted_data = sorted(data, key=itemgetter(1, 2))\n\nprint(sorted_data)\n```\n\nThis code will sort the list first by the \"tall/short\" attribute and then by the \"color\" attribute. The `itemgetter` function from the `operator` module is used here to create a function that extracts the specified elements (in this case, the elements at index 1 and 2) for sorting. The sorting is stable, which means that if two elements have the same \"tall/short\" and \"color\" values, their order relative to each other will remain unchanged."
+    }
+]
