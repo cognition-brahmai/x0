@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How do I modify the legend of a bar plot created using pandas? I am currently using the following code to create the plot:\n\n```python\nimport pandas as pd\nfrom matplotlib.pyplot import *\n\ndf = pd.DataFrame({'A':26, 'B':20}, index=['N'])\ndf.plot(kind='bar')\n```\nAnd I am trying to change the names of the labels in the legend using the following code:\n\n```python\nlegend(['AAA', 'BBB'])\n```\nBut instead of changing the names, it seems to add an additional patch. Is there a simple trick to change the labels or do I need to plot each of the columns independently with matplotlib and set the labels myself?"
+    },
+    {
+        "role": "assistant",
+        "content": "To modify the legend labels of a bar plot created using pandas, you can directly set the labels during the plotting process or immediately after. The issue you're encountering is due to the fact that calling `legend(['AAA', 'BBB'])` without specifying the handles will create a new legend without affecting the existing one.\n\nHere's how you can change the legend labels correctly when plotting with pandas:\n\n```python\nimport pandas as pd\nimport matplotlib.pyplot as plt\n\ndf = pd.DataFrame({'A': 26, 'B': 20}, index=['N'])\nax = df.plot(kind='bar')\n\n# Set the legend labels\nax.legend(['AAA', 'BBB'])\n\nplt.show()\n```\n\nIn this code, `ax` is the `Axes` object returned by `df.plot()`. You can use it to access and modify the plot elements, such as the legend. By calling `ax.legend(['AAA', 'BBB'])`, you update the labels for the existing legend without adding a new one.\n\nThis method should work effectively for your needs without requiring you to plot each column independently with matplotlib."
+    }
+]
