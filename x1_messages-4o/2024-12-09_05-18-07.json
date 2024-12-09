@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there a library in Python that can resolve a relative URL path to its absolute path? I am looking for functionality similar to the following example:\n\n```\n>>> resolvePath(\"http://www.asite.com/folder/currentpage.html\", \"anotherpage.html\")\n'http://www.asite.com/folder/anotherpage.html'\n>>> resolvePath(\"http://www.asite.com/folder/currentpage.html\", \"folder2/anotherpage.html\")\n'http://www.asite.com/folder/folder2/anotherpage.html'\n>>> resolvePath(\"http://www.asite.com/folder/currentpage.html\", \"/folder3/anotherpage.html\")\n'http://www.asite.com/folder3/anotherpage.html'\n>>> resolvePath(\"http://www.asite.com/folder/currentpage.html\", \"../finalpage.html\")\n'http://www.asite.com/finalpage.html'\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, Python has a library called `urllib` that provides functionality to resolve relative URL paths to their absolute paths. You can use the `urljoin` function from the `urllib.parse` module to achieve this. Here's how you can use it in your examples:\n\n```python\nfrom urllib.parse import urljoin\n\ndef resolvePath(base_url, relative_path):\n    return urljoin(base_url, relative_path)\n\n# Examples\nprint(resolvePath(\"http://www.asite.com/folder/currentpage.html\", \"anotherpage.html\"))\n# Output: 'http://www.asite.com/folder/anotherpage.html'\n\nprint(resolvePath(\"http://www.asite.com/folder/currentpage.html\", \"folder2/anotherpage.html\"))\n# Output: 'http://www.asite.com/folder/folder2/anotherpage.html'\n\nprint(resolvePath(\"http://www.asite.com/folder/currentpage.html\", \"/folder3/anotherpage.html\"))\n# Output: 'http://www.asite.com/folder3/anotherpage.html'\n\nprint(resolvePath(\"http://www.asite.com/folder/currentpage.html\", \"../finalpage.html\"))\n# Output: 'http://www.asite.com/finalpage.html'\n```\n\nThe `urljoin` function intelligently joins the base URL with the relative path, taking care of the path resolution as specified in your examples."
+    }
+]
