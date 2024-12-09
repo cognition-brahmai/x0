@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm currently trying to use psycopg2 to insert multiple rows with one query, however, the number of rows is not constant. I am using the following query:\n\n```python\nINSERT INTO t (a, b) VALUES (1, 2), (3, 4), (5, 6);\n```\n\nThe current method I'm using is:\n\n```python\nargs = [(1,2), (3,4), (5,6)]\nargs_str = ','.join(cursor.mogrify(\"%s\", (x, )) for x in args)\ncursor.execute(\"INSERT INTO t (a, b) VALUES \"+args_str)\n```\n\nHowever, I'm looking for a simpler way to do this. Can you suggest any improvements or alternative approaches?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! You can simplify your code by using `execute_values` from the `psycopg2.extras` module, which is specifically designed for inserting multiple rows efficiently. Here's how you can use it:\n\n```python\nimport psycopg2\nfrom psycopg2 import extras\n\n# Assuming you have a connection object 'conn'\nwith conn.cursor() as cursor:\n    args = [(1, 2), (3, 4), (5, 6)]\n    extras.execute_values(\n        cursor,\n        \"INSERT INTO t (a, b) VALUES %s\",\n        args\n    )\n    conn.commit()\n```\n\n### Key Points:\n- **`execute_values`**: This function is more efficient for inserting multiple rows as it minimizes the round trips to the database and handles the construction of the SQL statement internally.\n- **Placeholders**: You don't need to worry about constructing the query string with the appropriate placeholders; `execute_values` manages that for you.\n- **Committing**: Ensure you commit the transaction if you're making changes to the database.\n\nThis approach is cleaner, more efficient, and easier to maintain, especially when dealing with a dynamic number of rows."
+    }
+]
