@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I mock a readonly property with mock in Python? I have attempted to do this using `setattr(obj.__class__, 'property_to_be_mocked', mock.Mock())`, however, it applies to all instances of the class which is causing my tests to fail. I am looking for a solution that will allow me to mock only the specific property and not the entire object. Any suggestions?"
+    },
+    {
+        "role": "assistant",
+        "content": "To mock a read-only property in Python without affecting all instances of the class, you can use the `unittest.mock` library's `PropertyMock`. This allows you to mock the property specifically for the instance you are testing. Here's how you can achieve this:\n\n```python\nfrom unittest import mock\n\n# Assuming you have a class like this\nclass MyClass:\n    @property\n    def my_property(self):\n        return \"original_value\"\n\n# Create an instance of the class\ninstance = MyClass()\n\n# Use mock.patch.object to mock the property for this specific instance\nwith mock.patch.object(MyClass, 'my_property', new_callable=mock.PropertyMock) as mock_property:\n    mock_property.return_value = \"mocked_value\"\n    \n    # Now, when you access the property on this instance, it will return the mocked value\n    print(instance.my_property)  # Output: mocked_value\n\n# Outside the context manager, the property returns to its original behavior\nprint(instance.my_property)  # Output: original_value\n```\n\n### Explanation:\n- **`mock.patch.object`**: This is used to patch the object, specifically targeting the property you want to mock.\n- **`new_callable=mock.PropertyMock`**: This tells the patch to use `PropertyMock` to mock the property, allowing it to behave like a property (i.e., it can be accessed like one).\n- **`mock_property.return_value`**: This sets what the mocked property should return when accessed.\n\nUsing this approach ensures that only the specific instance of the property is mocked, not the entire class or all instances of the class. This way, your tests can be more precise and isolated."
+    }
+]
