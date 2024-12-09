@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, I know that I can use `string.find()` and `string.rfind()` to get the index of a substring in a string. These return the index of the first occurrence from the beginning or the end respectively. Is there a way to find all occurrences of a substring within a string? For instance, if I have a string \"test test test test\", I would like to get all indexes where the substring 'test' is found, something like `string.find_all('test')` which would return `[0,5,10,15]`."
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can find all occurrences of a substring within a string by using a loop or list comprehension in Python. The `str.find()` method can be used iteratively to achieve this. Here\u2019s how you can implement this:\n\n```python\ndef find_all_occurrences(s, sub):\n    start = 0\n    indices = []\n    while start < len(s):\n        pos = s.find(sub, start)\n        if pos == -1:\n            break\n        indices.append(pos)\n        start = pos + 1  # Move start index to the next character after the found substring\n    return indices\n\n# Example usage\nstring = \"test test test test\"\nsubstring = \"test\"\nindices = find_all_occurrences(string, substring)\nprint(indices)  # Output: [0, 5, 10, 15]\n```\n\nThis function `find_all_occurrences` initializes the search from the beginning of the string and continues until the entire string has been searched. It appends each found index to the `indices` list and moves the starting point for the next search to just after the current found substring."
+    }
+]
