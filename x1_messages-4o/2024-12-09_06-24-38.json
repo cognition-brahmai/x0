@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I invert a mask in OpenCV using the Python bindings? I have a mask like this:\n\n<pre><code>010\n111\n010\n</code></pre>\n\nBut I want to invert it and get this:\n\n<pre><code>101\n000\n101\n</code></pre>\n\nIs there a simple way to do this without looping over each element, as this could potentially cause execution speed issues?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can easily invert a mask in OpenCV using Python without having to loop over each element individually. OpenCV provides convenient functions that operate on entire arrays. You can use the `cv2.bitwise_not` function to invert a mask. Here's how you can do it:\n\n```python\nimport cv2\nimport numpy as np\n\n# Assuming your mask is a numpy array\nmask = np.array([[0, 1, 0],\n                 [1, 1, 1],\n                 [0, 1, 0]], dtype=np.uint8)\n\n# Invert the mask\ninverted_mask = cv2.bitwise_not(mask)\n\nprint(inverted_mask)\n```\n\nThe `cv2.bitwise_not` function inverts the values in the mask: it changes 0s to 255s and 255s to 0s. If you want to work with binary values (0s and 1s), you might need to convert the result back to binary by dividing by 255 if needed.\n\nHere's how you can adjust it if you want to keep the mask as binary (0s and 1s):\n\n```python\nbinary_inverted_mask = 1 - mask\n\nprint(binary_inverted_mask)\n```\n\nThis simple operation will give you the inverted binary mask as you desire."
+    }
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Keras, I'm trying to get the layer shapes in a Sequential model. I have the following code:\n\n```\nmodel = Sequential()\nmodel.add(Conv2D(filters=32, \n               kernel_size=(3,3), \n               input_shape=(64,64,3)\n        ))\nmodel.add(MaxPooling2D(pool_size=(3,3), strides=(2,2)))\n```\n\nHowever, when I try to print the shape of each layer using the following code:\n\n```\nfor layer in model.layers:\n    print(layer.get_shape())\n```\n\nI run into an error that says: `AttributeError: 'Conv2D' object has no attribute 'get_shape'`. How can I correctly access and print the layer shapes of a Sequential model in Keras?"
+    },
+    {
+        "role": "assistant",
+        "content": "To correctly access and print the shapes of each layer in a Keras Sequential model, you should use the `output_shape` attribute of each layer instead of calling a non-existent method `get_shape()`. Here's how you can modify your code to print the shape of each layer:\n\n```python\nfrom keras.models import Sequential\nfrom keras.layers import Conv2D, MaxPooling2D\n\n# Define the model\nmodel = Sequential()\nmodel.add(Conv2D(filters=32, \n               kernel_size=(3,3), \n               input_shape=(64,64,3)\n        ))\nmodel.add(MaxPooling2D(pool_size=(3,3), strides=(2,2)))\n\n# Print the output shape of each layer\nfor layer in model.layers:\n    print(layer.output_shape)\n```\n\nThis will output the shape of the output of each layer in the model. The `output_shape` attribute provides a tuple that represents the shape of the output tensor produced by the layer."
+    }
+]

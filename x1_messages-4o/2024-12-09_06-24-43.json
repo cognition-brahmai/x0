@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python 3.5, type annotations were introduced. I'm trying to define a recursive type annotation for a tree-like structure. Here is my code:\n\n```python\nclass Employee(object):\n    def __init__(self, name: str, reports: List[Employee]):\n       self.name = name\n       self.reports = reports\n```\n\nHowever, the annotation `List[Employee]` seems not to work. I get a `NameError` saying `'Employee' is not defined`. How can I correctly define recursive type annotations in Python 3.5+?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python 3.5, type annotations can be a bit tricky when dealing with recursive types because the class definition isn't complete by the time you're trying to use the class name within the annotations. To work around this, you can use a string literal for the type annotation to defer the evaluation until after the class is fully defined.\n\nHere's how you can modify your code:\n\n```python\nfrom typing import List\n\nclass Employee(object):\n    def __init__(self, name: str, reports: 'List[Employee]'):\n        self.name = name\n        self.reports = reports\n```\n\nBy using `'List[Employee]'` as a string, you avoid the `NameError` because the type hint is not evaluated until later, when the class name `Employee` is actually available.\n\nIf you're using Python 3.7 or later, you can also use the `from __future__ import annotations` feature, which automatically treats all annotations as string literals, allowing you to write:\n\n```python\nfrom __future__ import annotations\nfrom typing import List\n\nclass Employee:\n    def __init__(self, name: str, reports: List[Employee]):\n        self.name = name\n        self.reports = reports\n```\n\nThis approach is more elegant and is recommended if you can use a newer version of Python."
+    }
+]
