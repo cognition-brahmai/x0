@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a DataFrame with a MultiIndex and I am trying to get the unique values from an index column. I am currently resetting the index to achieve this as shown below:\n\n```python\ndf = df.reset_index()\nuniq_b = df.B.unique()\ndf = df.set_index(['A','B'])\n```\nHowever, I am looking for a way to avoid the index resetting step. Is there a built-in function in pandas that I can use to get the unique values directly from the index column in a MultiIndex DataFrame?\n\nMy DataFrame is structured as follows:\n\n```python\n        C\n A B     \n 0 one  3\n 1 one  2\n 2 two  1\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can get the unique values from a specific level of a MultiIndex without resetting the index by using the `get_level_values` method. This method allows you to access the values at a particular index level directly. Here's how you can achieve this:\n\n```python\n# Assuming 'df' is your DataFrame with a MultiIndex\nunique_b = df.index.get_level_values('B').unique()\n\nprint(unique_b)\n```\n\nIn this example, `get_level_values('B')` retrieves all the values from the 'B' level of the MultiIndex, and then `unique()` is used to find the unique values among them. This approach avoids the need to reset the index and is more efficient."
+    }
+]
