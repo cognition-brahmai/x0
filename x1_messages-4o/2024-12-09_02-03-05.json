@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "When applying min max scaling to normalize my features, should I apply it on the entire dataset before splitting it into training, validation and test data? Or should I split the data first and then apply min max scaling on each set, using the min and max values from that specific set? Additionally, when making a prediction on a new input, should the features of that input be normalized using the min, max values from the training data before being fed into the network?"
+    },
+    {
+        "role": "assistant",
+        "content": "When applying Min-Max scaling (or any kind of feature scaling), it's important to do so in a way that maintains the integrity of your model's evaluation process. Here's the recommended approach:\n\n1. **Split Your Dataset First**: You should first split your dataset into training, validation, and test sets. This ensures that your model's evaluation is unbiased and simulates how it will perform on unseen data.\n\n2. **Apply Scaling to the Training Set Only**: Compute the Min-Max scaling parameters (i.e., the minimum and maximum values for each feature) using only the training data. This is crucial because it prevents leakage of information from the validation or test sets into the model.\n\n3. **Transform the Validation and Test Sets**: Once you have the scaling parameters from the training data, apply them to transform the validation and test sets. This ensures that all data fed into your model is on the same scale, while still keeping the validation and test sets truly independent of the training process.\n\n4. **New Input Normalization**: When making predictions on new data, you should normalize the new input using the Min-Max scaling parameters derived from the training data. This consistency in scaling is necessary to ensure that the model interprets the new inputs correctly.\n\nBy following these steps, you ensure that your model is evaluated fairly and is capable of generalizing to new, unseen data."
+    }
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a DataFrame in pandas where several columns have the same name - for instance, 'NY-WEB01'. Here is an example:\n\n```python\ndf[\"NY-WEB01\"].head()\nOut[186]:\n                NY-WEB01    NY-WEB01\nDateTime        \n2012-10-18 16:00:00  5.6     2.8\n2012-10-18 17:00:00  18.6    12.0\n2012-10-18 18:00:00  18.4    12.0\n2012-10-18 19:00:00  18.2    12.0\n2012-10-18 20:00:00  19.2    12.0\n```\n\nHow can I combine these duplicate columns in such a way that for each row, the values in the duplicate columns are summed up? Note that there are many duplicate columns, not just 'NY-WEB01'."
+    },
+    {
+        "role": "assistant",
+        "content": "To combine columns with the same name by summing their values, you can group the columns by their names and then sum them. Here's how you can achieve this using the `groupby` method along with `axis=1`:\n\n```python\nimport pandas as pd\n\n# Your DataFrame\ndata = {\n    'DateTime': ['2012-10-18 16:00:00', '2012-10-18 17:00:00', '2012-10-18 18:00:00', \n                 '2012-10-18 19:00:00', '2012-10-18 20:00:00'],\n    'NY-WEB01': [5.6, 18.6, 18.4, 18.2, 19.2],\n    'NY-WEB01.1': [2.8, 12.0, 12.0, 12.0, 12.0]  # Renamed duplicate column for illustration\n}\n\ndf = pd.DataFrame(data)\ndf.set_index('DateTime', inplace=True)\n\n# Group by column names, sum them, and create a new DataFrame\ndf_combined = df.groupby(df.columns, axis=1).sum()\n\nprint(df_combined)\n```\n\nIn this example, I renamed one of the 'NY-WEB01' columns to 'NY-WEB01.1' for illustration, but you can apply this directly to your original DataFrame with actual duplicate names. The `groupby` method groups columns by their names, and `sum()` aggregates the values by summing them up for each group.\n\nThis will give you a DataFrame where each set of duplicate columns is replaced with a single column containing the summed values."
+    }
+]
