@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python Flask, how can I set the response header for all responses? I want all of my HTTP headers responses to be set as `response.headers[\"X-Frame-Options\"] = \"SAMEORIGIN\"`. I understand how to change the header for one specific controller as demonstrated in a previous question I found, but I want to change all of my headers possibly in the \"before_request\" function. Here is the logic I am currently considering:\n\n```python\n@app.before_request\ndef before_request():\n    # response.headers[\"X-Frame-Options\"] = \"SAMEORIGIN\"\n```\n However, I am unsure of how to proceed. Can you advise?"
+    },
+    {
+        "role": "assistant",
+        "content": "To set a specific HTTP header for all responses in a Flask application, you can use the `after_request` decorator instead of `before_request`. This is because the response object is available after the request has been processed. Here's how you can do it:\n\n```python\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.after_request\ndef add_header(response):\n    response.headers[\"X-Frame-Options\"] = \"SAMEORIGIN\"\n    return response\n\n@app.route('/')\ndef index():\n    return \"Hello, World!\"\n\nif __name__ == '__main__':\n    app.run()\n```\n\nIn this example, the `add_header` function is decorated with `@app.after_request`, which means it will be called after each request is handled. The `response` object is passed to this function, allowing you to modify its headers before it's sent back to the client. By setting `response.headers[\"X-Frame-Options\"] = \"SAMEORIGIN\"`, you ensure this header is included in all your HTTP responses."
+    }
+]
