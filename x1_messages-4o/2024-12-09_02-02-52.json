@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a DataFrame in pandas where I want to retain the rows where a particular variable has a 'NaN' value, and drop the rows where the variable is not missing. For example, in the below DataFrame, I want to drop all rows where 'opinion' is not missing (i.e., I want to drop the rows where 'ticker' is 'aapl', 'goog', and 'wmt'). Is there a function in pandas that performs the opposite operation to '.dropna()'?\n\n```python\nticker  opinion  x1       x2  \naapl    GC       100      70  \nmsft    NaN      50       40  \ngoog    GC       40       60  \nwmt     GC       45       15  \nabm     NaN      80       90 \n```"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can achieve this by using boolean indexing in pandas to filter the rows where the 'opinion' column has 'NaN' values. Here's how you can do it:\n\n```python\nimport pandas as pd\nimport numpy as np\n\n# Sample DataFrame\ndata = {\n    'ticker': ['aapl', 'msft', 'goog', 'wmt', 'abm'],\n    'opinion': ['GC', np.nan, 'GC', 'GC', np.nan],\n    'x1': [100, 50, 40, 45, 80],\n    'x2': [70, 40, 60, 15, 90]\n}\n\ndf = pd.DataFrame(data)\n\n# Retain rows where 'opinion' is NaN\ndf_with_nan_opinion = df[df['opinion'].isna()]\n\nprint(df_with_nan_opinion)\n```\n\nThis code will give you a DataFrame with only the rows where the 'opinion' column has NaN values:\n\n```\n  ticker opinion  x1  x2\n1   msft     NaN  50  40\n4    abm     NaN  80  90\n```\n\nThe `isna()` function is used to identify the NaN values in the 'opinion' column, and the boolean indexing `df[df['opinion'].isna()]` filters the DataFrame to retain only those rows."
+    }
+]
