@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Django, is it possible to catch a `MultipleObjectsReturned` error? I have a search query where if there are more than one objects, I want the first object in the list to be returned. I tried the following code, but it returns an error saying that the global variable `MultipleObjectsReturned` does not exist. Is there a way to resolve this?\n\n```python\ntry:\n    Location.objects.get(name='Paul')\nexcept MultipleObjectsReturned:\n    Location.objects.get(name='Paul')[0]\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, it is indeed possible to catch a `MultipleObjectsReturned` error in Django. The issue you're encountering stems from the fact that `MultipleObjectsReturned` is not a built-in Python exception; it's a specific exception provided by Django's ORM, and it needs to be imported from the Django models module.\n\nHere's how you can modify your code to handle the `MultipleObjectsReturned` exception correctly:\n\n```python\nfrom django.core.exceptions import MultipleObjectsReturned\nfrom your_app.models import Location  # Make sure to replace 'your_app' with your actual app name\n\ntry:\n    location = Location.objects.get(name='Paul')\nexcept MultipleObjectsReturned:\n    location = Location.objects.filter(name='Paul').first()\n\n# Now, 'location' will contain the first object if there are multiple matches,\n# or it will contain the object if there's exactly one match,\n# or it will be None if there are no matches.\n```\n\nIn this updated code:\n\n- Import `MultipleObjectsReturned` from `django.core.exceptions`.\n- Use `Location.objects.filter(name='Paul').first()` to retrieve the first object from the queryset if multiple objects are returned. The `first()` method ensures that you get the first object or `None` if no objects are found.\n"
+    }
+]
