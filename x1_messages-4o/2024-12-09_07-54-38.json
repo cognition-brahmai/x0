@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I retrieve the dimensions of a video using Python-OpenCV? I have successfully retrieved the dimensions of an image using the following code:\n\n```python\nimport cv2\n\nimg = cv2.imread('my_image.jpg',0)\nheight, width = img.shape[:2]\n```\n\nBut I'm unsure about how to proceed with videos."
+    },
+    {
+        "role": "assistant",
+        "content": "To retrieve the dimensions of a video using Python and OpenCV, you can use the `cv2.VideoCapture` class to read the video and then access its properties to get the frame width and height. Here's how you can do it:\n\n```python\nimport cv2\n\n# Open the video file\nvideo = cv2.VideoCapture('my_video.mp4')\n\n# Check if the video was opened successfully\nif not video.isOpened():\n    print(\"Error: Could not open video.\")\nelse:\n    # Get the width and height of the video frames\n    width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))\n    height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\n    print(f\"Video dimensions: {width} x {height}\")\n\n# Release the video capture object\nvideo.release()\n```\n\nThis code will open the specified video file, retrieve its frame width and height using the `CAP_PROP_FRAME_WIDTH` and `CAP_PROP_FRAME_HEIGHT` properties, and then print the dimensions. Don't forget to release the video capture object once you're done to free up resources."
+    }
+]

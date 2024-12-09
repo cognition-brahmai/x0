@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How are PCI-e lanes allocated on Nvidia devices containing two GPUs, such as the GTX 690? If I am running compute jobs on just one GPU, can all 16 PCI-e lanes serve the single GPU being utilized? I am not referring to the case where the CPU is connected to two cards, each with one GPU."
+    },
+    {
+        "role": "assistant",
+        "content": "The allocation of PCIe lanes on devices like the Nvidia GTX 690, which features two GPUs on a single card, is managed by the card's onboard controller. Each GPU is typically allocated a certain number of lanes by this controller. For the GTX 690, each GPU would generally have access to an equal share of the total available PCIe lanes when both are in use.\n\nWhen running compute jobs on just one of the GPUs on such a dual-GPU card, the specific allocation of PCIe lanes is not usually dynamically reassigned to provide all lanes to the active GPU. The PCIe lanes are typically hardwired to each GPU, meaning each GPU has a fixed number of lanes that it can utilize. In the case of the GTX 690, each GPU would likely be using 8 lanes if the card is on a 16-lane slot.\n\nTherefore, even if you're only using one GPU for a compute job, the other GPU's lanes would remain allocated to it, rather than being reassigned to boost the active GPU's bandwidth. This setup is generally designed to ensure balanced performance across both GPUs when they are both in use, rather than optimizing for single GPU performance when only one is active."
+    }
+]
