@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, how can I determine if a string is a valid JSON before attempting to parse it? This is important to me since when I am working with APIs like the Facebook Graph API, they sometimes return JSON, but other times they could return an image file."
+    },
+    {
+        "role": "assistant",
+        "content": "To determine if a string is a valid JSON in Python before attempting to parse it, you can use the `json` module. The idea is to try parsing the string with `json.loads()` inside a try-except block. If it successfully parses without any exceptions, then the string is a valid JSON. Otherwise, it's not. Here's how you can implement this:\n\n```python\nimport json\n\ndef is_valid_json(string):\n    try:\n        json_object = json.loads(string)\n    except ValueError as e:\n        return False\n    return True\n\n# Example usage:\njson_string = '{\"name\": \"John\", \"age\": 30, \"city\": \"New York\"}'\nnon_json_string = 'This is not a JSON string.'\n\nprint(is_valid_json(json_string))  # Output: True\nprint(is_valid_json(non_json_string))  # Output: False\n```\n\nThis function will return `True` if the string is a valid JSON and `False` otherwise. Keep in mind that this method will only verify the syntactical validity of the JSON string. It doesn't ensure the JSON structure aligns with any specific schema or expected data types beyond JSON's basic types (like objects, arrays, strings, numbers, etc.). If you need more comprehensive validation, you might consider using a schema validation library like `jsonschema`."
+    }
+]
