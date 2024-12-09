@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I sort an alphanumeric set in Python? I am currently working with the following set: \n\n```\nset(['booklet', '4 sheets', '48 sheets', '12 sheets'])\n```\n\nI would like the sorted output to be as follows:\n\n```\n4 sheets,\n12 sheets,\n48 sheets,\nbooklet\n```\n\nWhat solutions or methods are available to accomplish this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To sort an alphanumeric set in Python as you described, you'll need to use a custom sorting key that can handle both numbers and text. One way to achieve this is by using the `sorted()` function along with a custom sorting key. Here's how you can do it:\n\n```python\nimport re\n\n# Define the set\nitems = set(['booklet', '4 sheets', '48 sheets', '12 sheets'])\n\n# Function to extract numbers from strings\ndef alphanumeric_sort_key(s):\n    # Use regex to find the first occurrence of a digit in the string\n    match = re.search(r'\\d+', s)\n    if match:\n        # Convert the found number into an integer\n        number = int(match.group())\n        return (number, s)\n    else:\n        # If no number is found, return a tuple with a large number to sort text last\n        return (float('inf'), s)\n\n# Sort using the custom key\nsorted_items = sorted(items, key=alphanumeric_sort_key)\n\n# Print the sorted list\nfor item in sorted_items:\n    print(item)\n```\n\n### Explanation:\n1. **Regex Search**: The function `alphanumeric_sort_key` uses a regular expression to search for numbers in each string. If a number is found, it returns a tuple with the number and the string.\n2. **Sorting**: The `sorted()` function uses this tuple to sort, where the first element (number) is given priority. If no number is found, it assigns a large number (`float('inf')`) to ensure non-numeric strings are sorted to the end.\n3. **Result**: This results in the numeric strings being sorted by their numerical value first, followed by any non-numeric strings.\n\nThis approach will give you the output you desire:\n\n```\n4 sheets\n12 sheets\n48 sheets\nbooklet\n```"
+    }
+]
