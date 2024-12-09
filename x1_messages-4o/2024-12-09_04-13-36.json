@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am currently testing my Flask application using the methods suggested here: http://flask.pocoo.org/docs/testing/. I want to make a POST request with custom headers, specifically adding a content-md5 header. I am using the following code for my request: `self.app.post('/v0/scenes/test/foo', data=dict(image=(StringIO('fake image'), 'image.png')))`. However, when I looked into the Flask Client (in flask/testing.py), which extends Werkzeug's Client documented at http://werkzeug.pocoo.org/docs/test/, I didn't find a way to add custom headers to the post request. Is there a way I can add a content-md5 to the request header?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can add custom headers to your POST request when testing your Flask application. The `self.app.post` method in the Flask test client allows you to pass headers as an additional argument. You can use the `headers` parameter to include custom headers in your request.\n\nHere's how you can modify your code to add a `Content-MD5` header:\n\n```python\nfrom io import StringIO\nimport hashlib\nimport base64\n\n# Calculate the MD5 hash of the data\nimage_data = 'fake image'\nmd5_hash = hashlib.md5(image_data.encode('utf-8')).digest()\ncontent_md5 = base64.b64encode(md5_hash).decode('utf-8')\n\n# Make the POST request with custom headers\nresponse = self.app.post(\n    '/v0/scenes/test/foo',\n    data=dict(image=(StringIO(image_data), 'image.png')),\n    headers={\n        'Content-MD5': content_md5\n    }\n)\n\n# Process the response as needed\n```\n\nIn this example, I first calculate the MD5 hash of the image data and then encode it in base64 to form the `Content-MD5` header. This header is then added to the POST request using the `headers` parameter. You can adjust the header calculation based on your specific requirements."
+    }
+]
