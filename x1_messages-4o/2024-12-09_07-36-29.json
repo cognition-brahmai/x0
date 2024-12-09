@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I implement the __str__ method for a function in Python? Given a function `foo`, when I invoke `str` or `repr`, I get a simple representation like '<function foo at 0x119e0c8c8>'. However, I want to override this function's __str__ method to print a custom message such as \"I'm foo!\". I understand that the description of a function should come from __doc__ which is the function's docstring, but this is just an experiment. I've tried assigning a metaclass with an __str__ method to the function's __class__.__metaclass__ but I'm getting a TypeError. What's the correct way to implement this?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, functions are instances of the `function` class, and they don't directly support overriding methods like `__str__` in the same way that custom classes do. However, you can achieve your goal by wrapping your function in a custom class and overriding the `__str__` method there. Here's how you can do it:\n\n```python\nclass FunctionWrapper:\n    def __init__(self, func):\n        self.func = func\n\n    def __call__(self, *args, **kwargs):\n        return self.func(*args, **kwargs)\n\n    def __str__(self):\n        return f\"I'm {self.func.__name__}!\"\n\n    def __repr__(self):\n        return f\"<FunctionWrapper of {self.func.__name__}>\"\n\n# Example function\ndef foo():\n    return \"Hello, World!\"\n\n# Wrap the function\nwrapped_foo = FunctionWrapper(foo)\n\n# Usage\nprint(str(wrapped_foo))  # Output: I'm foo!\nprint(repr(wrapped_foo))  # Output: <FunctionWrapper of foo>\n\n# Call the function\nresult = wrapped_foo()\nprint(result)  # Output: Hello, World!\n```\n\nIn the example above, `FunctionWrapper` is a class that takes a function as an argument and provides a custom `__str__` and `__repr__` method. By using the `__call__` method, the `FunctionWrapper` instance can be called just like the original function. This way, you can achieve the desired custom string representation while still maintaining the functionality of the original function."
+    }
+]
