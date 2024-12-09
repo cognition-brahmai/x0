@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am attempting to copy an arbitrary dictionary into a new dictionary in Python, making modifications along the way, specifically swapping keys and values. However, some values are dictionaries themselves, leading to an \"unhashable type: 'dict'\" error. Is there a clean way to check if a value is hashable without trapping an exception and parsing the message string for \"unhashable type\"?\n\nHere's the code I've been trying:\n\n```python\nfor key in olddict:\n  if hashable(olddict[key]):\n    newdict[olddict[key]] = key\n  else\n    newdict[str(olddict[key])] = key\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To address the issue of checking if a value is hashable without relying on exception handling, you can define a helper function that attempts to hash the value. This function will determine if the value is hashable by using a try-except block internally, but it will return a boolean result instead of relying on exception parsing in the main code.\n\nHere's how you can accomplish this:\n\n```python\ndef is_hashable(obj):\n    try:\n        hash(obj)\n        return True\n    except TypeError:\n        return False\n\nolddict = {\n    'a': 1,\n    'b': {'nested': 'dict'},\n    'c': 3.14,\n    'd': (1, 2),\n    'e': [1, 2, 3]\n}\n\nnewdict = {}\n\nfor key in olddict:\n    value = olddict[key]\n    if is_hashable(value):\n        newdict[value] = key\n    else:\n        # Convert non-hashable values to their string representation\n        newdict[str(value)] = key\n\nprint(newdict)\n```\n\nIn this code, the `is_hashable` function attempts to hash the object and returns `True` if successful and `False` if a `TypeError` is caught, indicating that the object is unhashable. This approach allows you to handle unhashable values gracefully by converting them to strings or any other suitable representation before using them as keys in the new dictionary."
+    }
+]
