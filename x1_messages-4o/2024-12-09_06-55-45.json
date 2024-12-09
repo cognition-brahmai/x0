@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I pass a function, along with its parameters, as a parameter to another function in Python? For example, I have the following code:\n```python\ndef lite(a,b,c):\n    #...\n\ndef big(func): # func = callable()\n    #...\n\n#main\nbig(lite(1,2,3))\n```\nWhat is the correct way to pass the function `lite` with parameters `(1,2,3)` to the function `big`?"
+    },
+    {
+        "role": "assistant",
+        "content": "To pass a function along with its parameters to another function, you can use a lambda function or the `functools.partial` method in Python. This allows you to encapsulate the function call with its parameters so that it can be invoked later.\n\n**Using a lambda function:**\n\n```python\ndef lite(a, b, c):\n    print(a, b, c)\n\ndef big(func):\n    # Call the function passed as parameter\n    func()\n\n# Main\nbig(lambda: lite(1, 2, 3))\n```\n\n**Using `functools.partial`:**\n\n```python\nfrom functools import partial\n\ndef lite(a, b, c):\n    print(a, b, c)\n\ndef big(func):\n    # Call the function passed as parameter\n    func()\n\n# Main\nbig(partial(lite, 1, 2, 3))\n```\n\nBoth methods allow you to pass the function `lite` with its parameters `(1, 2, 3)` to the function `big`, where it can be called. The lambda function creates an anonymous function that calls `lite` with the specified parameters, while `functools.partial` creates a new function with some arguments of the original function fixed."
+    }
+]

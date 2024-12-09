@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I check if a cookie, for instance \"country\", exists using Python Flask? I am currently trying to get the cookie using the following Flask call: `data = request.cookies.get(\"country\")`."
+    },
+    {
+        "role": "assistant",
+        "content": "To check if a cookie exists in a Flask application, you can use the `request.cookies.get()` method, as you mentioned, and then verify if the returned value is `None` or not. If the value is `None`, it means the cookie does not exist; otherwise, it exists and you have the value of the cookie. Here's an example of how you can do this:\n\n```python\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route('/')\ndef check_cookie():\n    # Attempt to get the 'country' cookie\n    country_cookie = request.cookies.get('country')\n    \n    if country_cookie is None:\n        return \"The 'country' cookie does not exist.\"\n    else:\n        return f\"The 'country' cookie exists with value: {country_cookie}\"\n\nif __name__ == '__main__':\n    app.run(debug=True)\n```\n\nIn this example, when a request is made to the root route `'/'`, the application checks for the existence of the `'country'` cookie. If it exists, it returns the value of the cookie; otherwise, it informs the user that the cookie does not exist."
+    }
+]
