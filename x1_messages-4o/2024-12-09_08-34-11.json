@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I use matplotlib's autopct parameter to display numerical values on each wedge of a pie chart? I'm not sure what the format string or format function should be. Here's the basic code I'm working with:\n\n```python\nplt.figure()\nvalues = [3, 12, 5, 8] \nlabels = ['a', 'b', 'c', 'd'] \nplt.pie(values, labels=labels) #autopct??\nplt.show()\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To display numerical values on each wedge of a pie chart using the `autopct` parameter in Matplotlib's `pie()` function, you can use either a format string or a custom format function. Here's how you can do it:\n\n### Using a Format String\n\nIf you want to display the percentage of each wedge, you can use a format string. The format string should contain the placeholder `%f` for floating-point numbers, `%d` for integers, or `%.1f%%` to display percentages with one decimal place. Here's how you can update your code:\n\n```python\nimport matplotlib.pyplot as plt\n\nplt.figure()\nvalues = [3, 12, 5, 8] \nlabels = ['a', 'b', 'c', 'd'] \nplt.pie(values, labels=labels, autopct='%.1f%%')  # Display percentage with one decimal place\nplt.show()\n```\n\n### Using a Custom Format Function\n\nIf you want more control over the formatting, you can define a custom function that returns a formatted string for each wedge. This function takes the percentage value as its argument. Here's an example:\n\n```python\nimport matplotlib.pyplot as plt\n\ndef custom_autopct(pct):\n    total = sum(values)\n    val = int(round(pct * total / 100.0))\n    return '{:.1f}%\\n({:d})'.format(pct, val)  # Display percentage and actual number\n\nplt.figure()\nvalues = [3, 12, 5, 8] \nlabels = ['a', 'b', 'c', 'd'] \nplt.pie(values, labels=labels, autopct=custom_autopct)\nplt.show()\n```\n\nIn this example, the `custom_autopct` function formats the text to show both the percentage and the actual number of each wedge, separated by a newline character. You can customize the function further to meet your specific formatting needs."
+    }
+]
