@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python's pandas library, how can I select distinct values across multiple data frame columns? This can be likened to the SQL operation \"SELECT DISTINCT col1, col2 FROM dataframe_table\". The pandas sql comparison doesn't seem to have anything about the 'distinct' function. The '.unique()' function only works for a single column. Is there a more native way to do this in pandas, or am I missing something obvious?"
+    },
+    {
+        "role": "assistant",
+        "content": "In pandas, you can achieve the equivalent of SQL's `SELECT DISTINCT col1, col2 FROM dataframe_table` by using the `drop_duplicates()` function. This function is used to remove duplicate rows based on specified columns. Here's how you can do it:\n\n```python\nimport pandas as pd\n\n# Sample data frame\ndata = {\n    'col1': [1, 2, 2, 3, 4],\n    'col2': ['A', 'B', 'B', 'C', 'D'],\n    'col3': [10, 20, 20, 30, 40]\n}\n\ndf = pd.DataFrame(data)\n\n# Selecting distinct combinations of 'col1' and 'col2'\ndistinct_df = df[['col1', 'col2']].drop_duplicates()\n\nprint(distinct_df)\n```\n\nIn this example, `df[['col1', 'col2']].drop_duplicates()` will return a DataFrame with unique combinations of `col1` and `col2`. You can specify as many columns as you need in the list passed to `df[...]`.\n\nThis method is efficient and directly provides the functionality you're looking for, without needing to resort to more complex operations or additional libraries."
+    }
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to create a Python package with a setup.py file that includes an 'install_requires' field. My setup function looks like this:\n\n```python\nsetup(\n    name='TowelStuff',\n    version='0.1.0',\n    author='J. Random Hacker',\n    author_email='jrh@example.com',\n    packages=['towelstuff', 'towelstuff.test'],\n    scripts=['bin/stowe-towels.py','bin/wash-towels.py'],\n    url='http://pypi.python.org/pypi/TowelStuff/',\n    license='LICENSE.txt',\n    description='Useful towel-related stuff.',\n    long_description=open('README.txt').read(),\n    install_requires=[\n        \"Django >= 1.1.1\",\n        \"caldav == 0.1.4\",\n    ],\n)\n```\n\nHowever, when I build my package, I encounter a warning that says `distutils/dist.py:267: UserWarning: Unknown distribution option:`. Does 'install_requires' only work with specific Python versions?"
+    },
+    {
+        "role": "assistant",
+        "content": "The `install_requires` option is part of the `setuptools` library, not `distutils`. If you're seeing a warning about an unknown distribution option, it's likely because your `setup.py` is using `distutils` instead of `setuptools`.\n\nHere's how you can modify your `setup.py` to ensure it uses `setuptools`:\n\n1. Make sure you import `setup` from `setuptools`, not `distutils`. Change the import statement at the top of your `setup.py`:\n\n   ```python\n   from setuptools import setup\n   ```\n\n2. If you haven't already, make sure `setuptools` is installed in your environment. You can install it using pip:\n\n   ```bash\n   pip install setuptools\n   ```\n\nBy using `setuptools`, your `install_requires` option should work correctly without warnings. If you continue to face issues, ensure that your environment is set up correctly, and you have the latest version of `setuptools` installed."
+    }
+]
