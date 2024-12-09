@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I check in Python if a variable is of enum type? I have an enum class defined as below:\n\n```python\n@enum.unique\nclass TransactionTypes(enum.IntEnum):\n    authorisation = 1\n    balance_adjustment = 2\n    chargeback = 3\n    auth_reversal = 4\n```\n\nI assign a variable with this enum like this:\n\n```python\na = TransactionTypes\n```\n\nI want to check for the type of 'a' and perform a specific operation if it's an enum and a different operation if it's not an enum. I tried the following code but it's not working as expected:\n\n```python\nif type(a) == enum:\n    print \"do enum related stuff\"\nelse:\n    print \"do something else\"\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To check if a variable is of an enum type in Python, you should use the `isinstance()` function. Since `a` is assigned to the `TransactionTypes` enum class, you should compare it to the `enum.Enum` base class to determine if it is an enum type. Here's how you can perform the check:\n\n```python\nimport enum\n\n@enum.unique\nclass TransactionTypes(enum.IntEnum):\n    authorisation = 1\n    balance_adjustment = 2\n    chargeback = 3\n    auth_reversal = 4\n\na = TransactionTypes\n\n# Check if 'a' is an Enum type\nif issubclass(a, enum.Enum):\n    print(\"do enum related stuff\")\nelse:\n    print(\"do something else\")\n```\n\nIn this code, `issubclass(a, enum.Enum)` is used to check if `a` is a subclass of `enum.Enum`, which indicates that `a` is indeed an enum type. Note that `a` is not an instance of an enum member; it's the enum class itself, so `issubclass()` is appropriate here. If `a` were an instance of an enum member (e.g., `a = TransactionTypes.authorisation`), you would use `isinstance(a, enum.Enum)`."
+    }
+]
