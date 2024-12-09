@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I implement a simple redirect in Django, similar to `cflocation` in ColdFusion or `header(location:http://)` in PHP?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Django, you can implement a simple redirect using the `HttpResponseRedirect` class or the `redirect` shortcut function. Both methods can be used to redirect a user to a different URL. Here's how you can do it:\n\n### Method 1: Using `HttpResponseRedirect`\n\n```python\nfrom django.http import HttpResponseRedirect\n\ndef my_view(request):\n    # Your logic here\n    return HttpResponseRedirect('/some-url/')\n```\n\nIn this example, when the `my_view` function is called, it will redirect the user to `/some-url/`.\n\n### Method 2: Using `redirect` Shortcut\n\nDjango provides a more convenient shortcut function named `redirect`, which can handle more complex scenarios like redirecting to a URL pattern name or passing arguments.\n\n```python\nfrom django.shortcuts import redirect\n\ndef my_view(request):\n    # Your logic here\n    return redirect('/some-url/')\n```\n\nOr, if you want to redirect to a named URL pattern:\n\n```python\nfrom django.shortcuts import redirect\nfrom django.urls import reverse\n\ndef my_view(request):\n    # Your logic here\n    return redirect('url-pattern-name')\n\n# If you need to pass arguments to the URL pattern\ndef my_view_with_args(request, some_id):\n    # Your logic here\n    return redirect('url-pattern-name', some_id=some_id)\n```\n\n### Additional Options\n\n- **Redirecting with Query Parameters:** You can append query parameters to the URL string in either method if needed.\n  \n- **Redirecting to an External URL:** You can use either method to redirect to an external URL by specifying the full URL.\n\nThese methods should help you achieve the functionality similar to `cflocation` in ColdFusion or `header(location: http://)` in PHP."
+    }
+]
