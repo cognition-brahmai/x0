@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a custom class in Python that contains a `__mul__` function, which works with integers. However, in my program or libraries, it's being called in reverse, for example `2 * x`, where `x` is an instance of my custom class. Is there a method to have it utilize my `__mul__` function for this scenario?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can handle this scenario by implementing the `__rmul__` method in your custom class. In Python, when the left operand does not have a `__mul__` method that can handle the operation, Python will look for a `__rmul__` method on the right operand. Therefore, by implementing `__rmul__`, you can define how multiplication should be handled when your custom class instance is on the right side of the `*` operator.\n\nHere's an example of how you can implement this:\n\n```python\nclass MyCustomClass:\n    def __init__(self, value):\n        self.value = value\n\n    def __mul__(self, other):\n        if isinstance(other, int):\n            return MyCustomClass(self.value * other)\n        return NotImplemented\n\n    def __rmul__(self, other):\n        # This is called when the left operand does not support multiplication\n        # but the right operand does support it.\n        return self.__mul__(other)\n\n    def __repr__(self):\n        return f\"MyCustomClass({self.value})\"\n\n# Example usage\nx = MyCustomClass(10)\nresult = 2 * x  # This will call x.__rmul__(2)\nprint(result)  # Output: MyCustomClass(20)\n```\n\nIn this example, when `2 * x` is executed, Python attempts to call `int.__mul__`, which does not know how to handle an instance of `MyCustomClass`. As a result, it falls back to `x.__rmul__(2)`, which then calls your defined `__mul__` logic to handle the operation."
+    }
+]

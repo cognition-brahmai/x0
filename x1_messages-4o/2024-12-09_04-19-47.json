@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to use `_pickle` in Python3 to save large amounts of data onto a disk. However, when I call `_pickle.dump`, I encounter the following error: `OverflowError: cannot serialize a bytes object larger than 4 GiB`. Is this a hard limitation of using `_pickle` (or `cPickle` in Python2)?"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering is due to a limitation in the older versions of the pickle module in Python. In Python 3, the default protocol version for pickling is 3, which doesn't support serializing objects larger than 4 GiB. However, Python 3.4 introduced protocol version 4, which does support larger objects.\n\nTo resolve this issue, you can specify the use of protocol version 4 or higher when using `_pickle.dump`. Here's how you can do it:\n\n```python\nimport _pickle as pickle\n\n# Use protocol version 4 or higher\nwith open('large_data.pkl', 'wb') as f:\n    pickle.dump(large_data_object, f, protocol=pickle.HIGHEST_PROTOCOL)\n```\n\nBy using `protocol=pickle.HIGHEST_PROTOCOL`, you ensure that the highest available protocol is used, which is currently 5 (as of Python 3.8). This protocol supports serializing objects larger than 4 GiB.\n\nMake sure you're using a version of Python that supports these protocols (Python 3.4 or newer for protocol 4, and Python 3.8 or newer for protocol 5). If you're using an older version of Python, you might consider upgrading to take advantage of these enhancements."
+    }
+]

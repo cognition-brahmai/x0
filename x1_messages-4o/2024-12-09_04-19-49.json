@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I invalidate a @cached_property in Django? I'm currently using @cached_property on a model class and I want to delete it upon saving so that it can be repopulated on the next call. Here's an example of what I'm working with:\n\n```python\nclass Amodel():\n    #...model_fields....\n\n    @cached_property\n    def db_connection(self):\n        #get some thing in the db and cache here\n\ninstance = Amodel.objects.get(id=1)\nvariable = instance.db_connection\n\nAmodel.objects.select_for_update().filter(id=1).update(#some variable)\n#invalidate instance.db_connection\n#new_variable = instance.db_connection\n```\n\nHow can I accomplish this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To invalidate a `@cached_property` in Django, especially after updating the model, you can use the `del` statement to delete the cached attribute from the instance. This ensures that the next time you access the property, it gets recalculated.\n\nHere's how you can modify your code to invalidate the `@cached_property`:\n\n```python\nfrom django.utils.functional import cached_property\n\nclass Amodel():\n    # ... model fields ...\n\n    @cached_property\n    def db_connection(self):\n        # Get something from the db and cache it here\n        return some_database_operation()\n\n# Fetch the instance\ninstance = Amodel.objects.get(id=1)\n\n# Access the cached property\nvariable = instance.db_connection\n\n# Perform update operation\nAmodel.objects.select_for_update().filter(id=1).update(some_field=some_value)\n\n# Invalidate the cached property\nif 'db_connection' in instance.__dict__:\n    del instance.__dict__['db_connection']\n\n# Access the property again, it will be recalculated\nnew_variable = instance.db_connection\n```\n\nThis approach works because Django's `@cached_property` stores the cached value in the instance's `__dict__`. By deleting the specific key from `__dict__`, you effectively invalidate the cache, and the property will be recalculated the next time it's accessed."
+    }
+]
