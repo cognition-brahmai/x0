@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I check if a file with a specific extension exists in the current directory using Python? I have a directory with multiple files and I want to run a command if a file with a specific extension exists. However, my current code seems to run the else statement multiple times for files with different extensions, instead of running it only once if the file with the specific extension does not exist. How can I modify my code to achieve this?\n\nHere is the directory structure:\n\n```\ndir_________________________________________\n    \\            \\            \\            \\     \n file.false    file.false    file.true    file.false\n```\n\nAnd here is my current Python code:\n\n```python\nimport os\nfor File in os.listdir(\".\"):\n    if File.endswith(\".true\"):\n        print(\"true\")\n    else:\n        print(\"false\")\n```\n\nThe output from running this code is:\n\n```\nfalse\nfalse\ntrue\nfalse\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To modify your code so that it only prints \"false\" once if no file with the `.true` extension is found, you can use a flag variable to track whether such a file has been found. Here's how you can do it:\n\n```python\nimport os\n\n# Initialize a flag variable\nfound_true_file = False\n\n# Iterate over files in the current directory\nfor File in os.listdir(\".\"):\n    if File.endswith(\".true\"):\n        print(\"true\")\n        found_true_file = True\n        break  # Exit the loop early since we've found the file\n\n# Check if the flag is still False after the loop\nif not found_true_file:\n    print(\"false\")\n```\n\n### Explanation:\n- The `found_true_file` flag is initialized to `False`.\n- As you iterate through each file, if a file with the `.true` extension is found, it prints \"true\", sets the `found_true_file` flag to `True`, and breaks out of the loop.\n- After the loop, if `found_true_file` is still `False`, it means no file with the `.true` extension was found, so it prints \"false\" only once."
+    }
+]
