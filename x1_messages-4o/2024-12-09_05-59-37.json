@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I convert a pandas series containing string values to boolean? I have a DataFrame named `df` that looks like this:\n\n```python\n  Order Number       Status\n1         1668  Undelivered\n2        19771  Undelivered\n3    100032108  Undelivered\n4         2229    Delivered\n5        00056  Undelivered\n```\n\nI want to convert the `Status` column to boolean, where 'Delivered' is `True` and 'Undelivered' is `False`. If `Status` is neither 'Undelivered' nor 'Delivered', it should be considered as `NaN` or similar. I would like to use a dictionary like the following so that other strings can be easily added and considered as either `True` or `False`.\n\n```python\nd = {\n  'Delivered': True,\n  'Undelivered': False\n}\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "You can achieve this by using the `map()` function in combination with the dictionary you defined. This will allow you to map each value in the `Status` column to its corresponding boolean value based on the dictionary. For any values not in the dictionary, `map()` will automatically assign `NaN`, which is what you want for unexpected strings. Here\u2019s how you can do it:\n\n```python\nimport pandas as pd\nimport numpy as np\n\n# Sample DataFrame\ndata = {\n    'Order Number': [1668, 19771, 100032108, 2229, 56],\n    'Status': ['Undelivered', 'Undelivered', 'Undelivered', 'Delivered', 'Undelivered']\n}\n\ndf = pd.DataFrame(data)\n\n# Dictionary for mapping\nd = {\n    'Delivered': True,\n    'Undelivered': False\n}\n\n# Convert Status column to boolean using map\ndf['Status'] = df['Status'].map(d)\n\nprint(df)\n```\n\nAfter running this code, your DataFrame will look like this:\n\n```\n   Order Number  Status\n0          1668   False\n1         19771   False\n2     100032108   False\n3          2229    True\n4            56   False\n```\n\nThis approach ensures that any unexpected values in the `Status` column will be set to `NaN`, providing flexibility for handling other potential values."
+    }
+]
