@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a series with index as datetime and I would like to create a plot with this series. The values of the series are plotted on the y-axis and the index of the series on the x-axis. The series looks as follows:\n```\n2014-01-01     7\n2014-02-01     8\n2014-03-01     9\n2014-04-01     8\n...\n```\nI generate a graph using `plt.plot(series.index, series.values)`. However, I am getting a graph where the x-axis, which is supposed to display date in the format 'yyyy-mm' or 'yyyy month', is also showing hours, minutes and seconds. How can I modify this to display dates in my preferred format and remove the hours, minutes and seconds?"
+    },
+    {
+        "role": "assistant",
+        "content": "To format the x-axis to display only the year and month without the hours, minutes, and seconds, you can use the `matplotlib.dates` module to set the date format for the x-axis. Here's how you can do it:\n\n```python\nimport matplotlib.pyplot as plt\nimport matplotlib.dates as mdates\n\n# Assuming 'series' is your pandas Series with a datetime index\nplt.figure(figsize=(10, 5))\n\n# Plot the series\nplt.plot(series.index, series.values)\n\n# Set the locator for the x-axis to be at each month\nplt.gca().xaxis.set_major_locator(mdates.MonthLocator())\n\n# Set the formatter for the x-axis to display 'yyyy-mm'\nplt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))\n\n# Rotate the x-axis labels for better readability\nplt.gcf().autofmt_xdate()\n\n# Set labels and title if necessary\nplt.xlabel('Date')\nplt.ylabel('Value')\nplt.title('Time Series Plot')\n\n# Show the plot\nplt.show()\n```\n\nHere's what each part does:\n- `mdates.MonthLocator()` sets the ticks on the x-axis to be at the start of each month.\n- `mdates.DateFormatter('%Y-%m')` formats the date labels to show only the year and month.\n- `plt.gcf().autofmt_xdate()` automatically adjusts the x-axis labels to avoid overlap, often by rotating them.\n\nThis should give you a clean plot with the x-axis formatted to show only the year and month."
+    }
+]
