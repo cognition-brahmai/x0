@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, I'm attempting to continue to the next iteration in an outer loop. Specifically, I have a nested loop structure where 'ii' ranges from 0 to 200 and 'jj' ranges from 200 to 400. Within the nested 'jj' loop, there's a conditional statement where if 'something' is true, I want to continue to the next iteration of the outer 'ii' loop instead of the inner 'jj' loop. Here's my code:\n\n```python\nfor ii in range(200):\n    for jj in range(200, 400):\n        # block0...\n        if something:\n            continue\n    # block1...\n```\n\nIs there a built-in way or an easy way to accomplish this in Python without resorting to flag variables?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, you can achieve this by using a `try`-`except` block with a custom exception to break out of the inner loop and continue the outer loop. Here's how you can modify your code:\n\n```python\nclass ContinueOuterLoop(Exception):\n    pass\n\nfor ii in range(200):\n    try:\n        for jj in range(200, 400):\n            # block0...\n            if something:\n                raise ContinueOuterLoop\n    except ContinueOuterLoop:\n        continue\n    # block1...\n```\n\nIn this approach, define a custom exception `ContinueOuterLoop`. When the condition `something` is true, raise the exception to break out of the inner loop. The `except` block catches this exception and uses `continue` to proceed with the next iteration of the outer loop.\n\nThis way, you can avoid using flag variables and achieve the desired control flow in a more Pythonic manner."
+    }
+]

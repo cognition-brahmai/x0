@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am currently working with Flask in Python and I am trying to return an XML file from a get request. However, I am not sure how to set the content type to XML. Here is the code that I am using:\n\n```python\n@app.route('/ajax_ddl')\ndef ajax_ddl():\n    xml = 'foo'\n    header(\"Content-type: text/xml\")\n    return xml\n```\n\nHow can I set the content type to XML in Flask?"
+    },
+    {
+        "role": "assistant",
+        "content": "To set the content type to XML in a Flask response, you can use the `Response` object from Flask. You can specify the content type by setting the `mimetype` attribute of the `Response` object. Here's how you can modify your code to return XML with the appropriate content type:\n\n```python\nfrom flask import Flask, Response\n\napp = Flask(__name__)\n\n@app.route('/ajax_ddl')\ndef ajax_ddl():\n    xml = '<root><foo>bar</foo></root>'  # Your XML content\n    response = Response(xml, mimetype='text/xml')\n    return response\n\nif __name__ == '__main__':\n    app.run()\n```\n\nIn this code, the `Response` object is used to set the content type to `text/xml` by specifying it in the `mimetype` parameter. This will ensure that the client interprets the response as XML. You can replace the `xml` variable with your actual XML content."
+    }
+]

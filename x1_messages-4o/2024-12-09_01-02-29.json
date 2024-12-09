@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I use pandas' `pd.write_csv` method to write a file with headers if the file doesn't exist, and append to the existing file without headers if it does? I am currently using df.to_csv('filename.csv', mode = 'a', header ='column_names') but it seems to write the header every time I append to the file. Is there a way to only add the header if the file doesn't exist and append without the header if the file does exist?"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve the desired behavior of writing a header only if the file doesn't exist and appending data without a header if the file already exists, you can use Python's `os` module to check for the existence of the file before writing. Here's how you can do it:\n\n```python\nimport os\nimport pandas as pd\n\n# Your DataFrame\ndf = pd.DataFrame({\n    'column1': [1, 2, 3],\n    'column2': ['a', 'b', 'c']\n})\n\n# File name\nfilename = 'filename.csv'\n\n# Check if the file already exists\nif not os.path.isfile(filename):\n    # If the file doesn't exist, write the DataFrame with headers\n    df.to_csv(filename, mode='w', header=True, index=False)\nelse:\n    # If the file exists, append the DataFrame without writing the headers\n    df.to_csv(filename, mode='a', header=False, index=False)\n```\n\n### Explanation:\n- **os.path.isfile(filename):** This checks whether the specified file exists.\n- **mode='w':** This mode is used to write the DataFrame to a new file or overwrite an existing file.\n- **mode='a':** This mode is used to append data to an existing file.\n- **header=True/False:** Controls whether the column names are written as the first row.\n- **index=False:** Ensures that the DataFrame index is not written to the file.\n\nBy using this approach, you ensure that headers are only written when the file is created, and subsequent data is appended without headers."
+    }
+]
