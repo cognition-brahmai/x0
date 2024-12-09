@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a pandas DataFrame with a non-unique column named \"date\" containing datetime values. I am currently grouping the rows of this DataFrame using `data.groupby(data['date'])`, but this splits the data by the exact datetime values. I am interested in grouping these data by only the year part from the \"date\" column. In my case, the timestamp is not being used as an index. How can I perform this grouping by year?"
+    },
+    {
+        "role": "assistant",
+        "content": "To group your DataFrame by the year part of the \"date\" column, you can use the `pd.Grouper` function or extract the year from the datetime values directly. Here are two ways to achieve this:\n\n### Method 1: Using `pd.Grouper`\n\nYou can use `pd.Grouper` to group by the year part. First, ensure that your \"date\" column is a datetime type. If it's not, you can convert it using `pd.to_datetime()`. Then, use `pd.Grouper` to group by year:\n\n```python\nimport pandas as pd\n\n# Sample DataFrame\ndata = pd.DataFrame({\n    'date': ['2022-01-15', '2022-03-10', '2023-02-20', '2023-08-05'],\n    'value': [10, 20, 30, 40]\n})\n\n# Convert 'date' column to datetime if not already\ndata['date'] = pd.to_datetime(data['date'])\n\n# Group by year\ngrouped = data.groupby(pd.Grouper(key='date', freq='Y')).sum()\n\nprint(grouped)\n```\n\n### Method 2: Extracting the Year\n\nAlternatively, you can extract the year from the \"date\" column and use it for grouping:\n\n```python\nimport pandas as pd\n\n# Sample DataFrame\ndata = pd.DataFrame({\n    'date': ['2022-01-15', '2022-03-10', '2023-02-20', '2023-08-05'],\n    'value': [10, 20, 30, 40]\n})\n\n# Convert 'date' column to datetime if not already\ndata['date'] = pd.to_datetime(data['date'])\n\n# Extract year and group by it\ndata['year'] = data['date'].dt.year\ngrouped = data.groupby('year').sum()\n\nprint(grouped)\n```\n\nBoth methods will give you a DataFrame grouped by the year extracted from the \"date\" column. Choose the method that best fits your needs."
+    }
+]
