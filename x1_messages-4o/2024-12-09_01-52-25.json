@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I want to read a large text file line by line in Python and stop when a line containing \"str\" is found. How can I check if the end of the file has been reached? Here is my current code:\n\n```python\nfn = 't.log'\nf = open(fn, 'r')\nwhile not _is_eof(f): ## how to check that end is reached?\n    s = f.readline()\n    print s\n    if \"str\" in s: break\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To read a large text file line by line and stop when a line containing \"str\" is found, you can utilize Python's file reading capabilities. To check if the end of the file has been reached, you don't need a separate function. The `readline()` method will return an empty string when the end of the file is reached. Here's how you can modify your code:\n\n```python\nfn = 't.log'\nwith open(fn, 'r') as f:\n    while True:\n        s = f.readline()\n        if not s:  # Check if the line is empty, which indicates EOF\n            break\n        print(s.strip())  # Use strip() to remove any trailing newline characters\n        if \"str\" in s:\n            break\n```\n\nIn this code:\n\n- We use a `while True` loop to continuously read lines.\n- The `readline()` function reads the next line from the file.\n- If `readline()` returns an empty string (`not s`), it means the end of the file (EOF) has been reached, and we break out of the loop.\n- We print each line after stripping any trailing newline characters using `strip()`.\n- We break the loop if the line contains the substring \"str\"."
+    }
+]
