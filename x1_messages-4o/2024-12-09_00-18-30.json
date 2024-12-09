@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python 3, how can I create a list that will only contain the last 5 items entered into it? For instance, if I add 'apple', 'orange', 'grape', 'banana', 'mango' and 'kiwi' in that order, the list should only contain 'orange', 'grape', 'banana', 'mango', and 'kiwi'. Is there a way to force a list to a fixed size like this in Python?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can maintain a list that only contains the last 5 items by utilizing the `collections.deque` class, which allows you to specify a maximum length. When the deque exceeds this length, it automatically discards items from the opposite end. Here\u2019s how you can set it up:\n\n```python\nfrom collections import deque\n\n# Create a deque with a maximum length of 5\nrecent_items = deque(maxlen=5)\n\n# Function to add items to the list\ndef add_item(item):\n    recent_items.append(item)\n    print(list(recent_items))\n\n# Adding items\nadd_item('apple')   # ['apple']\nadd_item('orange')  # ['apple', 'orange']\nadd_item('grape')   # ['apple', 'orange', 'grape']\nadd_item('banana')  # ['apple', 'orange', 'grape', 'banana']\nadd_item('mango')   # ['apple', 'orange', 'grape', 'banana', 'mango']\nadd_item('kiwi')    # ['orange', 'grape', 'banana', 'mango', 'kiwi']\n```\n\nIn this code:\n\n- `deque` is initialized with a `maxlen` parameter set to 5, which means it will keep only the last 5 items.\n- When an item is added using `append`, if the deque is already at the maximum length, the oldest item is automatically removed.\n- The `add_item` function appends new items and prints the current state of the list.\n\nThis approach efficiently manages a fixed-size list of the most recent items in Python."
+    }
+]
