@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Why am I able to import the 'spatial' submodule in 'scipy' using 'from scipy import spatial' or 'import scipy.spatial', but not able to call 'scipy.spatial.distance.cosine(...)' after simply using 'import scipy'? I'm receiving an 'AttributeError: 'module' object has no attribute 'spatial'' error. What is incorrect with this approach?"
+    },
+    {
+        "role": "assistant",
+        "content": "When you use `import scipy`, it only imports the main `scipy` package and does not automatically import all of its submodules. This is why you encounter an `AttributeError` when trying to access `scipy.spatial` directly after just importing `scipy`.\n\nThe `scipy` package is designed this way to avoid loading unnecessary submodules, which could increase memory usage and import time. To access the `spatial` submodule and its functions, you have two options:\n\n1. **Import the Submodule Explicitly:**\n\n   You can import the submodule explicitly, which makes the functions within it available for use:\n\n   ```python\n   import scipy.spatial\n   cosine_distance = scipy.spatial.distance.cosine(...)\n   ```\n\n2. **Use the `from ... import ...` Syntax:**\n\n   Alternatively, you can import specific functions or submodules directly:\n\n   ```python\n   from scipy.spatial import distance\n   cosine_distance = distance.cosine(...)\n   ```\n\nBy using one of these methods, you ensure that the `spatial` submodule and its contents are properly loaded and accessible in your script."
+    }
+]
