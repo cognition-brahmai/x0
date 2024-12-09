@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there an option in the Python binding for sqlite3 to open a database in read-only mode? I've used this feature in C/C++ and found it very useful in preventing accidental data corruption."
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, the Python `sqlite3` module does provide a way to open a database in read-only mode, which can help prevent accidental data corruption. This feature is available by using a URI (Uniform Resource Identifier) to specify the database.\n\nTo open a SQLite database in read-only mode using the Python `sqlite3` module, you can use the `uri=True` parameter in the `sqlite3.connect()` function. This allows you to specify options such as opening the database in read-only mode.\n\nHere's an example of how you can do it:\n\n```python\nimport sqlite3\n\n# Path to your SQLite database file\ndb_path = 'file:your_database.db?mode=ro'\n\n# Connect to the database in read-only mode\nconnection = sqlite3.connect(db_path, uri=True)\n\n# You can now use the connection to execute queries\ncursor = connection.cursor()\n\n# Example query to fetch data\ncursor.execute(\"SELECT * FROM your_table\")\nrows = cursor.fetchall()\n\nfor row in rows:\n    print(row)\n\n# Close the connection when done\nconnection.close()\n```\n\nIn this example, `your_database.db` should be replaced with the path to your database file, and `your_table` with the name of the table you wish to query. The `mode=ro` option in the URI ensures the database is opened in read-only mode."
+    }
+]

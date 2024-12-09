@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I was trying to explore a solution and I came across this peculiar Python behavior where I accidentally overrode a built-in function, specifically the print function. I wrote this code:\n\n```python\ndef overriden_print(x):\n    print \"Overriden in the past!\"\n\nfrom __future__ import print_function\n\nprint = overriden_print\n\nprint(\"Hello World!\")\n```\n\nThe output is \"Overriden in the past!\" instead of \"Hello World!\". Now, I am not sure how can I get back the original print behavior in Python interpreter. Can you guide me on how to restore it?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, once you override a built-in function like `print`, you can restore it by re-importing it from the `builtins` module. Here's how you can restore the original `print` function:\n\n```python\nimport builtins\n\n# Your overridden print function\ndef overriden_print(x):\n    print(\"Overriden in the past!\")\n\n# Override the built-in print\nprint = overriden_print\n\n# Call the overridden print\nprint(\"Hello World!\")  # Outputs: Overriden in the past!\n\n# Restore the original print function\nprint = builtins.print\n\n# Call the restored print\nprint(\"Hello World!\")  # Outputs: Hello World!\n```\n\nBy importing `builtins`, you can access the original `print` function and assign it back to the `print` identifier, restoring the standard behavior of `print`."
+    }
+]

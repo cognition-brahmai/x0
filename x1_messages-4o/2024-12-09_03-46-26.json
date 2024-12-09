@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using pytest and I have marked some tests with decorators like `@pytest.mark.slow` and `@pytest.mark.long`. I can skip the tests marked \"slow\" by running `pytest -k-slow` from the command line. However, I am unable to skip both slow and long tests simultaneously. I've tried `pytest -k-slow -k-long` and `pytest -k-slow,long` commands but neither seems to work. How can I tell pytest to skip both the slow AND the long tests at the command line?"
+    },
+    {
+        "role": "assistant",
+        "content": "To skip both the `slow` and `long` tests simultaneously, you can use the `-k` option with an expression that combines both markers using the `and` or `or` logical operators. However, since you want to exclude both, you should use the `not` operator with each marker. Here's how you can achieve that:\n\nUse the `and` logical operator with the `not` operator for both markers:\n\n```bash\npytest -k \"not slow and not long\"\n```\n\nThis command will run tests that are neither marked as `slow` nor `long`, effectively skipping both sets of tests. The `-k` option in pytest allows for logical expressions to include or exclude tests based on their markers, and using `not` ensures that tests with those specific markers are not run."
+    }
+]

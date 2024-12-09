@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, is there a method to capture a KeyboardInterrupt event without placing all my code inside a try-except statement? My objective is to have a clean exit without a trace when the user presses Ctrl+C."
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can handle a `KeyboardInterrupt` event in Python without wrapping your entire code inside a `try-except` block by using signal handling. The `signal` module allows you to define a custom handler for the `SIGINT` signal, which is triggered when a user presses `Ctrl+C`. Here is how you can do it:\n\n```python\nimport signal\nimport sys\n\ndef handle_sigint(signal_number, frame):\n    print(\"\\nExiting gracefully...\")\n    sys.exit(0)\n\n# Set up the signal handler\nsignal.signal(signal.SIGINT, handle_sigint)\n\ndef main():\n    # Your main code goes here\n    print(\"Press Ctrl+C to exit\")\n    while True:\n        pass  # Simulating some long-running process\n\nif __name__ == \"__main__\":\n    main()\n```\n\nIn this example, when `Ctrl+C` is pressed, the `handle_sigint` function will be called, which prints a message and exits the program cleanly with `sys.exit(0)`. This way, you avoid having to wrap your entire main logic in a `try-except` block just to handle `KeyboardInterrupt`."
+    }
+]
