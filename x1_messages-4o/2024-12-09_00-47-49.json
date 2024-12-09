@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I prevent `setup.py` from installing a package as an egg? I am trying to install the `boto` package but `PyDev` is having issues with packages in `egg` format. I have tried the command `sudo python setup.py install` but it doesn't seem to solve the issue. Moreover, is there a way to prevent `easy_install` from installing a package as an `egg`? I have found a brute force way of doing it by moving and removing the egg but I am looking for a more straightforward solution."
+    },
+    {
+        "role": "assistant",
+        "content": "To prevent `setup.py` from installing a package as an egg, and to avoid `easy_install` from doing so, you can use the `--single-version-externally-managed` option when running the `setup.py` script. This tells the installer to install the package in a flat directory structure instead of an egg format. Here's how you can do it:\n\n1. **Using `setup.py`:**\n\n   Run the following command in the directory containing `setup.py`:\n\n   ```bash\n   sudo python setup.py install --single-version-externally-managed --record files.txt\n   ```\n\n   The `--record files.txt` option is required when using `--single-version-externally-managed` to keep track of the installed files.\n\n2. **Avoid using `easy_install`:**\n\n   Instead of using `easy_install`, consider using `pip`, which is the preferred installer for Python packages and does not install packages as eggs by default. You can install the `boto` package using `pip` like this:\n\n   ```bash\n   pip install boto\n   ```\n\n   If you don't have `pip` installed, you can install it using your package manager or by using `easy_install` itself for the first time:\n\n   ```bash\n   easy_install pip\n   ```\n\n3. **If you must use `easy_install`:**\n\n   You can use `easy_install` with the `--always-unzip` option, although this is not recommended as `pip` is the preferred tool:\n\n   ```bash\n   easy_install --always-unzip boto\n   ```\n\nBy using these methods, you should be able to avoid the installation of packages in egg format, which should help resolve any issues you are experiencing with `PyDev`."
+    }
+]
