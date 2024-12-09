@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I determine the length of lists in a pandas dataframe column without iteration? I have a dataframe which looks like this:\n\n```\n                                                    CreationDate\n2013-12-22 15:25:02                  [ubuntu, mac-osx, syslinux]\n2009-12-14 14:29:32  [ubuntu, mod-rewrite, laconica, apache-2.2]\n2013-12-22 15:42:00               [ubuntu, nat, squid, mikrotik]\n```\n\nCurrently, I am calculating the length of lists in the 'CreationDate' column and creating a new 'Length' column using this code: `df['Length'] = df.CreationDate.apply(lambda x: len(x))`. This gives me a new column with the length of each list:\n\n```\n                                                    CreationDate  Length\n2013-12-22 15:25:02                  [ubuntu, mac-osx, syslinux]       3\n2009-12-14 14:29:32  [ubuntu, mod-rewrite, laconica, apache-2.2]       4\n2013-12-22 15:42:00               [ubuntu, nat, squid, mikrotik]       4\n```\n\nIs there a more pythonic way to achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! While your current method using `apply` and a `lambda` function is quite common and effective, you can use a more efficient approach by leveraging the `str` accessor in pandas, which can be more performant as it may avoid the overhead of a Python-level loop. Here's how you can achieve this:\n\n```python\ndf['Length'] = df['CreationDate'].str.len()\n```\n\nThe `str.len()` method is designed to handle elements in columns that store iterable data types like lists. This approach is cleaner and aligns well with the pandas idiomatic style for manipulating series that contain iterable elements."
+    }
+]
