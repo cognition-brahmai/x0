@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Flask, how can I check if a request context is available? I'm trying to log some data from context variables such as 'request' and 'session' during a Flask request and use default behavior if they are not present. Currently, I'm using a 'try ... except' block inside 'logging.formatter' but I'm wondering if there's a more efficient way to check for a request context. Here's my code:\n\n```python\ntry:\n    record.user = session['user_name']\n    record.very_important_data = request.super_secret\nexcept Exception:\n    record.user = None\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "In Flask, you can use the `has_request_context()` function to check if a request context is available. This function returns `True` if the request context is active, and `False` otherwise. Similarly, you can use `has_app_context()` to check for an application context. Using these functions can help you avoid unnecessary exceptions and make your code cleaner and more efficient.\n\nHere's how you can modify your code to use `has_request_context()`:\n\n```python\nfrom flask import has_request_context, session, request\n\nif has_request_context():\n    record.user = session.get('user_name', None)\n    record.very_important_data = getattr(request, 'super_secret', None)\nelse:\n    record.user = None\n    record.very_important_data = None\n```\n\nIn this revised code:\n- `has_request_context()` checks if a request context is available.\n- `session.get('user_name', None)` safely attempts to access the `user_name` from the session, defaulting to `None` if it's not present.\n- `getattr(request, 'super_secret', None)` safely attempts to access `super_secret` from the request, defaulting to `None` if it's not present.\n\nThis approach avoids exceptions and makes the code more readable and efficient."
+    }
+]
