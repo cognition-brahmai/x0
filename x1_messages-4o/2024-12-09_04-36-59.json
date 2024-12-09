@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a CSV file with 3 columns, where each row of Column 3 contains a list of values as seen below:\n\n```python\nCol1,Col2,Col3\n1,a1,\"['Proj1', 'Proj2']\"\n2,a2,\"['Proj3', 'Proj2']\"\n3,a3,\"['Proj4', 'Proj1']\"\n4,a4,\"['Proj3', 'Proj4']\"\n5,a5,\"['Proj5', 'Proj2']\"\n```\n\nWhen I attempt to read this CSV, Column 3 is read as a string object and not as a list. I tried altering the data type of that column to a list but encountered an \"AttributeError\" as shown below:\n\n```python\ndf = pd.read_csv(\"inputfile.csv\")\ndf.Col3.dtype = list\n\nAttributeError                            Traceback (most recent call last)\n&lt;ipython-input-19-6f9ec76b1b30&gt; in &lt;module&gt;()\n----&gt; 1 df.Col3.dtype = list\n\nC:\\Python27\\lib\\site-packages\\pandas\\core\\generic.pyc in __setattr__(self,         name, value)\n   1953                     object.__setattr__(self, name, value)\n   1954             except (AttributeError, TypeError):\n-&gt; 1955                 object.__setattr__(self, name, value)\n   1956 \n   1957     #----------------------------------------------------------------------\n```\n\nHow can I correctly read Column 3 as a list instead of a string?"
+    },
+    {
+        "role": "assistant",
+        "content": "To read Column 3 as a list instead of a string, you can use the `ast.literal_eval` function from Python's `ast` module. This function safely evaluates a string containing a Python literal (like your list) and converts it into a Python object. Here's how you can apply it to your DataFrame:\n\n```python\nimport pandas as pd\nimport ast\n\n# Read the CSV file\ndf = pd.read_csv(\"inputfile.csv\")\n\n# Convert the string representation of lists to actual lists\ndf['Col3'] = df['Col3'].apply(ast.literal_eval)\n\n# Now df['Col3'] contains lists instead of strings\nprint(df)\n```\n\nThis approach uses `apply()` to iterate over each element in the 'Col3' column and applies `ast.literal_eval` to convert the string representation of the list into an actual list object. This should solve your problem and allow you to work with Column 3 as a list."
+    }
+]
