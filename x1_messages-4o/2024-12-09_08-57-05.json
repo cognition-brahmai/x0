@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Can you provide an algorithm in C++ to implement selection sorting on an array?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! Selection sort is a simple comparison-based sorting algorithm. It works by repeatedly finding the minimum element from the unsorted part of the array and swapping it with the first unsorted element. Here's a basic implementation of selection sort in C++:\n\n```cpp\n#include <iostream>\n#include <vector>\n\nvoid selectionSort(std::vector<int>& arr) {\n    int n = arr.size();\n    for (int i = 0; i < n - 1; ++i) {\n        // Assume the first element of the unsorted part is the minimum\n        int minIndex = i;\n        // Find the actual minimum element in the unsorted part\n        for (int j = i + 1; j < n; ++j) {\n            if (arr[j] < arr[minIndex]) {\n                minIndex = j;\n            }\n        }\n        // Swap the found minimum element with the first unsorted element\n        std::swap(arr[i], arr[minIndex]);\n    }\n}\n\nvoid printArray(const std::vector<int>& arr) {\n    for (int num : arr) {\n        std::cout << num << \" \";\n    }\n    std::cout << std::endl;\n}\n\nint main() {\n    std::vector<int> arr = {64, 25, 12, 22, 11};\n    std::cout << \"Original array: \";\n    printArray(arr);\n\n    selectionSort(arr);\n\n    std::cout << \"Sorted array: \";\n    printArray(arr);\n\n    return 0;\n}\n```\n\n### Explanation:\n1. **Outer Loop**: It iterates over each element in the array except the last one, as the last element will automatically be sorted after sorting the rest.\n2. **Inner Loop**: It finds the minimum element in the unsorted part of the array.\n3. **Swap**: Once the minimum element is found, it is swapped with the first element of the unsorted part of the array.\n4. **Print Function**: This is a utility function to print the array before and after sorting.\n\nThis algorithm has a time complexity of \\(O(n^2)\\), where \\(n\\) is the number of elements in the array. It is not suitable for large datasets but works fine with smaller ones."
+    }
+]
