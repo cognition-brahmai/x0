@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there a way to create an infinite-level recursive defaultdict in Python? I am trying to construct a defaultdict such that it can be accessed at any level without throwing a KeyError. Here is an example of what I am trying to achieve:\n\n```python\nx = defaultdict(...stuff...)\nx[0][1][0]\n{}\n```\nHowever, when I try to create a second level defaultdict using `x = defaultdict(defaultdict)`, I am only able to access the first level without a KeyError. For example:\n\n```python\nx[0]\n{}\nx[0][0]\nKeyError: 0\n```\nI am aware that there are recipes to achieve this and I could possibly use the bunch pattern, but I am interested in knowing if this can be accomplished directly with defaultdict."
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can create an infinite-level recursive `defaultdict` by using a lambda function to create a new `defaultdict` at each level. Here\u2019s how you can achieve that:\n\n```python\nfrom collections import defaultdict\n\n# Create a recursive defaultdict\ndef recursive_defaultdict():\n    return defaultdict(recursive_defaultdict)\n\nx = recursive_defaultdict()\n\n# Now you can access any level without a KeyError\nx[0][1][0] = 'value'\nprint(x[0][1][0])  # Output: 'value'\nprint(x[0][1])  # Output: defaultdict(<function recursive_defaultdict at 0x...>, {0: 'value'})\n```\n\nIn this setup, every time you try to access a non-existent key, the `defaultdict` will automatically create a new `defaultdict` using the `recursive_defaultdict` function. This allows you to nest dictionaries infinitely without encountering a `KeyError`."
+    }
+]
