@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I use figure numbers when referencing figures in Sphinx and reStructuredText? Here's the code I'm currently working with:\n\n```\nThe lemmings are attacking, as can be seen in :ref:`figlem`.\n\n.. _figlem:\n\n.. figure:: _static/lemming_invasion.* \n\n   They're coming!\n```\nThis code is converted into:\n\n```\nThe lemmings are attacking, as can be seen in They're coming!\n/image goes here/\nFigure 1.1: They're coming!\n```\nBut I would like to have the \"standard\" LaTeX way of referencing figures, like this:\n\n```\nThe lemmings are attacking, as can be seen in Figure 1.1\n```\nHow can I achieve this? The code I'm currently using is recommended by the Sphinx manual, but it doesn't produce the desired output."
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve LaTeX-style referencing of figures in Sphinx and reStructuredText, you can use the `numref` role instead of `ref`. The `numref` role is specifically designed for this purpose and allows for figure numbering to be included in cross-references. Here's how you can modify your code to accomplish this:\n\n```rst\nThe lemmings are attacking, as can be seen in :numref:`figlem`.\n\n.. _figlem:\n\n.. figure:: _static/lemming_invasion.*\n\n   They're coming!\n```\n\nMake sure you have the following configuration in your `conf.py` to enable numbered figures:\n\n```python\n# Enable numfig to number figures, tables, and code-blocks\nnumfig = True\n\n# Optional: Customize the figure numbering prefix\nnumfig_format = {\n    'figure': 'Figure %s',  # Customize the prefix for figures\n}\n```\n\nThis setup will produce the desired output:\n\n```\nThe lemmings are attacking, as can be seen in Figure 1.1\n/image goes here/\nFigure 1.1: They're coming!\n```\n\nThe `numfig` configuration option ensures that figures are automatically numbered, and `numref` uses these numbers in the references. Adjust the `numfig_format` dictionary if you need to customize the prefix or formatting further."
+    }
+]
