@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm working with Django's ManyToMany field and I'm trying to add an object by its id. I understand that I can use `my_field.add(my_instance)` to populate the field, and the only necessary information is `my_instance.id` to perform the SQL query. However, I've noticed that when I use `my_field.add(MyModel.objects.get(id=id))` to add an object by its id, it generates two queries instead of one. Is there a way to avoid this extra query?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Django, when you're using a `ManyToManyField` and you want to add an object by its ID, using `my_field.add(MyModel.objects.get(id=id))` indeed results in two queries: one to fetch the object and another to add it to the many-to-many relation. To avoid this extra query, you can use the `add()` method directly with the ID instead of the instance.\n\nHere's how you can do it:\n\n```python\nmy_field.add(id)\n```\n\nDjango's `add()` method for many-to-many relationships can accept IDs directly. This approach sends a single query to create the association without needing to retrieve the object first.\n\nKeep in mind that this method assumes that the ID is valid and corresponds to an existing object in the database. If there's a possibility that the ID might not exist, you should handle that case to avoid potential errors."
+    }
+]
