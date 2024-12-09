@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I correctly write the flask `app.route` if I have multiple parameters in the URL call? For example, I am calling the following URL from Ajax: `http://0.0.0.0:8888/createcm?summary=VVV&change=Feauure`. I tried to write my flask `app.route` as `@app.route('/test/<summary,change>', methods=['GET']`, but it's not working. How should I correctly mention the `app.route`?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Flask, when you want to handle multiple query parameters in a URL, you don't need to specify them in the `@app.route` decorator. Instead, you can access query parameters directly from the `request.args` object within the view function. The `@app.route` decorator should just specify the route path without query parameters.\n\nHere's how you can do it:\n\n1. Define the route without the query parameters:\n\n```python\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route('/createcm', methods=['GET'])\ndef createcm():\n    # Access the query parameters from the URL\n    summary = request.args.get('summary')\n    change = request.args.get('change')\n\n    # Now you can use 'summary' and 'change' in your logic\n    return f\"Summary: {summary}, Change: {change}\"\n\nif __name__ == '__main__':\n    app.run(debug=True, host='0.0.0.0', port=8888)\n```\n\n2. In this example, when you call the URL `http://0.0.0.0:8888/createcm?summary=VVV&change=Feauure`, the `createcm` function will access the `summary` and `change` parameters using `request.args.get('summary')` and `request.args.get('change')` respectively.\n\nBy using `request.args.get()`, you can easily retrieve query parameters from the URL in a clean and straightforward way."
+    }
+]
