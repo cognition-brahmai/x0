@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, how can I make an 'optional' argument compulsory using the `argparse` module? The argparse documentation refers to named arguments (those that start with `-` or `--`) as 'optional', making it seem like they can't be made compulsory. For example, I have a script where the invocation looks like `$ hello-world czech`, but I want to make it compulsory to pass the argument by name, like `$ hello-world --use-lang czech`. How can this be achieved?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python's `argparse` module, you can make a named argument (which is typically considered optional) compulsory by using the `required` parameter when adding the argument. This is useful when you want the argument to be specified with a flag (e.g., `--use-lang`) but still enforce that it must be provided by the user.\n\nHere's how you can achieve this:\n\n```python\nimport argparse\n\ndef main():\n    parser = argparse.ArgumentParser(description='Example script.')\n    # Define the named argument and set 'required=True'\n    parser.add_argument('--use-lang', required=True, help='Specify the language to use.')\n\n    args = parser.parse_args()\n\n    # Access the argument value\n    use_lang = args.use_lang\n    print(f'Language selected: {use_lang}')\n\nif __name__ == '__main__':\n    main()\n```\n\nIn this example, the `--use-lang` argument is defined as a named argument, and by setting `required=True`, it becomes compulsory. If the user runs the script without providing this argument, `argparse` will display an error message and show the usage information. \n\nThis way, you ensure that the script is invoked with the syntax `$ hello-world --use-lang czech`, and it will not run unless `--use-lang` is specified."
+    }
+]
