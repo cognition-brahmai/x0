@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "What is the most efficient way to parse an HTTP date-string in Python? According to the standard, there are multiple ways to format these date strings. I am looking for a method that can handle these variations and convert a string like \"Wed, 23 Sep 2009 22:15:29 GMT\" into a Python time-structure."
+    },
+    {
+        "role": "assistant",
+        "content": "To parse an HTTP date-string in Python, you can use the `email.utils` module, which provides a function called `parsedate_to_datetime`. This function can handle the various formats specified by the HTTP standard (RFC 7231). Here's a step-by-step guide on how to use it:\n\n```python\nfrom email.utils import parsedate_to_datetime\n\n# Example HTTP date-string\nhttp_date_string = \"Wed, 23 Sep 2009 22:15:29 GMT\"\n\n# Parse the date-string into a datetime object\ndatetime_obj = parsedate_to_datetime(http_date_string)\n\n# Output the result\nprint(datetime_obj)\n```\n\nThis code snippet will take an HTTP date string and convert it into a Python `datetime` object, which can then be used for further processing or manipulation. The `parsedate_to_datetime` function is robust and handles multiple date formats defined by the HTTP standard, including:\n\n- RFC 1123: \"Wed, 23 Sep 2009 22:15:29 GMT\"\n- RFC 850: \"Wednesday, 23-Sep-09 22:15:29 GMT\"\n- ANSI C's asctime() format: \"Wed Sep 23 22:15:29 2009\"\n\nBy using `parsedate_to_datetime`, you ensure that your code is flexible and capable of parsing the various date formats that might appear in HTTP headers."
+    }
+]
