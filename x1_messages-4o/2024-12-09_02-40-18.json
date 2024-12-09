@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using Pydantic and trying to restrict one field in a class to an enum. However, when I attempt to get a dictionary representation of the class, the enum field does not convert to string but retains the enum. Here is a representative example of my code:\n\n```python\nfrom enum import Enum\nfrom pydantic import BaseModel\n\nclass S(str, Enum):\n    am='am'\n    pm='pm'\n\nclass K(BaseModel):\n    k:S\n    z:str\n\na = K(k='am', z='rrrr')\nprint(a.dict()) # {'k': <S.am: 'am'>, 'z': 'rrrr'}\n```\nI want the `.dict()` method to return `{'k': 'am', 'z': 'rrrr'}` instead. How can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To ensure that the enum field in your Pydantic model is converted to a string when you call the `.dict()` method, you can leverage the `use_enum_values` parameter. By setting `use_enum_values=True`, Pydantic will automatically convert enum members to their corresponding values in the dictionary representation. Here\u2019s how you can modify your code:\n\n```python\nfrom enum import Enum\nfrom pydantic import BaseModel\n\nclass S(str, Enum):\n    am = 'am'\n    pm = 'pm'\n\nclass K(BaseModel):\n    k: S\n    z: str\n\n# Create an instance of the model\na = K(k='am', z='rrrr')\n\n# Convert the model to a dictionary with enum values as strings\nresult = a.dict(use_enum_values=True)\n\nprint(result)  # {'k': 'am', 'z': 'rrrr'}\n```\n\nBy setting `use_enum_values=True`, the `.dict()` method will output the values of the enum members as strings, which is the behavior you are looking for."
+    }
+]
