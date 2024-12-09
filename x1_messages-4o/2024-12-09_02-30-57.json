@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I enhance my use of the glob() function to find files recursively? Currently, I have the following code:\n\n```python\nglob(os.path.join('src','*.c'))\n```\nHowever, I want it to search the subfolders of 'src'. I've tried using the following:\n\n```python\nglob(os.path.join('src','*.c'))\nglob(os.path.join('src','*','*.c'))\nglob(os.path.join('src','*','*','*.c'))\nglob(os.path.join('src','*','*','*','*.c'))\n```\nThis works but it's limited and cumbersome. Is there a more efficient and less clunky way of doing this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To enhance your use of the `glob()` function for recursive file searching, you can use the `glob.glob()` function with the `recursive=True` parameter. Starting from Python 3.5, the `glob` module supports recursive wildcards using the `**` pattern. This allows you to search through all subdirectories without manually specifying multiple levels.\n\nHere's how you can modify your code to achieve this:\n\n```python\nimport glob\nimport os\n\n# Use the recursive=True parameter and '**' pattern to search recursively\nfiles = glob.glob(os.path.join('src', '**', '*.c'), recursive=True)\n\n# Now 'files' will contain all .c files in 'src' and its subdirectories\nfor file in files:\n    print(file)\n```\n\nThis approach is more efficient and cleaner, as it automates the recursive search through all levels of subdirectories. The `**` pattern tells `glob` to match any number of directories, and `recursive=True` enables this behavior."
+    }
+]
