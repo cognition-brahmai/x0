@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I drop all non-numeric columns from a pandas DataFrame in Python? I load text files into a DataFrame using the following code: `source = pandas.read_table(inputfile, index_col=0)`. My data is structured such that it has a first non-numeric column (ID), a variable number of non-numeric columns (strings), and a number of numeric columns (floats). I want to remove all non-numeric columns without knowing their names or indices. Is this possible using pandas?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can easily drop all non-numeric columns from a pandas DataFrame without knowing their names or indices. You can achieve this by using the `select_dtypes` method to select only the columns with numeric data types. Here's how you can do it:\n\n```python\nimport pandas as pd\n\n# Load your data into a DataFrame\nsource = pd.read_table(inputfile, index_col=0)\n\n# Select only the numeric columns\nnumeric_only_df = source.select_dtypes(include=[np.number])\n\n# If you want to keep the original index (e.g., ID), you can reset the index\nnumeric_only_df = numeric_only_df.reset_index()\n\n# Display the resulting DataFrame\nprint(numeric_only_df)\n```\n\nHere's what each part of the code does:\n- `pd.read_table(inputfile, index_col=0)` loads your data into a DataFrame, using the first column as the index.\n- `select_dtypes(include=[np.number])` selects only the columns with numeric data types (like integers and floats).\n- `reset_index()` restores the index to a column if you want to keep the original index (ID) in the resulting DataFrame.\n\nThis approach is flexible and doesn't require you to know the names or indices of the columns beforehand."
+    }
+]
