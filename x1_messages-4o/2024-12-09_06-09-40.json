@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I decode HTML entities in a Python string? I am parsing some HTML with Beautiful Soup 3, which contains HTML entities. Beautiful Soup 3 doesn't automatically decode these for me. For example, when I run the following code:\n\n```python\nfrom BeautifulSoup import BeautifulSoup\n\nsoup = BeautifulSoup(\"<p>&pound;682m</p>\")\ntext = soup.find(\"p\").string\n\nprint(text)\n```\n\nI get \"&pound;682m\" as output. However, I want the output to be \"\u00a3682m\". How can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To decode HTML entities in a Python string, you can use the `html.unescape()` function from the `html` module, which is available in Python 3. This function will convert HTML entities to their corresponding characters. Here is how you can use it in your code:\n\n```python\nfrom BeautifulSoup import BeautifulSoup\nimport html\n\nsoup = BeautifulSoup(\"<p>&pound;682m</p>\")\ntext = soup.find(\"p\").string\n\n# Use html.unescape to decode HTML entities\ndecoded_text = html.unescape(text)\n\nprint(decoded_text)\n```\n\nThis will give you the desired output:\n\n```\n\u00a3682m\n```\n\nIf you are using Python 2, you can use the `HTMLParser` module instead:\n\n```python\nfrom BeautifulSoup import BeautifulSoup\nimport HTMLParser\n\nsoup = BeautifulSoup(\"<p>&pound;682m</p>\")\ntext = soup.find(\"p\").string\n\n# Create an instance of HTMLParser\nhtml_parser = HTMLParser.HTMLParser()\n\n# Use the unescape method to decode HTML entities\ndecoded_text = html_parser.unescape(text)\n\nprint(decoded_text)\n```\n\nThis will also produce the same output:\n\n```\n\u00a3682m\n```\n\nBoth methods will convert HTML entities into their corresponding Unicode characters."
+    }
+]
