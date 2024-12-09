@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to sort a column in a pandas DataFrame by a custom list. I have a DataFrame with details of players, years, ages, team and games. I want to sort by Player, Year and then Team. The default sorting for Player and Year is fine with me. However, I want the Team to be sorted based on a custom list I created where 'TOT' always appears at the top. I tried using the `sort` function in pandas with the custom list for sorting the 'Team' column, but it's not working as expected and it just sorts alphabetically. How can I sort a DataFrame column based on a custom list?"
+    },
+    {
+        "role": "assistant",
+        "content": "To sort a column in a pandas DataFrame based on a custom list, you need to use the `pd.Categorical` type to define the custom order. Here\u2019s how you can achieve this:\n\n1. Convert the 'Team' column to a categorical type with your custom sorting order.\n2. Use the `sort_values` method to sort the DataFrame.\n\nHere's an example of how you can implement this:\n\n```python\nimport pandas as pd\n\n# Sample DataFrame\ndata = {\n    'Player': ['Alice', 'Bob', 'Charlie', 'Alice', 'Bob'],\n    'Year': [2021, 2022, 2021, 2022, 2022],\n    'Age': [25, 30, 23, 26, 31],\n    'Team': ['A', 'B', 'TOT', 'C', 'A'],\n    'Games': [10, 15, 5, 20, 12]\n}\n\ndf = pd.DataFrame(data)\n\n# Custom sorting order for 'Team'\nteam_order = ['TOT', 'A', 'B', 'C']\n\n# Convert 'Team' column to a categorical type with the specified order\ndf['Team'] = pd.Categorical(df['Team'], categories=team_order, ordered=True)\n\n# Sort the DataFrame by 'Player', 'Year', and 'Team'\nsorted_df = df.sort_values(by=['Player', 'Year', 'Team'])\n\nprint(sorted_df)\n```\n\nIn this example, the `pd.Categorical` function is used to specify the order of the 'Team' column, with 'TOT' appearing first, followed by 'A', 'B', and 'C'. The `sort_values` function then sorts the DataFrame by 'Player', 'Year', and 'Team' according to this custom order."
+    }
+]
