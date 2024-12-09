@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I insert a new row ([2, 3, 4]) at the beginning of a pandas DataFrame that currently looks like this:\n\n```\n   A  B  C\n0  5  6  7\n1  7  8  9\n```\nI've tried using `append()` and `concat()` functions but I can't seem to find the correct way to achieve this. Can you guide me on how to add or insert a series to a DataFrame?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! To insert a new row at the beginning of a pandas DataFrame, you can use the `pd.concat()` function. Here's how you can do it:\n\nFirst, you'll want to create a new DataFrame for the row you want to insert. Then, you can concatenate it with the original DataFrame. Here's a step-by-step guide:\n\n```python\nimport pandas as pd\n\n# Original DataFrame\ndf = pd.DataFrame({\n    'A': [5, 7],\n    'B': [6, 8],\n    'C': [7, 9]\n})\n\n# New row to be inserted\nnew_row = pd.DataFrame([[2, 3, 4]], columns=['A', 'B', 'C'])\n\n# Concatenate the new row at the beginning\ndf = pd.concat([new_row, df], ignore_index=True)\n\nprint(df)\n```\n\nThis will give you the following DataFrame:\n\n```\n   A  B  C\n0  2  3  4\n1  5  6  7\n2  7  8  9\n```\n\nIn this approach, `pd.concat()` is used to combine the new row DataFrame with the original DataFrame. The `ignore_index=True` parameter is used to reset the index of the combined DataFrame, ensuring that the indices are in sequential order."
+    }
+]
