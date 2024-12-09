@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there a way to refresh the state of a Django object from the database? I am looking for behavior roughly equivalent to this code snippet:\n\n```python\nnew_self = self.__class__.objects.get(pk=self.pk)\nfor each field of the record:\n    setattr(self, field, getattr(new_self, field))\n```\n\nI found a reopened/won't fix war in the tracker at http://code.djangoproject.com/ticket/901. Can someone explain why the maintainers don't support this?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Django, if you want to refresh the state of an object from the database, you can use the `refresh_from_db()` method, which was introduced in Django 1.8. This method reloads the object from the database, overwriting fields in the local instance with the values currently in the database.\n\nHere's how you can use it:\n\n```python\nself.refresh_from_db()\n```\n\nThis is a more efficient and cleaner way to achieve the same effect as the code snippet you provided.\n\nRegarding the ticket you mentioned (ticket #901), the discussion there was about adding a utility to refresh an object from the database into the Django core. The decision to not add a specific method at that time may have been due to various reasons, such as concerns about the method's necessity, implementation complexity, or the desire to keep the core API minimal and clean.\n\nSince Django evolves over time, the `refresh_from_db()` method was eventually introduced, addressing the need for such functionality in a more standardized and efficient way. This method is straightforward and integrates well into the existing Django ORM (Object-Relational Mapping) framework, providing developers with a reliable means to refresh their model instances directly."
+    }
+]
