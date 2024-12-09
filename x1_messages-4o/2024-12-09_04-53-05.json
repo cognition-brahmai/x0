@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I load a JSONL file as JSON objects in Python?"
+    },
+    {
+        "role": "assistant",
+        "content": "To load a JSONL (JSON Lines) file as JSON objects in Python, you can read the file line by line and parse each line as a JSON object using the `json` module. Here's how you can do it:\n\n1. Open the JSONL file using a `with` statement to ensure proper handling of file resources.\n2. Iterate over each line in the file.\n3. Use `json.loads()` to parse each line into a JSON object.\n4. Store or process each JSON object as needed.\n\nHere's a sample code snippet demonstrating this:\n\n```python\nimport json\n\ndef load_jsonl(file_path):\n    json_objects = []\n    with open(file_path, 'r', encoding='utf-8') as file:\n        for line in file:\n            json_obj = json.loads(line.strip())  # Parse the JSON object\n            json_objects.append(json_obj)        # Add it to the list\n\n    return json_objects\n\n# Example usage\nfile_path = 'your_file.jsonl'\njson_objects = load_jsonl(file_path)\n\nfor obj in json_objects:\n    print(obj)  # Process each JSON object as needed\n```\n\nHere's a breakdown of the code:\n\n- `open(file_path, 'r', encoding='utf-8')`: Opens the file in read mode with UTF-8 encoding.\n- `for line in file`: Iterates over each line in the file.\n- `json.loads(line.strip())`: Parses the line into a JSON object, using `strip()` to remove any leading/trailing whitespace.\n- `json_objects.append(json_obj)`: Adds the parsed JSON object to a list.\n\nMake sure to replace `'your_file.jsonl'` with the path to your own JSONL file."
+    }
+]
