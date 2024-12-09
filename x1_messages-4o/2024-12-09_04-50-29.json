@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using sklearn for a multi-classification task and I need to split all my data into a train_set and a test_set. I want to randomly sample the same number from each class. Currently, I am using the following function:\n\n<pre><code>X_train, X_test, y_train, y_test = cross_validation.train_test_split(Data, Target, test_size=0.3, random_state=0)\n</code></pre>\n\nHowever, this results in an unbalanced dataset. How can I achieve a balanced split of my data?"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve a balanced split of your data, where each class is equally represented in both the training and test sets, you can use the `StratifiedShuffleSplit` from `sklearn.model_selection`. This approach ensures that the proportion of each class label is maintained in both the training and test datasets. Here's how you can do it:\n\n```python\nfrom sklearn.model_selection import StratifiedShuffleSplit\n\n# Assuming Data is your feature matrix and Target is your label array\nsss = StratifiedShuffleSplit(n_splits=1, test_size=0.3, random_state=0)\n\nfor train_index, test_index in sss.split(Data, Target):\n    X_train, X_test = Data[train_index], Data[test_index]\n    y_train, y_test = Target[train_index], Target[test_index]\n```\n\n### Explanation:\n- `StratifiedShuffleSplit` splits the data into a training and test set while preserving the percentage of samples for each class.\n- `n_splits=1` indicates that you want a single split.\n- `test_size=0.3` specifies that 30% of the data should be reserved for testing.\n- `random_state=0` ensures reproducibility of the results.\n\nThis method will help you maintain a balanced distribution of classes in both your training and test sets, addressing the issue of class imbalance in your dataset split."
+    }
+]
