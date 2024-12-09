@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I perform a left join in pandas that selects only the first match on the right? For example, when I run the code below:\n\n```python\nleft = pd.DataFrame()\nleft['age'] = [11, 12]\nright = pd.DataFrame()\nright['age'] = [10, 11, 11]\nright['salary'] = [ 100, 150, 200 ]\nleft.merge( right, how='left', on='age' )\n```\n\nIt returns:\n\n```\n   age  salary\n0   11     150\n1   11     200\n2   12     NaN\n```\n\nBut what I want is to preserve the number of rows of left, by merely taking the first match. Like this:\n\n```\n   age  salary\n0   11     150\n2   12     NaN\n```\n\nI've been using:\n\n```python\nleft.merge( right.drop_duplicates(['age']), how='left', on='age')\n```\n\nBut I believe this makes a full copy of right. Is there a more elegant way?"
+    },
+    {
+        "role": "assistant",
+        "content": "To perform a left join in pandas that selects only the first match on the right without making a full copy of the right DataFrame, you can use the `merge` function in combination with the `groupby` function to retain only the first occurrence of each group in `right`. Here's how you can achieve that:\n\n```python\nimport pandas as pd\n\n# Initialize dataframes\nleft = pd.DataFrame({'age': [11, 12]})\nright = pd.DataFrame({'age': [10, 11, 11], 'salary': [100, 150, 200]})\n\n# Group the right dataframe by 'age' and take the first occurrence\nright_first_match = right.groupby('age', as_index=False).first()\n\n# Perform the left join\nresult = left.merge(right_first_match, how='left', on='age')\n\nprint(result)\n```\n\nThis will produce the desired output:\n\n```\n   age  salary\n0   11   150.0\n1   12     NaN\n```\n\nIn this approach, `right.groupby('age', as_index=False).first()` efficiently selects the first match for each age without making a full copy of the DataFrame, thus providing a more elegant solution."
+    }
+]
