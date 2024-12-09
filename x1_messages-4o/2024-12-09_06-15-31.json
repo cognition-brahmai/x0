@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using Django and django-jsonfield for a project and I need to set the default value of a JSONField to an empty list. Currently, I have a model where one of the fields is a list of items. In the case where there are no items set, the model should have an empty list as the default. My current solution is to set the default to an empty list as shown below:\n\n```python\nfrom django.models import Model\n\nclass MyModel(Model):\n    the_list_field = JSONField(default=[])\n```\n\nIs this the best way to do it or should I use the `list` function to set the default?"
+    },
+    {
+        "role": "assistant",
+        "content": "Setting the default value of a field in Django using a mutable object, like a list or a dictionary, can lead to unexpected behavior due to the way Python handles mutable default arguments. When you set the default to a mutable object, all instances of the model share the same object, which can lead to all instances having the same list if one is modified.\n\nTo avoid this problem, it's recommended to use a callable, such as a function, to provide a new instance of the list each time a new model instance is created. Here's how you can do it:\n\n```python\nfrom django.db import models\nfrom django.contrib.postgres.fields import JSONField\n\nclass MyModel(models.Model):\n    the_list_field = JSONField(default=list)\n```\n\nBy setting `default=list`, you're using the `list` callable to return a new empty list for each instance of `MyModel`. This prevents the shared mutable default issue and ensures that each model instance gets its own independent list."
+    }
+]
