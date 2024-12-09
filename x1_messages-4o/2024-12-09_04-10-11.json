@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am developing a Python application and I need to check if certain libraries, specifically numpy and wxpython, are installed on the machine running the code. How can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To check if specific Python libraries like `numpy` and `wxpython` are installed on the machine, you can use a simple script that attempts to import these libraries and handles any exceptions if they aren't installed. Here's a method you can use:\n\n```python\ndef check_libraries():\n    libraries = {\n        'numpy': False,\n        'wx': False\n    }\n\n    try:\n        import numpy\n        libraries['numpy'] = True\n    except ImportError:\n        libraries['numpy'] = False\n\n    try:\n        import wx\n        libraries['wx'] = True\n    except ImportError:\n        libraries['wx'] = False\n\n    return libraries\n\ninstalled_libraries = check_libraries()\n\nfor lib, is_installed in installed_libraries.items():\n    if is_installed:\n        print(f\"{lib} is installed.\")\n    else:\n        print(f\"{lib} is not installed.\")\n```\n\nThis script defines a function `check_libraries` that tries to import each library and updates a dictionary indicating whether each one is installed. After running this function, it prints out the installation status of each library.\n\nYou can easily extend this method to check for additional libraries by adding them to the `libraries` dictionary and including the appropriate `try-except` blocks."
+    }
+]
