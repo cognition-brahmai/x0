@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I freeze the entire header row in openpyxl? Currently, I am able to freeze only the column using the following code:\n\n```python\n# only freeze the column (freeze vertically)\ncell = ws.cell('{}{}'.format(col, row_idx+1))  \nworksheet.freeze_panes = cell\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To freeze the entire header row in an Excel worksheet using `openpyxl`, you need to set the `freeze_panes` property to the cell immediately below the row you want to freeze. For example, if you want to freeze the first row (which is typically the header row), you would set `freeze_panes` to the cell `A2`. Here is the modified code to freeze the entire header row:\n\n```python\nfrom openpyxl import Workbook\n\n# Create a workbook and select a worksheet\nwb = Workbook()\nws = wb.active\n\n# Assuming you want to freeze the first row\n# Which means you want to start scrolling from the second row\nws.freeze_panes = ws['A2']\n\n# Save the workbook if needed\n# wb.save('your_file.xlsx')\n```\n\nThis will freeze the first row, allowing you to scroll through the worksheet while keeping the header row visible at the top. Adjust the cell reference in `freeze_panes` if you need to freeze a different row."
+    }
+]
