@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I obtain a list of column names from a psycopg2 cursor in Python? I am looking for a technique to generate column labels directly from the selected column names and I understand that psycopg2 module offers this feature."
+    },
+    {
+        "role": "assistant",
+        "content": "To obtain a list of column names from a `psycopg2` cursor in Python, you can use the `cursor.description` attribute. This attribute provides metadata about the columns in the result set. Here's a step-by-step guide on how you can retrieve the column names:\n\n1. Execute your query using the cursor.\n2. Access the `description` attribute of the cursor.\n3. Extract the column names from the `description` attribute.\n\nHere's a sample code snippet to demonstrate this:\n\n```python\nimport psycopg2\n\n# Establish a connection to the database\nconnection = psycopg2.connect(\n    dbname=\"your_db_name\",\n    user=\"your_username\",\n    password=\"your_password\",\n    host=\"your_host\",\n    port=\"your_port\"\n)\n\n# Create a cursor object\ncursor = connection.cursor()\n\n# Execute a query\ncursor.execute(\"SELECT * FROM your_table_name LIMIT 1;\")\n\n# Fetch the column names\ncolumn_names = [desc[0] for desc in cursor.description]\n\n# Print the column names\nprint(column_names)\n\n# Close the cursor and connection\ncursor.close()\nconnection.close()\n```\n\n### Explanation:\n\n- `cursor.description` returns a sequence of 7-item tuples, where each tuple contains metadata about a column.\n- The first item in each tuple (`desc[0]`) is the name of the column.\n- We use a list comprehension to extract the column names into a list.\n\nThis will give you a list of column names from your query result, which you can then use as needed in your application."
+    }
+]
