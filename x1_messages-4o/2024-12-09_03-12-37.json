@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I modify a Python function to determine if it has received a string or a list as an argument? I have a function that takes a list of strings as a parameter but I want it to also support a single string argument, treating it as a list with one string. Here is my current function:\n\n```python\ndef func( files ):\n    for f in files:\n        doSomethingWithFile( f )\n\nfunc( ['file1','file2','file3'] )\n\nfunc( 'file1' ) # should be treated like ['file1']\n```\nI understand I can use the `type` function to check the type of the argument, but is there a more pythonic way to achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! You can achieve this in a more Pythonic way by using the `isinstance()` function, which is generally preferred over directly comparing types using the `type()` function. Additionally, you can modify your function to handle both single string inputs and list inputs gracefully. Here\u2019s how you can do it:\n\n```python\ndef func(files):\n    # Check if files is a string\n    if isinstance(files, str):\n        # Convert it to a list with one element\n        files = [files]\n    \n    # Iterate over the list of files\n    for f in files:\n        doSomethingWithFile(f)\n\n# Example Usage\nfunc(['file1', 'file2', 'file3'])\nfunc('file1')  # This will be treated as ['file1']\n\ndef doSomethingWithFile(f):\n    print(f\"Processing {f}\")\n\n# Testing the function\nfunc(['file1', 'file2', 'file3'])\nfunc('file1')  # Should print \"Processing file1\"\n```\n\nIn this implementation, `isinstance(files, str)` checks if the `files` parameter is a string. If it is, the function converts it to a list containing that single string. This way, your function can handle both single string inputs and list inputs consistently."
+    }
+]
