@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I get a list of indices where the values of a pandas series with boolean entries are True? I have an input like `pd.Series([True, False, True, True, False, False, False, True])` and I want it to yield an output like `[0,2,3,7]`. I can do it with a list comprehension, but is there a faster or cleaner way to do this?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, there is a more efficient and cleaner way to achieve this using the built-in functionalities of pandas. You can use the `pandas.Series.index` attribute along with boolean indexing to get the indices where the values are `True`. Here's how you can do it:\n\n```python\nimport pandas as pd\n\n# Create the Series\nseries = pd.Series([True, False, True, True, False, False, False, True])\n\n# Get indices where the values are True\ntrue_indices = series.index[series].tolist()\n\nprint(true_indices)\n```\n\nThis will give you the desired output:\n\n```\n[0, 2, 3, 7]\n```\n\nIn this approach, `series.index[series]` extracts the indices of the series where the corresponding value is `True`, and `tolist()` converts the indices to a standard Python list. This method is both efficient and concise."
+    }
+]
