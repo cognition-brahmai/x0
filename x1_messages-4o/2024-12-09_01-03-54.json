@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working with Python and trying to declare UTF-8 strings in my source code. I have a code snippet as follows:\n\n```python\nu = unicode('d\u2026')\ns = u.encode('utf-8')\nprint s\n```\n\nWhen I attempt to run this code using `python bla.py`, I encounter a SyntaxError: \n```python\nFile \"bla.py\", line 1\nSyntaxError: Non-ASCII character '\\xe2' in file bla.py on line 1, but no encoding declared; see http://www.python.org/peps/pep-0263.html for details\n```\nHow can I correctly declare UTF-8 strings in my Python source code to resolve this issue?"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering is due to Python 2's handling of non-ASCII characters in source files. In Python 2, you need to specify the encoding of your source file if it contains non-ASCII characters. This is done by adding a special comment at the top of your file. Here's how you can fix your code:\n\n1. Add an encoding declaration at the top of your Python file. This tells the Python interpreter to treat the source code file as UTF-8 encoded.\n\n2. Use `u\"...\"` to declare Unicode strings.\n\nHere is your corrected code:\n\n```python\n# -*- coding: utf-8 -*-\nu = u'd\u2026'\ns = u.encode('utf-8')\nprint s\n```\n\n### Explanation:\n\n- `# -*- coding: utf-8 -*-`: This is a magic comment that declares the encoding of the Python source file. It should be placed at the top of the file.\n\n- `u'd\u2026'`: This declares a Unicode string literal in Python 2. The `u` prefix indicates that the string should be treated as a Unicode object.\n\nBy making these changes, your code should run without errors. Note that Python 3 handles strings as Unicode by default, so if you're using Python 3, you wouldn't need the `u''` prefix or the encoding declaration for the same functionality. If you are able to, consider migrating your code to Python 3 for better Unicode support and other improvements."
+    }
+]
