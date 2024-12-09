@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to sum two columns in a Pandas DataFrame to create a third column. However, if any of the columns contain NaN values, the resultant column also becomes NaN. Is there any method to avoid these NaN values without setting them explicitly to 0? Here's the code:\n\n```python\nframe = pd.DataFrame({'a': [1, 2, np.nan], 'b': [3, np.nan, 4]})\nframe['c'] = frame['a'] + frame['b']\nframe\n```\nThis outputs:\n\n```\n    a   b   c\n0   1   3   4\n1   2 NaN NaN\n2 NaN   4 NaN\n```\nHowever, I would like column 'c' to be [4, 2, 4]. How can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve the desired result without explicitly setting NaN values to 0, you can use the `sum` method with the `min_count` parameter. This method allows you to specify the minimum number of non-NA values required to perform the operation. Here's how you can use it:\n\n```python\nimport pandas as pd\nimport numpy as np\n\nframe = pd.DataFrame({'a': [1, 2, np.nan], 'b': [3, np.nan, 4]})\nframe['c'] = frame[['a', 'b']].sum(axis=1, min_count=1)\nframe\n```\n\nBy setting `min_count=1`, the sum will ignore NaN values as long as there is at least one non-NaN value in the row. This will give you the desired output:\n\n```\n     a    b    c\n0  1.0  3.0  4.0\n1  2.0  NaN  2.0\n2  NaN  4.0  4.0\n```\n\nThis approach ensures that the sum is computed even if one of the columns contains NaN, as long as there is at least one present value."
+    }
+]
