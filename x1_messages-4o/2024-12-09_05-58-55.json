@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using nosetests for Python and need to disable a unit test. I am able to do this by setting the test function's `__test__` attribute to false. I have implemented this using a decorator as follows:\n\n```python\ndef unit_test_disabled():\n    def wrapper(func):\n         func.__test__ = False\n         return func\n\n    return wrapper\n\n@unit_test_disabled\ndef test_my_sample_test():\n    #code here ...\n```\n\nHowever, this has the side effect of calling wrapper as the unit test. It always passes but it appears in nosetests output. How can I structure the decorator so that the test will not run and does not appear in the nosetests output?"
+    },
+    {
+        "role": "assistant",
+        "content": "To disable a unit test using a decorator without having it appear in the `nosetests` output, you need to ensure that the decorator does not modify the test function in a way that causes `nosetests` to recognize it as a test. Your current implementation modifies the `__test__` attribute correctly, but the decorator itself is not structured to avoid creating a new function that `nosetests` picks up.\n\nTo achieve this, you can update your decorator to modify the `__test__` attribute and directly return the original function without wrapping it in any additional layers. Here's how you can do it:\n\n```python\ndef unit_test_disabled(func):\n    # Set the __test__ attribute to False to disable the test\n    func.__test__ = False\n    # Return the original function unmodified\n    return func\n\n@unit_test_disabled\ndef test_my_sample_test():\n    # code here ...\n    pass\n```\n\nIn this structure, `unit_test_disabled` directly takes the test function as an argument, sets its `__test__` attribute to `False`, and then returns the same function. This prevents the creation of any new wrapper function, ensuring that `nosetests` does not see it as a test case.\n\nWith this setup, the test function will be excluded from the test discovery process, and it will not appear in the `nosetests` output."
+    }
+]
