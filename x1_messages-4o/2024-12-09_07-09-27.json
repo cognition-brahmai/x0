@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm trying to compile a CUDA application with a C wrapper on Ubuntu 10.04. I've successfully compiled my CUDA application into a .so file using NVCC. However, when I try to compile my C wrapper file using GCC, I get an error saying \"cuda_runtime.h: No such file or directory.\" I've confirmed that the file is present in /usr/local/cuda/include. How can I force GCC to look in /usr/local/cuda/include for cuda_runtime.h?"
+    },
+    {
+        "role": "assistant",
+        "content": "To resolve the issue of GCC not finding the `cuda_runtime.h` file, you need to explicitly tell GCC where to look for the CUDA header files by specifying the include directory in your GCC compile command. You can do this by using the `-I` option followed by the path to the directory containing the header files.\n\nHere's how you can modify your GCC compile command to include the CUDA headers:\n\n```bash\ngcc -I/usr/local/cuda/include -L/usr/local/cuda/lib64 -o my_c_wrapper my_c_wrapper.c -lcuda -lcudart\n```\n\nHere's a breakdown of the command:\n\n- `-I/usr/local/cuda/include`: This option tells GCC to add `/usr/local/cuda/include` to the list of directories to search for header files.\n- `-L/usr/local/cuda/lib64`: This specifies the directory where the CUDA libraries are located.\n- `-o my_c_wrapper`: This specifies the output file name for your compiled C wrapper.\n- `my_c_wrapper.c`: This is the source file for your C wrapper.\n- `-lcuda -lcudart`: These options link the CUDA and CUDA runtime libraries to your C wrapper.\n\nMake sure to adjust the library path (`/usr/local/cuda/lib64`) if your CUDA libraries are located in a different directory. Also, ensure that the correct version of the CUDA toolkit is installed and that you have the appropriate permissions to access these directories."
+    }
+]
