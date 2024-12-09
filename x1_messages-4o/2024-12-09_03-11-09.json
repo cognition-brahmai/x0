@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I create a multi-line `with` statement in Python that allows opening several files and having comments inside it? I've tried several variations and they either result in a `SyntaxError` or don't allow me to place comments. Here are the code snippets I've tried:\n\n1. Using `,` for multiple `with` statements:\n\n```python\nclass Dummy:\n    def __enter__(self): pass\n    def __exit__(self, type, value, traceback): pass\n\nwith Dummy() as a, Dummy() as b,\n     Dummy() as c:\n    pass\n```\n\n2. Enclosing multiple `with` statements inside parentheses:\n\n```python\nwith (Dummy() as a, Dummy() as b,\n      Dummy() as c):\n    pass\n```\n\n3. Using `\\` for line continuation:\n\n```python\nwith Dummy() as a, Dummy() as b,\\\n     Dummy() as c:\n    pass\n```\n\n4. Using `\\` for line continuation and adding a comment:\n\n```python\nwith Dummy() as a, Dummy() as b,\\\n     # my comment explaining why I wanted Dummy() as c\\\n     Dummy() as c:\n    pass\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "Creating a multi-line `with` statement in Python while allowing for comments can be a bit tricky due to syntax rules. However, you can achieve this by using implicit line continuation with parentheses, which allows for clean formatting and the inclusion of comments. Here's how you can structure your code:\n\n```python\nclass Dummy:\n    def __enter__(self): pass\n    def __exit__(self, type, value, traceback): pass\n\nwith (\n    # Opening the first Dummy\n    Dummy() as a,\n    # Opening the second Dummy\n    Dummy() as b,\n    # Opening the third Dummy\n    Dummy() as c\n):\n    pass\n```\n\nThis approach uses parentheses to wrap the `with` statement, which allows you to split the statement across multiple lines and insert comments wherever necessary. Each context manager is separated by a comma, and you can place comments on their own lines to describe each part of the `with` statement."
+    }
+]
