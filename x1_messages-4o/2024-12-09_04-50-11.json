@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I write multi-line strings into cells using openpyxl and keep the line breaks intact in the resulting .xlsx file?"
+    },
+    {
+        "role": "assistant",
+        "content": "To write multi-line strings into Excel cells using `openpyxl` and maintain the line breaks, you need to ensure that the line breaks in your strings are represented correctly. In Python, you can use the newline character `\\n` to create line breaks within strings. When writing these strings to an Excel file using `openpyxl`, the line breaks will be preserved.\n\nHere's a step-by-step guide to achieve this:\n\n1. Install `openpyxl` if you haven't already:\n\n   ```bash\n   pip install openpyxl\n   ```\n\n2. Use the following example to write a multi-line string into an Excel cell:\n\n   ```python\n   from openpyxl import Workbook\n\n   # Create a new Workbook\n   wb = Workbook()\n   ws = wb.active\n\n   # Define a multi-line string\n   multi_line_string = \"This is line 1\\nThis is line 2\\nThis is line 3\"\n\n   # Write the multi-line string to a cell (e.g., A1)\n   ws['A1'] = multi_line_string\n\n   # Adjust the row height to make sure all lines are visible\n   ws.row_dimensions[1].height = 40  # Adjust the height as needed\n\n   # Save the workbook to a file\n   wb.save('multi_line_example.xlsx')\n   ```\n\n3. Open the resulting `multi_line_example.xlsx` file in Excel. You should see the text with line breaks intact.\n\n### Additional Tips:\n\n- **Wrap Text:** Ensure that text wrapping is enabled in Excel for the cell to display line breaks properly. You can set this property using the `openpyxl` library as well:\n\n  ```python\n  from openpyxl.styles import Alignment\n\n  ws['A1'].alignment = Alignment(wrap_text=True)\n  ```\n\n- **Adjust Row Height:** The default row height may not be sufficient to display all the lines. Manually adjust the row height or use the `row_dimensions` property in `openpyxl` as shown in the example.\n\nBy following these steps, you can successfully write multi-line strings into Excel cells with line breaks preserved using `openpyxl`."
+    }
+]

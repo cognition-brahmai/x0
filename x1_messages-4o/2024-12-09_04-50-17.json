@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I use python's re.sub function to replace 'foobar' with 'foo123bar'? When I try to use the code `re.sub(r'(foo)', r'\\1123', 'foobar')`, it doesn't work and the output I get is 'J3bar'. However, when I use `re.sub(r'(foo)', r'\\1hi', 'foobar')`, it works perfectly and the output is 'foohibar'. I believe this is a common issue when a number is following `\\number`. How can this situation be handled?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering stems from how Python's `re.sub` function interprets escape sequences in replacement strings. In the sequence `\\1123`, Python interprets `\\112` as an octal escape sequence, which corresponds to the character 'J', and the `3` as a literal character, resulting in 'J3bar'. \n\nTo correctly handle this situation, you need to clearly separate the group reference from the numbers following it. You can achieve this by using curly braces `{}` to delimit the group reference. Here's how you can modify your code to work as expected:\n\n```python\nimport re\n\nresult = re.sub(r'(foo)', r'\\g<1>123', 'foobar')\nprint(result)\n```\n\nIn this code, `\\g<1>` explicitly indicates that you want to use the first captured group, and `123` is simply appended to it. This avoids any ambiguity with escape sequences and gives you the desired output `'foo123bar'`."
+    }
+]
