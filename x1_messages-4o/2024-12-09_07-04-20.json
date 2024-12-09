@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I create a dictionary in Python that returns the key value for keys that are absent from the dictionary, instead of raising a KeyError? Here's an example of the desired behavior:\n\n```python\ndic = smart_dict()\ndic['a'] = 'one a'\nprint(dic['a'])\n# >>> one a\nprint(dic['b'])\n# >>> b\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve the behavior where a dictionary returns the key itself when it is absent instead of raising a `KeyError`, you can use the `collections.defaultdict` from Python's standard library. Here's how you can implement this:\n\n```python\nfrom collections import defaultdict\n\ndef smart_dict():\n    # The lambda function returns the key itself if it's not found in the dictionary\n    return defaultdict(lambda key: key)\n\n# Example usage\ndic = smart_dict()\ndic['a'] = 'one a'\nprint(dic['a'])  # >>> one a\nprint(dic['b'])  # >>> b\n```\n\nIn this implementation, `defaultdict` is used with a lambda function that takes a key and returns it as the default value if the key is not present in the dictionary. This way, the dictionary behaves as you want, returning the key itself when it is not found."
+    }
+]
