@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm using SQLAlchemy and I'm looking for a way to create a `case` statement similar to the one in PostgreSQL. If there is no straightforward way to do it, should I consider using literal SQL?"
+    },
+    {
+        "role": "assistant",
+        "content": "In SQLAlchemy, you can construct SQL expressions using its expression language, which provides a way to create a `CASE` statement similar to what you would write in raw SQL for PostgreSQL. You don\u2019t necessarily have to resort to writing literal SQL unless you find it more convenient or necessary for complex queries.\n\nHere\u2019s how you can create a `CASE` statement using SQLAlchemy:\n\n```python\nfrom sqlalchemy import case, select, Table, MetaData, Column, Integer, String\n\n# Assuming you have a table defined\nmetadata = MetaData()\nmy_table = Table('my_table', metadata,\n    Column('id', Integer),\n    Column('value', Integer),\n    Column('category', String)\n)\n\n# Creating a CASE statement\ncase_statement = case(\n    (my_table.c.value < 10, 'low'),\n    (my_table.c.value < 20, 'medium'),\n    else_='high'\n)\n\n# Using the CASE statement in a query\nquery = select(\n    my_table.c.id,\n    my_table.c.value,\n    case_statement.label('value_category')\n)\n\n# Print or execute the query\nprint(query)\n```\n\nIn this example, the `case` function is used to create a conditional expression similar to the `CASE` statement in SQL. The `case` function takes a series of tuples, where each tuple consists of a condition and a corresponding result. The `else_` parameter provides a default result if none of the conditions match.\n\nIf you find that your use case is too complex for SQLAlchemy's expression language or if you simply prefer writing raw SQL, SQLAlchemy does allow you to execute raw SQL queries using the `text()` construct. However, for maintainability and readability, it's typically better to use the expression language whenever possible."
+    }
+]
