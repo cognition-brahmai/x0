@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I pass model parameters as a dictionary to a Scikit-learn estimator? When I try to do this, my parameters get nested into one of the parameters. For example, when I pass this dictionary to LinearRegression:\n\n```python\nparams = {\n 'copy_X': True, \n 'fit_intercept': False, \n 'normalize': True\n}\n\nlr = LinearRegression(params)\n```\n\nI end up with:\n\n```python\nLinearRegression(copy_X=True,\n         fit_intercept={'copy_X': True, 'fit_intercept': False,'normalize': True},\n     normalize=False)\n```\n\nI have also tried to convert the dictionary into a string like `'copy_X=True, fit_intercept=True, normalize=False'` but it was unsuccessful as well. My only restriction is that the data is coming to me as a dictionary (or actually a json object being loaded with json.uploads). Any advice on how to properly pass this dictionary to the estimator?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering is because you are passing the entire dictionary as a single argument to the `LinearRegression` constructor, which is causing it to interpret the dictionary as a value for the first parameter, `fit_intercept`. Instead, you need to unpack the dictionary so that each key-value pair is passed as a separate keyword argument to the constructor.\n\nYou can achieve this using the `**` operator in Python, which unpacks a dictionary into keyword arguments. Here's how you can modify your code:\n\n```python\nfrom sklearn.linear_model import LinearRegression\n\nparams = {\n    'copy_X': True,\n    'fit_intercept': False,\n    'normalize': True\n}\n\n# Unpack the dictionary using **\nlr = LinearRegression(**params)\n```\n\nThis will correctly parse the dictionary and assign the values to the appropriate parameters of the `LinearRegression` estimator. The `**params` syntax effectively translates to:\n\n```python\nlr = LinearRegression(copy_X=True, fit_intercept=False, normalize=True)\n```\n\nThis way, you ensure that each parameter is passed individually, and you won't have the issue of nested parameters."
+    }
+]

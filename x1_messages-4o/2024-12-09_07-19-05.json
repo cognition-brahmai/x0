@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I retrieve values from a dictionary in jinja2 when the key is stored in a variable? I have a variable called `s.course` which contains the key I want to access. However, I'm having trouble making a double-substitution for this variable. I do not want to use a `for` loop as it will go through the dictionary more times than necessary. Below is the workaround I have at the moment, but the `s.course` values could change, so I'm looking for a more dynamic solution.\n\nHere is my current code:\n\n```jinja\n{% if s.course == \"p11\" %}\n    {{course_codes.p11}}\n{% elif s.course == \"m12a\" %}\n    {{course_codes.m12a}}\n{% elif s.course == \"m12b\" %}\n    {{course_codes.m12b}}\n{% endif %}\n```\n\nI would ideally want to write this as:\n\n```jinja\n{{course_codes.{{s.course}}}}\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "In Jinja2, you can use the `[]` notation to access dictionary values when the key is stored in a variable. This allows you to dynamically retrieve values from a dictionary without the need for multiple `if`-`elif` statements. Here's how you can achieve this:\n\nInstead of trying to use double curly braces within each other, you can use:\n\n```jinja\n{{ course_codes[s.course] }}\n```\n\nThis will dynamically access the value from the `course_codes` dictionary using the key stored in `s.course`, and it will work seamlessly without needing any conditional statements."
+    }
+]
