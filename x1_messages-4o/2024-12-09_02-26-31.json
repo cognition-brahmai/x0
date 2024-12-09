@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there a way to control the exit status code in Python's argparse, specifically in the instance of an error occurring when parse_args() is called, such as a missing required switch? This is without having to directly modify the argparse source code."
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can control the exit status code in Python's `argparse` by subclassing `ArgumentParser` and overriding the `exit` method. By doing this, you can customize the behavior when an error occurs, including setting a custom exit status code.\n\nHere's an example to illustrate how you can achieve this:\n\n```python\nimport argparse\nimport sys\n\nclass CustomArgumentParser(argparse.ArgumentParser):\n    def exit(self, status=0, message=None):\n        if message:\n            self._print_message(message, sys.stderr)\n        # Set your custom exit status code here\n        sys.exit(99)  # Replace 99 with your desired exit status code\n\ndef main():\n    parser = CustomArgumentParser(description='Example of custom exit status code')\n    parser.add_argument('--required', required=True, help='A required argument')\n\n    try:\n        args = parser.parse_args()\n    except SystemExit as e:\n        print(f\"Exited with status {e.code}\")\n        sys.exit(e.code)  # Ensures the program exits with the specified code\n\nif __name__ == '__main__':\n    main()\n```\n\nIn this example, if the `--required` argument is missing, the program will exit with status code 99 instead of the default status code 2. You can replace 99 with any custom status code that suits your needs."
+    }
+]

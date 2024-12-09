@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to convert a Python datetime to epoch with strftime. I have a time in UTC and I want to get the number of seconds since epoch. However, when I use strftime to convert '1st April 2012' to the number of seconds, there seems to be a discrepancy of an hour. Here's my code:\n\n```python\n>>>datetime.datetime(2012,04,01,0,0).strftime('%s')\n'1333234800'\n```\nThe correct number of seconds from epoch for 1st of April 2012 UTC should be 1333238400, but the above code returns 1333234800. It appears that strftime is taking my system time into account and applies a timezone shift somewhere, even though I thought datetime was purely naive. How can I correct this? I would prefer not to import other libraries unless they are standard due to portability concerns."
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you are encountering is related to the way `strftime('%s')` handles time zones. The `%s` format specifier is not a standard part of the C library's `strftime` function and its behavior can vary between different systems. In some implementations, it may assume the local time zone, which is why you are seeing a discrepancy.\n\nTo convert a naive `datetime` object to epoch time (seconds since the Unix epoch), you can use the `calendar` module, which is part of the Python standard library. Here's a way to achieve what you want without relying on `strftime('%s')`:\n\n```python\nimport datetime\nimport calendar\n\n# Create a naive datetime object for 1st April 2012\ndt = datetime.datetime(2012, 4, 1, 0, 0)\n\n# Convert the naive datetime object to a timestamp (seconds since epoch)\nepoch_time = calendar.timegm(dt.timetuple())\n\nprint(epoch_time)  # Should output 1333238400\n```\n\nThis method uses `calendar.timegm()`, which treats the time as UTC, thus avoiding any timezone-related discrepancies. This should give you the correct epoch time for 1st April 2012 in UTC."
+    }
+]
