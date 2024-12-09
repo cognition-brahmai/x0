@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I sort a list of version strings in Python? The list contains dot-separated numbers, for example, \"1.1.2\", \"1.0.0\", \"1.3.3\", \"1.0.12\", \"1.0.2\". The expected output should be a sorted version list like \"1.0.0\", \"1.0.2\", \"1.0.12\", \"1.1.2\", \"1.3.3\". The precedence for the digits should be from left to right and descending, meaning \"1.2.3\" should come before \"2.2.3\" and \"2.2.2\" should come before \"2.2.3\"."
+    },
+    {
+        "role": "assistant",
+        "content": "To sort a list of version strings in Python, you can use the `sorted()` function along with a custom sorting key. The key should split each version string into a tuple of integers so that the comparison happens numerically rather than lexicographically. Here's how you can do it:\n\n```python\nversion_list = [\"1.1.2\", \"1.0.0\", \"1.3.3\", \"1.0.12\", \"1.0.2\"]\n\nsorted_version_list = sorted(version_list, key=lambda version: tuple(map(int, version.split('.'))))\n\nprint(sorted_version_list)\n```\n\nThis code does the following:\n\n1. Uses the `sorted()` function to sort the list.\n2. Provides a key function that:\n   - Splits each version string at the dots using `version.split('.')`.\n   - Converts each split component into an integer using `map(int, ...)`.\n   - Collects the resulting integers into a tuple for comparison.\n\nThis will give you the desired sorted version list:\n\n```\n['1.0.0', '1.0.2', '1.0.12', '1.1.2', '1.3.3']\n```\n\nBy converting each component of the version string into an integer, you ensure that the sorting is done numerically, which handles cases like \"1.0.12\" coming after \"1.0.2\" correctly."
+    }
+]
