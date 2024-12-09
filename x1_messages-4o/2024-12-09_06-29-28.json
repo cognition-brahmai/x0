@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "What is the Python equivalent of the `set -x` command in shell scripts? Is there a way in Python to print or log every source file line that gets executed?"
+    },
+    {
+        "role": "assistant",
+        "content": "In shell scripts, the `set -x` command is used for debugging; it prints each command and its arguments to the terminal before executing it. In Python, you can achieve similar functionality using the `sys.settrace()` function or by using a module like `trace`.\n\nHere's a simple way to trace the execution of Python code:\n\n### Using `sys.settrace()`\n\nYou can use the `sys.settrace()` function to trace every function call, line, and exception:\n\n```python\nimport sys\n\ndef trace_calls(frame, event, arg):\n    if event == \"line\":\n        code = frame.f_code\n        lineno = frame.f_lineno\n        filename = code.co_filename\n        function_name = code.co_name\n        print(f\"Tracing: {filename}:{lineno} in {function_name}\")\n    return trace_calls\n\nsys.settrace(trace_calls)\n\n# Example function\ndef example():\n    x = 1\n    y = 2\n    z = x + y\n    print(z)\n\nexample()\n```\n\n### Using `trace` module\n\nThe `trace` module can also be used to trace program execution. You can use it from the command line or within a script:\n\n#### From the command line\n\nYou can run your script with the `trace` module using the command line:\n\n```bash\npython -m trace --trace your_script.py\n```\n\nThis will print each line of code as it is executed.\n\n#### Within a script\n\nYou can also use the `trace` module within your script as follows:\n\n```python\nimport trace\n\ntracer = trace.Trace(trace=True, count=False)\n\ndef example():\n    x = 1\n    y = 2\n    z = x + y\n    print(z)\n\ntracer.run('example()')\n```\n\nBoth methods will help you trace the execution of your Python script, similar to the `set -x` in shell scripts. Choose the one that best fits your needs."
+    }
+]
