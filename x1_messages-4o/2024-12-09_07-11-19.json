@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, I know how to generate a random number within a range using `random.randint(numLow, numHigh)`. I also know that I can use a loop to generate 'n' amount of these numbers. However, what I need to do is ensure that each number in the list is unique. Is there a straightforward way of generating 'n' number of unique random numbers? For example `[12, 5, 6, 1]` is acceptable but `[12, 5, 5, 1]` is not because the number 5 occurs twice."
+    },
+    {
+        "role": "assistant",
+        "content": "To generate a list of unique random numbers, you can use Python's `random.sample()` function. This function allows you to specify a range and the number of unique numbers you want, and it returns a list of unique numbers. Here's how you can use it:\n\n```python\nimport random\n\ndef generate_unique_random_numbers(numLow, numHigh, n):\n    if n > (numHigh - numLow + 1):\n        raise ValueError(\"The range is too small to generate the required number of unique numbers.\")\n    \n    return random.sample(range(numLow, numHigh + 1), n)\n\n# Example usage\nnumLow = 1\nnumHigh = 20\nn = 4\n\nunique_random_numbers = generate_unique_random_numbers(numLow, numHigh, n)\nprint(unique_random_numbers)\n```\n\nIn this example, `random.sample()` is used to generate `n` unique random numbers within the range from `numLow` to `numHigh`. The function will raise a `ValueError` if you try to generate more numbers than the range allows, ensuring that the list of numbers is always unique."
+    }
+]
