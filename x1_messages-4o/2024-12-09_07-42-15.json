@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I print the definition code of a lambda function in Python? For instance, if I define a function using the lambda syntax like this:\n```python\nmyfunction = lambda x: x==2\nprint_code(myfunction)\n```\nI want to get this output: `x==2`"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, lambda functions are anonymous and do not have the same introspective capabilities as regular functions. However, you can still extract the code of a lambda function by using the `inspect` module, which allows access to the source code of objects. Here's how you can achieve this:\n\n```python\nimport inspect\n\ndef print_code(lambda_function):\n    # Get the source code of the lambda function\n    source_lines, _ = inspect.getsourcelines(lambda_function)\n    # The source will include the line where the lambda function is defined\n    source_line = source_lines[0].strip()\n    \n    # Find the start of the lambda function definition\n    start = source_line.find('lambda')\n    \n    if start != -1:\n        # Extract and print the lambda function code\n        lambda_code = source_line[start:]\n        print(lambda_code)\n    else:\n        print(\"Not a valid lambda function\")\n\nmyfunction = lambda x: x == 2\nprint_code(myfunction)\n```\n\nThis code uses `inspect.getsourcelines` to retrieve the source code of the lambda function. It finds the line where the lambda function is defined and extracts the portion of the line that contains the lambda function itself. This approach assumes that the lambda function is defined in a single line and is not part of a more complex expression."
+    }
+]

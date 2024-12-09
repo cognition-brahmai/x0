@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I filter rows in a Python Pandas DataFrame based on whether a column value is in a given list? I have a DataFrame named `rpt` and I am able to filter rows where the stock id is `600809` using `rpt[rpt['STK_ID'] == '600809']`. However, I want to filter rows for multiple stock ids together like `['600809','600141','600329']`. I have tried using `rpt[rpt['STK_ID'] in stk_list]` but this syntax doesn't work with Pandas. How can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To filter rows in a Pandas DataFrame based on whether a column value is in a given list, you should use the `isin()` method. The `isin()` method is specifically designed to filter data based on a list of values. Here's how you can achieve this for your DataFrame `rpt`:\n\n```python\nimport pandas as pd\n\n# Your list of stock IDs\nstk_list = ['600809', '600141', '600329']\n\n# Use the isin() method to filter the DataFrame\nfiltered_rpt = rpt[rpt['STK_ID'].isin(stk_list)]\n\n# Display the filtered DataFrame\nprint(filtered_rpt)\n```\n\nThis code will filter the DataFrame `rpt` to only include rows where the `'STK_ID'` is one of the values in `stk_list`. The `isin()` method returns a boolean mask, which is then used to index the DataFrame."
+    }
+]
