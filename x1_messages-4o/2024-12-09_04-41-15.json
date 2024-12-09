@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "What is the Pythonic way to avoid having default parameters which are empty lists? I have a function where I want to append an item to a list and print the updated list. But when I call this function multiple times, the list is not reinitialized to an empty list each call but rather the existing list is updated. Here is the function:\n\n```python\ndef my_func(working_list=[]):\n    working_list.append(\"a\")\n    print(working_list)\n```\n\nThe first time it is called, the default will work, but calls after that will update the existing list (with one \"a\" each call) and print the updated version. How can I ensure that a fresh list is used each time the function is called?"
+    },
+    {
+        "role": "assistant",
+        "content": "The behavior you're encountering is due to the fact that default parameter values are evaluated once when the function is defined, not each time the function is called. This means that if you use a mutable object like a list as a default value, it will retain its state across multiple calls to the function.\n\nTo avoid this issue, you can use a default value of `None` for the parameter and then create a new list inside the function if none is provided. Here's how you can modify your function:\n\n```python\ndef my_func(working_list=None):\n    if working_list is None:\n        working_list = []\n    working_list.append(\"a\")\n    print(working_list)\n```\n\nWith this approach, each time `my_func` is called without an argument, a new list will be created and used within the function. This prevents the list from retaining state across multiple function calls."
+    }
+]
