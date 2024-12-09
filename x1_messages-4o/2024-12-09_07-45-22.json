@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, the new type hinting feature allows us to type hint that a function returns None or to leave the return type unspecified, which the PEP dictates should cause static analysers to assume that any return type is possible. But, how can I type hint that a function will never return? For example, how do I correctly type hint the return value of these two functions which either loops forever or always raises an exception?\n\n```python\ndef loop_forever():\n    while True:\n        print('This function never returns because it loops forever')\n\ndef always_explode():\n    raise Exception('This function never returns because it always raises')\n```\nNeither specifying -> None nor leaving the return type unspecified seems correct in these cases."
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, to type hint a function that never returns (either because it loops forever or always raises an exception), you can use the `NoReturn` special type from the `typing` module. This indicates that the function is not expected to return under any circumstances.\n\nHere's how you can use `NoReturn` for your functions:\n\n```python\nfrom typing import NoReturn\n\ndef loop_forever() -> NoReturn:\n    while True:\n        print('This function never returns because it loops forever')\n\ndef always_explode() -> NoReturn:\n    raise Exception('This function never returns because it always raises')\n```\n\nBy using `NoReturn`, you make it clear to anyone reading the code (and to static type checkers) that these functions are not intended to return normally. This helps improve code readability and can prevent potential misunderstandings or errors during development."
+    }
+]
