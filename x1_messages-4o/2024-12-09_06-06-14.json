@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I add a new row with a specific index name to a Pandas DataFrame?\n\nI have a DataFrame with the following data:\n\n```python\n    number   variable       values\na    NaN       bank          true   \nb    3.0       shop          false  \nc    0.5       market        true   \nd    NaN       government    true  \n```\n\nI'm trying to add a new row with a specific index name `'e'`. I attempted to do this with the following code:\n\n```python\nnew_row = [1.0, 'hotel', 'true']\ndf = df.append(new_row)\n```\n\nHowever, this is instead adding a new column, rather than a new row. I'm not sure how to add a row with a specific index. I would be grateful for any suggestions."
+    },
+    {
+        "role": "assistant",
+        "content": "To add a new row with a specific index name to a Pandas DataFrame, you can use the `loc` method. This approach allows you to specify the index label and assign the new row data directly. Here's how you can do it:\n\n```python\nimport pandas as pd\n\n# Existing DataFrame\ndata = {\n    'number': [None, 3.0, 0.5, None],\n    'variable': ['bank', 'shop', 'market', 'government'],\n    'values': ['true', 'false', 'true', 'true']\n}\nindex_labels = ['a', 'b', 'c', 'd']\ndf = pd.DataFrame(data, index=index_labels)\n\n# New row data\nnew_row = [1.0, 'hotel', 'true']\n\n# Adding a new row with a specific index 'e'\ndf.loc['e'] = new_row\n\nprint(df)\n```\n\nThis code will produce the following DataFrame:\n\n```\n   number   variable       values\na     NaN       bank        true\nb     3.0       shop       false\nc     0.5     market        true\nd     NaN  government        true\ne     1.0      hotel        true\n```\n\nThe `loc` method allows you to insert a new row by specifying the index label directly, which is a straightforward way to achieve what you want."
+    }
+]
