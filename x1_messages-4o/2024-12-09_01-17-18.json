@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I add an element to the beginning of an OrderedDict without creating a new dictionary? Currently, when I use the following code:\n\n```python\nd1 = OrderedDict([('a', '1'), ('b', '2')])\nd1.update({'c':'3'})\n```\n\nI get:\n\n```python\nOrderedDict([('a', '1'), ('b', '2'), ('c', '3')])\n```\n\nHowever, I want the output to be:\n\n```python\n[('c', '3'), ('a', '1'), ('b', '2')]\n```\n\nWhat is the correct way to achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To add an element to the beginning of an `OrderedDict` without creating a new dictionary, you can use the `move_to_end` method to rearrange the elements after adding the new one. Here's how you can achieve that:\n\n```python\nfrom collections import OrderedDict\n\nd1 = OrderedDict([('a', '1'), ('b', '2')])\n\n# Add the new element\nd1.update({'c': '3'})\n\n# Move the newly added element to the beginning\nd1.move_to_end('c', last=False)\n\nprint(list(d1.items()))\n```\n\nThis code will give you the desired output:\n\n```python\n[('c', '3'), ('a', '1'), ('b', '2')]\n```\n\nIn this approach, you first add the new element using the `update` method, which appends it to the end. Then, you use `move_to_end` with the `last=False` argument to move the newly added element to the beginning of the `OrderedDict`."
+    }
+]
