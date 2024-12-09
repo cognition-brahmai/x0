@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to set PYTHONPATH to point to two folders in my ~/.bash_profile file on OS X. I have set it as follows:\n\n```\nexport PYTHONPATH=/Applications/python/common:$PYTHONPATH\nexport PYTHONPATH=/Applications/sitecustomize:$PYTHONPATH\n```\n\nHowever, only the `sitecustomize` folder, which is set on the second line, is being recognized. The `common` folder, set on the first line, is being ignored, and I am unable to import any module from this path. What do I need to revise in the above syntax to make Python recognize both folders in PYTHONPATH?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue with your current setup is that each line sets the `PYTHONPATH` variable independently, effectively overwriting the previous value. To include multiple directories in the `PYTHONPATH`, you should concatenate them in a single line, separating each path with a colon (`:`).\n\nHere's how you can modify your `~/.bash_profile` to include both directories:\n\n```bash\nexport PYTHONPATH=/Applications/python/common:/Applications/sitecustomize:$PYTHONPATH\n```\n\nThis line sets the `PYTHONPATH` to include both `/Applications/python/common` and `/Applications/sitecustomize`, followed by any existing paths in the current `PYTHONPATH`.\n\nAfter making this change, remember to reload your `~/.bash_profile` to apply the changes. You can do this by running:\n\n```bash\nsource ~/.bash_profile\n```\n\nNow, both directories should be included in your `PYTHONPATH`, and you should be able to import modules from both locations."
+    }
+]
