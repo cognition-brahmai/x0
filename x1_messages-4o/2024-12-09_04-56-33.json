@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I obtain a list of names of built-in modules in Python? I want to use this list to test the popularity of function's naming conventions (underline, CamelCase or mixedCase). I am aware of the Global Module Index, but I am looking for a list of strings, which would be easier to handle. I tried using the following methods:\n\n```\nlen(dir(__builtins__)) = 145  \nlen(stdlib_list(\"2.7\")) = 430  \nhelp('modules') = 508 # counting manually the output\n```\nBut none of these seem to provide the desired result."
+    },
+    {
+        "role": "assistant",
+        "content": "To obtain a list of names of built-in modules in Python, you can use the `sys` module to access the list of built-in modules. This will provide you with a straightforward list of module names that you can use for your analysis. Here's how you can do it:\n\n```python\nimport sys\n\n# Get the list of built-in module names\nbuiltin_modules = sys.builtin_module_names\n\n# Print the list\nprint(builtin_modules)\n```\n\n`sys.builtin_module_names` returns a tuple containing the names of all the built-in modules compiled into the Python interpreter. This should give you a clear list of built-in module names, which you can then use for your analysis of naming conventions.\n\nAdditionally, if you want to get a list of all modules available in the Python Standard Library, you can combine the `pkgutil` and `importlib` modules to iterate over all modules. However, note that this will include both built-in and other standard library modules:\n\n```python\nimport pkgutil\n\n# Get all module names in the standard library\nstd_lib_modules = [name for _, name, _ in pkgutil.iter_modules()]\n\n# Print the list\nprint(std_lib_modules)\n```\n\nThis approach will provide you with a more comprehensive list of module names, but it may include third-party modules installed in your environment. Make sure to clean up any unnecessary entries if you're only interested in standard library modules."
+    }
+]
