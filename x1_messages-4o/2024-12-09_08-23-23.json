@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Matplotlib, can I add a string as a separate legend item above the '0-10' item? I am currently using the following code to create my legend: `ax.legend(['0-10','10-100','100-500','500+'],loc='best')`. But I would like to add explanatory text for some of the data as a separate legend item. How can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can add a separate string as a legend item by using a workaround with `Line2D` from `matplotlib.lines`. This allows you to create dummy artists that can be used as legend items. Here's how you can achieve this:\n\n```python\nimport matplotlib.pyplot as plt\nfrom matplotlib.lines import Line2D\n\n# Create a figure and axis\nfig, ax = plt.subplots()\n\n# Plot some data\nax.plot([1, 2, 3], [4, 5, 6], label='0-10')  # Example plot\n\n# Create dummy artists for the legend\ncustom_legend = [Line2D([0], [0], color='none', label='Explanatory Text')]\nlegend_items = ['0-10', '10-100', '100-500', '500+']\n\n# Add the explanatory text to the legend items\nall_legend_items = custom_legend + legend_items\n\n# Create the legend with the combined items\nax.legend(all_legend_items, loc='best')\n\n# Show the plot\nplt.show()\n```\n\nThis code snippet creates a custom legend entry using `Line2D` with no color and then combines it with your existing legend items. Adjust the `label` in `Line2D` to whatever explanatory text you want to display."
+    }
+]
