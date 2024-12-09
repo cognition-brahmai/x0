@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to create a `SlugField` in Django, but I'm not getting the desired output. I've written a simple model as follows:\n\n```python\nfrom django.db import models\n\nclass Test(models.Model):\n    q = models.CharField(max_length=30)\n    s = models.SlugField()\n```\n\nAnd I'm trying to assign a value to the `SlugField` like this:\n\n```python\n>>> from mysite.books.models import Test\n>>> t=Test(q=\"aa a a a\", s=\"b b b b\")\n>>> t.s\n'b b b b'\n>>> t.save()\n>>> t.s\n'b b b b'\n```\n\nHowever, I was expecting the output to be `b-b-b-b` instead. How can I create a slug in Django that replaces spaces with hyphens?"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve the desired behavior of converting spaces to hyphens in a `SlugField`, you can utilize Django's `slugify` function. This function is specifically designed to create slugs by converting strings into a format suitable for URLs, which includes replacing spaces with hyphens.\n\nHere's how you can modify your model to automatically slugify the value before saving:\n\n```python\nfrom django.db import models\nfrom django.utils.text import slugify\n\nclass Test(models.Model):\n    q = models.CharField(max_length=30)\n    s = models.SlugField()\n\n    def save(self, *args, **kwargs):\n        self.s = slugify(self.s)  # Automatically slugify the value before saving\n        super(Test, self).save(*args, **kwargs)\n```\n\nWith this setup, when you create a new `Test` object and save it, the `s` field will automatically be slugified:\n\n```python\n>>> from mysite.books.models import Test\n>>> t = Test(q=\"aa a a a\", s=\"b b b b\")\n>>> t.save()\n>>> t.s\n'b-b-b-b'\n```\n\nThis way, every time you save a `Test` instance, the `s` field will be processed to ensure it is in a proper slug format, replacing spaces with hyphens."
+    }
+]
