@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I reset the index of my dataframe columns to 0,1,2,3,4 in pandas? Even though I have tried using df.reset_index(), it doesn't seem to reset the column index. After dropping some columns and rows, my dataframe looks like this:\n\n```python\n>>> data = data.drop(data.columns[[1,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]], axis=1)\n>>> data = data.drop(data.index[[0,1]],axis = 0)\n>>> print(data.head())\n\n             0         2    3    4    20\n2  500292014600       .00  .00  .00  NaN\n3  500292014600    100.00  .00  .00  NaN\n4  500292014600  11202.00  .00  .00  NaN\n\n>>> data = data.reset_index(drop = True)\n>>> print(data.head())\n\n             0         2    3    4    20\n0  500292014600       .00  .00  .00  NaN\n1  500292014600    100.00  .00  .00  NaN\n2  500292014600  11202.00  .00  .00  NaN\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "The `reset_index()` method in pandas is used to reset the index of the rows, not the columns. To reset the column indices in your DataFrame to a sequential order starting from 0, you can manually set the columns using the `range()` function and the number of columns. Here\u2019s how you can do it:\n\n```python\n# Reset column indices\ndata.columns = range(data.shape[1])\n\n# Print the updated DataFrame\nprint(data.head())\n```\n\nHere\u2019s what each line does:\n- `data.columns = range(data.shape[1])`: This line assigns new column indices starting from 0 up to the number of columns minus one. `data.shape[1]` gives the total number of columns in the DataFrame.\n\nAfter running the above code, your DataFrame should have columns indexed as 0, 1, 2, 3, and 4, irrespective of their original labels."
+    }
+]
