@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I round a number to significant figures in Python? I need to round a float to be displayed in a UI. For instance, I need to round the numbers as follows: \n<pre><code>\n1234 to 1000\n0.12 to 0.1\n0.012 to 0.01\n0.062 to 0.06\n6253 to 6000\n1999 to 2000\n</code></pre>\nIs there a simple way to achieve this using the Python library, or do I need to write a custom function?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, you can round a number to a specified number of significant figures using a custom function. The built-in `round()` function doesn't directly support rounding to significant figures, but you can achieve this by leveraging the `math` library to calculate the appropriate rounding.\n\nHere's a custom function to round numbers to significant figures:\n\n```python\nimport math\n\ndef round_to_significant_figures(num, sig_figs):\n    if num == 0:\n        return 0\n    else:\n        # Calculate the order of magnitude of the number\n        order_of_magnitude = math.floor(math.log10(abs(num)))\n        # Calculate the factor to scale the number\n        scale = 10 ** (sig_figs - 1 - order_of_magnitude)\n        # Scale, round, and then scale back\n        return round(num * scale) / scale\n\n# Examples\nnumbers = [1234, 0.12, 0.012, 0.062, 6253, 1999]\nrounded_numbers = [round_to_significant_figures(num, 1) for num in numbers]\n\nprint(rounded_numbers)\n```\n\nThis function will round each number to the desired number of significant figures. In your case, you've specified rounding to 1 significant figure for each number. The function works by determining the order of magnitude of the number, scaling it to shift the decimal point to the right, rounding it, and then scaling it back. This effectively rounds the number to the specified number of significant figures."
+    }
+]
