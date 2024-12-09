@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I divide each row of a DataFrame (df1) with dimensions 2000 rows x 500 columns by another DataFrame (df2) with dimensions 1 row x 500 columns in Python? Both DataFrames have the same column headers. When I try using the `df.divide(df2)` or `df.divide(df2, axis='index')` functions, I always get a DataFrame with `nan` values in every cell. What argument am I missing in the `df.divide` function?"
+    },
+    {
+        "role": "assistant",
+        "content": "When you encounter `NaN` values while trying to divide a DataFrame by another, it's usually due to mismatched indices or misalignment between the two DataFrames. In your case, since `df2` has only one row and the same column headers as `df1`, you should align the operation along the columns, not the index.\n\nHere's how you can do it correctly:\n\n```python\ndf1 = df1.divide(df2.iloc[0], axis='columns')\n```\n\nIn this line of code, `df2.iloc[0]` selects the first row of `df2` as a Series, which shares the same index (i.e., column labels) as `df1`. By specifying `axis='columns'`, you tell pandas to align the operation along the columns, which should solve the issue with `NaN` values. This ensures that each element in the columns of `df1` is divided by the corresponding element in the columns of `df2`."
+    }
+]
