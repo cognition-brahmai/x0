@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I return an HTTP error code without the default template in Tornado? Currently, when I raise an HTTP bad request using the code `raise tornado.web.HTTPError(400)`, it returns an HTML output like this: `<html><title>400: Bad Request</title><body>400: Bad Request</body></html>`. Is there a way to return only the HTTP response code with a custom body?"
+    },
+    {
+        "role": "assistant",
+        "content": "To return an HTTP error code with a custom body in Tornado without the default HTML template, you need to override the `write_error` method in your request handler. This method is called whenever an `HTTPError` is raised. By customizing `write_error`, you can control both the status code and the response body.\n\nHere's an example of how you can achieve this:\n\n```python\nimport tornado.ioloop\nimport tornado.web\n\nclass CustomErrorHandler(tornado.web.RequestHandler):\n    def write_error(self, status_code, **kwargs):\n        # Set the response status code\n        self.set_status(status_code)\n        \n        # Customize the response body\n        if status_code == 400:\n            self.write({\"error\": \"Bad Request\", \"message\": \"Your custom error message\"})\n        else:\n            self.write({\"error\": \"Unknown Error\", \"message\": \"An unknown error occurred\"})\n    \n    def get(self):\n        # Example of raising an HTTP 400 error\n        raise tornado.web.HTTPError(400)\n\ndef make_app():\n    return tornado.web.Application([\n        (r\"/\", CustomErrorHandler),\n    ])\n\nif __name__ == \"__main__\":\n    app = make_app()\n    app.listen(8888)\n    tornado.ioloop.IOLoop.current().start()\n```\n\nIn this example, the `write_error` method checks for a 400 status code and returns a JSON response with a custom error message. You can customize the response format and content according to your needs. This approach allows you to handle different status codes and provide tailored responses for each one."
+    }
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using Seaborn to create a heatmap from a pandas pivot_table, but the numbers on the heatmap are being displayed in scientific notation even though they are not large numbers (maximum value is 750). This is not the case when I view the table directly. Can anyone suggest how I can have them displayed in plain notation? Here's the code I am using:\n\n```python\ntable2 = pd.pivot_table(df,values='control',columns='Year',index='Region',aggfunc=np.sum)\nsns.heatmap(table2,annot=True,cmap='Blues')\n```\nThe image of the heatmap is as follows:\n![heatmap](https://i.stack.imgur.com/iE5eh.png)"
+    },
+    {
+        "role": "assistant",
+        "content": "To address the issue of numbers being displayed in scientific notation on your Seaborn heatmap, you can format the annotations to display in plain notation. You can achieve this by using the `fmt` parameter in the `sns.heatmap` function. Here's how you can modify your code:\n\n```python\nimport pandas as pd\nimport numpy as np\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\n# Assuming df is your DataFrame\ntable2 = pd.pivot_table(df, values='control', columns='Year', index='Region', aggfunc=np.sum)\n\n# Create a heatmap with annotations in plain notation\nsns.heatmap(table2, annot=True, cmap='Blues', fmt='.0f')\n\n# Display the plot\nplt.show()\n```\n\nIn this code, `fmt='.0f'` is used to format the numbers as plain integers without any decimal places. You can adjust the format string as needed, for example, `fmt='.2f'` if you want two decimal places. This should ensure that the numbers on your heatmap are displayed in plain notation."
+    }
+]
