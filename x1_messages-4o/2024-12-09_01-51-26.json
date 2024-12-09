@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to get my computer's fully qualified domain name using Python. I am aware that I can use `platform.node()` to get my computer's network name like this:\n\n```python\nimport platform\nplatform.node()\n```\nwhich returns `'MyComputerName'`. But, I am looking for a function or method that works in a similar way and returns the full network domain name, like this:\n\n```python\nget_full_network_domain_name()\n```\nwhich should return `'MyComputerName.it.na.mycompany.com'`. Is there a way to achieve this in Python?"
+    },
+    {
+        "role": "assistant",
+        "content": "To get the fully qualified domain name (FQDN) of your computer in Python, you can use the `socket` module, which provides access to the BSD socket interface. Here's a way to achieve this:\n\n```python\nimport socket\n\ndef get_full_network_domain_name():\n    try:\n        # Get the FQDN using socket.getfqdn\n        fqdn = socket.getfqdn()\n        return fqdn\n    except Exception as e:\n        return str(e)\n\n# Example usage\nfqdn = get_full_network_domain_name()\nprint(fqdn)\n```\n\nThis code uses `socket.getfqdn()`, which attempts to return the fully qualified domain name of the local machine. It retrieves the host name and then resolves it to an FQDN.\n\nKeep in mind that the result depends on the network configuration and the DNS settings of your environment, so ensure that your system and network are configured correctly to resolve the FQDN. If the configuration is not set up to provide an FQDN, it might just return the local host name."
+    }
+]
