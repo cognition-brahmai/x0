@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to write an 'if' statement in a jinja2 template. The specific code snippet I'm trying to translate from Python to jinja2 is:\n\n```python\nif key == priority:\n    print('Priority: ' + str(data[key]))\n```\n\nHowever, when I try to convert this to a jinja2 template, it throws an error. The code I wrote is:\n\n```jinja\n{% for key in data %}\n    {% if key is 'priority' %}\n        <p>('Priority: ' + str(data[key])</p>\n    {% endif %}\n{% endfor %}\n```\n\nThe error I'm getting is:\n```\nTemplateSyntaxError: expected token 'name', got 'string'\n```\nWhat is the correct way to write this 'if' statement in a jinja2 template?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering is due to the way Jinja2 handles string comparisons and expressions. In Jinja2, you should use `==` for comparisons instead of `is`. Additionally, Jinja2 does not use Python's `str()` function directly within the template syntax. Instead, you can use Jinja2's built-in filters and syntax for rendering values.\n\nHere's how you can correct your Jinja2 template code:\n\n```jinja\n{% for key in data %}\n    {% if key == 'priority' %}\n        <p>Priority: {{ data[key] }}</p>\n    {% endif %}\n{% endfor %}\n```\n\n### Explanation:\n\n1. **String Comparison**: Use `==` instead of `is` for comparing strings in the `if` statement.\n   \n2. **Outputting Values**: Use `{{ ... }}` to output values or expressions in Jinja2. Here, `{{ data[key] }}` will render the value associated with the key in the dictionary.\n\nThis should resolve the `TemplateSyntaxError` and correctly display the priority data in your template."
+    }
+]
