@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am currently working with a DataFrame in pandas that has year columns from 2004 to 2014. Some of the values in these columns are not numeric and I want to convert them all to numeric values. I know that I can use the 'pd.to_numeric()' function to do this for a single column like so: 'c['2014'] = pd.to_numeric(c['2014'], errors='coerce')'. Is there a simpler way to apply this to all the year columns at once, or do I need to manually type out each column like this?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can apply the `pd.to_numeric()` function to multiple columns at once without manually typing out each column. You can use the `apply` method along with a lambda function to achieve this. Here's how you can do it:\n\n```python\nimport pandas as pd\n\n# Sample DataFrame\ndata = {\n    '2004': ['1', '2', 'three', '4'],\n    '2005': ['5', 'six', '7', '8'],\n    '2006': ['9', '10', 'eleven', '12'],\n    # ... other years ...\n    '2014': ['13', 'fourteen', '15', '16']\n}\n\ndf = pd.DataFrame(data)\n\n# Convert all columns from 2004 to 2014 to numeric, coercing errors\nyear_columns = [str(year) for year in range(2004, 2015)]\ndf[year_columns] = df[year_columns].apply(lambda x: pd.to_numeric(x, errors='coerce'))\n\nprint(df)\n```\n\nThis code first creates a list of column names that you want to convert (from 2004 to 2014). Then, it uses the `apply` method with a lambda function to apply `pd.to_numeric()` to each column in that list. The `errors='coerce'` parameter ensures that any non-numeric values are converted to `NaN`. This approach is efficient and scales well with a large number of columns."
+    }
+]

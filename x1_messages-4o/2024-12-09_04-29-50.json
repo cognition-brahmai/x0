@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a module that is compatible with both Python 2 and Python 3. However, I need to install a specific package as a dependency for versions of Python less than 3.2. I tried to achieve this with the following code:\n\n```python\ninstall_requires=[\n    \"threadpool >= 1.2.7 if python_version < 3.2.0\",\n],\n```\n\nHow can I correctly implement this feature?"
+    },
+    {
+        "role": "assistant",
+        "content": "To conditionally install a package based on the Python version, you can use environment markers in the `install_requires` section of your `setup.py` file. The syntax for environment markers allows you to specify conditions under which a package should be installed. Here's how you can modify your code to achieve this:\n\n```python\ninstall_requires=[\n    \"threadpool >= 1.2.7; python_version < '3.2'\",\n],\n```\n\nIn this code snippet, the `threadpool` package will only be installed if the Python version is less than 3.2. The semicolon (`;`) is used to separate the package specification from the environment marker. The condition `python_version < '3.2'` is evaluated, and if it is true, the package will be included in the installation."
+    }
+]
