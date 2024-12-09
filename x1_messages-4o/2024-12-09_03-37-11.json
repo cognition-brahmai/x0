@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I modify my Tkinter code so that when I press the Escape key, it automatically restores down from fullscreen mode? Here's the current code that I'm working with:\n\n```python\nimport Tkinter\nroot = Tkinter.Tk()\nroot.overrideredirect(True)\nroot.geometry(\"{0}x{1}+0+0\".format(root.winfo_screenwidth(), root.winfo_screenheight()))\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To modify your Tkinter code so that pressing the Escape key will restore the window from fullscreen mode, you can bind the Escape key to a function that toggles the fullscreen state. Here's an updated version of your code with this functionality:\n\n```python\nimport Tkinter as tk\n\ndef toggle_fullscreen(event=None):\n    global fullscreen\n    fullscreen = not fullscreen\n    root.attributes(\"-fullscreen\", fullscreen)\n\ndef exit_fullscreen(event=None):\n    global fullscreen\n    fullscreen = False\n    root.attributes(\"-fullscreen\", fullscreen)\n\nroot = tk.Tk()\nfullscreen = True\n\n# Set initial fullscreen\nroot.attributes(\"-fullscreen\", fullscreen)\n\n# Bind the Escape key to exit fullscreen\nroot.bind(\"<Escape>\", exit_fullscreen)\n\nroot.mainloop()\n```\n\n### Explanation:\n- I used `tk` instead of `Tkinter` as the module name for consistency with Python 3 syntax.\n- We added a `toggle_fullscreen` function to switch between fullscreen and windowed mode.\n- The `exit_fullscreen` function sets `fullscreen` to `False` and adjusts the window's fullscreen attribute accordingly.\n- The `<Escape>` key is bound to the `exit_fullscreen` function, allowing you to exit fullscreen mode by pressing Escape.\n\nThis code will set the window to fullscreen initially and allow you to exit fullscreen by pressing the Escape key. If you're using Python 2, retain `import Tkinter` instead of `import Tkinter as tk`, and ensure that the rest of your code is compatible with Python 2 syntax."
+    }
+]
