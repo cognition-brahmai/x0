@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working with a class 'CItem' that is inherited from the list data structure in Python. However, I am facing an issue when I use an object of my class inside of an 'if' statement. Python evaluates it to False if the underlying list has no elements. I want my class to evaluate to False only if it's None, and True otherwise. Here is the sample code:\n\n```python\nclass CItem(list):\n  pass\noItem = CItem()\noItem.m_something = 10\noItem += [1, 2, 3]\n\na = None\nif a:\n  print(\"this is not called, as expected\")\n\na = CItem()\nif a:\n  print(\"and this is not called too, since CItem is empty list. How to fix it?\")\n```\n\nHow can I override the 'to boolean' evaluation in Python so that the 'CItem' class behaves as expected?"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve the desired behavior where an instance of your `CItem` class evaluates to `True` unless it is `None`, you need to override the `__bool__` method in your class. By default, Python uses the `__len__` method to determine the truthiness of lists, which is why an empty list evaluates to `False`. To change this behavior for your custom class, you can define the `__bool__` method to always return `True`, unless the instance itself is `None`.\n\nHere's how you can modify your `CItem` class:\n\n```python\nclass CItem(list):\n    def __bool__(self):\n        # Return True unless the instance is None\n        return self is not None\n\n# Test cases\noItem = CItem()\noItem.m_something = 10\noItem += [1, 2, 3]\n\na = None\nif a:\n    print(\"this is not called, as expected\")\n\na = CItem()\nif a:\n    print(\"and this is called now, as expected\")\n```\n\nWith this modification, any instance of `CItem` will evaluate to `True` in a boolean context, even if it's an empty list, unless the instance itself is `None`."
+    }
+]
