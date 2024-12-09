@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working with a pandas dataframe and I am trying to implement a Boolean search across multiple columns, similar to the SQL query \"SELECT * FROM df WHERE column1 = 'a' OR column2 = 'b' OR column3 = 'c' etc.\" I have been able to perform this operation for one column/value pair using the code \"foo = df.loc[df['column']==value]\", but I am unsure how to expand this to include multiple column/value pairs. Note that each column matches a different value."
+    },
+    {
+        "role": "assistant",
+        "content": "To perform a Boolean search across multiple columns in a pandas DataFrame, you can combine multiple conditions using the bitwise OR operator (`|`). Each condition should be enclosed in parentheses to ensure the correct order of operations. Here's how you can expand your search to include multiple column/value pairs:\n\nAssume you have a DataFrame `df` and you want to select rows where `column1` equals `'a'`, `column2` equals `'b'`, and `column3` equals `'c'`. You can achieve this with:\n\n```python\nimport pandas as pd\n\n# Sample DataFrame\ndata = {\n    'column1': ['a', 'd', 'g'],\n    'column2': ['b', 'e', 'h'],\n    'column3': ['c', 'f', 'i']\n}\ndf = pd.DataFrame(data)\n\n# Define your conditions\ncondition = (df['column1'] == 'a') | (df['column2'] == 'b') | (df['column3'] == 'c')\n\n# Apply the conditions to filter the DataFrame\nfiltered_df = df.loc[condition]\n\nprint(filtered_df)\n```\n\nThis code will filter the DataFrame `df` and return rows where any of the specified conditions are true. You can adjust the conditions to match the specific columns and values you are interested in."
+    }
+]
