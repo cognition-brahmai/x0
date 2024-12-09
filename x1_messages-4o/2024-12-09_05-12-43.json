@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I efficiently split a dictionary into multiple dictionaries without using external modules such as numpy? I have attempted a solution but it is proving to be extremely slow. Here is my current implementation:\n\n```python\ndef chunks(self, data, SIZE=10000):\n    for i in xrange(0, len(data), SIZE):\n        yield dict(data.items()[i:i+SIZE])\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "Your current implementation is using `xrange` and `data.items()[i:i+SIZE]`, which are both inefficient for large dictionaries in Python 3. Here's a more efficient way to split a dictionary into multiple smaller dictionaries without using external modules:\n\n```python\ndef split_dict(data, SIZE=10000):\n    it = iter(data.items())\n    for i in range(0, len(data), SIZE):\n        yield {k: v for k, v in (next(it) for _ in range(min(SIZE, len(data) - i)))}\n\n# Example usage:\nlarge_dict = {i: i*2 for i in range(100000)}  # Example large dictionary\nchunks = list(split_dict(large_dict, SIZE=10000))\n\nfor idx, chunk in enumerate(chunks):\n    print(f\"Chunk {idx + 1} has {len(chunk)} items\")\n```\n\n### Explanation:\n\n1. **Iterating with `iter`**: Using `iter(data.items())` creates an iterator over the dictionary items, which is more memory-efficient than slicing a list of items.\n\n2. **Generator Comprehension**: The inner generator comprehension `(next(it) for _ in range(min(SIZE, len(data) - i)))` fetches the next `SIZE` items from the iterator.\n\n3. **Dictionary Comprehension**: The outer dictionary comprehension `{k: v for k, v in ...}` constructs a dictionary from the fetched items.\n\n4. **Range with `min(SIZE, len(data) - i)`**: This ensures that the last chunk doesn't attempt to fetch more items than are available.\n\nThis approach should be faster and more memory-efficient, especially for large dictionaries."
+    }
+]
