@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm trying to import a Flask extension using the following syntax: `from flask.ext.module import Module`, but I keep receiving the error `ImportError: No module named 'flask.ext'`. However, when I import the same Flask extension using `from flask_module import Module`, it works just fine, so the extension is certainly installed correctly. I haven't found any extensions that work with the former import method, and I'm currently using Windows 10, Python 3.5 and Flask 1.0.2 in a virtual environment. What could be causing this issue?"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you are encountering is related to changes in how Flask extensions are imported. In older versions of Flask, extensions were commonly imported using the `flask.ext` namespace, like `from flask.ext.module import Module`. However, this approach is now deprecated.\n\nIn more recent versions of Flask, extensions should be imported directly using their own namespace, as you've already discovered works for you: `from flask_module import Module`.\n\nHere\u2019s a bit more explanation:\n\n1. **Deprecation of `flask.ext`:** The `flask.ext` import mechanism was deprecated because it relied on dynamic imports that could lead to issues and confusion. The Flask community moved towards a more explicit import system.\n\n2. **Direct Import:** Importing directly from the extension's own namespace is the recommended approach. This is more explicit and aligns with Python's usual import patterns. For example, if you are using `Flask-SQLAlchemy`, you should import it as `from flask_sqlalchemy import SQLAlchemy`.\n\n3. **Python Version Compatibility:** Ensure you are using a version of the extension that is compatible with your version of Python and Flask. Some older extensions might not be updated to the latest standards.\n\nIn summary, the issue you faced is due to the deprecation of `flask.ext` imports, and you should continue using the direct import approach that worked for you. This is the standard practice with Flask extensions now."
+    }
+]
