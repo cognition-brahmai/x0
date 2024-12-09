@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a sequential plan to respond to the user query using the following tools. For each plan, indicate the tool and its input to gather evidence. Store the gathered evidence into a variable #E[index] that can be referenced later.\n\nAvailable tools:\nGoogleScholar[input]: A tool that allows users to search for academic papers and articles related to the input query. \nPDFReader[input]: Reads PDF files from the provided link(s) and outputs plain text.\nSummarizer[input]: Summarizes long texts into concise points.\nAIQA[input]: An AI-powered tool that answers questions based on the provided context.\n\nEach plan should be followed by exactly one evidence (#E[index]) value.\n\nThe output should be in format:\nPlan: [first action to take based in input question]\n#E1 = [function to call with input parameter]\nPlan: [next action to take, based on result of #E1]\n#E2 = [next function to call and input parameter, which may include reference to previous evidence, e.g. \"Given context #E1\"]\n...\nFinal answer: #E[n]\n\nQuestion: What are the latest advancements in Quantum Computing according to recent research papers?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Search for recent research papers on Quantum Computing.\n#E1 = GoogleScholar[\"latest advancements in Quantum Computing\"]\n\nPlan: Read the abstracts and introductions of the top papers to understand their contributions.\n#E2 = PDFReader[#E1[0:5]['links']]\n\nPlan: Summarize the key points from these papers.\n#E3 = Summarizer[#E2]\n\nPlan: Compile a comprehensive answer based on these summaries.\n#E4 = AIQA[\"What are the latest advancements in Quantum Computing, based on these summaries? \" + #E3]\n\nFinal answer: #E4"
+    }
+]
