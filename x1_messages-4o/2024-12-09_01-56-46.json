@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I strip non-printable characters from a string in Python? In Perl, I used to run `$s =~ s/[^[:print:]]//g;` to get rid of non-printable characters. However, in Python, there's no POSIX regex classes, and I can't write `[:print:]` to get the result I want. I also need a solution that supports Unicode characters, as the string.printable method strips them from the output, and curses.ascii.isprint returns false for any Unicode character. What should I do?"
+    },
+    {
+        "role": "assistant",
+        "content": "To strip non-printable characters from a string in Python while supporting Unicode characters, you can use the `unicodedata` module, which provides a way to check if a character is printable. Here's one way to achieve this:\n\n```python\nimport unicodedata\n\ndef is_printable(char):\n    # The 'category' function returns a string like 'Lu' (Letter, uppercase)\n    # and 'Cc' (Control character), among others. We can use this to filter\n    # out non-printable characters.\n    return unicodedata.category(char)[0] != 'C'\n\ndef strip_non_printable(s):\n    return ''.join(c for c in s if is_printable(c))\n\n# Example usage:\ns = \"Hello, World!\\x00\\x01\\x02\"\nclean_s = strip_non_printable(s)\nprint(clean_s)  # Output: \"Hello, World!\"\n```\n\nIn this code:\n\n1. The `is_printable` function checks if a character's Unicode category starts with 'C', which stands for control characters. These are generally non-printable.\n\n2. The `strip_non_printable` function iterates over each character in the input string and filters out any character that is not printable according to our `is_printable` function.\n\nThis approach ensures that all Unicode printable characters are retained, while non-printable ones are removed. You can adjust the `is_printable` function to suit your specific needs regarding printable character categories."
+    }
+]
