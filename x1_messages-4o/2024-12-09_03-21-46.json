@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, using the pandas library, how can I select rows in a DataFrame where the values do not start with certain strings? For instance, if I have a DataFrame df with values 'text1', 'mext1', 'cext1', 'okl1', how can I select and output only the data that does not start with 't' and 'c'? The expected output in this scenario would be 'mext1' and 'okl1'."
+    },
+    {
+        "role": "assistant",
+        "content": "To select rows in a DataFrame where the values do not start with certain strings, you can use the `str.startswith()` method in combination with the negation operator `~` to filter out the rows that start with the specified strings. Here is how you can achieve this using the pandas library:\n\n```python\nimport pandas as pd\n\n# Sample DataFrame\ndata = {'values': ['text1', 'mext1', 'cext1', 'okl1']}\ndf = pd.DataFrame(data)\n\n# Strings to avoid\navoid_starts = ('t', 'c')\n\n# Filter the DataFrame\nfiltered_df = df[~df['values'].str.startswith(avoid_starts)]\n\n# Display the result\nprint(filtered_df)\n```\n\nThis code snippet will output:\n\n```\n  values\n1  mext1\n3   okl1\n```\n\nHere's a breakdown of how it works:\n- `df['values'].str.startswith(avoid_starts)` returns a boolean Series where `True` indicates the rows that start with either 't' or 'c'.\n- `~` is the negation operator, which flips `True` to `False` and vice versa.\n- `df[...]` is used to select rows where the condition is `False`, i.e., where the values do not start with the specified strings."
+    }
+]
