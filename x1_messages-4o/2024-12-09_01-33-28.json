@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am downloading a file using Mechanize and the response headers contain a string, \"Content-Disposition: attachment; filename=myfilename.txt\". Is there a standard or cleaner method to extract the filename value from this string? Currently, I am employing a quick and dirty solution which looks like this:\n\n```python\nfilename = f[1]['Content-Disposition'].split('; ')[1].replace('filename=', '')\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To extract the filename from the `Content-Disposition` header in a cleaner and more robust way, you can use the `email` module from Python's standard library, which is designed to parse such headers properly. Here's a cleaner approach using the `email` module:\n\n```python\nimport email\nfrom email.message import Message\n\ndef extract_filename(content_disposition):\n    msg = Message()\n    msg['Content-Disposition'] = content_disposition\n    filename = msg.get_param('filename', header='Content-Disposition')\n    return filename\n\n# Example usage\ncontent_disposition = 'attachment; filename=myfilename.txt'\nfilename = extract_filename(content_disposition)\nprint(filename)  # Output: myfilename.txt\n```\n\nThis method is more robust as it handles various cases, such as when the filename contains special characters or is encoded. It relies on the `email` package's ability to parse header parameters correctly."
+    }
+]
