@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm using the `generate_password_hash` function from werkzeug.security to hash a password, but every time I run `werkzeug.security.generate_password_hash(\"Same password\")`, I get a different output. According to the documentation [here](https://werkzeug.palletsprojects.com/en/0.15.x/utils/#werkzeug.security.generate_password_hash), I'm expecting a constant output. Can someone explain why this is happening and what I might be doing wrong?"
+    },
+    {
+        "role": "assistant",
+        "content": "When you use the `generate_password_hash` function from `werkzeug.security`, it is normal to get different outputs each time you hash the same password. This behavior is intentional and is due to the use of a technique known as \"salting.\"\n\nSalting involves adding a random value (the salt) to the password before hashing it. This ensures that even if two users have the same password, their hashed passwords will be different. The salt is stored along with the hashed password, so when you need to verify a password, the same salt is used to generate the hash for comparison.\n\nThis approach enhances security by protecting against certain types of attacks, such as rainbow table attacks, where attackers precompute hashes for a large number of potential passwords.\n\nIf you want to verify a password, you should use the `check_password_hash` function, which takes the stored hash and the input password, applies the same hashing process with the stored salt, and checks if the resulting hash matches the stored hash.\n\nHere's a quick example of how you might use these functions:\n\n```python\nfrom werkzeug.security import generate_password_hash, check_password_hash\n\n# Hash a password for the first time\nhashed_password = generate_password_hash(\"Same password\")\n\n# Later, when you need to verify the password\nis_correct = check_password_hash(hashed_password, \"Same password\")\n\nprint(\"Password is correct:\", is_correct)\n```\n\nThis will correctly verify the password, even though the hash changes every time you generate it."
+    }
+]
