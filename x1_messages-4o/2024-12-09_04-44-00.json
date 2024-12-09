@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, is there a way to print a string with indentation so that long strings wider than the terminal length always wrap and start from the same position? Here's an example of what I'm trying to achieve: \n\n```python\nprint(user + \":\\t\\t\" + message)\n```\n\nI want to format it like this:\n\n```python\nUsername:              LEFTLEFTLEFTLEFTLEFTLEFTLEFT\n                       RIGHTRIGHTRIGHT\n```\n\nInstead of this:\n\n```python\nUsername:              LEFTLEFTLEFTLEFTLEFTLEFTLEFT\nRIGHTRIGHTRIGHT\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve the desired string formatting in Python, you can use the `textwrap` module. This module allows you to format text by wrapping it into lines of a specified width. Here is an example of how you can achieve the indentation you want:\n\n```python\nimport textwrap\n\n# Example user and message\nuser = \"Username\"\nmessage = \"LEFTLEFTLEFTLEFTLEFTLEFTLEFT RIGHTRIGHTRIGHT\"\n\n# Desired width of the text\nwidth = 40\n\n# Calculate the prefix to maintain indentation\nprefix = user + \":              \"  # Adjust spaces as needed for alignment\nprefix_length = len(prefix)\n\n# Use textwrap to wrap the message text\nwrapped_message = textwrap.fill(message, width=width-prefix_length, subsequent_indent=' ' * prefix_length)\n\n# Print the user and the wrapped message\nprint(prefix + wrapped_message[len(prefix):])\n```\n\nIn this example:\n\n- The `textwrap.fill` function is used to format the message string.\n- The `width` parameter specifies the maximum line width.\n- The `subsequent_indent` parameter is used to specify the indentation for lines after the first line.\n- The `prefix` variable stores the initial part of the line (e.g., `Username:`), and its length is used to adjust the wrapping width accordingly.\n\nYou can adjust the `width` and `prefix` to fit the specific requirements of your terminal or output format."
+    }
+]
