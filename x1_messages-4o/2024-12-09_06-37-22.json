@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I construct a Python regular expression to check if a specific word is present in a string that may be comma-separated? For instance, given the string `line = 'This,is,a,sample,string'`, I want to determine if the word \"sample\" is present. I attempted to use `re.match(r'sample', line)` as per the Python documentation, but I am unsure about the significance of the 'r' before the text to be matched. Can anyone help me understand and solve this problem?"
+    },
+    {
+        "role": "assistant",
+        "content": "To determine if a specific word is present in a string using Python's regular expressions, you can use the `re.search()` function instead of `re.match()`. The `re.match()` function checks for a match only at the beginning of the string, which is why it didn't work for your use case. The `re.search()` function, on the other hand, scans through the entire string to find a match.\n\nRegarding the 'r' before the text, it's known as a raw string literal in Python. When you prefix a string with 'r', it tells Python to treat backslashes as literal characters and not as escape characters. This is particularly useful in regular expressions where backslashes are often used.\n\nHere's how you can construct a regular expression to check if the word \"sample\" is present in a comma-separated string:\n\n```python\nimport re\n\nline = 'This,is,a,sample,string'\n\n# Use re.search to find the word 'sample' in the string\n# The word boundaries (\\b) ensure you match the whole word 'sample'\npattern = r'\\bsample\\b'\nmatch = re.search(pattern, line)\n\nif match:\n    print(\"The word 'sample' is present in the string.\")\nelse:\n    print(\"The word 'sample' is not present in the string.\")\n```\n\nIn this code:\n- `\\b` is a word boundary anchor that ensures that \"sample\" is matched as a whole word, preventing it from matching substrings like \"samples\" or \"example\".\n- `re.search()` is used to search the entire string for a match.\n\nThis approach will correctly identify if the word \"sample\" is present in the given comma-separated string."
+    }
+]
