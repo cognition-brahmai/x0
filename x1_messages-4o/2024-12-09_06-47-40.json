@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am encountering an issue when using Seaborn to plot countplots in a loop in Spyder. The issue is that all the plots seem to be overlaying on top of each other in the same object. As a result, I can only see the last instance of the plot. How can I ensure that each plot can be viewed independently in my console, one below the other? The code I am currently using is as follows:\n\n<pre><code>\nfor col in df.columns:\n   if  ((df[col].dtype == np.float64) | (df[col].dtype == np.int64)):\n       i=0\n       #Later\n   else :\n       print(col +' count plot \\n') \n       sns.countplot(x =col, data =df)\n       sns.plt.title(col +' count plot')\n</code></pre>"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering is due to the fact that the plots are being drawn to the same figure without being explicitly separated or displayed. In order to ensure that each plot is created and displayed independently, you need to use `plt.figure()` to create a new figure for each plot. Additionally, you should call `plt.show()` to display the plot before moving to the next iteration. Here's how you can modify your code:\n\n```python\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nimport numpy as np\n\nfor col in df.columns:\n    if ((df[col].dtype == np.float64) | (df[col].dtype == np.int64)):\n        i = 0\n        # Later\n    else:\n        print(col + ' count plot \\n')\n        plt.figure()  # Create a new figure for each plot\n        sns.countplot(x=col, data=df)\n        plt.title(col + ' count plot')\n        plt.show()  # Show the plot\n```\n\nWith these modifications, each plot will be created in a new figure, and `plt.show()` will ensure that it is displayed before the loop continues to the next column. This way, you will be able to view each count plot independently in your console."
+    }
+]
