@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I search for a string in all columns of a Pandas DataFrame at the same time? I want to apply `df['col1'].str.contains('^')` to the entire DataFrame and filter the rows that contain the partial string match."
+    },
+    {
+        "role": "assistant",
+        "content": "To search for a string in all columns of a Pandas DataFrame and filter the rows that contain the partial string match, you can use the `applymap` function combined with `str.contains`. Here's how you can achieve that:\n\n```python\nimport pandas as pd\n\n# Sample DataFrame\ndata = {\n    'col1': ['apple', 'banana', 'cherry'],\n    'col2': ['apricot', 'berry', 'citrus'],\n    'col3': ['avocado', 'blueberry', 'cranberry']\n}\n\ndf = pd.DataFrame(data)\n\n# String to search for\nsearch_string = '^'\n\n# Apply str.contains to every element in the DataFrame\nmask = df.applymap(lambda x: search_string in x)\n\n# Filter rows where any column contains the search string\nfiltered_df = df[mask.any(axis=1)]\n\nprint(filtered_df)\n```\n\nIn this code, `applymap` applies a function to each element of the DataFrame, checking if the `search_string` is in the element. The `mask` DataFrame contains `True` or `False` for each element. Then, `mask.any(axis=1)` checks each row to see if there is at least one `True` value (i.e., if the search string is present in any column of that row). Finally, the original DataFrame is filtered based on this mask."
+    }
+]
