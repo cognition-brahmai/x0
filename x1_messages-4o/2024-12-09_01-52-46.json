@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a list of dictionaries as shown below:\n\n```\n[\n    {'id': 1, 'name': 'john', 'age': 34},\n    {'id': 1, 'name': 'john', 'age': 34},\n    {'id': 2, 'name': 'hanna', 'age': 30},\n]\n```\n\nHow can I modify this list to remove duplicate dictionaries, so my output would look like this?\n\n```\n[\n    {'id': 1, 'name': 'john', 'age': 34},\n    {'id': 2, 'name': 'hanna', 'age': 30},\n]\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To remove duplicate dictionaries from a list in Python, you can use a combination of a loop and a set to track the dictionaries you've already seen. Here's a way to achieve that:\n\n```python\n# Initial list of dictionaries\ndata = [\n    {'id': 1, 'name': 'john', 'age': 34},\n    {'id': 1, 'name': 'john', 'age': 34},\n    {'id': 2, 'name': 'hanna', 'age': 30},\n]\n\n# Function to remove duplicates\ndef remove_duplicates(data):\n    seen = set()\n    unique_data = []\n    for d in data:\n        # Convert dictionary to a tuple of tuples for immutability\n        d_tuple = tuple(d.items())\n        if d_tuple not in seen:\n            seen.add(d_tuple)\n            unique_data.append(d)\n    return unique_data\n\n# Get the list without duplicates\nunique_data = remove_duplicates(data)\n\n# Print the result\nprint(unique_data)\n```\n\nOutput:\n```\n[\n    {'id': 1, 'name': 'john', 'age': 34},\n    {'id': 2, 'name': 'hanna', 'age': 30},\n]\n```\n\nThis function works by converting each dictionary into a tuple of its items, which makes it hashable and allows us to use it in a set to track which dictionaries have been encountered. If a dictionary's tuple representation is not in the set, it's added to both the set and the result list. This way, only unique dictionaries are retained."
+    }
+]
