@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I extract only the attributes of a Python class? For instance, in the class defined below:\n\n```python\nclass MyClass():\n  a = \"12\"\n  b = \"34\"\n\n  def myfunc(self):\n    return self.a\n```\n\nI want to obtain only `a` and `b` as attributes. When I use `MyClass.__dict__`, I get a list of attributes and functions, including functions such as `__module__` and `__doc__`. Using `MyClass().__dict__` provides me with an empty dictionary unless I explicitly set an attribute value for that instance. How can I extract only the attributes from this class?"
+    },
+    {
+        "role": "assistant",
+        "content": "To extract only the class-level attributes from a Python class, you can differentiate between methods (functions) and attributes (variables) by checking if the value is callable or not. Here's a method to achieve this:\n\n```python\nclass MyClass:\n    a = \"12\"\n    b = \"34\"\n\n    def myfunc(self):\n        return self.a\n\n# Extract only the class attributes\ndef get_class_attributes(cls):\n    # Using cls.__dict__.items() to get all key-value pairs\n    attributes = {key: value for key, value in cls.__dict__.items() if not callable(value) and not key.startswith('__')}\n    return attributes\n\n# Usage\nattributes = get_class_attributes(MyClass)\nprint(attributes)\n```\n\nThis code snippet defines a function `get_class_attributes` which filters out any callable items (like methods) and special attributes (those starting with `__`). It then returns only the non-callable, non-special attributes, which in this case are `a` and `b`."
+    }
+]
