@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I convert a raw HTML string to a Scrapy HTMLResponse object so that I can use the selectors 'css' and 'xpath', similar to Scrapy's 'response'?"
+    },
+    {
+        "role": "assistant",
+        "content": "To convert a raw HTML string into a Scrapy `HTMLResponse` object, which allows you to use the `css` and `xpath` selectors just like you would with a standard Scrapy response, you can follow these steps:\n\n1. **Import the Required Modules**: You need to import the `HtmlResponse` class from Scrapy.\n\n2. **Create an HTMLResponse Object**: Use the `HtmlResponse` class to create a response object from your raw HTML string.\n\nHere's a step-by-step guide with code:\n\n```python\nfrom scrapy.http import HtmlResponse\n\n# Your raw HTML string\nhtml_string = \"\"\"\n<html>\n    <head>\n        <title>Sample Page</title>\n    </head>\n    <body>\n        <h1>Hello, World!</h1>\n        <p>This is a sample HTML content.</p>\n    </body>\n</html>\n\"\"\"\n\n# Create an HtmlResponse object from the raw HTML string\nresponse = HtmlResponse(url='http://example.com', body=html_string, encoding='utf-8')\n\n# Now you can use the `css` and `xpath` methods\ntitle = response.css('title::text').get()\nheading = response.xpath('//h1/text()').get()\n\nprint(\"Title:\", title)\nprint(\"Heading:\", heading)\n```\n\n### Explanation:\n\n- **HtmlResponse**: This is a class in Scrapy which mimics the behavior of a response object you would get in Scrapy Spider callbacks.\n  \n- **url**: Even though you are working with a raw HTML string, you need to provide a URL. This can be any string that you use to identify the source of the HTML. It doesn't have to be a real URL if you're working with raw content.\n\n- **body**: This is where you pass your raw HTML string. Make sure it is encoded properly (usually UTF-8).\n\n- **encoding**: Specify the encoding of your HTML content. UTF-8 is the most common encoding.\n\nOnce you have the `response` object, you can use the `.css()` and `.xpath()` methods to extract data just like you would in a regular Scrapy spider."
+    }
+]
