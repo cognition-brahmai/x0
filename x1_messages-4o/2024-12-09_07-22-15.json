@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In pymongo, I am trying to find an equivalent command for collection.getIndexes() shell command. However, I am unable to locate a getIndexes() command as part of pymongo's Collection object. Is this intentional or is it implemented somewhere else in the class hierarchy? If not, what is the pymongo canonical way of achieving the same effect?"
+    },
+    {
+        "role": "assistant",
+        "content": "In PyMongo, the equivalent of the `collection.getIndexes()` shell command is achieved using the `list_indexes()` method. This method is part of the `Collection` class in PyMongo and is used to retrieve a list of all indexes on a collection.\n\nHere's how you can use it:\n\n```python\nfrom pymongo import MongoClient\n\n# Connect to the MongoDB server\nclient = MongoClient('mongodb://localhost:27017/')\n\n# Access the database\ndb = client['your_database_name']\n\n# Access the collection\ncollection = db['your_collection_name']\n\n# List all indexes on the collection\nindexes = collection.list_indexes()\n\n# Iterate over the indexes and print their details\nfor index in indexes:\n    print(index)\n```\n\nThis code connects to a MongoDB database, accesses a specific collection, and lists all the indexes on that collection by iterating through the result of `list_indexes()`. Each index is returned as a dictionary containing details about the index configuration."
+    }
+]
