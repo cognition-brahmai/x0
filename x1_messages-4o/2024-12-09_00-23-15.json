@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a signal handler in my Python script to handle a ctrl-c interrupt. In this signal handler, I need to read a variable that is set in my main script. Currently, I'm using a \"global\" statement when setting this variable. However, I read a post suggesting that there shouldn't be a need to use the \"global\" statement in Python. Is there an alternative approach to using a global variable in this case? Here is my existing code:\n\n```python\ndef signal_handler(signal, frame):\n    print \"in sig handler - g_var=%s\" % g_var\n\ndef main():\n    global g_var\n    g_var = \"test\"\n\n    time.sleep(120)\n\nif __name__ == '__main__':\n    signal.signal(signal.SIGINT, signal_handler)\n    main()\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To avoid using a global variable, you can use a class to encapsulate the state you want to share between the main function and the signal handler. By using a class, you can store the variable as an instance attribute, which allows you to access and modify it without needing a global statement. Here's how you can refactor your code:\n\n```python\nimport signal\nimport time\n\nclass SignalHandler:\n    def __init__(self):\n        self.g_var = \"test\"\n\n    def handler(self, signal, frame):\n        print(\"in sig handler - g_var=%s\" % self.g_var)\n\ndef main():\n    signal_handler = SignalHandler()\n    signal.signal(signal.SIGINT, signal_handler.handler)\n\n    # Simulate a long-running process\n    try:\n        time.sleep(120)\n    except KeyboardInterrupt:\n        # Optionally handle the interrupt in the main thread if needed\n        pass\n\nif __name__ == '__main__':\n    main()\n```\n\nIn this refactored version:\n\n1. We define a `SignalHandler` class with an instance attribute `g_var`.\n2. The signal handler function is now a method of the `SignalHandler` class.\n3. We create an instance of the `SignalHandler` class and pass its method as the signal handler.\n\nThis approach eliminates the need for a global variable and keeps the shared state encapsulated within a class instance."
+    }
+]
