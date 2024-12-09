@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, I am launching an external process using os.system() inside a loop, which results in the process being launched 'n' times simultaneously. This is causing my computer to struggle. How can I modify my code so that Python waits for each process to finish before launching the next one? Here is my current code:\n\n```python\nfor i in range(0, n):\n    os.system('someprog.exe %d' % i)\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To ensure that each process finishes before the next one is launched, you can use the `subprocess` module instead of `os.system()`. The `subprocess.run()` function will wait for the process to complete before moving on to the next iteration of the loop. Here\u2019s how you can modify your code:\n\n```python\nimport subprocess\n\nfor i in range(n):\n    subprocess.run(['someprog.exe', str(i)])\n```\n\nThis code will launch `someprog.exe` with the current loop index as an argument and wait for the process to finish before starting the next one. This should help reduce the load on your computer by preventing multiple processes from running simultaneously."
+    }
+]
