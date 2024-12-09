@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I check if a value in Numpy is 'NaT' in a datetime64? I am currently facing a FutureWarning when I compare 'NaT' to a value and a TypeError when I use np.isnan(). I am trying to avoid using Pandas for such a basic operation, is there any other way to achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "In NumPy, 'NaT' (Not-a-Time) is a special value used to represent missing or null datetime values. To check if a value is 'NaT', you can use the `numpy.isnat()` function, which is specifically designed for this purpose. This function checks if the given datetime64 or timedelta64 value is 'NaT'.\n\nHere's how you can use it:\n\n```python\nimport numpy as np\n\n# Example datetime64 array with NaT\ndates = np.array(['2023-10-01', 'NaT', '2023-10-03'], dtype='datetime64[ns]')\n\n# Check for NaT\nis_nat = np.isnat(dates)\n\nprint(is_nat)  # Output: [False  True False]\n```\n\nIn this example, `np.isnat()` returns a boolean array indicating which elements are 'NaT'. This approach avoids the use of Pandas and works directly with NumPy arrays."
+    }
+]

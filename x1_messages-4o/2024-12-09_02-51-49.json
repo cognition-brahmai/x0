@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Django, I'm trying to output fields of a form in a template like so: `{{ form.first_name }}`. I would like to add a class to this, specifically blueprint's `span-x` class. Is there a pre-made solution or template filter that would allow me to do this, such as `{{ form.first_name|add_class:\"span-4\" }}? I would like to know if this functionality is already available before I attempt to implement it myself."
+    },
+    {
+        "role": "assistant",
+        "content": "In Django, there isn't a built-in template filter specifically for adding classes to form fields. However, you can achieve this by creating a custom template filter. Here\u2019s how you can implement it:\n\n1. **Create a custom template filter:**\n\n   First, create a new file named `custom_filters.py` (or any name you prefer) inside one of your app directories, typically inside a `templatetags` directory. Make sure the directory has an `__init__.py` file to be recognized as a module.\n\n   ```python\n   # myapp/templatetags/custom_filters.py\n   from django import template\n\n   register = template.Library()\n\n   @register.filter(name='add_class')\n   def add_class(field, css_class):\n       return field.as_widget(attrs={\"class\": css_class})\n   ```\n\n2. **Register the filter:**\n\n   Ensure that your app is included in `INSTALLED_APPS` in your `settings.py`, and then load the custom filter in your template:\n\n   ```html\n   {% load custom_filters %}\n   ```\n\n3. **Use the custom filter in your template:**\n\n   Now, you can use your `add_class` filter in your template like this:\n\n   ```html\n   <div>\n       {{ form.first_name|add_class:\"span-4\" }}\n   </div>\n   ```\n\nThis approach allows you to dynamically add CSS classes to form fields in your templates. Keep in mind that you need to load your custom filters in each template where you intend to use them with `{% load custom_filters %}`.\n\nIf you plan to use this functionality across multiple projects, consider creating a reusable Django app or package for your custom filters."
+    }
+]
