@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I slice a dataframe in python using pandas by multiple index ranges? For example, I want to slice a dataframe by index ranges 10:12 and 25:28. I don't want to use the existing method which is not very elegant as shown in the code below:\n\n```python\ndf = pd.DataFrame({'a':range(10,100)})\ndf.iloc[[i for i in range(10,12)] + [i for i in range(25,28)]]\n```\n\nInstead, I am looking for a more elegant solution. Something like using multiple ranges directly within the iloc function, as shown below:\n\n```python\ndf.iloc[(10:12, 25:28)]\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve slicing a DataFrame using multiple index ranges in a more elegant way, you can utilize the `numpy.r_` object, which allows you to easily concatenate slice objects and integer arrays. Here\u2019s how you can do it:\n\n```python\nimport pandas as pd\nimport numpy as np\n\n# Sample DataFrame\ndf = pd.DataFrame({'a': range(10, 100)})\n\n# Using numpy.r_ to specify multiple index ranges\nsliced_df = df.iloc[np.r_[10:12, 25:28]]\n\nprint(sliced_df)\n```\n\nIn this code, `np.r_` is used to construct an array that includes both ranges `10:12` and `25:28`, which is then passed to `iloc` for slicing. This approach is elegant and concise, making it easy to specify multiple index ranges."
+    }
+]
