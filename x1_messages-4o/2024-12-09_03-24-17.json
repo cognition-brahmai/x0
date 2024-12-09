@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I extract the names of the rows in a dataframe using their indices in Python? I have a dataframe such as the following:\n\n```python\n        X  Y\nRow 1  0  5\nRow 2  8  1\nRow 3  3  0\n```\n\nI want to create a function that when given a list of indices, returns the corresponding row names, like this:\n\n```python\nfunction_name(dataframe[indices])\n> ['Row 1', 'Row 2']\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To extract the names of the rows using their indices in a pandas DataFrame, you can create a function that takes the DataFrame and a list of indices as input and returns the corresponding row names. Here is how you can do it:\n\n```python\nimport pandas as pd\n\n# Sample dataframe\ndata = {'X': [0, 8, 3],\n        'Y': [5, 1, 0]}\ndf = pd.DataFrame(data, index=['Row 1', 'Row 2', 'Row 3'])\n\ndef get_row_names(dataframe, indices):\n    \"\"\"\n    Function to get the row names based on indices.\n\n    :param dataframe: The DataFrame from which to extract row names.\n    :param indices: A list of integer indices.\n    :return: A list of row names corresponding to the given indices.\n    \"\"\"\n    return dataframe.index[indices].tolist()\n\n# Example usage\nindices = [0, 1]\nrow_names = get_row_names(df, indices)\nprint(row_names)  # Output: ['Row 1', 'Row 2']\n```\n\nIn this function, the `dataframe.index[indices]` expression is used to select the row names based on the provided list of indices, and then `tolist()` converts the index object to a regular Python list. Adjust the `indices` list to suit the specific indices you want to extract."
+    }
+]
