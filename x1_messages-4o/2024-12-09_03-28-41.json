@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have an Enum defined as shown below:\n\n```python\ndef enum(**enums):\n    return type('Enum', (), enums)\n\nStatus = enum(\n       STATUS_OK=0,\n       STATUS_ERR_NULL_POINTER=1, \n       STATUS_ERR_INVALID_PARAMETER=2)\n```\n\nI have a function that returns a status as the `Status` enum. When I print the current status like this:\n\n```python\ncur_status = get_Status()\nprint(cur_status)\n```\n\nIt prints the numerical value `1`. However, I want to print the name of the enum element, such as `STATUS_ERR_NULL_POINTER`, rather than its value. How can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To print the name of the enum element instead of its numerical value, you need to reverse-map the value back to its corresponding name. Since your custom `enum` function creates an `Enum` type with attributes corresponding to the enum names, you can iterate over these attributes to find the name that matches the given value.\n\nHere's how you can achieve this using your current setup:\n\n```python\ndef enum(**enums):\n    return type('Enum', (), enums)\n\nStatus = enum(\n    STATUS_OK=0,\n    STATUS_ERR_NULL_POINTER=1, \n    STATUS_ERR_INVALID_PARAMETER=2)\n\ndef get_Status():\n    # This is a placeholder for your actual status retrieval logic\n    return Status.STATUS_ERR_NULL_POINTER\n\ndef get_status_name(status_value):\n    for name, value in Status.__dict__.items():\n        if not name.startswith('__') and value == status_value:\n            return name\n    return None\n\ncur_status = get_Status()\nstatus_name = get_status_name(cur_status)\nprint(status_name)\n```\n\nIn this implementation, the `get_status_name` function iterates over the attributes of `Status` and returns the name of the attribute whose value matches the `status_value`. If no match is found, it returns `None`. When you call `get_status_name(cur_status)`, it will return `STATUS_ERR_NULL_POINTER` for the value `1`."
+    }
+]
