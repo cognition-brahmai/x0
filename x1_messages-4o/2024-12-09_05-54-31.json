@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I remove HTML tags from a string in Python without using any external module? Here is the text I'm working with:\n\n```python\ntext = \"\"\"&lt;div&gt;\n&lt;h1&gt;Title&lt;/h1&gt;\n&lt;p&gt;A long text........ &lt;/p&gt;\n&lt;a href=\"\"&gt; a link &lt;/a&gt;\n&lt;/div&gt;\"\"\"\n```\nI want the output to be like this:\n\n```python\n>>> print remove_tags(text)\nTitle A long text..... a link\n```\nI am aware that this can be done using lxml.html.fromstring(text).text_content(), but I need to achieve the same in pure Python using built-in or standard library for version 2.6+."
+    },
+    {
+        "role": "assistant",
+        "content": "To remove HTML tags from a string in Python without using any external modules, you can use the `re` module, which is part of the standard library. Here's a simple way to achieve this by using regular expressions:\n\n```python\nimport re\n\ndef remove_tags(text):\n    # Convert HTML entities to actual characters\n    text = text.replace('&lt;', '<').replace('&gt;', '>')\n    \n    # Use a regular expression to remove HTML tags\n    clean = re.compile('<.*?>')\n    return re.sub(clean, '', text)\n\ntext = \"\"\"&lt;div&gt;\n&lt;h1&gt;Title&lt;/h1&gt;\n&lt;p&gt;A long text........ &lt;/p&gt;\n&lt;a href=\"\"&gt; a link &lt;/a&gt;\n&lt;/div&gt;\"\"\"\n\nprint(remove_tags(text))\n```\n\nThis code first replaces the HTML entities `&lt;` and `&gt;` with their respective characters `<` and `>`. Then, it uses a regular expression to match and remove any content inside angle brackets, effectively removing all HTML tags from the text. The resulting string is the plain text content you want."
+    }
+]
