@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "What is a SQL query that can be used to retrieve a table containing the most frequently occurring words from a given table?"
+    },
+    {
+        "role": "assistant",
+        "content": "To retrieve the most frequently occurring words from a given table, you need a query that counts the occurrences of each word and sorts them by frequency. Let's assume you have a table named `documents` with a column `text` that contains the text data. Here's a SQL query that can achieve this:\n\n```sql\nWITH WordList AS (\n    SELECT \n        TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(text, ' ', numbers.n), ' ', -1)) AS word\n    FROM \n        documents\n    INNER JOIN (\n        SELECT 1 AS n UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5\n        UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10\n    ) numbers ON CHAR_LENGTH(text) - CHAR_LENGTH(REPLACE(text, ' ', '')) >= numbers.n - 1\n)\nSELECT \n    word,\n    COUNT(*) AS frequency\nFROM \n    WordList\nGROUP BY \n    word\nORDER BY \n    frequency DESC;\n```\n\n### Explanation:\n\n1. **WordList CTE**: This common table expression (CTE) splits the text into words using a simple space delimiter. It uses a numbers table approach to split the text into words. This assumes each entry in `text` has up to 10 words. You can expand the `numbers` subquery for more words if needed.\n\n2. **Count and Group**: The main query then counts the occurrences of each word.\n\n3. **Order**: Finally, it orders the words by their frequency in descending order to show the most frequently occurring words at the top.\n\n### Notes:\n- This query assumes that words are separated by spaces and does not account for punctuation. If you need more sophisticated text processing, such as handling punctuation or case sensitivity, consider using additional functions or preprocessing your data.\n- The `numbers` table approach is a workaround for databases that don't have built-in string splitting functions. Adjust the range of numbers based on the maximum expected number of words in a `text` entry."
+    }
+]
