@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I assign a default value to a Pydantic list field? I am trying to create a Pydantic model with a list field that defaults to an empty list if it is not initialized. In Python's built-in dataclass objects, I can use `field(default_factory=list)`. However, when I try to use this in my Pydantic models, it prevents them from being pickled. I tried implementing this in a naive way:\n\n```python\nfrom pydantic import BaseModel\n\nclass Foo(BaseModel):\n    defaulted_list_field: Sequence[str] = [] # Bad!\n```\nBut, as is common knowledge, using a mutable value like the empty-list literal as a default is not recommended. So, what is the correct and idiomatic way to assign a default value to a Pydantic list field?"
+    },
+    {
+        "role": "assistant",
+        "content": "To assign a default value to a list field in a Pydantic model without running into issues with mutable default arguments, you should use Pydantic's `Field` with `default_factory`. This approach is similar to using `default_factory` in Python's `dataclass`. Here's how you can define a list field with a default value of an empty list in a Pydantic model:\n\n```python\nfrom typing import List\nfrom pydantic import BaseModel, Field\n\nclass Foo(BaseModel):\n    defaulted_list_field: List[str] = Field(default_factory=list)\n\n# Example usage\nfoo_instance = Foo()\nprint(foo_instance.defaulted_list_field)  # Output: []\n```\n\n### Explanation:\n\n- **Field with `default_factory`:** By using `Field(default_factory=list)`, you ensure that each instance of the `Foo` model gets its own separate list, avoiding the common pitfall of shared mutable defaults.\n- **List Type:** Use `List[str]` instead of `Sequence[str]` if you specifically want a list. `Sequence` is a more general type that can include tuples and other sequence types; `List` is more specific.\n\nThis approach maintains the immutability of the default value by creating a new list for each instance, which is the recommended and idiomatic way in Pydantic."
+    }
+]
