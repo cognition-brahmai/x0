@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Perl, how can I determine if the current file is the one being executed, similar to the Python's construct `if __name__ == '__main__'`? I have tried using `FindBin` and `__FILE__`, but I'm hoping there's a more straightforward way of doing this. The Python construct I want to replicate is as follows:\n\n```python\nif __name__ == '__main__':\n    # This file is being executed.\n    raise NotImplementedError\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "In Perl, the equivalent of Python\u2019s `if __name__ == '__main__':` construct can be accomplished using the special variable `__FILE__`. This allows you to determine if the current file is the one being executed directly. Here\u2019s how you can achieve this in Perl:\n\n```perl\nuse strict;\nuse warnings;\n\n# Check if the current script file is the one being executed\nif (__FILE__ eq $0) {\n    # This file is being executed directly\n    die \"NotImplementedError\";\n}\n```\n\n### Explanation:\n\n- `__FILE__` is a special Perl token that contains the name of the file in which it appears.\n- `$0` is a special variable in Perl that contains the name of the file used to invoke the Perl interpreter. When a Perl script is executed directly, `$0` will be equal to the filename of the script.\n- By comparing `__FILE__` and `$0`, you can determine if the current file is the one being run directly.\n\nThis is the Perl way of achieving what `if __name__ == '__main__':` does in Python."
+    }
+]
