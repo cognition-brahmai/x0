@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there a recommended Socket.IO client library for Python that does not depend on any other frameworks? I need to use this client library to work with multiple socketio servers, some of which may not support websockets."
+    },
+    {
+        "role": "assistant",
+        "content": "For a Socket.IO client library in Python that doesn't depend on any other frameworks and is suitable for working with multiple Socket.IO servers, you can use `python-socketio`. This library is versatile and supports various transports, including HTTP long-polling, which is useful if some servers do not support WebSockets.\n\nHere's a brief overview of how you can use `python-socketio`:\n\n1. **Installation**: You can install it via pip:\n\n   ```bash\n   pip install python-socketio\n   ```\n\n2. **Basic Usage**: Here's a simple example of how to use it as a client:\n\n   ```python\n   import socketio\n\n   # Create a Socket.IO client\n   sio = socketio.Client()\n\n   # Define event handlers\n   @sio.event\n   def connect():\n       print(\"Connection established\")\n\n   @sio.event\n   def disconnect():\n       print(\"Disconnected from server\")\n\n   @sio.event\n   def message(data):\n       print(\"Message received:\", data)\n\n   # Connect to a Socket.IO server\n   sio.connect('http://your-socketio-server.com')\n\n   # Send a message\n   sio.send('Hello, server!')\n\n   # Wait for events\n   sio.wait()\n   ```\n\n3. **Handling Multiple Servers**: You can create multiple `Client` instances if you need to connect to different servers. Each instance will maintain its own connection and event handling.\n\n4. **Transport Options**: By default, `python-socketio` will try to use WebSockets, but it will fall back to HTTP long-polling if necessary. You can specify transport options if needed.\n\n5. **Documentation**: For more detailed usage, refer to the [python-socketio documentation](https://python-socketio.readthedocs.io/en/latest/).\n\nThis library is lightweight and doesn't have dependencies on specific frameworks, making it a suitable choice for your requirements."
+    }
+]
