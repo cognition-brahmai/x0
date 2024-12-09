@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, I have three date formats: `YYYY-MM-DD`, `DD.MM.YYYY`, `DD/MM/YYYY`. How can I validate and parse strings in these formats such as `2014-05-18`, `18.5.2014` or `18/05/2019`?"
+    },
+    {
+        "role": "assistant",
+        "content": "To validate and parse date strings in different formats in Python, you can use the `datetime` module, specifically `datetime.strptime()` for parsing and validation. Here's how you can handle the three formats you specified:\n\n```python\nfrom datetime import datetime\n\ndef parse_date(date_string):\n    # Define possible formats\n    formats = [\"%Y-%m-%d\", \"%d.%m.%Y\", \"%d/%m/%Y\"]\n    \n    for fmt in formats:\n        try:\n            # Try to parse the date string with the current format\n            return datetime.strptime(date_string, fmt)\n        except ValueError:\n            # If parsing fails, continue with the next format\n            continue\n    \n    # If none of the formats match, raise an exception\n    raise ValueError(f\"Date string '{date_string}' is not in a recognized format.\")\n\n# Examples of usage\ntry:\n    date1 = parse_date(\"2014-05-18\")\n    print(\"Parsed date1:\", date1)\n    \n    date2 = parse_date(\"18.5.2014\")\n    print(\"Parsed date2:\", date2)\n    \n    date3 = parse_date(\"18/05/2019\")\n    print(\"Parsed date3:\", date3)\nexcept ValueError as e:\n    print(e)\n```\n\n### Explanation:\n- **`%Y-%m-%d`**: Matches the `YYYY-MM-DD` format.\n- **`%d.%m.%Y`**: Matches the `DD.MM.YYYY` format.\n- **`%d/%m/%Y`**: Matches the `DD/MM/YYYY` format.\n\nThe `parse_date` function iterates over each format, attempting to parse the input string. If a format matches, it returns the parsed `datetime` object. If none of the formats match, it raises a `ValueError` indicating that the input string does not conform to any of the specified formats.\n\nMake sure to handle the potential `ValueError` when calling `parse_date` to manage cases where the input string does not match any of the expected formats."
+    }
+]
