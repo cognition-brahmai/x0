@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I add a new entry into a dictionary object in Jinja2? I have a variable 'data' which is a dictionary and I want to append a 'location' attribute to 'data' if 'node.location' is not empty. However, I am getting an 'UndefinedError' saying 'dict object' has no attribute 'append'. Here's my code:\n\n```jinja2\n{%- set data = {\n              'name' : node.Name,\n              'id' : node.id,\n           }\n-%}\n\n{% if node.location !=\"\" %}\n    data.append({'location': node.location}) \n{% endif %}\n```\n\nAnd here's the error I'm getting:\n\n```jinja2\njinja2.exceptions.UndefinedError: 'dict object' has no attribute 'append'\n```\n\nI have searched the web and referred to multiple resources but haven't found a solution for this."
+    },
+    {
+        "role": "assistant",
+        "content": "In Jinja2, dictionaries do not have an `append` method because they are not lists. Instead, you can add a new key-value pair to a dictionary using the `update` method. Here\u2019s how you can modify your code to add a `location` attribute to the `data` dictionary:\n\n```jinja2\n{%- set data = {\n              'name' : node.Name,\n              'id' : node.id,\n           }\n-%}\n\n{% if node.location != \"\" %}\n    {%- set _ = data.update({'location': node.location}) -%}\n{% endif %}\n```\n\nIn this modified version, we use `data.update({'location': node.location})` to add the `location` key to the `data` dictionary if `node.location` is not empty. The `_` is a common placeholder variable used in Jinja2 to assign the result of a function call that you don't need to use directly. This approach will avoid the `UndefinedError` and correctly update your dictionary."
+    }
+]
