@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm getting a TypeError: bad operand type for unary ~: 'float' when running the following line of code: df = df[~df[\"column\"].str.contains(\"Total\")]. Why does .str.contains() return a float and what should I do to fix this error?"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering, `TypeError: bad operand type for unary ~: 'float'`, suggests that the operation involving the unary tilde `~` is being applied to a float, which is not supported. The issue here is likely related to the data type of the column you're trying to filter.\n\nThe `~` operator is used to invert boolean values, and `df[\"column\"].str.contains(\"Total\")` is expected to return a boolean Series indicating whether each element in the column contains the substring \"Total\". However, this operation would fail if the column contains non-string values, such as floats or NaNs.\n\nTo fix this error, you should ensure that the column you're applying `.str.contains()` to is of string type. You can do this by converting the column to strings before applying the method. Here's how you can modify your code:\n\n```python\ndf = df[~df[\"column\"].astype(str).str.contains(\"Total\", na=False)]\n```\n\nIn this revised code:\n- `df[\"column\"].astype(str)` ensures that all values in the column are treated as strings.\n- The `na=False` parameter in `.str.contains()` makes sure that any NaN values are treated as `False`, preventing them from causing errors during the filtering process. \n\nThis should resolve the error and allow your code to run without issues."
+    }
+]

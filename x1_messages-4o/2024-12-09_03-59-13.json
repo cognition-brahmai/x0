@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm trying to plot an infinite horizontal line with Bokeh, in a way that the endpoints of the line never become visible, no matter how far out the user is zooming. Currently when I try to use the below code, it just prints an empty canvas.\n\n```python\nimport bokeh.plotting as bk\nimport numpy as np\n\np = bk.figure()\np.line([-np.inf,np.inf], [0,0], legend=\"y(x) = 0\")\nbk.show(p)\n```\n\nOne alternative approach I have considered is to set the endpoints extremely high/low and the figure's x_range and y_range very small in relation to them, as shown in the code below:\n\n```python\nimport bokeh.plotting as bk\nimport numpy as np\n\np = bk.figure(x_range=[-10,10])\np.line([-np.iinfo(np.int64).max, np.iinfo(np.int64).max], [0,0], legend=\"y(x) = 0\")\nbk.show(p)\n```\n\nBut I'm hoping that there may be a more elegant solution. Any suggestions?"
+    },
+    {
+        "role": "assistant",
+        "content": "To create an infinite horizontal line in Bokeh that remains visible regardless of zoom level, you can use the `Span` annotation, which allows you to draw a horizontal or vertical line across the entire plot area. This is a more elegant and efficient solution than setting extremely high/low endpoints. Here's how you can do it:\n\n```python\nimport bokeh.plotting as bk\nfrom bokeh.models import Span\n\n# Create a new plot\np = bk.figure()\n\n# Create a horizontal span (line) at y=0\nhline = Span(location=0, dimension='width', line_color='black', line_width=2)\n\n# Add the span to the plot\np.add_layout(hline)\n\n# Show the plot\nbk.show(p)\n```\n\nIn this example, the `Span` object is used to create a horizontal line (span) at `y=0` that stretches across the entire width of the plot. The `dimension='width'` parameter ensures that the line is horizontal. The line will remain visible and stretch infinitely as you zoom in or out. You can customize its appearance with additional parameters such as `line_color` and `line_width`."
+    }
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I get the HTML source of a WebElement in Selenium WebDriver using Python? I am currently using the Python bindings to run Selenium WebDriver as shown below:\n\n```python\nfrom selenium import webdriver\nwd = webdriver.Firefox()\n```\n\nI know how to grab a WebElement like this:\n\n```python\nelem = wd.find_element_by_css_selector('#my-id')\n```\n\nI also know how to get the full page source like this:\n\n```python\nwd.page_source\n```\n\nBut I am not sure how to get the \"element source\"? For instance, something like this:\n\n```python\nelem.source   # <-- returns the HTML as a string\n```\n\nThe Selenium WebDriver documentation for Python seems to be lacking and I don't see anything in the code that seems to enable that functionality. What is the best way to access the HTML of an element (and its children)?"
+    },
+    {
+        "role": "assistant",
+        "content": "To get the HTML source of a specific `WebElement` in Selenium WebDriver using Python, you can utilize the `get_attribute` method to retrieve the `outerHTML` of the element. This will give you the HTML of the element itself, including all its children.\n\nHere's how you can do it:\n\n```python\nfrom selenium import webdriver\n\n# Initialize the WebDriver (for example, using Firefox)\nwd = webdriver.Firefox()\n\n# Open a webpage\nwd.get('http://example.com')\n\n# Find the element using a CSS selector\nelem = wd.find_element_by_css_selector('#my-id')\n\n# Get the HTML source of the element including its children\nelement_html = elem.get_attribute('outerHTML')\n\n# Print the HTML\nprint(element_html)\n\n# Close the WebDriver\nwd.quit()\n```\n\nIn this code snippet:\n- `find_element_by_css_selector` is used to locate the element. You can use other methods like `find_element_by_id`, `find_element_by_xpath`, etc., depending on your needs.\n- `get_attribute('outerHTML')` fetches the HTML content of the element, including its children, as a string.\n\nThis approach is quite effective for retrieving the HTML of any element in a web page using Selenium with Python."
+    }
+]

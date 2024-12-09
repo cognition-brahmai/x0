@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to display figures separately in matplotlib. I have two figures with one plot per figure, as shown in the following code:\n\n```python\nimport matplotlib.pyplot as plt\n\nf1 = plt.figure()\nplt.plot(range(0,10))\nf2 = plt.figure()\nplt.plot(range(10,20))\nplt.show()\n```\n\nCurrently, I am displaying both figures at once using `plt.show()`. Is there a way to display them separately, i.e. to show just `f1`? Ideally, I would like to manage the figures separately, as shown in the following code (which currently does not work):\n\n```python\nf1 = plt.figure()\nf1.plot(range(0,10))\nf1.show()\n```\n\nHow can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To manage and display figures separately in Matplotlib, you need to use the `figure` object to control which figure you are currently plotting on and when to display each figure. The `show()` function is typically used to display all figures and is generally called once at the end. However, you can control the display of individual figures by using a combination of `figure` and `draw` functions.\n\nHere's how you can display figures separately:\n\n```python\nimport matplotlib.pyplot as plt\n\n# Create the first figure and axis\nf1 = plt.figure()\nax1 = f1.add_subplot(111)  # Add a subplot to figure f1\nax1.plot(range(0, 10))     # Plot on this subplot\n\n# Create the second figure and axis\nf2 = plt.figure()\nax2 = f2.add_subplot(111)  # Add a subplot to figure f2\nax2.plot(range(10, 20))    # Plot on this subplot\n\n# To display the first figure separately\nplt.figure(f1.number)  # Focus on the first figure\nplt.show()  # Show only f1\n\n# To display the second figure separately\nplt.figure(f2.number)  # Focus on the second figure\nplt.show()  # Show only f2\n```\n\nIn this example, `plt.figure(f1.number)` and `plt.figure(f2.number)` are used to switch focus to the respective figures before calling `plt.show()`, allowing you to display each figure separately. You can call `plt.show()` after focusing on each figure to display them one at a time."
+    }
+]
