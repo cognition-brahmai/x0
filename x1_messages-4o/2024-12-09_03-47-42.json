@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I combine the pandas DataFrame `query()` method with `isin()`? I have a DataFrame 'df' and I want to select rows with 'id' in a list: `id_list`. I know I can use `df[df['id'].isin(id_list)]`, but I'm trying to find a way to use `df.query()` instead. Here is my code:\n\n```python\nimport numpy as np\nimport pandas as pd\n\ndf = pd.DataFrame({'a': list('aabbccddeeff'), 'b': list('aaaabbbbcccc'),\n                   'c': np.random.randint(5, size=12),\n                   'd': np.random.randint(9, size=12)})\n\nid_list = [\"a\", \"b\", \"c\"]\n```\n\nWhen I use `df.query('a == id_list')`, it yields an error. How can I properly use `query()` with `isin()`?"
+    },
+    {
+        "role": "assistant",
+        "content": "To use the `query()` method with a list of values, you can utilize the `@` symbol to reference a Python variable. This allows you to dynamically include the contents of `id_list` in your query statement. Here's how you can achieve this with your DataFrame:\n\n```python\nimport numpy as np\nimport pandas as pd\n\ndf = pd.DataFrame({'a': list('aabbccddeeff'), 'b': list('aaaabbbbcccc'),\n                   'c': np.random.randint(5, size=12),\n                   'd': np.random.randint(9, size=12)})\n\nid_list = [\"a\", \"b\", \"c\"]\n\n# Using query() with isin()\nresult = df.query('a in @id_list')\n\nprint(result)\n```\n\nIn this code, `@id_list` allows the `query()` method to access the `id_list` variable directly, enabling you to filter the DataFrame based on whether the values in column `'a'` are present in `id_list`."
+    }
+]

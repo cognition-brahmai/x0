@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using PyCharm IDE for my Python programming. I want to know if there is any way to check if I am in debugging mode or not when I run my program. I am using pyplot as plt and I want a Figure to only be shown if I am in debug mode. Currently, I have a global boolean `_debug_` which I set myself, but I am looking for a better solution. Is there a more efficient way to achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, there is a more efficient way to determine if you are in debugging mode in PyCharm (or any other IDE that supports Python debugging). You can use Python's built-in `sys` module to check if a debugger is currently active. Here's a method you can use:\n\n```python\nimport sys\n\ndef is_debugging():\n    \"\"\"Check if the current script is being run in debug mode.\"\"\"\n    gettrace = getattr(sys, 'gettrace', None)\n    if gettrace is None:\n        return False\n    else:\n        return gettrace() is not None\n\n# Usage\nimport matplotlib.pyplot as plt\n\nif is_debugging():\n    # Debug-specific code\n    plt.figure()\n    plt.plot([1, 2, 3], [4, 5, 6])\n    plt.show()\n```\n\nIn this code, `sys.gettrace()` returns a trace function if a debugger is currently active, otherwise, it returns `None`. By checking if `gettrace()` is not `None`, you can determine whether you are in debugging mode. This approach is more efficient and eliminates the need for manually setting a global `_debug_` variable."
+    }
+]

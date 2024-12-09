@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using Python 2.7 and trying to create a distribution package of my Python module using setuptools. I have a setup.py file and when I run the command `python setup.py sdist`, it creates a file that includes only the source modules from the top-level package 'mypackage' and not any other submodules like 'mypackage.tests'. The setup.py file looks like this:\n\n```python\nfrom setuptools import setup\n\nsetup(\n    ...\n    packages=['mypackage'],\n    test_suite='mypackage.tests',\n    ...\n)\n```\n\nWhy doesn't this setup.py file include the submodules of 'mypackage' in the distribution package and what am I doing wrong?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering is due to the way the `packages` argument is specified in your `setup.py` file. When you list packages in the `setup()` function, you need to explicitly specify all the subpackages you want to include in the distribution package. The `setuptools` library doesn't automatically include subpackages unless they are specified.\n\nTo include all submodules, you can use the `find_packages` function from `setuptools`, which will automatically find all the packages and subpackages in your project. Here's how you can modify your `setup.py`:\n\n```python\nfrom setuptools import setup, find_packages\n\nsetup(\n    ...\n    packages=find_packages(),  # Automatically find all packages and subpackages\n    test_suite='mypackage.tests',\n    ...\n)\n```\n\nThe `find_packages()` function will search through your project directory and include all packages and subpackages. This is generally a better approach than manually specifying each package, especially as your project grows.\n\nAdditionally, make sure that your submodules (e.g., `mypackage.tests`) contain an `__init__.py` file. This file can be empty, but it is necessary for Python to recognize the directory as a package, especially in Python 2.7. Without this file, the directory will not be included as a package by `find_packages()` or any other packaging tool."
+    }
+]
