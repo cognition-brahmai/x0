@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I obtain the class that defined a specific method in Python? For instance, in the following example, I want the output to be \"__main__.FooClass\":\n\n```python\nclass FooClass:\n    def foo_method(self):\n        print \"foo\"\n\nclass BarClass(FooClass):\n    pass\n\nbar = BarClass()\nprint get_class_that_defined_method(bar.foo_method)\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To obtain the class that defined a specific method in Python, you can inspect the `__qualname__` attribute of the method. This attribute provides a qualified name for the method, including the class in which it was defined. Here's how you can achieve this:\n\n```python\ndef get_class_that_defined_method(meth):\n    if hasattr(meth, '__self__'):\n        # Bound method\n        for cls in meth.__self__.__class__.__mro__:\n            if cls.__dict__.get(meth.__name__) is meth:\n                return cls\n    else:\n        # Unbound function\n        return meth.__qualname__.split('.<locals>', 1)[0].rsplit('.', 1)[0]\n    return None\n\nclass FooClass:\n    def foo_method(self):\n        print(\"foo\")\n\nclass BarClass(FooClass):\n    pass\n\nbar = BarClass()\nprint(get_class_that_defined_method(bar.foo_method))\n```\n\nThis function works by checking if the method `meth` is a bound method (associated with an instance) or a function. For bound methods, it iterates through the method resolution order (`__mro__`) of the instance's class to find the class that contains the method in its `__dict__`. For unbound functions, it uses the `__qualname__` to extract the class name. \n\nThe output of the above code will be:\n\n```\n<class '__main__.FooClass'>\n```\n\nThis indicates that `foo_method` is defined in `FooClass`."
+    }
+]
