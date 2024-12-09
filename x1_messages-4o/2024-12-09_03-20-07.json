@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a DataFrame with columns 'Type' and 'Set'. I want to add a new column 'color' to this DataFrame with the condition that if 'Set' equals 'Z', 'color' should be 'green'. For all other cases, 'color' should be 'red'. My DataFrame is as follows:\n\n```python\n    Type       Set\n1    A          Z\n2    B          Z           \n3    B          X\n4    C          Y\n```\nHow can I achieve this using pandas?"
+    },
+    {
+        "role": "assistant",
+        "content": "You can achieve this by using the `apply` method along with a lambda function to set the 'color' column based on the condition you described. Here's how you can do it:\n\n```python\nimport pandas as pd\n\n# Sample DataFrame\ndata = {\n    'Type': ['A', 'B', 'B', 'C'],\n    'Set': ['Z', 'Z', 'X', 'Y']\n}\n\ndf = pd.DataFrame(data)\n\n# Add 'color' column based on the condition\ndf['color'] = df['Set'].apply(lambda x: 'green' if x == 'Z' else 'red')\n\nprint(df)\n```\n\nThis code will add a new column 'color' to your DataFrame, where the value is 'green' if the 'Set' column value is 'Z', and 'red' otherwise. The output will be:\n\n```\n  Type Set  color\n1    A   Z  green\n2    B   Z  green\n3    B   X    red\n4    C   Y    red\n```"
+    }
+]
