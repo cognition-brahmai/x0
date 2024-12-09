@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I get the opposite diagonal of a numpy array in Python? I know the built-in function `np.diag_indices()` to get the diagonal indices starting from the top left. For instance, using the following code:\n\n```python\nimport numpy as np\narray = np.arange(25).reshape(5,5)\ndiagonal = np.diag_indices(5)\narray\n```\n\nThis will output the array:\n\n```python\narray([[ 0,  1,  2,  3,  4],\n[ 5,  6,  7,  8,  9],\n[10, 11, 12, 13, 14],\n[15, 16, 17, 18, 19],\n[20, 21, 22, 23, 24]])\n```\n\nAnd `array[diagonal]` will give me:\n\n```python\narray([ 0,  6, 12, 18, 24])\n```\n\nHowever, I'm looking for a way to get the diagonal starting from the top right, which should give me the following:\n\n```python\narray([ 4,  8, 12, 16, 20])\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To get the opposite diagonal (from the top right to the bottom left) of a NumPy array, you can use slicing in combination with the `np.diag()` function. Here's how you can achieve this:\n\n```python\nimport numpy as np\n\narray = np.arange(25).reshape(5, 5)\n\n# Get the opposite diagonal (top right to bottom left)\nopposite_diagonal = np.diag(np.fliplr(array))\n\nprint(opposite_diagonal)\n```\n\nHere's what happens in the code:\n\n1. `np.fliplr(array)` flips the array in the left/right direction, effectively swapping the columns.\n2. `np.diag()` is then used to extract the main diagonal from this flipped array.\n\nWhen you run the code above, it will output:\n\n```python\narray([ 4,  8, 12, 16, 20])\n```\n\nThis gives you the diagonal starting from the top right and ending at the bottom left of the original array."
+    }
+]
