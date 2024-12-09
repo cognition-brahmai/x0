@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I strip the decorators from a function in Python? For example, I have the following code:\n\n```python\ndef with_connection(f):\n    def decorated(*args, **kwargs):\n        f(get_connection(...), *args, **kwargs)\n    return decorated\n\n@with_connection\ndef spam(connection):\n    # Do something\n```\n\nI want to test the `spam` function without the hassle of setting up a connection or whatever the decorator is doing. How can I get the underlying \"undecorated\" function from `spam`?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, when you decorate a function, the original function is replaced by the decorated version. However, you can often access the original function by utilizing attributes that decorators sometimes set, or by modifying the decorator to store the original function.\n\nHere\u2019s how you can modify your decorator to store a reference to the original function:\n\n```python\ndef with_connection(f):\n    def decorated(*args, **kwargs):\n        return f(get_connection(...), *args, **kwargs)\n    decorated._original = f  # Store a reference to the original function\n    return decorated\n\n@with_connection\ndef spam(connection):\n    # Do something\n    return f\"Using connection: {connection}\"\n\n# Access the undecorated function\noriginal_spam = spam._original\n\n# You can now call it without the connection\nprint(original_spam())\n```\n\nIn this example, we added an `_original` attribute to the decorated function, which holds a reference to the undecorated function. This way, you can access the original function by using `spam._original`.\n\nIf you don't have control over the decorator or if it doesn't store the original function, you could use a different approach, such as manually avoiding decoration during testing. However, modifying the decorator as shown is a clean and effective solution when testing or debugging."
+    }
+]
