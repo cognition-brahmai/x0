@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I remove the label on the left side of a pie chart in Python using matplotlib.pyplot? I have a pie chart which I plot using pyplot with the following code:\n\n```python\nimport pylab\nimport pandas as pd\ntest = pd.Series(['male', 'male', 'male', 'male', 'female'], name=\"Sex\")\ntest = test.astype(\"category\")\ngroups = test.groupby([test]).agg(len)\ngroups.plot(kind='pie', shadow=True)\npylab.show()\n```\nThe result is a pie chart with a label on the left (marked red in the picture):\n\n![Pie chart](https://i.stack.imgur.com/RzvfT.png)\n\nI've tried to remove the label using the following code, but it didn't work:\n\n```python\nplt.axes().set_xlabel('')\nplt.axes().set_ylabel('')\n```\n\nCan anyone provide a solution for this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To remove the label on the left side of the pie chart, you need to ensure that the axis labels are turned off or set to an empty string. In your case, since you're using `pandas.DataFrame.plot`, you can achieve this by setting the `ylabel` parameter to an empty string directly in the plotting command. Here's how you can modify your code:\n\n```python\nimport matplotlib.pyplot as plt\nimport pandas as pd\n\n# Create the data\ntest = pd.Series(['male', 'male', 'male', 'male', 'female'], name=\"Sex\")\ntest = test.astype(\"category\")\ngroups = test.groupby([test]).agg(len)\n\n# Plot the pie chart\nax = groups.plot(kind='pie', shadow=True, ylabel='')\n\n# Remove the y-axis label manually if needed\nax.set_ylabel('')\n\n# Display the plot\nplt.show()\n```\n\nBy setting `ylabel=''` in the `plot` function, you should be able to remove the label on the left side of the pie chart. If it's still not working, ensure that you're using the correct version of `matplotlib` and `pandas`, as sometimes default behaviors might change between versions."
+    }
+]
