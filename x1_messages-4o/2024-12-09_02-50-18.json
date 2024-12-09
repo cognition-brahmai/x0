@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I enforce a function in Python to only accept a specific set of values for a given parameter? For example, I have a function called 'results' that takes two parameters: 'status' and 'data'. I want to restrict the 'status' parameter to only accept values from the set {0, 1, 99}. Here's the current function definition:\n\n```python\ndef results(status, data):\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To enforce a function in Python to only accept a specific set of values for a given parameter, you can add a check at the beginning of the function to ensure that the parameter's value is within the allowed set. If the value is not within the set, you can raise a `ValueError` to inform the user of the invalid input. Here's how you can modify your `results` function to restrict the `status` parameter to only accept values from the set {0, 1, 99}:\n\n```python\ndef results(status, data):\n    allowed_statuses = {0, 1, 99}\n    \n    if status not in allowed_statuses:\n        raise ValueError(f\"Invalid status: {status}. Allowed values are: {allowed_statuses}\")\n    \n    # Proceed with the rest of the function logic\n    print(f\"Status: {status}, Data: {data}\")\n\n# Example usage\ntry:\n    results(1, \"Some data\")  # Valid status\n    results(99, \"Another piece of data\")  # Valid status\n    results(2, \"Invalid data\")  # This will raise ValueError\nexcept ValueError as e:\n    print(e)\n```\n\nIn this modified version, the function checks if `status` is in the `allowed_statuses` set. If it is not, a `ValueError` is raised with a descriptive message, helping you enforce the desired constraint on the `status` parameter."
+    }
+]
