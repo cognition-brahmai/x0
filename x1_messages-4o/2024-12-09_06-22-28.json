@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I set a default value for a SelectField using WTForms? I have tried passing a value to the 'default' parameter like this:\n\n```python\nclass TestForm(Form):\n  test_field = SelectField(\"Test: \", choices=[(1, \"Abc\"), (2, \"Def\")], default=2)\n```\n\nand also like this:\n\n```python\nclass TestForm(Form):\n  test_field = SelectField(\"Test: \", choices=[(1, \"Abc\"), (2, \"Def\")], default=(2, \"Def\"))\n```\n\nUnfortunately, neither of these set the default selected field to \"Def.\" This approach works for other kinds of fields such as TextField. What is the correct way to set the default value for a SelectField?"
+    },
+    {
+        "role": "assistant",
+        "content": "To set a default value for a `SelectField` in WTForms, you need to ensure that the form is processed with the default data. This involves a few steps beyond just setting the `default` parameter when defining the field.\n\nHere\u2019s a correct approach to set a default value for a `SelectField`:\n\n1. Define the `SelectField` with your choices.\n2. Set the `default` parameter to the value you want to be selected by default.\n3. Call the `process` method with `formdata=None` after creating the form instance, so it initializes with default values.\n\nHere is how you can do it:\n\n```python\nfrom wtforms import Form, SelectField\n\nclass TestForm(Form):\n    test_field = SelectField(\"Test: \", choices=[(1, \"Abc\"), (2, \"Def\")], default=2)\n\n# Create an instance of the form\nform = TestForm()\n\n# Process the form to set the default value\nform.process()\n\n# Now, when you render the form, \"Def\" will be selected by default\n```\n\nBy calling `form.process()`, WTForms will initialize the field with its default value. Without explicitly calling `process()`, the form will not automatically populate the field with the default value when rendered.\n\nRemember that if any form data is submitted (e.g., from a POST request), it will override the default value. The default value is only used when there is no other data present."
+    }
+]
