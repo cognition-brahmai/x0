@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working with a dataframe 'df' in pandas which has a datetime column named 'ACC_DATE' as shown below:\n\n```python\n>>> df['ACC_DATE'].head(2)\n538   2006-04-07\n550   2006-04-12\nName: ACC_DATE, dtype: datetime64[ns]\n```\nI need to subtract a year from each row in this column. Can you guide me on how I can achieve this and which library I should use? My expected output would be a new column 'NEW_DATE' in the dataframe as shown below:\n\n```python\n        ACC_DATE    NEW_DATE\n538   2006-04-07  2005-04-07\n549   2006-04-12  2005-04-12\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To subtract a year from each date in the `ACC_DATE` column of your DataFrame, you can use the `pandas` library along with the `DateOffset` function. Here's how you can achieve this:\n\n```python\nimport pandas as pd\n\n# Assuming 'df' is your DataFrame and 'ACC_DATE' is already in datetime64 dtype\n# If not, you can convert it using pd.to_datetime(df['ACC_DATE'])\n\n# Use DateOffset to subtract one year\ndf['NEW_DATE'] = df['ACC_DATE'] - pd.DateOffset(years=1)\n\n# Display the updated DataFrame\nprint(df[['ACC_DATE', 'NEW_DATE']].head())\n```\n\nThis code will create a new column `NEW_DATE` in the DataFrame `df` where each date is one year earlier than the corresponding date in the `ACC_DATE` column. The `pd.DateOffset(years=1)` is used to subtract a year from each date in the column."
+    }
+]
