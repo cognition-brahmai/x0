@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I sort a list of tuples according to another list in Python? For instance, I have a list 'a' as follows:\n\n```python\na = [(\"ax\", 1), (\"ec\", 3), (\"bk\", 5)]\n```\n\nAnd another list 'b' as:\n\n```python\nb = [\"ec\", \"ax\", \"bk\"]\n```\n\nI would like to sort list 'a' based on the order of elements in list 'b'. Hence, after sorting, list 'a' should look like this:\n\n```python\na = [(\"ec\", 3), (\"ax\", 1), (\"bk\", 5)]\n```\n\nHow can I accomplish this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To sort a list of tuples based on the order of elements specified in another list, you can use the `sorted()` function along with a custom key function. The key function will determine the order based on the position of the first element of each tuple within the second list. Here's how you can achieve this:\n\n```python\na = [(\"ax\", 1), (\"ec\", 3), (\"bk\", 5)]\nb = [\"ec\", \"ax\", \"bk\"]\n\n# Create a dictionary that maps each item in 'b' to its index\norder_dict = {value: index for index, value in enumerate(b)}\n\n# Sort 'a' using the dictionary to determine the order\nsorted_a = sorted(a, key=lambda x: order_dict[x[0]])\n\nprint(sorted_a)\n```\n\nOutput:\n```python\n[('ec', 3), ('ax', 1), ('bk', 5)]\n```\n\nHere's a breakdown of how this works:\n\n1. We create a dictionary called `order_dict` that maps each element of list `b` to its index. This is done using a dictionary comprehension.\n2. We use the `sorted()` function on list `a`, specifying a lambda function as the key. The lambda function takes a tuple `x` as an argument and returns the index of its first element in list `b` using the `order_dict`.\n3. The `sorted()` function then orders the tuples in list `a` according to their indices in list `b`, resulting in the desired order."
+    }
+]
