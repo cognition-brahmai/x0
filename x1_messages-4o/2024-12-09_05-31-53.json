@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I add a unique UUID to a new column for every row in a pandas DataFrame? I've tried adding a UUID to a new column, but all rows are populated with the same UUID. Here's the code I've been using:\n\n```python\nimport uuid\nimport pandas as pd\nimport numpy as np\n\ndf = pd.DataFrame(np.random.randn(4,3), columns=list('abc'), index=['apple', 'banana', 'cherry', 'date'])\ndf['uuid'] = uuid.uuid4()\nprint(df)\n\n               a         b         c                                  uuid\napple   0.687601 -1.332904 -0.166018  34115445-c4b8-4e64-bc96-e120abda1653\nbanana -2.252191 -0.844470  0.384140  34115445-c4b8-4e64-bc96-e120abda1653\ncherry -0.470388  0.642342  0.692454  34115445-c4b8-4e64-bc96-e120abda1653\ndate   -0.943255  1.450051 -0.296499  34115445-c4b8-4e64-bc96-e120abda1653\n```\n\nI'm looking for a unique UUID in each row of the 'uuid' column and I've tried using .apply() and .map() without success."
+    },
+    {
+        "role": "assistant",
+        "content": "To ensure that each row in your DataFrame gets a unique UUID, you can use the `apply` method with a lambda function that generates a new UUID for each row. Here's how you can modify your code to achieve this:\n\n```python\nimport uuid\nimport pandas as pd\nimport numpy as np\n\n# Create a sample DataFrame\ndf = pd.DataFrame(np.random.randn(4,3), columns=list('abc'), index=['apple', 'banana', 'cherry', 'date'])\n\n# Assign a unique UUID to each row in the 'uuid' column\ndf['uuid'] = df.apply(lambda _: uuid.uuid4(), axis=1)\n\nprint(df)\n```\n\nIn this revised code, the `apply` method is used with `axis=1` to apply the lambda function across each row of the DataFrame. The lambda function generates a new UUID for each row using `uuid.uuid4()`. As a result, each row in the 'uuid' column will have a unique UUID."
+    }
+]
