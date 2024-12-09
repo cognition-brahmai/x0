@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, is there a built-in method to retrieve an array of all instance variables of a class? For instance, given the following code:\n\n```python\nclass hi:\n  def __init__(self):\n    self.ii = \"foo\"\n    self.kk = \"bar\"\n```\n\nIs there a method that can be used in this way?\n\n```python\n>>> mystery_method(hi)\n[\"ii\", \"kk\"]\n```\n\nI am specifically looking for instance variables and not class variables."
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, there isn't a built-in method that directly retrieves the instance variable names of a class. However, you can achieve this by creating an instance of the class and using the `__dict__` attribute. The `__dict__` attribute of an instance contains a dictionary of all the instance variables and their values. You can use this to get the instance variable names. Here's how you can do it:\n\n```python\nclass hi:\n    def __init__(self):\n        self.ii = \"foo\"\n        self.kk = \"bar\"\n\ndef mystery_method(cls):\n    instance = cls()\n    return list(instance.__dict__.keys())\n\n# Usage\ninstance_variable_names = mystery_method(hi)\nprint(instance_variable_names)  # Output: ['ii', 'kk']\n```\n\nIn this code, the `mystery_method` function creates an instance of the given class and retrieves the keys from the `__dict__` attribute, which correspond to the instance variable names."
+    }
+]
