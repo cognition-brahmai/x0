@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a dictionary in Python in the following format:\n\n```python\n{'KEY1':{'name':'google','date':20100701,'downloads':0},\n 'KEY2':{'name':'chrome','date':20071010,'downloads':0},\n 'KEY3':{'name':'python','date':20100710,'downloads':100}}\n```\n\nI want to sort this dictionary based on the 'downloads' key first, and then for all items with no downloads, I want them to be sorted by the 'date' key. I understand that a dictionary cannot be sorted, so what I need is a sorted list of keys that I can iterate over. The final output that I want is:\n\n```python\n['KEY3','KEY1','KEY2']\n```\n\nI know how to use the `sorted` function to sort the list by either value, but how do I sort it by a secondary value as well?"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve the desired sorting of the dictionary keys based on multiple criteria, you can use the `sorted` function with a custom sorting key. You can define a lambda function as the key, which will return a tuple containing the values for sorting. In your case, you'll first sort by the 'downloads' key in descending order and then by the 'date' key in ascending order for items with zero downloads.\n\nHere is how you can do that:\n\n```python\ndata = {\n    'KEY1': {'name': 'google', 'date': 20100701, 'downloads': 0},\n    'KEY2': {'name': 'chrome', 'date': 20071010, 'downloads': 0},\n    'KEY3': {'name': 'python', 'date': 20100710, 'downloads': 100}\n}\n\n# Sort the keys based on the custom sorting key\nsorted_keys = sorted(data.keys(), key=lambda k: (-data[k]['downloads'], data[k]['date']))\n\nprint(sorted_keys)  # Output: ['KEY3', 'KEY1', 'KEY2']\n```\n\nExplanation:\n- The sorting key is a tuple `(-data[k]['downloads'], data[k]['date'])`.\n- `-data[k]['downloads']`: Negates the downloads value to sort in descending order.\n- `data[k]['date']`: Sorts by date in ascending order for items with the same downloads value.\n  \nThis will give you the list of keys sorted according to your criteria."
+    }
+]
