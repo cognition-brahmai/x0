@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I format a Python datetime object to include English ordinal suffixes (\"st\", \"nd\", \"rd\", \"th\") like PHP's \"S\" string does? I need the output to be in a format like \"Thu the 2nd at 4:30\". I've found that the `strftime` method doesn't meet my needs. Is there a built-in way to do this in Django or Python? I know Django has a filter that can achieve this, but I'm looking for a function, not a filter."
+    },
+    {
+        "role": "assistant",
+        "content": "To format a Python `datetime` object to include English ordinal suffixes like \"st\", \"nd\", \"rd\", and \"th\", you can create a custom function. Python's `strftime` method indeed doesn't support this directly, and while Django has template filters for this, you can achieve similar functionality with a standalone Python function.\n\nHere's a function you can use to format a `datetime` object with ordinal suffixes:\n\n```python\nfrom datetime import datetime\n\ndef get_ordinal_suffix(day):\n    if 11 <= day <= 13:\n        return 'th'\n    last_digit = day % 10\n    if last_digit == 1:\n        return 'st'\n    elif last_digit == 2:\n        return 'nd'\n    elif last_digit == 3:\n        return 'rd'\n    else:\n        return 'th'\n\ndef format_datetime_with_ordinal_suffix(dt):\n    day = dt.day\n    suffix = get_ordinal_suffix(day)\n    formatted_date = dt.strftime(f'%a the {day}{suffix} at %I:%M %p')\n    return formatted_date\n\n# Example usage\ndt = datetime.now()\nformatted_date = format_datetime_with_ordinal_suffix(dt)\nprint(formatted_date)\n```\n\nThis code snippet defines a function `get_ordinal_suffix` to determine the appropriate suffix for a given day. The `format_datetime_with_ordinal_suffix` function then uses this suffix when formatting the date string. This provides the desired output, such as \"Thu the 2nd at 4:30 PM\". The `%a` and `%I:%M %p` parts are used to format the day of the week and the time respectively, and you can adjust these format codes to suit your specific needs."
+    }
+]
