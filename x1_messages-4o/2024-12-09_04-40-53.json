@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm working with a simplified dataframe in pandas that looks like this:\n\n```python\nID   Fruit\nF1   Apple\nF2   Orange\nF3   Banana \n```\n\nI want to add a new column at the beginning of the dataframe, named 'New_ID', which should start with the number 880 and increment by one in each subsequent row. The desired output is:\n\n```python\nNew_ID   ID   Fruit\n880      F1   Apple\n881      F2   Orange\n882      F3   Banana  \n```\n\nI have tried using the following code:\n\n```python\ndf['New_ID'] = [\"880\"]\n```\n\nHowever, this doesn't seem to work as it doesn't increment the number for the next rows. How can I add an incrementing number to a new column in a pandas dataframe without literally assigning a list of numbers?"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve adding a new column with an incrementing number starting from 880, you can use the `range` function to generate the numbers and assign them to the new column. You can then rearrange the columns to place 'New_ID' at the beginning. Here\u2019s how you can do it:\n\n```python\nimport pandas as pd\n\n# Creating the initial DataFrame\ndata = {'ID': ['F1', 'F2', 'F3'],\n        'Fruit': ['Apple', 'Orange', 'Banana']}\ndf = pd.DataFrame(data)\n\n# Adding the 'New_ID' column with incrementing numbers starting from 880\ndf['New_ID'] = range(880, 880 + len(df))\n\n# Reordering columns to place 'New_ID' at the beginning\ndf = df[['New_ID', 'ID', 'Fruit']]\n\nprint(df)\n```\n\nThis code uses `range(880, 880 + len(df))` to create a sequence of numbers starting from 880, with the number of elements equal to the number of rows in the DataFrame. Then, it assigns this sequence to the 'New_ID' column. Finally, it rearranges the columns to place 'New_ID' at the front."
+    }
+]
