@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have functions that sometimes return NaNs using `float('nan')`. I'm not using numpy, and when I try to write a unittest using `assertEqual(nan_value, float('nan'))`, it doesn't work because `float('nan') == float('nan')` is always false. Is there something like `assertIsNan` available for unittest? I could not find any information on this."
+    },
+    {
+        "role": "assistant",
+        "content": "In Python's `unittest` framework, there isn't a built-in `assertIsNan` method, but you can create a custom assertion method to handle this case. Since NaN (Not a Number) is not equal to itself, you can use the `math.isnan()` function to check for NaN values. Here's how you can create a custom assertion in your test case:\n\n```python\nimport unittest\nimport math\n\nclass MyTestCase(unittest.TestCase):\n    def assertIsNan(self, value, msg=None):\n        \"\"\"Check if the provided value is NaN.\"\"\"\n        if not math.isnan(value):\n            standardMsg = f'{value} is not NaN'\n            self.fail(self._formatMessage(msg, standardMsg))\n\n    def test_nan_value(self):\n        nan_value = float('nan')\n        # Use the custom assert method to check for NaN\n        self.assertIsNan(nan_value)\n\nif __name__ == '__main__':\n    unittest.main()\n```\n\nIn this example, `assertIsNan` is a method defined within your test case class that uses `math.isnan()` to verify if a value is NaN. You can then use this method in your tests to assert that a value is NaN. This approach will allow you to handle NaN checks in a clean and reusable manner within your unit tests."
+    }
+]
