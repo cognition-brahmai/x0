@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working with a bash (3.00) shell script and I have several tests on variables where if the variable is not set, then a default value is assigned, such as:\n\n```bash\nif [ -z \"${VARIABLE}\" ]; then \n    FOO='default'\nelse \n    FOO=${VARIABLE}\nfi\n```\n\nI remember there being a way to perform this operation in a single line, something similar to a ternary operator, like:\n\n```bash\nFOO=${ ${VARIABLE} : 'default' }\n```\n\nHowever, I know the above code won't work. Is there an actual syntax that can perform this operation?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can perform this operation using parameter expansion in Bash. You can use the following syntax to assign a default value if a variable is unset or null:\n\n```bash\nFOO=${VARIABLE:-'default'}\n```\n\nHere's how it works:\n\n- `VARIABLE` is the variable you are checking.\n- `:-` is the parameter expansion operator that checks if `VARIABLE` is unset or null.\n- `'default'` is the value that will be assigned to `FOO` if `VARIABLE` is either unset or null.\n\nSo, if `VARIABLE` is set and not empty, `FOO` will take its value. Otherwise, `FOO` will be set to `'default'`. This is a concise and efficient way to handle default values in bash scripting."
+    }
+]
