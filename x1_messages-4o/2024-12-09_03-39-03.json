@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I drop all data in a Pandas DataFrame and keep only the column headers? I am currently trying to accomplish this with the `drop()` function, but I'm getting a `TypeError: drop() takes at least 2 arguments (3 given)`. Here is my current code:\n\n```python\nimport pandas as pd\n\nweb_stats = {'Day': [1, 2, 3, 4, 2, 6],\n             'Visitors': [43, 43, 34, 23, 43, 23],\n             'Bounce_Rate': [3, 2, 4, 3, 5, 5]}\ndf = pd.DataFrame(web_stats)\n\ndf.drop(axis=0, inplace=True)\nprint df\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering is because the `drop()` function needs the labels of the rows or columns you want to drop, and you've provided the `axis` without specifying which rows to drop. To clear all the data in a DataFrame while keeping the column headers, you can simply slice the DataFrame to create an empty DataFrame with the same columns. Here's how you can do it:\n\n```python\nimport pandas as pd\n\nweb_stats = {'Day': [1, 2, 3, 4, 2, 6],\n             'Visitors': [43, 43, 34, 23, 43, 23],\n             'Bounce_Rate': [3, 2, 4, 3, 5, 5]}\ndf = pd.DataFrame(web_stats)\n\n# Create an empty DataFrame with the same columns\ndf = df[0:0]\n\nprint(df)\n```\n\nThis will effectively remove all the data from the DataFrame, leaving only the column headers. The key here is slicing the DataFrame in such a way (`df[0:0]`) that it retains the structure but contains no rows."
+    }
+]

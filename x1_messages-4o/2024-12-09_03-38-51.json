@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to find a quick and efficient way to keep a running maximum of a numpy array. For example, if my array is x = numpy.array([11,12,13,20,19,18,17,18,23,21]), I am aiming for a result like numpy.array([11,12,13,20,20,20,20,20,23,23]). I currently have a function which uses a loop:\n\n```python\ndef running_max(x):\n    result = [x[0]]\n    for val in x:\n        if val > result[-1]:\n            result.append(val)\n        else:\n            result.append(result[-1])\n    return result\n```\n\nHowever, this isn't ideal since my arrays can have hundreds of thousands of entries and I need to call this function multiple times. Is there a more efficient numpy method or trick to remove the loop? I am considering writing this as a C extension, but I want to ensure that I am not reinventing the wheel."
+    },
+    {
+        "role": "assistant",
+        "content": "You can achieve a running maximum efficiently using NumPy by leveraging the `np.maximum.accumulate` function. This function is specifically designed to perform cumulative operations like running maximum without the need for explicit loops. Here's how you can use it:\n\n```python\nimport numpy as np\n\nx = np.array([11, 12, 13, 20, 19, 18, 17, 18, 23, 21])\nrunning_max_result = np.maximum.accumulate(x)\n\nprint(running_max_result)\n```\n\nThis will give you the desired output:\n\n```\n[11 12 13 20 20 20 20 20 23 23]\n```\n\nThe `np.maximum.accumulate` function efficiently computes the running maximum by iterating internally in C, which is much faster than a Python loop, especially for large arrays. This should significantly improve the performance of your code without the need to write a C extension."
+    }
+]
