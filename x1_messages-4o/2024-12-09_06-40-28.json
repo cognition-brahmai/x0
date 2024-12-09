@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I efficiently merge multiple dictionaries or sequences of key-value pairs and collect values from matching keys? For instance, if I have two dictionaries like this:\n```python\nd1 = {key1: x1, key2: y1}\nd2 = {key1: x2, key2: y2}\n```\nI want to obtain a new dictionary that looks like this:\n```python\nd = {key1: (x1, x2), key2: (y1, y2)}\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To efficiently merge multiple dictionaries and collect values from matching keys, you can use Python's `collections.defaultdict` in combination with a loop to iterate through the dictionaries. The `defaultdict` allows you to automatically initialize a list for each key, which you can then append values to. Here's how you can do this:\n\n```python\nfrom collections import defaultdict\n\n# Sample dictionaries\nd1 = {'key1': 'x1', 'key2': 'y1'}\nd2 = {'key1': 'x2', 'key2': 'y2'}\n\n# Create a defaultdict with list as default value\nmerged_dict = defaultdict(list)\n\n# Iterate over both dictionaries\nfor d in (d1, d2):\n    for key, value in d.items():\n        merged_dict[key].append(value)\n\n# Convert defaultdict back to a regular dictionary if needed\nresult_dict = {key: tuple(values) for key, values in merged_dict.items()}\n\nprint(result_dict)\n```\n\nOutput:\n```\n{'key1': ('x1', 'x2'), 'key2': ('y1', 'y2')}\n```\n\nIn this solution, `merged_dict` is a `defaultdict` that stores lists of values for each key. We iterate over each dictionary, appending each value to the list corresponding to its key. Finally, we convert the lists to tuples to match your desired output format. This approach efficiently handles merging any number of dictionaries."
+    }
+]
