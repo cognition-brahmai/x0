@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working with a Pandas data frame in Python which looks like this:\n\n```python\nimport pandas as pd\ndf = pd.DataFrame({'name' : ['A', 'Z','C'],\n                   'company' : ['Apple', 'Yahoo','Amazon'],\n                   'height' : [130, 150,173]})\n\ndf = df.pivot(index=\"name\", columns=\"company\", values=\"height\").fillna(0)\n```\n\nThis gives me a data frame with companies as column headers and names as the index. I would like to reorder the indexed rows based on a predefined list: [\"Z\", \"C\", \"A\"]. How can I reorder my dataframe to match this list?"
+    },
+    {
+        "role": "assistant",
+        "content": "You can reorder the indexed rows in your DataFrame using the `reindex` method. Here's how you can achieve that:\n\n```python\nimport pandas as pd\n\n# Create the initial DataFrame\ndf = pd.DataFrame({'name' : ['A', 'Z', 'C'],\n                   'company' : ['Apple', 'Yahoo', 'Amazon'],\n                   'height' : [130, 150, 173]})\n\n# Pivot the DataFrame\ndf = df.pivot(index=\"name\", columns=\"company\", values=\"height\").fillna(0)\n\n# Define the desired order of the index\ndesired_order = [\"Z\", \"C\", \"A\"]\n\n# Reorder the DataFrame\ndf = df.reindex(desired_order)\n\nprint(df)\n```\n\nThis code will reorder the rows in the DataFrame to match the order specified in the `desired_order` list. The `reindex` method is used to align the DataFrame index with the specified list, rearranging the rows accordingly."
+    }
+]
