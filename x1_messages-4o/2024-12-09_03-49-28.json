@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I send a HEAD HTTP request in Python 2 to get the headers of a given URL so I can determine the MIME type? For example, I want to check if `http://somedomain/foo/` will return an HTML document or a JPEG image. I need to send a HEAD request to read the MIME type without having to download the content. Is there an easy method to achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To send a HEAD HTTP request in Python 2 and retrieve the headers of a given URL to determine the MIME type, you can use the `httplib` or `urllib2` modules. Here's a simple example using `urllib2`, which is typically easier to work with for such tasks:\n\n```python\nimport urllib2\n\ndef get_mime_type(url):\n    request = urllib2.Request(url)\n    request.get_method = lambda: 'HEAD'  # Set the request method to HEAD\n\n    try:\n        response = urllib2.urlopen(request)\n        mime_type = response.info().getheader('Content-Type')\n        return mime_type\n    except urllib2.URLError as e:\n        print(f\"Error: {e.reason}\")\n        return None\n\n# Example usage\nurl = 'http://somedomain/foo/'\nmime_type = get_mime_type(url)\nif mime_type:\n    print(f\"The MIME type is: {mime_type}\")\nelse:\n    print(\"Failed to retrieve MIME type.\")\n```\n\n### Explanation:\n- **`urllib2.Request(url)`**: Creates a request object for the specified URL.\n- **`request.get_method = lambda: 'HEAD'`**: Overrides the method to send a HEAD request instead of the default GET method.\n- **`urllib2.urlopen(request)`**: Opens the URL and sends the request.\n- **`response.info().getheader('Content-Type')`**: Retrieves the 'Content-Type' header from the response, which indicates the MIME type of the resource.\n\nThis code will send a HEAD request to the specified URL and print the MIME type of the response, allowing you to determine if it's an HTML document, a JPEG image, or another type of content."
+    }
+]
