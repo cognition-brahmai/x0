@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have two models in Django - `InformationUnit` and `Project`. I want to annotate all the `InformationUnit`s that belong to a project. I tried using `p = Project.objects.all().annotate(Count('informationunit')` which works fine. However, I also want to know, in each project, how many distinct `username`s participate. That is, I need to count how many distinct `username`s are there in the `InformationUnit`s that compose one project. I tried using `p = Project.objects.all().annotate(Count('informationunit__username')`, but it simply counts the number of `InformationUnit`, regardless of the `username`. Note that `username` is not an object, it is a string. Is there a way to achieve this without creating a complicated code based on loops?"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve the result you're looking for, you can use Django's `annotate()` function along with `Count()` and the `distinct=True` option to count distinct `username`s for each project. Here's how you can adjust your query:\n\n```python\nfrom django.db.models import Count\n\nprojects = Project.objects.all().annotate(\n    informationunit_count=Count('informationunit'),\n    distinct_usernames_count=Count('informationunit__username', distinct=True)\n)\n```\n\nHere's a breakdown of what this does:\n\n- `informationunit_count`: Counts the total number of `InformationUnit`s associated with each `Project`.\n- `distinct_usernames_count`: Counts the number of distinct `username`s in the `InformationUnit`s associated with each `Project`. The `distinct=True` option ensures that only unique usernames are counted.\n\nThis query will give you a queryset where each `Project` object has two additional attributes: `informationunit_count` for the total number of information units and `distinct_usernames_count` for the number of unique usernames. This solution leverages Django's ORM capabilities to perform the necessary aggregation efficiently without needing to resort to manual loops or complex code structures."
+    }
+]
