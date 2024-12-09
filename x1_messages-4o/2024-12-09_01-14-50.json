@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I print a DataFrame in Python on a single line instead of the automatic multi-line formatting? Currently, when I use the following code:\n\n```python\nimport pandas as pd\ndf = pd.read_csv('pima-data.csv')\nprint(df.head(2))\n```\n\nThe output is formatted across multiple lines like this:\n\n```python\n   num_preg  glucose_conc  diastolic_bp  thickness  insulin   bmi  diab_pred  \\\n0         6           148            72         35        0  33.6      0.627   \n1         1            85            66         29        0  26.6      0.351   \n\n   age    skin diabetes  \n0   50  1.3790     True  \n1   31  1.1426    False \n```\n\nHowever, I would like it to be printed on a single line like this:\n\n```python\n   num_preg  glucose_conc  diastolic_bp  thickness  insulin       bmi      diab_pred     age       skin      diabetes  \n0         6           148            72         35        0      33.6          0.627      50     1.3790          True  \n1         1            85            66         29        0      26.6          0.351      31     1.1426         False \n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To print a DataFrame on a single line, you can convert it to a string and replace newline characters with spaces. Here's how you can achieve this:\n\n```python\nimport pandas as pd\n\n# Read the CSV file\ndf = pd.read_csv('pima-data.csv')\n\n# Get the first two rows of the DataFrame\ndf_head = df.head(2)\n\n# Convert the DataFrame to a string without the default formatting\ndf_str = df_head.to_string(index=False)\n\n# Replace newline characters with spaces\nsingle_line_output = df_str.replace('\\n', ' ')\n\n# Print the single line output\nprint(single_line_output)\n```\n\nThis code utilizes the `to_string()` method of the DataFrame, which allows you to control the formatting. By setting `index=False`, it avoids printing the index column, and by replacing newline characters with spaces, the output is formatted on a single line."
+    }
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I check the exit status in an 'if' statement and echo a particular output? I am trying to use the following code:\n```\nif [ $? -eq 1 ] \nthen\n    echo \"blah blah blah\"\nfi\n```\nBut I am encountering an issue because the 'exit' statement is positioned before the 'if' statement due to the requirement of the exit code. How do I correct this without causing the program to exit prematurely?"
+    },
+    {
+        "role": "assistant",
+        "content": "To address the issue of checking the exit status without causing your script to terminate prematurely, you can save the exit status of the last executed command into a variable before calling the `if` statement. This way, you can evaluate the exit status without affecting the flow of your script. Here's how you can achieve this:\n\n```bash\n# Execute a command whose exit status you want to check\nsome_command\n\n# Save the exit status of the last command\nexit_status=$?\n\n# Now use the saved exit status in your if statement\nif [ $exit_status -eq 1 ]; then\n    echo \"blah blah blah\"\nfi\n```\n\nIn this example, `some_command` represents the command you are running. By saving its exit status into the `exit_status` variable immediately after the command, you can then use that variable within the `if` statement to perform conditional checks based on the exit status. This approach keeps the logic clear and avoids any premature exits or disruptions to your script."
+    }
+]
