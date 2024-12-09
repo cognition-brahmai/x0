@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using a class as a type hint for arguments in its methods. However, I am encountering an error \"NameError: name 'Vector2' is not defined\" at the line where I defined the Translate method, specifically \"def Translate (self, pos: Vector2):\". Why does Python not recognize my Vector2 class in the Translate method? Here's my code:\n\n```python\nclass Vector2:\n\n    def __init__(self, x: float, y: float):\n        self.x = x\n        self.y = y\n\n    def Translate(self, pos: Vector2):\n        self.x += pos.x\n        self.y += pos.y\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering is due to the fact that the `Vector2` class is not yet fully defined when you're using it as a type hint in the `Translate` method. In Python, when a class is in the process of being defined, its name is not yet available in the local scope for type hinting purposes.\n\nTo solve this, you can use a string to refer to the class type within its own definition. This is a common technique used to avoid such issues. Here's how you can modify your code:\n\n```python\nclass Vector2:\n\n    def __init__(self, x: float, y: float):\n        self.x = x\n        self.y = y\n\n    def Translate(self, pos: 'Vector2'):\n        self.x += pos.x\n        self.y += pos.y\n```\n\nBy using `'Vector2'` (a string) as the type hint, you're letting Python know that it should look for the `Vector2` class name within its own definition. This resolves the `NameError` you were seeing."
+    }
+]
