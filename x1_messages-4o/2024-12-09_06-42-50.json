@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using Flask for one of our APIs and I am trying to return a HTTP response 201. I am able to return errors such as 404 by calling the following code:\n\n```python\nfrom flask import abort\nabort(404)\n```\n\nHowever, when I try to return a 201 status, I get a LookupError that says \"no exception for 201\". Do I need to create my own exception like the one in the Flask documentation on custom errors?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Flask, the `abort` function is typically used for error responses, which is why it works for HTTP status codes like 404, 400, etc. Status 201, however, is not an error; it's a success status indicating that a resource has been successfully created. Therefore, you don't use `abort` for 201 responses.\n\nTo return a 201 status code, you can use Flask's `make_response` or simply return a tuple from your view function. Here's how you can do it:\n\n1. **Using `make_response`:**\n\n   ```python\n   from flask import make_response, jsonify\n\n   @app.route('/create', methods=['POST'])\n   def create_resource():\n       # Your logic to create a resource\n       data = {\"message\": \"Resource created successfully\"}\n       response = make_response(jsonify(data), 201)\n       return response\n   ```\n\n2. **Returning a tuple:**\n\n   ```python\n   from flask import jsonify\n\n   @app.route('/create', methods=['POST'])\n   def create_resource():\n       # Your logic to create a resource\n       data = {\"message\": \"Resource created successfully\"}\n       return jsonify(data), 201\n   ```\n\nIn both examples, you return a JSON response with the desired 201 status code. You can also include additional data in the JSON response if needed."
+    }
+]
