@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm trying to use TensorFlow and I'm having an issue feeding a list into `feed_dict`. I've created a list of placeholders named `inputs` like so: `inputs = 10 * [tf.placeholder(tf.float32, shape=(batch_size, input_size))]`. I want to feed `inputs` into a function named `outputs`. In order to run this, I created a session and tried: `sess.run(outputs, feed_dict = {inputs: data})`. However, I'm getting a `TypeError: unhashable type: 'list'` error. I've noticed I can pass the data element-wise successfully: `sess.run(outputs, feed_dict = {inputs[0]: data[0], ..., inputs[9]: data[9]})`. Also, when I try to construct a dictionary using a `for` loop, it results in a dictionary with a single element where the key is `tensorflow.python.framework.ops.Tensor at 0x107594a10`. How can I solve this issue?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering is due to the fact that `inputs` is a list of TensorFlow placeholder tensors, and you can't use a list as a key in a dictionary. Each placeholder in `inputs` must be individually associated with the corresponding data in the `feed_dict`.\n\nTo resolve this, you need to construct the `feed_dict` by mapping each placeholder in the `inputs` list to the corresponding data. You can do this using a dictionary comprehension or a loop. Here's how you can do it:\n\n```python\nfeed_dict = {inputs[i]: data[i] for i in range(len(inputs))}\n```\n\nOr, using a loop:\n\n```python\nfeed_dict = {}\nfor i in range(len(inputs)):\n    feed_dict[inputs[i]] = data[i]\n```\n\nWith this approach, each placeholder `inputs[i]` is correctly mapped to its corresponding data `data[i]`, and you should be able to run your session without encountering the `TypeError`.\n\nMake sure that `data` is a list (or another iterable) containing the values you want to feed into the placeholders, and its length should match the length of the `inputs` list (in this case, 10). Each element of `data` should have the shape `(batch_size, input_size)` to match the shape specified in the placeholders."
+    }
+]
