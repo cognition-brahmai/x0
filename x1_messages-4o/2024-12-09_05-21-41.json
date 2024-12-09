@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I pass the best parameters from Sklearn's GridSearchCV to another model? I found the best hyperparameters for my KNN estimator with Grid Search CV:\n\n```python\n>>> knn_gridsearch_model.best_params_\n{'algorithm': 'auto', 'metric': 'manhattan', 'n_neighbors': 3}\n```\n\nI want to train my final estimator with these new-found parameters. I tried passing the dict to my new model like this:\n\n```python\n>>> new_knn_model = KNeighborsClassifier(knn_gridsearch_model.best_params_)\n```\n\nHowever, this just sets the whole dict as the first parameter of the model and leaves the remaining ones as default:\n\n```python\n>>> knn_model\nKNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',\n           metric_params=None, n_jobs=1,\n           n_neighbors={'n_neighbors': 3, 'metric': 'manhattan', 'algorithm': 'auto'},\n           p=2, weights='uniform')\n```\n\nHow can I elegantly pass these parameters to the new model?"
+    },
+    {
+        "role": "assistant",
+        "content": "To pass the best parameters found using `GridSearchCV` to a new model, you'll want to unpack the dictionary of best parameters directly into the model's constructor. In Python, you can use the `**` syntax to unpack the dictionary. Here's how you can do it:\n\n```python\nfrom sklearn.neighbors import KNeighborsClassifier\n\n# Assuming you have your best parameters in best_params_:\nbest_params = knn_gridsearch_model.best_params_\n\n# Unpack the dictionary using ** and pass it to the new model\nnew_knn_model = KNeighborsClassifier(**best_params)\n\n# Now, new_knn_model should have the correct parameters set\nprint(new_knn_model)\n```\n\nThe `**` operator will unpack the dictionary and pass each key-value pair as a separate argument to the constructor, thereby setting the parameters correctly. This should give you a model initialized with the parameters found by `GridSearchCV`."
+    }
+]
