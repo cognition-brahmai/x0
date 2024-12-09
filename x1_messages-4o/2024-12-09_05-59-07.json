@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am currently using the `dns.resolver` from dnspython. I would like to know if it's possible to specify a particular IP address for the server to use when conducting queries."
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can specify a particular IP address for the DNS server when using the `dns.resolver` module from dnspython. By default, the `dns.resolver.Resolver` object uses the system's configured DNS servers, but you can customize it to use a specific DNS server by setting the `nameservers` attribute.\n\nHere's an example of how you can do that:\n\n```python\nimport dns.resolver\n\n# Create a resolver instance\nresolver = dns.resolver.Resolver()\n\n# Specify the IP address of the DNS server you want to use\nresolver.nameservers = ['8.8.8.8']  # Example: Using Google's public DNS server\n\n# Now you can perform DNS queries using this resolver\ntry:\n    answer = resolver.resolve('example.com', 'A')\n    for rdata in answer:\n        print('IP address:', rdata.to_text())\nexcept Exception as e:\n    print('An error occurred:', e)\n```\n\nIn this example, the resolver is configured to use the Google Public DNS server with the IP address `8.8.8.8`. You can replace it with the IP address of any DNS server you want to query."
+    }
+]
