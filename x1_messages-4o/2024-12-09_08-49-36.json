@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Can you provide a code example to reverse a linked list using Python?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! Reversing a linked list is a common problem, and it can be solved by iteratively adjusting the pointers of the nodes. Here's a Python code example to reverse a singly linked list:\n\n```python\n# Define a Node class for the linked list\nclass Node:\n    def __init__(self, data):\n        self.data = data\n        self.next = None\n\n# Define a LinkedList class\nclass LinkedList:\n    def __init__(self):\n        self.head = None\n\n    # Function to append a new node to the linked list\n    def append(self, data):\n        new_node = Node(data)\n        if not self.head:\n            self.head = new_node\n            return\n        last = self.head\n        while last.next:\n            last = last.next\n        last.next = new_node\n\n    # Function to reverse the linked list\n    def reverse(self):\n        prev = None\n        current = self.head\n        while current:\n            next_node = current.next\n            current.next = prev\n            prev = current\n            current = next_node\n        self.head = prev\n\n    # Function to print the linked list\n    def print_list(self):\n        current = self.head\n        while current:\n            print(current.data, end=\" -> \")\n            current = current.next\n        print(\"None\")\n\n# Example usage\nif __name__ == \"__main__\":\n    ll = LinkedList()\n    ll.append(1)\n    ll.append(2)\n    ll.append(3)\n    ll.append(4)\n\n    print(\"Original Linked List:\")\n    ll.print_list()\n\n    ll.reverse()\n\n    print(\"Reversed Linked List:\")\n    ll.print_list()\n```\n\nIn this code, we have a `Node` class to represent each element in the linked list, and a `LinkedList` class to manage the list. The `reverse` method iteratively reverses the pointers of the linked list. The `print_list` method is used to display the linked list before and after reversal."
+    }
+]
