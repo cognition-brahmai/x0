@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm trying to create a boxplot in Seaborn and I would like to label each boxplot with the median value. For instance, I've created a boxplot with the following code:\n```python\nimport seaborn as sns\nsns.set_style(\"whitegrid\")\ntips = sns.load_dataset(\"tips\")\nax = sns.boxplot(x=\"day\", y=\"total_bill\", data=tips)\n```\nHow can I add a label that displays the median or average value to each boxplot?"
+    },
+    {
+        "role": "assistant",
+        "content": "To label each boxplot with the median value, you can calculate the median for each category and then use `ax.text()` to place the labels at the appropriate positions. Here's how you can achieve this:\n\n```python\nimport seaborn as sns\nimport matplotlib.pyplot as plt\nimport numpy as np\n\n# Set the style\nsns.set_style(\"whitegrid\")\n\n# Load the dataset\ntips = sns.load_dataset(\"tips\")\n\n# Create the boxplot\nax = sns.boxplot(x=\"day\", y=\"total_bill\", data=tips)\n\n# Calculate the medians\nmedians = tips.groupby(['day'])['total_bill'].median().values\n\n# Annotate the median values\nfor i, median in enumerate(medians):\n    ax.text(i, median, f'{median:.2f}', ha='center', va='center', fontweight='bold', color='black', size=10, backgroundcolor='white')\n\n# Show the plot\nplt.show()\n```\n\n### Explanation:\n\n1. **Group and Calculate Medians**: `tips.groupby(['day'])['total_bill'].median()` calculates the median `total_bill` for each day.\n\n2. **Annotate**: `ax.text()` is used to place text on the plot. The `x` position is the index of the category, the `y` position is the calculated median, and `f'{median:.2f}'` formats the median to two decimal places.\n\n3. **Styling**: Adjust text properties like `fontweight`, `color`, `size`, and `backgroundcolor` for better visibility.\n\nThis will add the median value on top of each box in the boxplot. Adjust the parameters of `ax.text()` as needed to get the positioning and styling you prefer."
+    }
+]
