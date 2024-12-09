@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I catch a 'UNIQUE constraint failed' error in Django? I have the following code where I think I need to add an exception in the \"here?\" section. \n\n```python\ntry:\n    q = AnswerModel(user=user, yes_question=question_model)\n    q.save()\nexcept ( here? ):\n    return HttpResponseRedirect('/user/already_exists')\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "In Django, when you encounter a `UNIQUE constraint failed` error, it is typically due to an attempt to save an object with a field that must be unique, but the value already exists in the database. This kind of error raises an `IntegrityError` exception. To catch this exception, you can import `IntegrityError` from `django.db` and handle it in your try-except block. Here's how you can modify your code:\n\n```python\nfrom django.db import IntegrityError\n\ntry:\n    q = AnswerModel(user=user, yes_question=question_model)\n    q.save()\nexcept IntegrityError:\n    return HttpResponseRedirect('/user/already_exists')\n```\n\nIn this code, the `IntegrityError` exception is caught, and you can then redirect the user to the desired URL if the exception occurs. Make sure that your database and model constraints are set up correctly, and this should work to handle attempts to save duplicate entries."
+    }
+]
