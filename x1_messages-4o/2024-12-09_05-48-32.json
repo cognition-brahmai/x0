@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to use an xpath expression to obtain the value of an attribute using lxml in python. I wrote the following code:\n```python\nfrom lxml import etree\n\nfor customer in etree.parse('file.xml').getroot().findall('BOB'):\n    print customer.find('./@NAME')\n```\nHowever, I am encountering an error:\n```python\nTraceback (most recent call last):\n  File \"bob.py\", line 22, in &lt;module&gt;\n    print customer.find('./@ID')\n  File \"lxml.etree.pyx\", line 1409, in lxml.etree._Element.find (src/lxml/lxml.etree.c:39972)\n  File \"/usr/local/lib/python2.7/dist-packages/lxml/_elementpath.py\", line 272, in find\n    it = iterfind(elem, path, namespaces)\n  File \"/usr/local/lib/python2.7/dist-packages/lxml/_elementpath.py\", line 262, in iterfind\n    selector = _build_path_iterator(path, namespaces)\n  File \"/usr/local/lib/python2.7/dist-packages/lxml/_elementpath.py\", line 246, in _build_path_iterator\n    selector.append(ops[token[0]](_next, token))\nKeyError: '@'\n```\nI expected this code to work. Am I wrong? If not, how can I fix the error?"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering is due to the misuse of the `find` method. The `find` method is used to locate child elements, not attributes. To access an attribute, you should use the `get` method instead. Here's how you can modify your code to obtain the value of the `NAME` attribute:\n\n```python\nfrom lxml import etree\n\n# Parse the XML file\ntree = etree.parse('file.xml')\nroot = tree.getroot()\n\n# Iterate over each 'BOB' element\nfor customer in root.findall('BOB'):\n    # Use the get method to access the 'NAME' attribute\n    name = customer.get('NAME')\n    print(name)\n```\n\nThis code will correctly print the value of the `NAME` attribute for each `BOB` element in your XML file. Remember that `get` returns `None` if the attribute does not exist, so you might want to add a check for that if necessary."
+    }
+]

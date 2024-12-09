@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a dataframe in python and when I use the describe() function, the output is in scientific notation. How can I suppress this and get the output in a regular decimal format? Here is the code I have been using:\n\n```python\ncontrib_df[\"AMNT\"].describe()\n\ncount    1.979680e+05\nmean     5.915134e+02\nstd      1.379618e+04\nmin     -1.750000e+05\n25%      4.000000e+01\n50%      1.000000e+02\n75%      2.500000e+02\nmax      3.000000e+06\nName: AMNT, dtype: float64\n```\nI have confirmed that my data is of type float64 using the following code:\n```python\ncontrib_df[\"AMNT\"].dtypes\n\ndtype('float64')\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To suppress scientific notation and display your `describe()` output in a regular decimal format, you can use the `pandas` options to change the display settings. Specifically, you can set the `display.float_format` option to format floating-point numbers as desired. Here's how you can do it:\n\n```python\nimport pandas as pd\n\n# Set display options to suppress scientific notation\npd.options.display.float_format = '{:.2f}'.format\n\n# Now call the describe() function again\nprint(contrib_df[\"AMNT\"].describe())\n```\n\nThis code sets the float format to two decimal places. You can adjust the number of decimal places by changing the `'{:.2f}'.format` part to your liking, such as `'{:.4f}'.format` for four decimal places. Once set, this will apply to all floating-point numbers displayed by pandas functions, including `describe()`."
+    }
+]
