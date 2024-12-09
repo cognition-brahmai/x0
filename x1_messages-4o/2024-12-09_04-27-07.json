@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working with a MultiIndexed DataFrame in pandas, similar to the following:\n```python\ndf = pd.DataFrame({'country':['DE','DE','FR','FR'],\n                   'biome':['Lake','Forest','Lake','Forest'],\n                   'area':[10,20,30,40],\n                   'count':[7,5,2,3]})\ndf = df.set_index(['country','biome'])\n```\nThis DataFrame looks like this:\n```python\n                area  count\ncountry biome\nDE      Lake      10      7\n        Forest    20      5\nFR      Lake      30      2\n        Forest    40      3\n```\nI am trying to retrieve the unique values per index level by addressing the levels by their name, i.e. 'country' and 'biome'. The methods I have found are as follows:\n```python\nlist(set(df.index.get_level_values('country')))\ndf.index.levels[df.index.names.index('country')]\n```\nHowever, I find these methods not very elegant. Is there a shorter or more efficient way to accomplish this?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! You can achieve this in a more concise way using the `unique` method directly on the index level values. This method is both efficient and easy to read. Here's how you can do it for each index level:\n\n```python\n# Unique values for 'country'\nunique_countries = df.index.get_level_values('country').unique()\n\n# Unique values for 'biome'\nunique_biomes = df.index.get_level_values('biome').unique()\n```\n\nThe `unique` method will return the unique values for the specified index level in the DataFrame. This approach is both straightforward and efficient."
+    }
+]
