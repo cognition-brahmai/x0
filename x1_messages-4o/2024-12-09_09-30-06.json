@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Can you provide a PHP program that sorts book data by title, author, and publication year?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! Here's a PHP program that sorts an array of book data by title, author, and publication year:\n\n```php\n<?php\n\n// Sample book data\n$books = [\n    ['title' => 'The Great Gatsby', 'author' => 'F. Scott Fitzgerald', 'year' => 1925],\n    ['title' => 'To Kill a Mockingbird', 'author' => 'Harper Lee', 'year' => 1960],\n    ['title' => '1984', 'author' => 'George Orwell', 'year' => 1949],\n    ['title' => 'Pride and Prejudice', 'author' => 'Jane Austen', 'year' => 1813],\n    ['title' => 'Moby Dick', 'author' => 'Herman Melville', 'year' => 1851],\n];\n\n// Function to sort books\nfunction sortBooks(&$books, $sortBy) {\n    usort($books, function ($a, $b) use ($sortBy) {\n        return strcmp($a[$sortBy], $b[$sortBy]);\n    });\n}\n\n// Sort by title\nsortBooks($books, 'title');\necho \"Sorted by Title:\\n\";\nprint_r($books);\n\n// Sort by author\nsortBooks($books, 'author');\necho \"\\nSorted by Author:\\n\";\nprint_r($books);\n\n// Sort by year\nusort($books, function ($a, $b) {\n    return $a['year'] <=> $b['year'];\n});\necho \"\\nSorted by Year:\\n\";\nprint_r($books);\n\n?>\n```\n\n### Explanation:\n\n1. **Sample Data**: An array of associative arrays represents the books, each containing `title`, `author`, and `year`.\n\n2. **`sortBooks` Function**: This function takes the array of books and a key (`title`, `author`, or `year`) and sorts the books based on that key using `usort` and `strcmp` for string comparison.\n\n3. **Sorting by Title and Author**: The `sortBooks` function is used to sort the books by `title` and `author`.\n\n4. **Sorting by Year**: For the numerical year, a simple comparison using the spaceship operator `<=>` is used within `usort`.\n\nYou can modify the sample data or the sorting criteria as needed. This program will print the sorted arrays to the console."
+    }
+]
