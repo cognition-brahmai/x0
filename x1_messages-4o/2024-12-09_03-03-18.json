@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is it possible to perform partial string formatting with advanced string formatting methods, similar to the string template `safe_substitute()` function? For example, when I try to format the string like this:\n\n```python\ns = '{foo} {bar}'\ns.format(foo='FOO') # This raises a KeyError 'bar'\n```\n\nA KeyError for 'bar' is raised. How can I avoid this issue?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can perform partial string formatting in Python and avoid the `KeyError` using a custom approach. One way to achieve this is by using a subclass of `str` that overrides the `__missing__` method to provide a default value for missing keys. Here's an example of how you can do this:\n\n```python\nclass SafeDict(dict):\n    def __missing__(self, key):\n        return '{' + key + '}'\n\ns = '{foo} {bar}'\nformatted_string = s.format_map(SafeDict(foo='FOO'))\nprint(formatted_string)  # Output: FOO {bar}\n```\n\nIn this example, a `SafeDict` class is defined, which inherits from the built-in `dict` class. The `__missing__` method is overridden to return the placeholder `{key}` if the key is not found. This allows the `format_map()` method to perform partial string formatting without raising a `KeyError`.\n\nAlternatively, you can use the `string.Template` class from the `string` module, which has a method called `safe_substitute()` designed for this purpose:\n\n```python\nfrom string import Template\n\ns = Template('$foo $bar')\nformatted_string = s.safe_substitute(foo='FOO')\nprint(formatted_string)  # Output: FOO $bar\n```\n\nThe `safe_substitute()` method replaces the placeholders with the provided values and leaves the placeholders for missing keys unchanged, thereby avoiding any errors."
+    }
+]
