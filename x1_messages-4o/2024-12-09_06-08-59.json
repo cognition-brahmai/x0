@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am looking for an efficient and pythonic way to check the monotonicity of a list in Python. Specifically, I want to verify whether the list has monotonically increasing or decreasing values. For instance, the list [0, 1, 2, 3, 3, 4] is monotonically increasing, [4.3, 4.2, 4.2, -2] is monotonically decreasing, but [2, 3, 1] is neither. How can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To check the monotonicity of a list in Python, you can use a simple and efficient approach by leveraging the `all()` function along with list comprehensions. This method checks if each pair of consecutive elements satisfies the condition for being monotonically increasing or decreasing. Here's how you can do it:\n\n```python\ndef is_monotonic(lst):\n    if not lst:  # Check for an empty list\n        return True\n\n    increasing = all(x <= y for x, y in zip(lst, lst[1:]))\n    decreasing = all(x >= y for x, y in zip(lst, lst[1:]))\n\n    return increasing or decreasing\n\n# Examples\nlist1 = [0, 1, 2, 3, 3, 4]\nlist2 = [4.3, 4.2, 4.2, -2]\nlist3 = [2, 3, 1]\n\nprint(is_monotonic(list1))  # Output: True (monotonically increasing)\nprint(is_monotonic(list2))  # Output: True (monotonically decreasing)\nprint(is_monotonic(list3))  # Output: False (neither)\n```\n\n### Explanation:\n- `all(x <= y for x, y in zip(lst, lst[1:]))`: This checks if every element `x` is less than or equal to the next element `y`, meaning the list is monotonically increasing.\n- `all(x >= y for x, y in zip(lst, lst[1:]))`: This checks if every element `x` is greater than or equal to the next element `y`, meaning the list is monotonically decreasing.\n- The function returns `True` if the list is either monotonically increasing or decreasing, and `False` otherwise.\n\nThis approach is efficient and takes advantage of Python's built-in capabilities for handling consecutive elements in a list."
+    }
+]
