@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "What is the most pythonic way to split a list of numbers into smaller lists based on a number missing in the sequence? For instance, if the initial list is `seq1 = [1, 2, 3, 4, 6, 7, 8, 9, 10]`, the function should yield `[[1, 2, 3, 4], [6, 7, 8, 9, 10]]`. Similarly, if the initial list is `seq2 = [1, 2, 4, 5, 6, 8, 9, 10]`, the function should result in `[[1, 2], [4, 5, 6], [8, 9, 10]]`."
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve this task in a Pythonic way, you can use the `itertools.groupby` function along with a custom key function to split the list whenever a number is missing in the sequence. Here's a function that implements this logic:\n\n```python\nfrom itertools import groupby\n\ndef split_on_missing_numbers(sequence):\n    # Calculate the difference between each number and its index\n    # This helps in identifying consecutive numbers in sequence\n    groups = groupby(enumerate(sequence), key=lambda x: x[1] - x[0])\n    \n    # Extract groups of consecutive numbers\n    result = [list(map(lambda x: x[1], group)) for _, group in groups]\n    \n    return result\n\n# Example usage\nseq1 = [1, 2, 3, 4, 6, 7, 8, 9, 10]\nseq2 = [1, 2, 4, 5, 6, 8, 9, 10]\n\nprint(split_on_missing_numbers(seq1))  # Output: [[1, 2, 3, 4], [6, 7, 8, 9, 10]]\nprint(split_on_missing_numbers(seq2))  # Output: [[1, 2], [4, 5, 6], [8, 9, 10]]\n```\n\n### Explanation:\n- The `enumerate` function is used to pair each number with its index.\n- The key function in `groupby` calculates the difference between the number and its index. This difference remains constant for consecutive numbers.\n- `groupby` groups elements based on this difference, effectively splitting the list at points where the sequence is broken.\n- Finally, the result is constructed by extracting the numbers from each group."
+    }
+]
