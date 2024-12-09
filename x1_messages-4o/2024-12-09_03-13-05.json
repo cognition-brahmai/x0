@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there a method in IPython to step into the first line of a function? Currently, to accomplish this, I have to manually go to the function's source code and add an `import ipdb; ipdb.set_trace()` line. Ideally, I would like a command similar to `%step foo(1, 2)`, which would run `ipdb` and set a breakpoint at the first line of function `foo`."
+    },
+    {
+        "role": "assistant",
+        "content": "In IPython, you can achieve stepping into a function without modifying its source code by using the `%debug` magic command in combination with the `pdb` module. Here's a way to set a breakpoint at the first line of a function using `pdb`:\n\n1. Import the `pdb` module in your IPython environment.\n2. Use the `pdb.runcall()` function to run your function, which allows you to step into the execution of the function right from the start.\n\nHere's how you can set it up:\n\n```python\nimport pdb\n\ndef foo(x, y):\n    # Example function\n    result = x + y\n    return result\n\n# Use pdb.runcall to step into the function\npdb.runcall(foo, 1, 2)\n```\n\nWhen you run `pdb.runcall(foo, 1, 2)`, it will start the debugger and pause execution at the first line of `foo`. You can then use typical `pdb` commands like `step`, `next`, `continue`, etc., to navigate through your code.\n\nThis approach provides a way to debug your function without needing to modify its source code to insert breakpoints manually."
+    }
+]
