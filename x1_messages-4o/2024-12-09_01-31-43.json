@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I display a help message with Python argparse when my script is called without any arguments? Currently, when I run my program with the `-h` or `--help` arguments, it prints out the help message as expected. However, when I run the script without any arguments, it doesn't do anything. I would like it to display the usage message in this case. How can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To display a help message when your script is called without any arguments using `argparse`, you can check if any arguments were provided and then manually call the help message if none were. You can achieve this by inspecting `sys.argv` to determine if the script was run with any arguments besides the script name itself. If no arguments are provided, then you can print the help message explicitly.\n\nHere's how you can modify your script to achieve this behavior:\n\n```python\nimport argparse\nimport sys\n\ndef main():\n    parser = argparse.ArgumentParser(description=\"Your program description here.\")\n    \n    # Add arguments to the parser\n    parser.add_argument('--example', help='An example argument')\n\n    # Parse the command line arguments\n    args = parser.parse_args()\n\n    # Check if no arguments were provided\n    if len(sys.argv) == 1:\n        parser.print_help()\n        sys.exit(1)\n\n    # Your code logic here\n    if args.example:\n        print(f\"Example argument provided: {args.example}\")\n\nif __name__ == '__main__':\n    main()\n```\n\nIn this script:\n\n1. We import the `sys` module to access `sys.argv`.\n2. After parsing the arguments with `parser.parse_args()`, we check the length of `sys.argv`.\n3. If `sys.argv` contains only one element (the script name), it means no additional arguments were provided.\n4. We then call `parser.print_help()` to display the help message and terminate the script with `sys.exit(1)`.\n\nThis will ensure that if the script is run without any arguments, the help message will be displayed automatically."
+    }
+]
