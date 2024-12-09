@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I display warning output to the console when running py.test on my code? I received an output that shows I have 2 pytest-warnings, but I'm unable to see what these warnings are about. The `--strict` flag is offered when I run `py.test --help`, but I don't want this to make my tests fail, I just want to see the warning output. How can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To display warnings when running `py.test`, you can use the `-r` option followed by `w` to report warnings. This will show warning messages in the test output without necessarily failing the tests. Here's how you can do it:\n\nRun your tests using the following command:\n\n```bash\npytest -rw\n```\n\nExplanation:\n- `-r` is used to control the reporting of test results.\n- `w` is the option to include warnings in the output.\n\nThis will display the warnings at the end of the test session, allowing you to see what they are about without using the `--strict` flag, which would cause tests to fail if there are any warnings.\n\nAdditionally, if you want to see more detailed warning messages, you can also use the `-p no:warnings` option to disable the warnings plugin and manage warnings directly via the standard Python warnings module:\n\n```bash\npytest -p no:warnings\n```\n\nOr, you can configure pytest to show warnings by editing or creating a `pytest.ini` file in your project directory with the following content:\n\n```ini\n[pytest]\nfilterwarnings =\n    error\n    ignore::DeprecationWarning\n    default\n```\n\nThis configuration will display all warnings by default, while allowing you to ignore specific warnings if needed. Adjust the `filterwarnings` settings to suit your needs."
+    }
+]
