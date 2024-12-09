@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Can anyone help me construct a SQL query to find the average salary for each department? I have two tables, DEPARTMENTS and EMPLOYEES, with a common column DeptID."
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! To find the average salary for each department, you can use a SQL query that involves joining the `DEPARTMENTS` and `EMPLOYEES` tables on the common column `DeptID`, and then using the `AVG()` function along with `GROUP BY` to calculate the average salary for each department. Here\u2019s how you can construct the query:\n\n```sql\nSELECT \n    d.DeptID,\n    d.DepartmentName,\n    AVG(e.Salary) AS AverageSalary\nFROM \n    DEPARTMENTS d\nJOIN \n    EMPLOYEES e ON d.DeptID = e.DeptID\nGROUP BY \n    d.DeptID, d.DepartmentName;\n```\n\nIn this query:\n- `d` and `e` are aliases for the `DEPARTMENTS` and `EMPLOYEES` tables, respectively.\n- We join the tables on `DeptID` to ensure we are considering the correct relationships between departments and employees.\n- We select `DeptID` and `DepartmentName` from the `DEPARTMENTS` table to get the department details.\n- We use the `AVG()` function to calculate the average salary of employees in each department.\n- The `GROUP BY` clause groups the results by `DeptID` and `DepartmentName` to ensure that the average salary is calculated for each department separately.\n\nMake sure that the column names match exactly with those in your database schema. Adjust them if necessary."
+    }
+]
