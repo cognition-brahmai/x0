@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a DataFrame 'df' in Python which looks like this:\n\n```\nTimestamp              Value\n2012-06-01 00:00:00     100\n2012-06-01 00:15:00     150\n2012-06-01 00:30:00     120\n2012-06-01 01:00:00     220\n2012-06-01 01:15:00      80\n...and so on.\n```\nThe 'Timestamp' is the index of the DataFrame. I need to add a new column 'df['weekday']' to the DataFrame. This column should contain the weekday/day-of-week of the timestamps. Can anyone help me on how to achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "You can easily add a new column to your DataFrame that contains the weekday of each timestamp using the `pandas` library. Here's how you can do it:\n\n```python\nimport pandas as pd\n\n# Assuming 'df' is your DataFrame and 'Timestamp' is already set as the index\n# If not, you can set it by uncommenting the next line\n# df.set_index('Timestamp', inplace=True)\n\n# Use the index to extract the weekday\ndf['weekday'] = df.index.to_series().dt.day_name()\n\n# Alternatively, if you prefer the weekday as an integer (Monday=0, Sunday=6), you can use:\n# df['weekday'] = df.index.to_series().dt.dayofweek\n\nprint(df)\n```\n\nThis code uses the `dt.day_name()` function to convert the index timestamps to their corresponding weekday names. If you'd prefer the day of the week as an integer, you can use `dt.dayofweek` instead."
+    }
+]
