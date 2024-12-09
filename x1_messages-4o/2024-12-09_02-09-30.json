@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm trying to implement a backtracking packrat parser in Python, where I'm using dictionaries to cache parse results. However, since Python dictionaries can't be used as keys to other dictionaries, I'm running into a problem. I've tried using tuples as keys, but it seems that it also doesn't work. I've considered using `collections.namedtuple`, but it has its own issues. I need a way to use dictionaries as keys to other dictionaries. How can I do this?\n\nHere is an example of the issue I'm facing:\n\n```python\ncache = {}\nrule = {\"foo\":\"bar\"}\ncache[(rule, \"baz\")] = \"quux\"\n```\n\nThis results in a `TypeError: unhashable type: 'dict'`."
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, dictionaries are mutable and unhashable, which means they cannot be directly used as keys in other dictionaries. To achieve what you're aiming for\u2014using a dictionary as a key\u2014you can convert the dictionary into a hashable type. One common approach is to use a `frozenset`, which is immutable and hashable, to represent the dictionary items. Here's how you can do it:\n\n1. Convert the dictionary into a `frozenset` of its items.\n2. Use this `frozenset` as part of the key in your cache dictionary.\n\nHere's how you can implement it:\n\n```python\ncache = {}\nrule = {\"foo\": \"bar\"}\n\n# Convert the dictionary to a frozenset of its items\nrule_key = frozenset(rule.items())\n\n# Use the frozenset in the key for the cache\ncache[(rule_key, \"baz\")] = \"quux\"\n\n# Accessing the cache\nprint(cache[(rule_key, \"baz\")])  # Output: quux\n```\n\nBy converting the dictionary to a `frozenset`, you make it immutable and hashable, allowing it to be used as a key in another dictionary. This approach keeps the structure of your data intact while enabling caching capabilities. Remember that this method assumes that the dictionaries you're using as keys do not change after being added to the cache, as any change would require re-computing the `frozenset` and updating the cache key accordingly."
+    }
+]
