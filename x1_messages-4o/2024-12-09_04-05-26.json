@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, I have fetched a date from a database with the variable `i.operation_date`, which returns a date like `April 1, 2013`. How can I add one year to this date to get a date like `April 1, 2014`?"
+    },
+    {
+        "role": "assistant",
+        "content": "To add one year to a date in Python, you can use the `datetime` module, which provides functions for manipulating dates and times. Here's how you can do it:\n\nFirst, you need to convert the date string into a `datetime` object, then add one year using the `relativedelta` function from the `dateutil` module.\n\nHere's a step-by-step example:\n\n```python\nfrom datetime import datetime\nfrom dateutil.relativedelta import relativedelta\n\n# Assuming i.operation_date is the string 'April 1, 2013'\noperation_date_str = 'April 1, 2013'\n\n# Convert the string to a datetime object\noperation_date = datetime.strptime(operation_date_str, '%B %d, %Y')\n\n# Add one year to the date\nnew_date = operation_date + relativedelta(years=1)\n\n# Convert the new date back to the desired string format\nnew_date_str = new_date.strftime('%B %d, %Y')\n\nprint(new_date_str)  # Output: 'April 1, 2014'\n```\n\nMake sure you have the `python-dateutil` library installed in your environment. If not, you can install it using pip:\n\n```\npip install python-dateutil\n```\n\nThis approach will correctly handle leap years and other date-related edge cases."
+    }
+]
