@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I grab the HTTP status code in Python when a URLError exception is raised? I attempted to use the following code but it didn't work:\n\n```python\nexcept URLError, e:\n    logger.warning( 'It seems like the server is down. Code:' + str(e.code) )\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "When a `URLError` exception is raised, it typically means there was a problem with reaching the server, such as a network issue or an invalid URL. In these cases, you won't have an HTTP status code, because the request never reached the server to get a response with a status code. Therefore, accessing `e.code` on a `URLError` won't work as expected.\n\nIf you're looking to handle HTTP errors specifically, you should catch the `HTTPError` exception, which is a subclass of `URLError` and includes an HTTP status code. Here's how you can modify your code to handle both `HTTPError` and `URLError`:\n\n```python\nfrom urllib.error import URLError, HTTPError\nimport logging\n\nlogger = logging.getLogger()\n\ntry:\n    # Your code to open a URL\n    pass\nexcept HTTPError as e:\n    logger.warning(f'HTTP Error occurred. Code: {e.code}, Reason: {e.reason}')\nexcept URLError as e:\n    logger.warning(f'URL Error occurred. Reason: {e.reason}')\nexcept Exception as e:\n    logger.warning(f'An unexpected error occurred: {e}')\n```\n\nIn this updated code:\n\n1. `HTTPError` will catch exceptions where there is a valid HTTP response from the server with an error status code (e.g., 404, 500).\n2. `URLError` will catch other URL-related issues like network problems or invalid URLs.\n3. A generic `Exception` block is added to catch any other unexpected exceptions that might occur. \n\nMake sure to replace the `pass` in the `try` block with your actual code for opening a URL or making a request, such as using `urllib.request.urlopen()`."
+    }
+]
