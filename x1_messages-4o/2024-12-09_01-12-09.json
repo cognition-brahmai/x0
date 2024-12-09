@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I limit the number of characters to 255 in a Django template filter? I have a variable that contains around 300 characters, and I want to output only the first 255 characters. I am trying to call the variable like this, {{ my_variable|characterlimit:255 }}, but I'm not sure if this tag exists in Django. If it doesn't, how can I create it?"
+    },
+    {
+        "role": "assistant",
+        "content": "Django doesn't have a built-in template filter named `characterlimit`, but you can easily create a custom template filter to achieve this functionality. Here's how you can do it:\n\n1. **Create a custom template filter:**\n\n   First, you need to create a new Python file inside one of your apps. Let's say you have an app called `myapp`, you can create a file named `templatetags` (if it doesn't exist yet) and then create a file named `custom_filters.py` inside it.\n\n   Your directory structure should look like this:\n\n   ```\n   myapp/\n       templatetags/\n           __init__.py\n           custom_filters.py\n   ```\n\n   Add the following code to `custom_filters.py`:\n\n   ```python\n   from django import template\n\n   register = template.Library()\n\n   @register.filter(name='characterlimit')\n   def characterlimit(value, max_length):\n       if not isinstance(value, str):\n           value = str(value)\n       return value[:max_length]\n   ```\n\n2. **Load the custom filter in your template:**\n\n   In your Django template, you need to load the custom filter before using it. Add the following line at the top of your template file:\n\n   ```html\n   {% load custom_filters %}\n   ```\n\n3. **Use the custom filter in your template:**\n\n   Now, you can use your custom `characterlimit` filter in the template like this:\n\n   ```html\n   {{ my_variable|characterlimit:255 }}\n   ```\n\nThis will ensure that only the first 255 characters of `my_variable` are displayed in the template. Remember to restart your Django server after creating the custom filter so that it gets picked up correctly."
+    }
+]

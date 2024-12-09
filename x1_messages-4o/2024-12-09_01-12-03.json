@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I use a wildcard with os.path.isfile() to check if any .rar files exist in a directory? I don't need the solution to be recursive but my attempts to use a wildcard with os.path.isfile() have been unsuccessful. What should I do?"
+    },
+    {
+        "role": "assistant",
+        "content": "The `os.path.isfile()` function in Python checks if a specific path is a file, but it does not support wildcards directly. Instead, you can use the `glob` module, which is specifically designed for pattern matching and can handle wildcards. Here's how you can use it to check for `.rar` files in a directory:\n\n```python\nimport glob\nimport os\n\ndef check_rar_files(directory):\n    # Use glob to find all .rar files in the specified directory\n    rar_files = glob.glob(os.path.join(directory, '*.rar'))\n    \n    if rar_files:\n        print(\"RAR files found:\", rar_files)\n        return True\n    else:\n        print(\"No RAR files found.\")\n        return False\n\n# Example usage\ndirectory_path = '/path/to/your/directory'\ncheck_rar_files(directory_path)\n```\n\nIn this code:\n\n- `glob.glob()` is used to find all files matching the pattern `*.rar` in the specified directory.\n- `os.path.join(directory, '*.rar')` constructs the path pattern for `.rar` files in the given directory.\n- The function returns `True` if any `.rar` files are found and `False` otherwise, while also printing the results.\n\nEnsure that you replace `'/path/to/your/directory'` with the actual path to the directory you want to check."
+    }
+]
