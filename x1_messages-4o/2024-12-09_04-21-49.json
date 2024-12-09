@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I assign a multi-line string to a variable using a heredoc in Bash? The string is as follows:\n\n```bash\nabc'asdf\"\n$(dont-execute-this)\nfoo\"bar\"''\n```\n\nAdditionally, I need to preserve the newlines in the string, and I would prefer not to escape the characters in the string."
+    },
+    {
+        "role": "assistant",
+        "content": "In Bash, you can use a heredoc to assign a multi-line string to a variable while preserving the newlines and without needing to escape special characters. Here's how you can do it:\n\n```bash\nmy_var=$(cat <<'EOF'\nabc'asdf\"\n$(dont-execute-this)\nfoo\"bar\"''\nEOF\n)\n\necho \"$my_var\"\n```\n\nHere's a breakdown of how this works:\n\n1. `cat <<'EOF'` begins the heredoc. The `<<` operator tells Bash to read input until it encounters a line containing only `EOF`. The `'EOF'` (with single quotes) ensures that the contents of the heredoc are treated as a literal string, preventing variable expansion or command substitution within the heredoc.\n\n2. The content between `<<'EOF'` and the closing `EOF` is treated as a literal string and assigned to `my_var`.\n\n3. The variable `my_var` will contain the string exactly as you have written it, including newlines and special characters.\n\nWhen you echo `\"$my_var\"`, it will display the content with the preserved formatting."
+    }
+]
