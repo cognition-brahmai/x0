@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In the Django admin interface, is it possible to exclude specific fields when using the Inline feature?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, in the Django admin interface, it's possible to exclude specific fields when using the Inline feature. When defining an inline, you can use the `exclude` attribute to specify which fields you want to exclude from the form.\n\nHere's a basic example to illustrate this:\n\nSuppose you have the following models:\n\n```python\nfrom django.db import models\n\nclass Author(models.Model):\n    name = models.CharField(max_length=100)\n\nclass Book(models.Model):\n    title = models.CharField(max_length=100)\n    author = models.ForeignKey(Author, on_delete=models.CASCADE)\n    published_date = models.DateField()\n    isbn_number = models.CharField(max_length=13)\n    price = models.DecimalField(max_digits=5, decimal_places=2)\n```\n\nAnd you want to create an inline for the `Book` model in the `Author` admin but exclude the `isbn_number` and `price` fields. You can do it like this:\n\n```python\nfrom django.contrib import admin\nfrom .models import Author, Book\n\nclass BookInline(admin.TabularInline):  # or admin.StackedInline\n    model = Book\n    exclude = ('isbn_number', 'price')\n\nclass AuthorAdmin(admin.ModelAdmin):\n    inlines = [BookInline]\n\nadmin.site.register(Author, AuthorAdmin)\n```\n\nIn this example, the `BookInline` class specifies the `exclude` attribute to exclude the `isbn_number` and `price` fields from the inline form. You can use `TabularInline` for a table-based layout or `StackedInline` for a stacked layout. Adjust the `exclude` attribute as needed for your specific use case."
+    }
+]

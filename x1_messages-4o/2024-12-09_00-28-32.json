@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I use something like the modulus operator in a Django template? I am trying to add a class name to every fourth element in a loop, but I'm having trouble because the % symbol is a reserved character in Django. Here is the code I'm currently trying to use:\n\n```django\n{% for p in posts %}\n    <div class=\"post width1 height2 column {% if forloop.counter0 % 4 == 0 %}first{% endif %}\">\n        <div class=\"preview\">\n\n        </div>\n        <div class=\"overlay\">\n\n        </div>\n        <h2>p.title</h2>\n    </div>\n{% endfor %}\n```\n\nIs there any alternative way to accomplish this?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Django templates, you can't use the modulus operator `%` directly as you would in Python because it's a reserved character. However, you can achieve the desired effect by using a workaround that involves a combination of the `divisibleby` filter and the `forloop.counter` variable. Here's a revised version of your code that will add a class name to every fourth element:\n\n```django\n{% for p in posts %}\n    <div class=\"post width1 height2 column {% if forloop.counter|divisibleby:4 %}first{% endif %}\">\n        <div class=\"preview\">\n            <!-- Your preview content here -->\n        </div>\n        <div class=\"overlay\">\n            <!-- Your overlay content here -->\n        </div>\n        <h2>{{ p.title }}</h2>\n    </div>\n{% endfor %}\n```\n\nIn this version:\n\n- I'm using `forloop.counter` instead of `forloop.counter0` because `forloop.counter` is 1-based, which aligns better with most typical use cases.\n- The `divisibleby` filter is applied to `forloop.counter` to check if the counter is divisible by 4, which effectively gives the same result as a modulus operation.\n\nThis should work as expected to add the `first` class to every fourth element in your loop."
+    }
+]
