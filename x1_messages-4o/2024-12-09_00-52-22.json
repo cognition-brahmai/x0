@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I get the last N rows of a pandas DataFrame? I have two pandas dataframes, df1 and df2. df1 is a vanilla dataframe, while df2 is indexed by 'STK_ID' & 'RPT_Date'. I can easily get the last 3 rows of df2 by using df2.ix[-3:], but when I try to do the same with df1 (df1.ix[-3:]), it returns all the rows instead of the last three. What is the reason for this and how can I get the last three rows of df1? I am using Pandas 0.10.1."
+    },
+    {
+        "role": "assistant",
+        "content": "In older versions of pandas, like version 0.10.1, the behavior of `.ix[]` can be a bit inconsistent, especially when dealing with negative indexing. In your case, `df2.ix[-3:]` works because `df2` is indexed, allowing `.ix[]` to interpret the negative index as counting from the end. However, for a standard DataFrame like `df1`, `.ix[]` does not work with negative indices as you might expect.\n\nTo get the last N rows of a DataFrame, you should use the `.tail()` method, which is specifically designed for this purpose. Here is how you can get the last three rows of both `df1` and `df2`:\n\n```python\n# For df1\nlast_three_df1 = df1.tail(3)\n\n# For df2\nlast_three_df2 = df2.tail(3)\n```\n\nThe `.tail()` method is straightforward and works regardless of whether your DataFrame is indexed or not, making it a reliable choice for this kind of operation. \n\nNote: If you decide to update your pandas version, it is recommended to use `.iloc[]` or `.loc[]` for indexing, as `.ix[]` has been deprecated in later versions of pandas."
+    }
+]
