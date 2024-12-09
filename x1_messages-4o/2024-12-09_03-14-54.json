@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I expose read-only fields from Python classes? For instance, I have a class 'Article' with fields 'name' and 'available'. I would like to make the 'name' field read-only to prevent any changes to it after initial assignment. What's the idiomatic way in Python to achieve this? I have considered using a getter, __setattr__, and a utility function, but none of these seem ideal. Is there a better approach?"
+    },
+    {
+        "role": "assistant",
+        "content": "To create read-only fields in a Python class, you can use the `@property` decorator to define a getter method without a corresponding setter method. This makes the attribute read-only, as any attempt to set the attribute will result in an `AttributeError`.\n\nHere's how you can implement this in your `Article` class:\n\n```python\nclass Article:\n    def __init__(self, name, available):\n        self._name = name  # Use a private attribute for the internal storage\n        self.available = available\n\n    @property\n    def name(self):\n        return self._name\n\n# Usage\narticle = Article(\"Python Programming\", True)\nprint(article.name)  # This will print: Python Programming\n\n# Attempting to set the name will raise an AttributeError\narticle.name = \"New Name\"  # This will raise an AttributeError\n```\n\nIn this example, the `name` attribute is made read-only by defining a `name` property that only provides a getter. The actual data is stored in a private attribute `_name`, which is conventionally considered internal to the class.\n\nThis approach is idiomatic in Python and allows you to provide read-only access to class attributes while preventing modification after initial assignment."
+    }
+]

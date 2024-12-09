@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I replace a string with line breaks in Jinja2? I have some data in Jinja2 like this: \n\n```'item1|item2|item3'```\n\nI want to turn it into rendered linebreaks. However, when I replace it with br/ tags, I get the br tags rendered on the page, like this:\n\n```{{ 'item1|item2|item3' | replace(\"|\", \"<br/>\") }}```\n\nIt renders as:\n\n```item1<br/>item2<br/>item3<br/>```\n\nHowever, I want it to render as:\n\n```\nitem1\nitem2\nitem3\n```\n\nWhat am I missing here?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you are facing is that the `<br/>` tags are being rendered as plain text because Jinja2 automatically escapes HTML content to prevent XSS (Cross-Site Scripting) attacks. To render the `<br/>` tags as actual line breaks, you need to mark the output as safe, indicating that it's safe to render the HTML content without escaping it.\n\nYou can achieve this by using the `safe` filter in Jinja2. Here is how you can do it:\n\n```jinja\n{{ 'item1|item2|item3' | replace(\"|\", \"<br/>\") | safe }}\n```\n\nBy adding the `safe` filter, you are telling Jinja2 that the output is safe to render as HTML, and it will not escape the `<br/>` tags, resulting in the desired line breaks:\n\n```\nitem1\nitem2\nitem3\n```\n\nJust be cautious when using the `safe` filter, as it can lead to security vulnerabilities if not used carefully, especially with user-provided input. Always ensure that the content being marked as safe is sanitized and free from malicious code."
+    }
+]
