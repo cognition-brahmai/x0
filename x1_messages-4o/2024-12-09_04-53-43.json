@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm trying to sort a list of objects in Python 3 using `my_list.sort(key=operator.attrgetter(attr_name))`. However, if any of the list items has `attr = None` instead of `attr = 'whatever'`, I encounter a `TypeError: unorderable types: NoneType() < str()`. This wasn't a problem in Python 2. How can I handle this in Python 3?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python 3, when sorting, `None` is not directly comparable with other data types like strings, which causes the `TypeError`. To handle this situation, you can modify the sorting logic to handle `None` values gracefully. One common approach is to use a custom sorting key function that ensures `None` values are treated in a way that avoids comparison issues.\n\nHere's how you can modify your sorting code to handle `None` values:\n\n```python\nimport operator\n\n# Define a custom key function\ndef none_safe_attrgetter(attr_name):\n    def key_func(obj):\n        attr_value = getattr(obj, attr_name)\n        # Return a tuple where None is handled as the lowest or highest value\n        return (attr_value is None, attr_value)\n    return key_func\n\n# Sort the list using the custom key function\nmy_list.sort(key=none_safe_attrgetter(attr_name))\n```\n\nThis custom key function `none_safe_attrgetter` returns a tuple `(attr_value is None, attr_value)`. This means that when sorting, objects with `None` values will be sorted based on the boolean `attr_value is None`, which places them consistently either at the start or end of the sorted list. You can adjust the order by changing the way you handle the `None` comparison in the tuple.\n\nThis method ensures that `None` values do not cause a `TypeError`, and it gives you control over where `None` values appear in the sorted list."
+    }
+]
