@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I make pip ignore an existing wheel? Whenever a `.whl` is available online, `pip` always installs it rather than compiling from source. However, for a specific module, the wheel appears to be compiled for the next processor generation and doesn't run on my machine. Even when I command it to just download the package, it still downloads the wheel instead of the source. Is there a mechanism in `pip` to override this preference?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can instruct `pip` to ignore pre-built wheels and instead compile a package from source. Here are several approaches you can take:\n\n1. **Use the `--no-binary` option**: This option allows you to specify which packages should be ignored when wheels are available. You can use it in the following ways:\n\n    - To ignore wheels for a specific package:\n      ```bash\n      pip install --no-binary=<package_name> <package_name>\n      ```\n\n    - To ignore all wheels and force source installation for all packages:\n      ```bash\n      pip install --no-binary=:all: <package_name>\n      ```\n\n2. **Use the `--no-use-pep517` flag**: This can sometimes force a source installation by bypassing the PEP 517 build backend. However, this might not always work depending on the package's setup:\n   \n   ```bash\n   pip install --no-use-pep517 <package_name>\n   ```\n\n3. **Download source and install manually**: You can also manually download the source distribution and then install it:\n\n   - First, download the source distribution (`.tar.gz` or `.zip`) using:\n     ```bash\n     pip download --no-binary=:all: <package_name>\n     ```\n\n   - Then, extract the archive and install it using:\n     ```bash\n     tar -xzf <package_name>-<version>.tar.gz\n     cd <package_name>-<version>\n     python setup.py install\n     ```\n\nThese methods should help you bypass the wheel and compile the package from source, allowing it to work with your current processor architecture."
+    }
+]
