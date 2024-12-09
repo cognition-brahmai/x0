@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I determine if a Python script is imported as a module or run as a script? I am trying to find a way to evaluate the command line parameters only if the script is run as a standalone script, but not when the module is imported in another script. Is there a way to distinguish these two cases in Python?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can determine if a Python script is being run as a standalone script or imported as a module by using the special variable `__name__`. When a script is run directly, the value of `__name__` is set to `\"__main__\"`. When the same script is imported as a module in another script, `__name__` is set to the name of the module.\n\nHere's how you can use this to distinguish between the two cases:\n\n```python\nif __name__ == \"__main__\":\n    # This block will only execute if the script is run directly\n    # Place your command line parameters evaluation code here\n    print(\"Script is being run directly.\")\nelse:\n    # This block will execute if the script is imported as a module\n    print(\"Script has been imported as a module.\")\n```\n\nBy placing the command line parameter evaluation code inside the `if __name__ == \"__main__\":` block, you ensure that it only runs when the script is executed directly, and not when it is imported as a module. This is a common practice in Python to allow scripts to be used both as standalone programs and as importable modules."
+    }
+]
