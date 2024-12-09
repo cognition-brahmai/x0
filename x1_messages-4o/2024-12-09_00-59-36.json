@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, how can I query a namespace to find all classes which inherit from a particular class? For instance, given a class named 'widget', how can I call a function like 'inheritors(widget)' to retrieve a list of all different types of widgets that inherit from it?"
+    },
+    {
+        "role": "assistant",
+        "content": "To find all classes that inherit from a particular class in Python, you can utilize the `__subclasses__()` method. This method returns a list of immediate subclasses of a given class. You can then recursively search through these subclasses to find all descendants. Here's how you can implement the `inheritors` function:\n\n```python\ndef inheritors(cls):\n    subclasses = cls.__subclasses__()\n    all_subclasses = []\n\n    for subclass in subclasses:\n        all_subclasses.append(subclass)\n        all_subclasses.extend(inheritors(subclass))\n\n    return all_subclasses\n\n# Example usage:\nclass Widget:\n    pass\n\nclass WidgetA(Widget):\n    pass\n\nclass WidgetB(Widget):\n    pass\n\nclass WidgetC(WidgetA):\n    pass\n\n# Find all classes that inherit from Widget\nwidget_inheritors = inheritors(Widget)\nprint(widget_inheritors)\n```\n\nThis script defines a function `inheritors` that recursively finds all subclasses of a given class, including indirect descendants. When you run the example, it will output a list of classes that inherit from `Widget`, including both direct and indirect subclasses."
+    }
+]
