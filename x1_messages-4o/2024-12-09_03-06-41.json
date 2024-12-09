@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I match a substring in a string, ignoring the case in Python? Currently, I am searching for a set of words in a given text file, which I am reading line by line. The word on a line can be 'mandy', 'Mandy', 'MANDY', etc. I am using the following code, but it doesn't seem to work for ignoring case, as I am not finding success with `line.find('mandy') >= 0`. I don't want to use `toupper`/`tolower` methods. Is there a Python equivalent of the Perl code `if ($line=~/^Mandy Pande:/i)`?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, you can achieve case-insensitive substring matching using regular expressions with the `re` module, which provides functionality similar to Perl's regex capabilities. By using the `re.IGNORECASE` flag, you can perform case-insensitive searches. Here's how you can modify your code to match a substring in a string while ignoring the case:\n\n```python\nimport re\n\n# Your target substring\nsubstring = 'mandy'\n\n# Open and read the file line by line\nwith open('your_text_file.txt', 'r') as file:\n    for line in file:\n        # Use re.search with re.IGNORECASE to match the substring case-insensitively\n        if re.search(substring, line, re.IGNORECASE):\n            print(\"Matched line:\", line.strip())\n```\n\nIn this code, `re.search(substring, line, re.IGNORECASE)` will look for the substring \"mandy\" in each line, ignoring the case of both the line content and the substring. If a match is found, it prints the matched line.\n\nThis approach allows you to avoid using `str.upper()` or `str.lower()` while still achieving the desired case-insensitive matching functionality."
+    }
+]
