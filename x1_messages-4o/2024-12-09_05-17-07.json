@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to pass command line arguments to a Python script while using IPython. I would like to call my script using the following format: \n\n```ipython -i script.py --argument blah```\n\nHow can I ensure that both `--argument` and `blah` are included in my `sys.argv`?"
+    },
+    {
+        "role": "assistant",
+        "content": "When you're using IPython and want to pass command-line arguments to a Python script, IPython's default behavior might not directly pass the arguments as you expect. However, you can achieve this by using a workaround. Here's how you can do it:\n\n1. **Use a `--` separator**: You can separate the IPython arguments from the script arguments using a `--`. This tells IPython to treat everything after `--` as arguments to the script.\n\n   You can run your command like this:\n\n   ```bash\n   ipython -i script.py -- --argument blah\n   ```\n\n   In this command, `--` is used to separate IPython's own arguments from those intended for the script.\n\n2. **Access `sys.argv` in your script**: In your Python script (`script.py`), you can access the command-line arguments using `sys.argv`. Make sure to import the `sys` module at the beginning of your script:\n\n   ```python\n   import sys\n\n   print(sys.argv)\n   ```\n\n   When you run the command, `sys.argv` will include `['script.py', '--argument', 'blah']` as expected.\n\nThis approach ensures that the command-line arguments are passed correctly to your script when using IPython."
+    }
+]
