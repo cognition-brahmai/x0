@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Generate a step-by-step execution plan using the following tools to solve the problem. For each plan, indicate which external tool together with tool input to retrieve evidence. You can store the evidence into a variable #E[index] that can be called by later tools.\n\nTools available:\nWebSearch[input]: A tool that uses a general-purpose search engine to find information related to the input query.\nPageReader[input]: Loads the full text of a webpage given its URL. \nLinkCollector[input]: Collects all URLs from a block of text.\nKnowledgeBase[input]: A tool that answers questions based on common knowledge and specific context provided as input.\n\nOutput Format:\nPlan: [First action]\n#E1 = [Function to call with input]\nPlan: [Next action based on #E1]\n#E2 = [Next function to call with input including reference to #E1 if needed]\n...\nFinal Answer: #E[n]\n\nQuestion: Who was the first woman to win a Nobel Prize and what was her contribution?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for general information about the first woman to win a Nobel Prize.\n\n#E1 = WebSearch[\"first woman Nobel Prize\"]\n\nPlan: Use the KnowledgeBase to interpret the search results and identify the name of the woman.\n\n#E2 = KnowledgeBase[\"Who was the first woman to win a Nobel Prize, based on #E1?\"]\n\nPlan: Conduct another web search to find detailed information about her contributions.\n\n#E3 = WebSearch[#E2 + \" contributions\"]\n\nPlan: Collect the relevant links from the search results for a more focused search.\n\n#E4 = LinkCollector[#E3]\n\nPlan: Read the content of the top relevant page to gather detailed information about her contributions.\n\n#E5 = PageReader[#E4[0]]\n\nPlan: Use the KnowledgeBase again to summarize her key contributions from the page content.\n\n#E6 = KnowledgeBase[\"What were the key contributions of \" + #E2 + \" based on #E5?\"]\n\nFinal Answer: #E6"
+    }
+]
