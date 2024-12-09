@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a long string of pandas chained commands, as shown below:\n\n```python\ndf.groupby[['x','y']].apply(lambda x: (np.max(x['z'])-np.min(x['z']))).sort_values(ascending=False)\n```\n\nIs it possible to split this sequence across multiple lines but still as a one liner, without saving results to a temporary object or defining the lambda as a function? I'm looking for a way to format it like this:\n\n```python\ndf.groupby[['x','y']]\n.apply(lambda x: (np.max(x['z'])-np.min(x['z'])))\n.sort_values(ascending=False)\n```\n\nI'm aware that the underscore '_' has this functionality in Python, but it doesn't seem to work with chained commands. How can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, you can use parentheses to split a long chain of method calls across multiple lines while maintaining the chain. This way, you avoid using temporary variables and keep the entire operation as a single expression. Here's how you can format your code:\n\n```python\n(\n    df.groupby(['x', 'y'])\n    .apply(lambda x: np.max(x['z']) - np.min(x['z']))\n    .sort_values(ascending=False)\n)\n```\n\nBy wrapping the entire expression in parentheses, you can split the code across multiple lines. This approach keeps the chain intact and doesn't require temporary variables or defining the lambda function separately."
+    }
+]
