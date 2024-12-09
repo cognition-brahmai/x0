@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How do I remove a field from a parent Form in a subclass in Django? I have a parent `LoginForm` class and a subclass `LoginFormWithoutNickname`. I want to remove the `nickname` field from the subclass. Here is my code:\n\n```python\nclass LoginForm(forms.Form):\n    nickname = forms.CharField(max_length=100)\n    username = forms.CharField(max_length=100)\n    password = forms.CharField(widget=forms.PasswordInput)\n\nclass LoginFormWithoutNickname(LoginForm):\n    # i don't want the field nickname here\n    nickname = None\n```\n\nIs there a way to achieve this? Also, I don't have a `ModelForm`, so the `Meta` class with `exclude` option won't work for me."
+    },
+    {
+        "role": "assistant",
+        "content": "To remove a field from a parent form in a subclass in Django, you can manipulate the `fields` attribute of the form. In your case, you want to remove the `nickname` field from the `LoginFormWithoutNickname` subclass. Here's how you can achieve that:\n\n```python\nfrom django import forms\n\nclass LoginForm(forms.Form):\n    nickname = forms.CharField(max_length=100)\n    username = forms.CharField(max_length=100)\n    password = forms.CharField(widget=forms.PasswordInput)\n\nclass LoginFormWithoutNickname(LoginForm):\n    def __init__(self, *args, **kwargs):\n        super(LoginFormWithoutNickname, self).__init__(*args, **kwargs)\n        # Remove the 'nickname' field from the form\n        if 'nickname' in self.fields:\n            del self.fields['nickname']\n```\n\n### Explanation:\n- **Override the `__init__` method**: We override the `__init__` method of the `LoginFormWithoutNickname` class to customize the initialization process.\n- **Call the parent class's `__init__` method**: This ensures that the form is initialized with all fields defined in the parent class.\n- **Remove the `nickname` field**: Use `del self.fields['nickname']` to remove the `nickname` field from the `fields` dictionary of the form.\n\nThis approach allows you to subclass an existing form and remove specific fields as needed without affecting the parent form."
+    }
+]
