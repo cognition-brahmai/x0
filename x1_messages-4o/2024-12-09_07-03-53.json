@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How does CUDA assign device IDs to GPUs? I have two GPUs in my machine: a GTX 480 and a GTX 670. How does CUDA decide which GPU is device ID 0 and which GPU is device ID 1? I am working on some High-Performance Computing (HPC) algorithms and benchmarking and auto-tuning them for several GPUs. I want to be able to predict what will happen when I add or replace some GPUs in the computer."
+    },
+    {
+        "role": "assistant",
+        "content": "CUDA assigns device IDs to GPUs based on the order in which they are enumerated by the system. This enumeration is typically influenced by the PCIe topology of your system. Here are some factors that can affect the order:\n\n1. **PCIe Slot Order**: The GPUs are usually enumerated based on the PCIe slot they are installed in. The motherboard BIOS determines the order, typically starting from the topmost slot (closest to the CPU) to the bottom.\n\n2. **BIOS and Motherboard**: Different motherboards and BIOS configurations might enumerate devices differently. Some systems might have settings that influence device enumeration order.\n\n3. **Operating System**: The OS can also influence enumeration, although it's generally consistent across reboots unless hardware changes occur.\n\n4. **Driver and CUDA Version**: NVIDIA drivers and CUDA versions generally follow the system's enumeration order, but there could be differences in how they report or handle devices.\n\nFor benchmarking and auto-tuning purposes, it's often a good practice to query and identify GPUs based on their properties rather than assuming a fixed device ID. You can use the CUDA Runtime API to query each device's properties, like name, compute capability, and total memory, and then decide programmatically which device to use.\n\nWhen adding or replacing GPUs, check the PCIe slots and ensure that the system BIOS and OS recognize them correctly. You might need to re-enumerate devices or reset the device IDs if the order changes due to hardware modifications."
+    }
+]
