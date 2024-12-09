@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am facing a problem when trying to do a less than or equal to filter in Django queryset. I have a custom field in each users profile called 'profile', and a field called 'level' which is an integer between 0-3. If I filter using equals like `user_list = User.objects.filter(userprofile__level = 0)`, I get a list of users with the chosen level as expected. However, when I try to filter using less than like `user_list = User.objects.filter(userprofile__level < 3)`, I get the error \"global name 'userprofile__level' is not defined\". How can I filter by less than or greater than in this case?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Django, when you're working with querysets and you want to use a comparison operator like \"less than\" or \"greater than\", you need to use field lookups. For your specific case, you should use the `__lt` (less than) or `__gt` (greater than) field lookup suffixes. Here's how you can apply it to your queryset:\n\n```python\n# To filter users with level less than 3\nuser_list = User.objects.filter(userprofile__level__lt=3)\n```\n\nSimilarly, if you wanted to filter users with a level greater than a certain value, you would use `__gt`:\n\n```python\n# To filter users with level greater than 1\nuser_list = User.objects.filter(userprofile__level__gt=1)\n```\n\nThese field lookups allow you to apply various comparisons directly in your querysets. Here are some common ones:\n\n- `__lt`: less than\n- `__lte`: less than or equal to\n- `__gt`: greater than\n- `__gte`: greater than or equal to\n- `__exact`: exactly equal to\n- `__iexact`: exactly equal to, case-insensitive\n\nIn your case, using `__lt=3` should resolve the error and filter the users correctly."
+    }
+]
