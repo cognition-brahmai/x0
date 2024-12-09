@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, how can I implement a function similar to Java's `List.toString()` which automatically calls the `toString()` method on each object inside the List? I have implemented a `__str__()` method in my class, but when I print out a list of objects using `print 'my list is %s'%(list)`, the output looks like this: `[<__main__.cell instance at 0x2a955e95f0>, <__main__.cell instance at 0x2a955e9638>, <__main__.cell instance at 0x2a955e9680>]`. How can I get Python to automatically call my `__str__()` method for each element inside the list or dictionary?"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve functionality similar to Java's `List.toString()` in Python, you can create a custom function that iterates over the list and calls the `__str__()` method (or `str()`) for each object. Here's a simple implementation:\n\n```python\nclass Cell:\n    def __init__(self, value):\n        self.value = value\n\n    def __str__(self):\n        return f\"Cell({self.value})\"\n\ndef list_to_string(lst):\n    return '[' + ', '.join(str(item) for item in lst) + ']'\n\n# Example usage:\nmy_list = [Cell(1), Cell(2), Cell(3)]\nprint('My list is %s' % list_to_string(my_list))\n```\n\nHere's a breakdown of how the `list_to_string` function works:\n\n- It takes a list `lst` as an argument.\n- It uses a list comprehension combined with `str(item)` to call the `__str__()` method on each object in the list.\n- It joins the resulting strings with a comma and a space, then encloses them in square brackets to mimic the default list representation.\n\nNow, when you run this code, the output will be:\n\n```\nMy list is [Cell(1), Cell(2), Cell(3)]\n```\n\nThis approach can be similarly applied to dictionaries or other collections by iterating over the items and formatting them as needed."
+    }
+]
