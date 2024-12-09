@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I modify my Django ORM query to return the last three added valid Avatar models instead of the first three? Currently, my query looks like this:\n\n```python\nnewUserAv = Avatar.objects.filter(valid=True).order_by(\"date\")[:3]\n```\nThis query returns the first three avatar models ordered by date, but I would like to reverse the order to get the last three instead. I am having difficulty finding this information in the Django documentation."
+    },
+    {
+        "role": "assistant",
+        "content": "To modify your Django ORM query to return the last three added valid `Avatar` models instead of the first three, you need to reverse the order of the queryset by specifying descending order on the `date` field. You can achieve this by using the `-` prefix to the field name in the `order_by` method. After reversing the order, you can still use slicing to get the last three entries.\n\nHere's how you can modify your query:\n\n```python\nnewUserAv = Avatar.objects.filter(valid=True).order_by(\"-date\")[:3]\n```\n\nIn this modified query:\n\n- `order_by(\"-date\")` sorts the queryset in descending order based on the `date` field.\n- `[:3]` then selects the first three items from this ordered list, which effectively gives you the last three entries when considering the original order."
+    }
+]
