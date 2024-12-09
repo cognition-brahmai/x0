@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working on a Python script that can either receive zero or three command line arguments. It either operates on default behavior or requires all three values to be specified. I am trying to implement a conditional check with the syntax \"if a or b or c but not all of them\". In other words, I want to check if one or two of the variables are true, but not all three of them. How can I write this conditional check? Here is what I have so far:\n\n```python\nif a and (not b or not c) or b and (not a or not c) or c and (not b or not a):\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "Your current implementation is almost there, but it can be simplified and made a bit more readable. You want to check if exactly one or two of the variables \\(a\\), \\(b\\), or \\(c\\) are true, but not all three. This logic can be expressed using the sum of boolean values because `True` is treated as `1` and `False` as `0` in Python. Here's how you can do it:\n\n```python\n# Check if exactly one or two of the variables are True\nif (a + b + c) in (1, 2):\n```\n\nThis condition will evaluate to `True` only if either one or two of the variables are `True`, but not all three. Here's a brief explanation of how this works:\n\n- `a + b + c` calculates the number of `True` values among `a`, `b`, and `c`.\n- `(a + b + c) in (1, 2)` checks if the sum is either 1 or 2, meaning one or two values are `True`.\n\nHere's a more complete example in context:\n\n```python\ndef check_arguments(a, b, c):\n    if (a + b + c) in (1, 2):\n        print(\"One or two arguments are true, but not all three.\")\n    else:\n        print(\"Either all or none are true.\")\n\n# Example usage:\ncheck_arguments(True, False, True)  # Output: One or two arguments are true, but not all three.\ncheck_arguments(True, True, True)   # Output: Either all or none are true.\ncheck_arguments(False, False, False) # Output: Either all or none are true.\n```\n\nThis approach is both efficient and easy to understand."
+    }
+]
