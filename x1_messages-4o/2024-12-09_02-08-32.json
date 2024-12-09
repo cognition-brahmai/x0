@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I use Django SQL queries to simultaneously perform case insensitive searches and contains operations? I have two users with usernames 'AbA' and 'aBa' in the database. My query word is 'ab'. I tried using `User.objects.filter(username__contains='ab')` and `User.objects.filter(username__iexact='ab')` but these two queries return empty results. I want to use something like `username__contains__iexact='ab'` that can retrieve both 'AbA' and 'aBa'. Can anyone suggest a way to resolve this problem?"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve a case-insensitive \"contains\" search in Django, you can use the `icontains` lookup. This lookup is specifically designed to perform a case-insensitive containment test, which is what you need for your use case. Here's how you can use it to search for usernames that contain the substring `'ab'`, regardless of case:\n\n```python\nusers = User.objects.filter(username__icontains='ab')\n```\n\nThis query will return both `'AbA'` and `'aBa'` from your database, as it will match any username containing `'ab'` in a case-insensitive manner. \n\nThe `icontains` lookup is the correct approach for situations where you want to find substrings within a string without considering the case, and it combines both the functionalities of `contains` and `iexact` but specifically for substring searches."
+    }
+]
