@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I construct a sequential model in PyTorch similar to that of Keras? I attempted the following code:\n\n```python\nimport torch\nimport torch.nn as nn\n\nnet = nn.Sequential()\nnet.add(nn.Linear(3, 4))\nnet.add(nn.Sigmoid())\nnet.add(nn.Linear(4, 1))\nnet.add(nn.Sigmoid())\nnet.float()\n```\nBut, I encountered an error saying: \n```python\nAttributeError: 'Sequential' object has no attribute 'add'\n```\nHow can I resolve this issue?"
+    },
+    {
+        "role": "assistant",
+        "content": "In PyTorch, the `nn.Sequential` class does not have an `add` method like Keras's Sequential model. Instead, you can pass the layers as arguments to the `nn.Sequential` constructor at the time of initialization. Here's how you can construct a sequential model similar to the one you attempted:\n\n```python\nimport torch\nimport torch.nn as nn\n\nnet = nn.Sequential(\n    nn.Linear(3, 4),\n    nn.Sigmoid(),\n    nn.Linear(4, 1),\n    nn.Sigmoid()\n)\n\nnet.float()\n```\n\nIn this code, you directly pass the layers as arguments to `nn.Sequential`. The model will contain a linear layer with 3 input features and 4 output features, followed by a Sigmoid activation, another linear layer with 4 input features and 1 output feature, and another Sigmoid activation. This should work without any attribute errors."
+    }
+]

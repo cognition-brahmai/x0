@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a large DataFrame in pandas with 423244 lines. I am trying to divide this DataFrame into 4 equal parts. But when I use the following code:\n\n```python\nfor item in np.split(df, 4):\n    print item\n```\nI encounter this error: `ValueError: array split does not result in an equal division`. How can I successfully split this DataFrame into 4 parts?"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering occurs because the number of rows in your DataFrame (423,244) is not divisible by 4, which is a requirement for `np.split` to divide the DataFrame into exactly equal parts. To handle this, you can use `np.array_split` instead, which divides the DataFrame into nearly equal parts, even if the number of rows isn't perfectly divisible by the number of parts you want.\n\nHere's how you can do it:\n\n```python\nimport numpy as np\nimport pandas as pd\n\n# Assuming df is your DataFrame\nparts = np.array_split(df, 4)\n\nfor part in parts:\n    print(part)\n```\n\nThis will divide your DataFrame into 4 parts, where the first few parts may have one more row than the last part if 423,244 isn't perfectly divisible by 4. This method ensures that all data is included, and the parts are as equal in size as possible."
+    }
+]
