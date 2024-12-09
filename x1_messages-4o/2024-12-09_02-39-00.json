@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, is there a straightforward method to request a URL without following redirects? As per my understanding from the urllib2 source, it seems like I might have to subclass HTTPRedirectHandler and then use build_opener to override the default HTTPRedirectHandler. However, this appears to be a relatively complicated process for a seemingly simple task. Is there an easier way to achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, there is a simpler way to make an HTTP request without following redirects in Python. You can use the `requests` library, which provides a convenient method to control redirect behavior. Here's how you can do it:\n\nFirst, make sure you have the `requests` library installed. You can install it using pip if you haven't already:\n\n```bash\npip install requests\n```\n\nThen, you can use the `allow_redirects` parameter in the `requests.get()` function to prevent following redirects. Here's an example:\n\n```python\nimport requests\n\nurl = 'http://example.com'  # Replace with your URL\n\nresponse = requests.get(url, allow_redirects=False)\n\nprint('Status Code:', response.status_code)\nprint('Headers:', response.headers)\nprint('Content:', response.content)\n```\n\nBy setting `allow_redirects=False`, the `requests` library will not follow any redirects, and you'll receive the response from the initial request, including any redirection status codes (like 301 or 302) and headers.\n\nThis approach is much more straightforward than subclassing handlers in `urllib`."
+    }
+]
