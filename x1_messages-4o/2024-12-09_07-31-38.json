@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, how can I invoke a function on an object dynamically by its name? For instance, suppose I have an instance of a class, `MyClass`, that has a method `doStuff()`. Now, if I have a string variable `func` that contains the name of this method, how can I call `doStuff()` on the object using the `func` variable?\n\nHere is the example code:\n\n```python\nobj = MyClass() # this class has a method doStuff()\nfunc = \"doStuff\"\n# how to call obj.doStuff() using the func variable?\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To invoke a method on an object dynamically using its name stored in a string variable, you can use the `getattr` function in Python. This function retrieves an attribute from an object by name. If the attribute is a callable (like a method), you can then call it.\n\nHere's how you can use `getattr` to dynamically call the `doStuff()` method on the `obj` instance of `MyClass` using the `func` variable:\n\n```python\nclass MyClass:\n    def doStuff(self):\n        print(\"Doing stuff!\")\n\nobj = MyClass()  # Create an instance of MyClass\nfunc = \"doStuff\" # The name of the method to call\n\n# Use getattr to retrieve the method by name and then call it\nmethod_to_call = getattr(obj, func)\nmethod_to_call()  # This will call obj.doStuff()\n```\n\nExplanation:\n- `getattr(obj, func)` retrieves the `doStuff` method from `obj` because `func` contains the string `\"doStuff\"`.\n- `method_to_call` will be a reference to the `doStuff` method, which you can then call using `method_to_call()`. \n\nThis approach is very useful for scenarios where you need to decide which method to call at runtime."
+    }
+]
