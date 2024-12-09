@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How do I calculate the probability in a normal distribution given the mean and standard deviation in Python? I could code my own function according to the definition, but I'm curious if there is a library function that could help me achieve this. I imagine it would look something like this:\n\n```python\nnd = NormalDistribution(mu=100, std=12)\np = nd.prob(98)\n```\n\nI am aware of `numpy`'s `random.normal` function, but it seems like this is more for sampling and not exactly what I want."
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, in Python, you can use the `scipy.stats` module, which provides a convenient way to work with probability distributions, including the normal distribution. You can use the `norm` class to create a normal distribution with a specified mean and standard deviation, and then use the `cdf` (cumulative distribution function) to calculate the probability of a value being less than or equal to a certain point.\n\nHere's how you can do it:\n\n```python\nfrom scipy.stats import norm\n\n# Define the mean and standard deviation\nmu = 100\nstd = 12\n\n# Create a normal distribution object\nnd = norm(loc=mu, scale=std)\n\n# Calculate the probability of a value being less than or equal to 98\np = nd.cdf(98)\n\nprint(f\"The probability of a value being less than or equal to 98 is {p:.4f}\")\n```\n\nIn this code:\n- `loc` is the mean of the distribution.\n- `scale` is the standard deviation of the distribution.\n- `cdf(x)` gives the probability that a random variable from the distribution is less than or equal to `x`.\n\nYou can also calculate the probability of a value lying between two points by using the difference of two `cdf` calls:\n\n```python\np_between = nd.cdf(110) - nd.cdf(90)\nprint(f\"The probability of a value being between 90 and 110 is {p_between:.4f}\")\n```\n\nThis will give you a straightforward way to calculate probabilities in a normal distribution without having to manually implement the underlying mathematics."
+    }
+]
