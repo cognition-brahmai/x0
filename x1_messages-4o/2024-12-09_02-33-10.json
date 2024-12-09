@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I list only the files from the current directory in Python, without listing any files from the subdirectories or parent directories? I have tried using the os.walk() function in Python, but it lists files from subdirectories too. For example, in my current directory, I have two files: 'holygrail.py' and 'Tim', and a subdirectory that contains two files: 'Arthur' and 'Lancelot'. When I use the following script:\n\n```python\nimport os\nfor subdir, dirs, files in os.walk('./'):\n    for file in files:\n      # do some stuff\n      print file\n```\n\nThe output includes files from the subdirectory, which I do not want:\n\n```python\nholygrail.py\nTim\nArthur\nLancelot\n```\n\nHow can I modify my code to exclude files from subdirectories?"
+    },
+    {
+        "role": "assistant",
+        "content": "To list only the files in the current directory without including files from subdirectories, you can use the `os.listdir()` function and filter out the directories. Here's how you can modify your code:\n\n```python\nimport os\n\n# Get the list of all entries in the current directory\nentries = os.listdir('./')\n\n# Filter the list to include only files\nfiles = [entry for entry in entries if os.path.isfile(os.path.join('./', entry))]\n\n# Print the files\nfor file in files:\n    print(file)\n```\n\nThis code uses `os.listdir()` to get all entries in the current directory, and then filters this list to include only those entries that are files by checking with `os.path.isfile()`. This way, you only get a list of files from the current directory, excluding any files from subdirectories."
+    }
+]
