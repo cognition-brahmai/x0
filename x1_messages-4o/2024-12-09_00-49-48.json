@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I evaluate if an environment variable is boolean True in Python? I tried using the following code:\n```python\nif os.environ['ENV_VAR'] is True:\n      .......\n```\nIs this the correct way to do it?"
+    },
+    {
+        "role": "assistant",
+        "content": "The code you've provided will not work as intended because environment variables in Python are always strings. The expression `os.environ['ENV_VAR'] is True` will not evaluate as you might expect because `'True'` (a string) is not the same as `True` (a boolean).\n\nTo evaluate if an environment variable represents a boolean `True`, you should compare the string value to one of the common string representations of `True`. Here's an example of how you can do this:\n\n```python\nimport os\n\n# Retrieve the environment variable\nenv_var = os.environ.get('ENV_VAR', '')\n\n# Check if it is a common representation of True\nif env_var.lower() in ['true', '1', 'yes', 'on']:\n    # Your code for when the environment variable is True\n    print(\"Environment variable is True\")\nelse:\n    # Your code for when the environment variable is not True\n    print(\"Environment variable is not True\")\n```\n\nIn this example, we convert the environment variable to lowercase and check if it matches any of the common string representations for `True`. This approach is more reliable for evaluating boolean-like environment variables."
+    }
+]
