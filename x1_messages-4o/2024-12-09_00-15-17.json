@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I use multiple conditions with pyspark.sql.functions.when()? I have a dataframe with a few columns. I'm trying to derive a new column from two other columns. Here is my current code:\n\n```python\nfrom pyspark.sql import functions as F\nnew_df = df.withColumn(\"new_col\", F.when(df[\"col-1\"] > 0.0 & df[\"col-2\"] > 0.0, 1).otherwise(0))\n```\n\nHowever, this throws an exception: `py4j.Py4JException: Method and([class java.lang.Double]) does not exist`. It works with just one condition like this:\n\n```python\nnew_df = df.withColumn(\"new_col\", F.when(df[\"col-1\"] > 0.0, 1).otherwise(0))\n```\n\nSo, how can I use multiple conditions in this case? I'm using Spark 1.4."
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering is due to the precedence of operators in Python. The `&` operator has a lower precedence than comparison operators, leading to an incorrect evaluation of the expression. To solve this, you need to use parentheses to group your conditions properly. Here's how you can modify your code:\n\n```python\nfrom pyspark.sql import functions as F\n\nnew_df = df.withColumn(\n    \"new_col\", \n    F.when((df[\"col-1\"] > 0.0) & (df[\"col-2\"] > 0.0), 1).otherwise(0)\n)\n```\n\nBy adding parentheses around each condition `(df[\"col-1\"] > 0.0)` and `(df[\"col-2\"] > 0.0)`, you ensure that the comparison operations are evaluated before the `&` operation, which is the bitwise AND for combining conditions. This should resolve the `py4j.Py4JException` you're encountering.\n\nRemember that the `&` operator is used for element-wise logical AND operations in PySpark, similar to how it is used in Pandas."
+    }
+]
