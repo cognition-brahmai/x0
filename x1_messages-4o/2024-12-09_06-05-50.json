@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I map a function that takes scalars as arguments, to multiple columns in a pandas dataframe? I want to pass three columns of the dataframe as arguments to the function and create a new column with the returned results. The code for the function is not modifiable as it is part of another package.\n\n<pre><code>\ndef some_func(int a, int b, int c) returns int d\ndf['d'] = some_func(a = df['a'], b = df['b'], c = df['c'])\n</code></pre>\n\nAll solutions I've found suggest rewriting the function to work with series instead of scalars, which isn't feasible for me. Is there a way to achieve this elegantly?"
+    },
+    {
+        "role": "assistant",
+        "content": "To map a function that accepts scalars as arguments to multiple columns in a pandas DataFrame, you can use the `apply` method along with `axis=1`. This will allow you to apply the function row-wise. Since `some_func` cannot be modified, you'll need to pass the DataFrame columns as scalar values for each row. Here's how you can do it:\n\n```python\nimport pandas as pd\n\n# Assuming df is your DataFrame and it contains columns 'a', 'b', 'c'\n\n# Define a wrapper function that applies the scalar function to a row\ndef apply_some_func(row):\n    return some_func(row['a'], row['b'], row['c'])\n\n# Apply the function row-wise and create a new column 'd'\ndf['d'] = df.apply(apply_some_func, axis=1)\n```\n\nThis approach uses `apply` to iterate over each row of the DataFrame, passing the appropriate column values to `some_func`. The results are then stored in a new column 'd'. This method is efficient and leverages the existing function without needing to modify it."
+    }
+]
