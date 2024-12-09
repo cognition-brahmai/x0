@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I remove the default delete action in the Django admin panel? Would assigning an empty list to actions, like this \"actions = [ ]\", work?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, assigning an empty list to the `actions` attribute in your Django admin class will indeed remove the default delete action from the Django admin panel. Here's how you can do it:\n\nWhen you define your model's admin class, you can specify `actions = []` to override the default list of actions, effectively removing the \"Delete selected\" action. Here's an example:\n\n```python\nfrom django.contrib import admin\nfrom .models import YourModel\n\nclass YourModelAdmin(admin.ModelAdmin):\n    actions = []  # This removes all actions, including the default delete action\n\nadmin.site.register(YourModel, YourModelAdmin)\n```\n\nBy setting `actions` to an empty list, you are telling Django that there are no actions available for this model in the admin panel. If you want to have other custom actions but still remove the delete action, you can list those custom actions here instead."
+    }
+]
