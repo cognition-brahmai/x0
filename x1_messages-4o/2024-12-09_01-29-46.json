@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using an API that returns a single row of data as a Python dictionary. Most of the keys in the dictionary have a single value, but some keys have values in the form of lists, lists-of-lists, or lists-of-dictionaries. When I attempt to convert this dictionary into a pandas DataFrame using pd.DataFrame, it results in an \"Arrays must be the same length\" error. This seems to be caused by the inability to process keys with multiple values, specifically those with lists as values. How can I convert this dictionary into a pandas DataFrame such that pandas treats the lists as 'single values'? Here's an example of the data I'm dealing with:\n\n```python\ndata = { 'building': 'White House', 'DC?': True,\n         'occupants': ['Barack', 'Michelle', 'Sasha', 'Malia'] }\n```\n\nI would like the resulting DataFrame to look like this:\n\n```python\nix   building         DC?      occupants\n0    'White House'    True     ['Barack', 'Michelle', 'Sasha', 'Malia']\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To convert your dictionary into a pandas DataFrame while treating lists as 'single values', you can use the `pd.DataFrame.from_records` method. This approach allows you to specify that each key-value pair in the dictionary should become a single row in the DataFrame. Here's how you can do it:\n\n```python\nimport pandas as pd\n\n# Your data dictionary\ndata = {\n    'building': 'White House',\n    'DC?': True,\n    'occupants': ['Barack', 'Michelle', 'Sasha', 'Malia']\n}\n\n# Convert dictionary to a list of dictionaries (each key-value pair becomes a row)\ndata_list = [data]\n\n# Create DataFrame\ndf = pd.DataFrame.from_records(data_list)\n\n# Display the DataFrame\nprint(df)\n```\n\nThis will produce the DataFrame you want, with lists treated as single values:\n\n```\n       building   DC?                           occupants\n0  White House  True  [Barack, Michelle, Sasha, Malia]\n```\n\nThis approach works well when you want to convert a dictionary with potential list values into a DataFrame without expanding the lists into multiple rows."
+    }
+]
