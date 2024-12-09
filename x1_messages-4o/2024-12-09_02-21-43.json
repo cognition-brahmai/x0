@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I dynamically assign a column name from a string variable in SQL Alchemy filter? I have created a query in SQL Alchemy filter, but the column name is specified in a variable. My original query is as follows:\n\n```python\ndb_session.query(Notice).filter(Notice.subject.like(\"%\" +query+ \"%\"))\n```\nI want to modify the query like this:\n\n```python\ncol_name='subject'\ndb_session.query(Notice).filter(Notice.col_name.like(\"%\" +query+ \"%\"))\ncol_name='status'\nstatus=0\ndb_session.query(Notice).filter(Notice.col_name != 1)\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "In SQLAlchemy, you can dynamically reference column names using `getattr` to access the attributes of a model class. This allows you to use a variable to specify the column name in your queries. Here's how you can modify your queries to use a string variable for column names:\n\n```python\n# For the first query with the 'subject' column name\ncol_name = 'subject'\nquery_string = \"%\" + query + \"%\"\ndb_session.query(Notice).filter(getattr(Notice, col_name).like(query_string))\n\n# For the second query with the 'status' column name\ncol_name = 'status'\nstatus_value = 0\ndb_session.query(Notice).filter(getattr(Notice, col_name) != status_value)\n```\n\n### Explanation:\n1. **`getattr` Function**: This function is used to dynamically access the attribute of a class. `getattr(Notice, col_name)` is equivalent to `Notice.subject` if `col_name` is `'subject'`.\n\n2. **Dynamic Queries**: By using `getattr`, you can dynamically construct queries based on variable column names, which is useful for building flexible and reusable code.\n\n3. **Variable Replacement**: Ensure that the variables `query` and `status_value` are defined in your context as they are used in filter conditions.\n\nThis approach will help you handle dynamic column names in SQLAlchemy queries effectively."
+    }
+]
