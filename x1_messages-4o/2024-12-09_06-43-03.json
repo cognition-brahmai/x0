@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I filter all rows with NaT (Not a Time) in column 'b' of a Python DataFrame? I tried using `df=df[df.b==None]` but it didn't work. Here's my DataFrame:\n\n```python\n    a b           c\n    1 NaT         w\n    2 2014-02-01  g\n    3 NaT         x   \n```\n\nI want to get:\n\n```python\n    a b           c\n    1 NaT         w\n    3 NaT         x    \n```\n\nHow can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To filter rows with `NaT` in a specific column of a pandas DataFrame, you should use `pd.isna()` or its equivalent `pd.isnull()` function. The reason `df.b == None` didn't work is that `NaT` is a special constant used by pandas to represent missing datetime values, and it is not equivalent to `None`.\n\nHere's how you can filter the DataFrame to get rows where column 'b' is `NaT`:\n\n```python\nimport pandas as pd\nimport numpy as np\n\n# Creating the DataFrame\ndata = {\n    'a': [1, 2, 3],\n    'b': [pd.NaT, pd.Timestamp('2014-02-01'), pd.NaT],\n    'c': ['w', 'g', 'x']\n}\n\ndf = pd.DataFrame(data)\n\n# Filtering rows where column 'b' is NaT\nfiltered_df = df[pd.isna(df['b'])]\n\nprint(filtered_df)\n```\n\nThis will give you the desired output:\n\n```\n   a   b  c\n0  1 NaT  w\n2  3 NaT  x\n```\n\nThe `pd.isna()` function checks for `NaN` or `NaT` values and can be used to filter out such rows effectively."
+    }
+]
