@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there a method in Python which allows me to be inside a function and get a list of the parameter names? For instance, if we consider the following code:\n\n```python\ndef func(a,b,c):\n    print magic_that_does_what_I_want()\n\n>>> func()\n['a','b','c']\n```\nHow can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can achieve this by using the `inspect` module in Python, which provides several useful functions to obtain information about live objects, such as modules, classes, methods, functions, tracebacks, frame objects, and code objects. For your specific requirement, you can use the `inspect.signature()` function to get the parameter names within a function. Here's how you can do it:\n\n```python\nimport inspect\n\ndef func(a, b, c):\n    # Get the signature of the current function\n    sig = inspect.signature(func)\n    # Extract the parameter names from the signature\n    param_names = list(sig.parameters.keys())\n    print(param_names)\n\nfunc()  # Output will be: ['a', 'b', 'c']\n```\n\nThis code will print `['a', 'b', 'c']`, which is the list of parameter names for the `func` function."
+    }
+]
