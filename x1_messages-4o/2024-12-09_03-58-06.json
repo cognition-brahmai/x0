@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I remove multiple columns from a Pandas DataFrame and assign them to a new DataFrame? I have a DataFrame 'df' defined as follows:\n\n```python\ndf = pd.DataFrame({'a':range(2), 'b':range(2), 'c':range(2), 'd':range(2)})\n```\n\nI want to move the columns 'c' and 'd' into a new DataFrame, leaving 'a' and 'b' in the original DataFrame 'df'. When I tried using `df2 = df.pop(['c', 'd'])`, I received an error stating `TypeError: '['c', 'd']' is an invalid key`. I know I could use the following:\n\n```python\ndf2 = df[['c', 'd']]\ndf3 = df[['a', 'b']]\n```\n\nBut I am looking for a more efficient solution, as I believe this is why DataFrame.pop was created. Any suggestions?"
+    },
+    {
+        "role": "assistant",
+        "content": "To move multiple columns from one DataFrame to another in an efficient manner, you can use the `drop` method to remove the columns from the original DataFrame and then use them to create a new DataFrame. Here's how you can accomplish that for your specific case:\n\n```python\nimport pandas as pd\n\n# Original DataFrame\ndf = pd.DataFrame({'a': range(2), 'b': range(2), 'c': range(2), 'd': range(2)})\n\n# Selecting the columns to move into a new DataFrame\ndf2 = df[['c', 'd']].copy()\n\n# Dropping the columns from the original DataFrame\ndf.drop(['c', 'd'], axis=1, inplace=True)\n\nprint(\"Original DataFrame after removing columns 'c' and 'd':\")\nprint(df)\n\nprint(\"\\nNew DataFrame with columns 'c' and 'd':\")\nprint(df2)\n```\n\nThis method is efficient because it directly manipulates the DataFrame by dropping the specified columns and assigns them to a new DataFrame in two straightforward steps. By using `df[['c', 'd']].copy()`, you ensure that `df2` is an independent DataFrame and any changes to it do not affect the original DataFrame `df`. The `inplace=True` parameter in the `drop` method ensures that the changes are directly applied to `df`."
+    }
+]
