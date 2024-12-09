@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Why am I receiving an UnboundLocalError when attempting to increment the 'counter' variable within the 'increment' function in the following code?\n```python\ncounter = 0\n\ndef increment():\n  counter += 1\n\nincrement()\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "The `UnboundLocalError` occurs because Python is attempting to modify the `counter` variable within the `increment` function, but it treats `counter` as a local variable since you are assigning to it. However, since `counter` is defined outside the function, Python expects it to be declared as a global variable within the function if you intend to modify it.\n\nTo resolve this issue, you need to use the `global` keyword to indicate that you are referring to the `counter` variable defined outside the function scope. Here's how you can modify your code:\n\n```python\ncounter = 0\n\ndef increment():\n    global counter\n    counter += 1\n\nincrement()\nprint(counter)  # This will print 1\n```\n\nBy adding `global counter` inside the `increment` function, you inform Python that you want to use the `counter` variable defined in the global scope, allowing you to modify its value."
+    }
+]
