@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am currently utilizing the Requests library in my Python script. However, I need to use a socks proxy instead of the HTTP proxy that Requests currently supports. How do I modify my script to allow this? This is my current script:\n\n```python\nimport requests\nr = requests.get(\"some-site.example\")\nprint r.text\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To use a SOCKS proxy with the Requests library in Python, you need to use an additional package called `requests[socks]`, which leverages the `PySocks` library to add SOCKS proxy support to Requests. Here's how you can modify your script:\n\n1. First, install the necessary library:\n\n```bash\npip install requests[socks]\n```\n\n2. Then, modify your script to use the SOCKS proxy:\n\n```python\nimport requests\n\n# Define the SOCKS proxy\nsocks_proxy = 'socks5://username:password@proxy_host:proxy_port'\n\n# Use the proxy with the requests library\nproxies = {\n    'http': socks_proxy,\n    'https': socks_proxy\n}\n\n# Make the request using the proxy\nr = requests.get(\"http://some-site.example\", proxies=proxies)\n\n# Print the response\nprint(r.text)\n```\n\nReplace `username`, `password`, `proxy_host`, and `proxy_port` with your actual SOCKS proxy credentials and address. If your proxy does not require authentication, you can omit the `username:password@` part."
+    }
+]
