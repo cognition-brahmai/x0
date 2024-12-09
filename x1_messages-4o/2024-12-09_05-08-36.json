@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to sort a dictionary in Python by its values in descending order. However, when two elements have the same value, I want them to be sorted by their keys in ascending order. I have a dictionary of the form `string(key) : integer(value)`. For example, consider this dictionary:\n\n```python\nd = {'banana':3, 'orange':5, 'apple':5}\n```\nI want the sorted output to be as follows:\n\n```python\n[('apple', 5), ('orange', 5), ('banana', 3)]\n```\nI tried using the following solution:\n```python\nsorted(d.items(), key=operator.itemgetter(1,0), reverse=True)\n```\nHowever, it sorts both the value and the key in reverse order, which is not what I want. The output I get with this solution is:\n\n```python\n[('orange', 5), ('apple', 5), ('banana', 3)]\n```\nHow can I sort the dictionary as described above?"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve the desired sorting where you sort by values in descending order and then by keys in ascending order when the values are the same, you need to use a custom sorting key. You can achieve this by using a lambda function in the `sorted()` method. Here's how you can do it:\n\n```python\nd = {'banana': 3, 'orange': 5, 'apple': 5}\n\n# Sort by value descending and then by key ascending\nsorted_items = sorted(d.items(), key=lambda item: (-item[1], item[0]))\n\nprint(sorted_items)\n```\n\nThis code works as follows:\n\n- The lambda function `lambda item: (-item[1], item[0])` creates a tuple for each item in the dictionary.\n- `-item[1]` sorts the values in descending order by negating them.\n- `item[0]` sorts the keys in ascending order when the values are the same.\n\nThe output will be:\n\n```python\n[('apple', 5), ('orange', 5), ('banana', 3)]\n```\n\nThis way you get the sorting by value in descending order and by key in ascending order when values are tied."
+    }
+]
