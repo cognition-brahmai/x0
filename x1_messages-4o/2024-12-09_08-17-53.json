@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I set my PyQt4 window to be maximized by default in my application? I tried using the following code, but it only resizes the window to the desktop screen size, rather than giving the effect of pressing the maximize button on the right side of the window title bar. \n\n```\nscreen = QtGui.QDesktopWidget().screenGeometry()\nself.setGeometry(0, 0, screen.width(), screen.height())  \n```\n\nHow can I get it to truly maximize?"
+    },
+    {
+        "role": "assistant",
+        "content": "To maximize a PyQt4 window by default, you should use the `showMaximized()` method of the QMainWindow or QWidget class, rather than manually setting the geometry to the screen size. This method will simulate the effect of pressing the maximize button, and it is the correct approach to ensure that the window behaves like a maximized window.\n\nHere's how you can modify your code to maximize the window:\n\n```python\nfrom PyQt4 import QtGui\nimport sys\n\nclass MyWindow(QtGui.QMainWindow):\n    def __init__(self):\n        super(MyWindow, self).__init__()\n        self.initUI()\n\n    def initUI(self):\n        # Set up your UI components here\n\n        # Maximize the window\n        self.showMaximized()\n\ndef main():\n    app = QtGui.QApplication(sys.argv)\n    window = MyWindow()\n    window.show()\n    sys.exit(app.exec_())\n\nif __name__ == '__main__':\n    main()\n```\n\nIn the `MyWindow` class, the `self.showMaximized()` line will ensure that when the window is shown, it starts in a maximized state, giving you the desired behavior similar to clicking the maximize button on the window's title bar."
+    }
+]
