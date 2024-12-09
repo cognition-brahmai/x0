@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a Python list containing pairs of key/value like this: `l = [[1, 'A'], [1, 'B'], [2, 'C']]`. I am seeking for a Pythonic way to convert this list into a dictionary where multiple values per key are aggregated into a tuple like this: `{1: ('A', 'B'), 2: ('C',)}`. I am currently using the following iterative solution, but I am wondering if there is a more elegant way to accomplish this task:\n\n```python\nl = [[1, 'A'], [1, 'B'], [2, 'C']]\nd = {}\nfor pair in l:\n    if pair[0] in d:\n        d[pair[0]] = d[pair[0]] + tuple(pair[1])\n    else:\n        d[pair[0]] = tuple(pair[1])\nprint(d)  # {1: ('A', 'B'), 2: ('C',)}\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "You can achieve this in a more Pythonic and elegant way using the `collections.defaultdict` class to automatically handle the creation of new entries in the dictionary. Here's how you can do it:\n\n```python\nfrom collections import defaultdict\n\nl = [[1, 'A'], [1, 'B'], [2, 'C']]\nd = defaultdict(tuple)\n\nfor key, value in l:\n    d[key] += (value,)\n\n# Convert defaultdict back to a regular dict if necessary\nresult = dict(d)\nprint(result)  # {1: ('A', 'B'), 2: ('C',)}\n```\n\nThis solution leverages `defaultdict` to automatically initialize an empty tuple for each new key, which allows you to simply append each value to the existing tuple associated with that key. After processing the list, you can convert the `defaultdict` to a regular dictionary if needed."
+    }
+]
