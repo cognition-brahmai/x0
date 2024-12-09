@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python 2.6, when I use the urlparse.parse_qs function on a string of data, it parses single values into lists. For example, the code below:\n\n```python\nimport urlparse\nqsdata = \"test=test&amp;test2=test2&amp;test2=test3\"\nqs = urlparse.parse_qs(qsdata)\nprint qs\n```\n\nProduces the output:\n\n```python\n{'test': ['test'], 'test2': ['test2', 'test3']}\n```\n\nEven though there is only one value for 'test', it is still parsed into a list. I would like to know if there is a way to stop the function from parsing single values into lists, so that the output would instead look like this:\n\n```python\n{'test': 'test', 'test2': ['test2', 'test3']}\n```\n\nHow can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python 2.6, the `urlparse.parse_qs` function always returns the values as lists, even if there's only one value. To achieve the desired output where single values are not in lists, you can process the dictionary returned by `parse_qs` and adjust it accordingly. Here's a way to do that:\n\n```python\nimport urlparse\n\nqsdata = \"test=test&test2=test2&test2=test3\"\nqs = urlparse.parse_qs(qsdata)\n\n# Convert single-item lists to just the item\nparsed_qs = {k: v[0] if len(v) == 1 else v for k, v in qs.items()}\n\nprint(parsed_qs)\n```\n\nThis will output:\n\n```python\n{'test': 'test', 'test2': ['test2', 'test3']}\n```\n\nThis code iterates over the items in the dictionary returned by `parse_qs`, and for each key-value pair, it checks if the list has only one element. If it does, the value is replaced with just that element instead of a list."
+    }
+]
