@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I modify the host and port that the flask command uses for running my app? Despite setting the host and port in app.run, the flask run command continues to operate on the default 127.0.0.1:8000. How can I modify these settings? Here is the current code I'm using:\n\n```python\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port=3000)\n\nset FLASK_APP=onlinegame\nset FLASK_DEBUG=true\npython -m flask run\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "When you're using the `flask run` command, it doesn't automatically take into account the host and port settings specified in `app.run()`. Instead, you need to specify the host and port using environment variables or command-line options.\n\nHere\u2019s how you can modify the host and port when using the `flask run` command:\n\n### Option 1: Use Environment Variables\n\nYou can set the `FLASK_RUN_HOST` and `FLASK_RUN_PORT` environment variables to specify the host and port:\n\n#### On Windows:\n\n```bash\nset FLASK_APP=onlinegame\nset FLASK_DEBUG=true\nset FLASK_RUN_HOST=0.0.0.0\nset FLASK_RUN_PORT=3000\nflask run\n```\n\n#### On macOS/Linux:\n\n```bash\nexport FLASK_APP=onlinegame\nexport FLASK_DEBUG=true\nexport FLASK_RUN_HOST=0.0.0.0\nexport FLASK_RUN_PORT=3000\nflask run\n```\n\n### Option 2: Use Command-Line Arguments\n\nYou can directly specify the host and port when running the `flask run` command:\n\n```bash\nflask run --host=0.0.0.0 --port=3000\n```\n\n### Summary\n\nIf you opt for environment variables, remember to set them each time you start a new terminal session, unless you add them to a startup script or use a `.env` file with a library like `python-dotenv` to automatically load them.\n\nUsing command-line arguments is a quick and easy way to run the app with the desired configurations without modifying scripts or setting environment variables."
+    }
+]
