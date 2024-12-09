@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I join two pandas DataFrames by column names when the columns I want to join are not the index? I have two DataFrames with the following column names:\n\nFor frame_1, the columns are: event_id, date, time, county_ID. \n\nFor frame_2, the columns are: countyid, state. \n\nI would like to get a DataFrame with the following columns by joining (left) on county_ID = countyid: event_id, date, time, county, state. However, I am unable to figure out how to achieve this."
+    },
+    {
+        "role": "assistant",
+        "content": "To join two pandas DataFrames based on column names that are not the index, you can use the `merge` function provided by pandas. In your case, you want to perform a left join on `county_ID` from `frame_1` and `countyid` from `frame_2`. Here's how you can achieve this:\n\n```python\nimport pandas as pd\n\n# Sample data for demonstration\ndata_1 = {\n    'event_id': [1, 2, 3],\n    'date': ['2023-10-21', '2023-10-22', '2023-10-23'],\n    'time': ['10:00', '11:00', '12:00'],\n    'county_ID': [101, 102, 103]\n}\n\ndata_2 = {\n    'countyid': [101, 102, 104],\n    'state': ['State_A', 'State_B', 'State_C']\n}\n\n# Creating DataFrames\nframe_1 = pd.DataFrame(data_1)\nframe_2 = pd.DataFrame(data_2)\n\n# Perform the left join\nmerged_frame = pd.merge(frame_1, frame_2, how='left', left_on='county_ID', right_on='countyid')\n\n# Drop the redundant 'countyid' column\nmerged_frame.drop(columns='countyid', inplace=True)\n\n# Display the result\nprint(merged_frame)\n```\n\nThis will give you the resulting DataFrame with the columns `event_id`, `date`, `time`, `county_ID`, and `state`, where the data is combined based on matching `county_ID` in `frame_1` with `countyid` in `frame_2`. The `drop` function is used to remove the redundant `countyid` column from the result."
+    }
+]

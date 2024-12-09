@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there a more convenient networkx function that returns a list of edges connected to a given node (or nodes) in a graph? For instance, if I have a node named 'my_node_name' in a graph 'G', I want to get all the edges connected to it. Currently, I am using a loop to iterate over all edges and checking if 'my_node_name' is in the edge, like this:\n\n```python\nedlist=[]\nfor ed in G.edges():\n     if 'my_node_name' in ed:\n            edlist.append(ed)\n```\nI am wondering if there is a more efficient way to achieve this."
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, NetworkX provides a more convenient way to achieve this without the need for explicitly iterating over all edges. You can use the `G.edges()` method with the `nbunch` parameter to get the edges connected to a specific node. Here's how you can do it:\n\n```python\n# Assuming G is your graph and 'my_node_name' is the node of interest\nedges_connected_to_node = list(G.edges('my_node_name'))\n```\n\nThis will return a list of edges that are directly connected to the specified node `'my_node_name'`. If you want the edges connected to multiple nodes, you can pass a list or any iterable of node names to `G.edges()`:\n\n```python\n# For multiple nodes\nnodes_of_interest = ['my_node_name1', 'my_node_name2']\nedges_connected = list(G.edges(nodes_of_interest))\n```\n\nThis method is more efficient and concise than manually iterating through all the edges in the graph."
+    }
+]
