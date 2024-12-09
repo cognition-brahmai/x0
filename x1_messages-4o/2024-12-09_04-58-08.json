@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to use interactive debugging in Python with IPython. I remember that in previous versions of IPython I could induce a breakpoint in my script from which I could inspect my workspace by doing something like this:\n\n```python\nfrom IPython.Debugger import Tracer;     \n\ndef my_function():\n    x = 5\n    Tracer()\n    print 5;\n```\n\nHowever, the submodule `Debugger` does not seem to be available anymore. Now, I have an IPython session open and I want to stop my program at a location of my choice to inspect my workspace. Ideally, I would prefer solutions that do not require me to pre-specify line numbers as I would like to possibly have more than one such call to `Tracer()` and not have to keep track of the line numbers where they are. How can I accomplish this?"
+    },
+    {
+        "role": "assistant",
+        "content": "In the newer versions of IPython, the `Debugger` module has been replaced with more modern tools. You can achieve interactive debugging using the `IPython.core.debugger` module, specifically with the `set_trace()` function. This allows you to set breakpoints in your code without needing to manage line numbers manually.\n\nHere's how you can use it:\n\n```python\nfrom IPython.core.debugger import set_trace\n\ndef my_function():\n    x = 5\n    set_trace()  # This will pause execution and allow you to inspect variables\n    print(x)\n\nmy_function()\n```\n\nWhen the program execution reaches `set_trace()`, it will pause, and you'll enter an interactive IPython shell where you can inspect variables, step through the code, and perform other debugging tasks.\n\nAdditionally, if you prefer to use the standard Python debugger (pdb) in an IPython environment, you can also use:\n\n```python\nimport pdb\n\ndef my_function():\n    x = 5\n    pdb.set_trace()  # This will also pause execution for debugging\n    print(x)\n\nmy_function()\n```\n\nBoth methods provide a powerful way to debug your code interactively within an IPython or Jupyter Notebook environment."
+    }
+]
