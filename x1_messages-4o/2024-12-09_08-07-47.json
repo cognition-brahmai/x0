@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I force the MIME type `application/json` for a view in Flask? I have a simple view as shown below:\n\n```python\n@app.route(\"/\")\ndef testView():\n    ret = '{\"data\": \"JSON string example\"}'\n    return ret\n```\n\nThe JSON string (in variable `ret`) is obtained from elsewhere using `subprocess`, so I can't use `jsonify` provided with Flask. I've looked at the \"Returning Json\" Documentation and various Stackoverflow questions but haven't found a solution. Can anyone help me with this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To force the MIME type `application/json` for your Flask view, you can manually set the content type in the response object. Flask's `Response` class allows you to specify the MIME type by setting the `content_type` parameter. Here's how you can modify your view to ensure that the response has the `application/json` MIME type:\n\n```python\nfrom flask import Flask, Response\n\napp = Flask(__name__)\n\n@app.route(\"/\")\ndef testView():\n    ret = '{\"data\": \"JSON string example\"}'\n    return Response(ret, mimetype='application/json')\n\nif __name__ == \"__main__\":\n    app.run()\n```\n\nIn this code, the `Response` object is instantiated with the JSON string and the `mimetype` parameter is set to `'application/json'`. This approach ensures that the response is correctly interpreted as JSON by clients that consume your API."
+    }
+]
