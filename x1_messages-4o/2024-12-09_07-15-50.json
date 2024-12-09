@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am currently using Flask 0.9 and I am trying to route three different URLs to the same function. These are the URLs:\n- /item/<int:appitemid>\n- /item/<int:appitemid>/\n- /item/<int:appitemid>/<anything can be here>\n\nThe '<anything can be here>' part won't be used in the function. Right now, I'm having to copy the same function twice to achieve this. Is there a more efficient solution? Here is the code I'm working with:\n\n```python\n@app.route('/item/<int:appitemid>/')\ndef show_item(appitemid):\n\n@app.route('/item/<int:appitemid>/<path:anythingcanbehere>')\ndef show_item(appitemid, anythingcanbehere):\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To route multiple URLs to the same function in Flask, you can use Flask's capability to define multiple routes for a single view function. You can achieve this by using the `@app.route` decorator multiple times for the same function. Here's how you can simplify your code:\n\n```python\n@app.route('/item/<int:appitemid>')\n@app.route('/item/<int:appitemid>/')\n@app.route('/item/<int:appitemid>/<path:anythingcanbehere>')\ndef show_item(appitemid, anythingcanbehere=None):\n    # Your function logic here\n    # The 'anythingcanbehere' parameter will be None if the third route is not used\n    pass\n```\n\nIn this setup:\n\n- All three routes are mapped to the same `show_item` function.\n- The `anythingcanbehere` parameter is optional because it defaults to `None` when the third route is not used.\n- This allows your function to handle requests from any of the three route patterns without duplicating code."
+    }
+]
