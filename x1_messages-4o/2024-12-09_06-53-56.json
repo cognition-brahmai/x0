@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Pandas DataFrame, how can I add 'd' to the existing index ['a', 'b'] without having to reset it first?\n\nHere is my current code and DataFrame:\n\n```python\nfrom pandas import DataFrame\ndf = DataFrame( {'a': range(6), 'b': range(6), 'c': range(6)} )\ndf.set_index(['a','b'], inplace=True)\ndf['d'] = range(6)\n```\n\nI tried using 'reset_index' and 'set_index' but I want to avoid resetting the index.\n\n```python\n# how do I set index to 'a b d' without having to reset it first?\ndf.reset_index(['a','b','d'], inplace=True)\ndf.set_index(['a','b','d'], inplace=True)\n\ndf\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To add 'd' to the existing multi-index of your DataFrame without resetting the index, you can modify the index directly by creating a new MultiIndex that includes 'd'. Here is how you can do it:\n\n```python\nfrom pandas import DataFrame, MultiIndex\n\n# Your initial DataFrame setup\ndf = DataFrame({'a': range(6), 'b': range(6), 'c': range(6)})\ndf.set_index(['a', 'b'], inplace=True)\n\n# Add column 'd'\ndf['d'] = range(6)\n\n# Create a new MultiIndex including 'd'\ndf.index = MultiIndex.from_arrays([df.index.get_level_values('a'), \n                                   df.index.get_level_values('b'), \n                                   df['d']])\n\n# Drop the column 'd' as it is now part of the index\ndf.drop('d', axis=1, inplace=True)\n\nprint(df)\n```\n\nThis approach directly modifies the index by creating a new MultiIndex from the existing index levels and the 'd' column, and then drops the 'd' column as it is now part of the index. This way, you avoid resetting the index first."
+    }
+]
