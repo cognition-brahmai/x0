@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I want to write a SQL query to find the top 5 most popular movies in the last 2 years. Can someone help me with this?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! To write a SQL query to find the top 5 most popular movies in the last 2 years, you'll need to have a database with at least two key pieces of information: the release date of the movies and some metric to determine popularity (like ratings, number of views, or box office revenue).\n\nLet's assume we have a table named `movies` with the following columns:\n- `movie_id` (unique identifier for each movie)\n- `title` (name of the movie)\n- `release_date` (date when the movie was released)\n- `popularity_score` (a numerical value indicating the popularity of the movie)\n\nHere's a sample SQL query to achieve this:\n\n```sql\nSELECT title, release_date, popularity_score\nFROM movies\nWHERE release_date >= DATE_SUB(CURDATE(), INTERVAL 2 YEAR)\nORDER BY popularity_score DESC\nLIMIT 5;\n```\n\nThis query does the following:\n1. Selects the `title`, `release_date`, and `popularity_score` columns from the `movies` table.\n2. Filters the results to only include movies released in the last 2 years using `WHERE release_date >= DATE_SUB(CURDATE(), INTERVAL 2 YEAR)`.\n3. Orders the movies by `popularity_score` in descending order to get the most popular ones at the top.\n4. Limits the results to the top 5 movies using `LIMIT 5`.\n\nMake sure to adjust the column names and table name according to your actual database schema. If your database system does not support `DATE_SUB` or `CURDATE()`, you might need to use equivalent functions specific to your SQL dialect."
+    }
+]
