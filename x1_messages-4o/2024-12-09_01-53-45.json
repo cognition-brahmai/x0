@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to determine the correct exception class to raise when one of my function detects `None` passed where an argument value is required. For example, look at the code snippet below: \n\n```python\ndef MyFunction(MyArg1, MyArg2):\n    if not MyArg2:\n        raise ?Error?\n```\n\nI have seen `TypeError` being used in such scenarios, as I am receiving a `NoneType` where some other type is expected. However, I don't think that this is the most appropriate exception for this situation. Can you suggest a more explicit exception I could use?"
+    },
+    {
+        "role": "assistant",
+        "content": "In the scenario where you want to raise an exception for receiving a `None` value where an argument is required, a `TypeError` is indeed commonly used, but you're correct that it might not be the most explicit choice for indicating that a `None` value is not acceptable.\n\nA more explicit and semantically clear option could be to use a `ValueError`. This exception is generally used when a function receives an argument of the right type but an inappropriate value. Since `None` is generally a valid type but not a valid value in this context, `ValueError` could be more appropriate.\n\nHere's how you might implement it:\n\n```python\ndef MyFunction(MyArg1, MyArg2):\n    if MyArg2 is None:\n        raise ValueError(\"MyArg2 cannot be None\")\n```\n\nBy raising a `ValueError`, you're clearly indicating that the issue is with the value provided, rather than the type. This can make your code more understandable and maintainable."
+    }
+]
