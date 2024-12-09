@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I zip two lists of unequal size in Python? I have two lists, 'a' and 'b', defined as follows:\n\n```python\na = [1,2,3]\nb = [9,10]\n```\nI want to combine or zip these two lists into a single list 'c', such that:\n\n```python\nc = [(1,9), (2,10), (3, )]\n```\nDoes the standard library in Python provide any function to accomplish this?"
+    },
+    {
+        "role": "assistant",
+        "content": "The standard `zip` function in Python stops creating pairs once the shortest input iterable is exhausted. However, if you want to zip two lists of unequal length and fill the remaining elements with a default value (like `None`), you can use the `itertools.zip_longest` function from the `itertools` module. Here's how you can achieve the desired result:\n\n```python\nfrom itertools import zip_longest\n\na = [1, 2, 3]\nb = [9, 10]\n\n# Use zip_longest and specify fillvalue as None\nc = list(zip_longest(a, b, fillvalue=None))\n\n# Convert tuples with None to single-element tuples\nc = [(x,) if y is None else (x, y) for x, y in c]\n\nprint(c)\n```\n\nThis will give you the desired output:\n\n```python\n[(1, 9), (2, 10), (3,)]\n```\n\nThe `zip_longest` function pairs elements from both lists, and fills in the missing values with `None` when one list is shorter. Then, you can iterate over the zipped result and adjust tuples that have `None` to be single-element tuples."
+    }
+]
