@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm encountering an issue when using Tensorflow Version 2.0.0-alpha0 in my Jupyter Notebook. When I try to compile my model using 'tf.train.AdamOptimizer()' as the optimizer, I receive an error that says \"module 'tensorflow._api.v2.train' has no attribute 'AdamOptimizer'\". The code I'm using is as follows:\n\n```python\nmodel.compile(optimizer = tf.train.AdamOptimizer(),\n              loss = 'sparse_categorical_crossentropy',\n              metrics=['accuracy'])\n```\n\nDo I need to downgrade my Tensorflow version to resolve this issue, or is there another solution?"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering is due to changes in the TensorFlow API with the release of TensorFlow 2.0. In TensorFlow 2.0, the Keras API is more tightly integrated, and many functions and classes have been moved or renamed.\n\nTo resolve the issue without downgrading your TensorFlow version, you can use the Keras optimizer directly from the `tf.keras.optimizers` module. Here's how you can modify your code:\n\n```python\nimport tensorflow as tf\n\nmodel.compile(optimizer=tf.keras.optimizers.Adam(),\n              loss='sparse_categorical_crossentropy',\n              metrics=['accuracy'])\n```\n\nThis should work without errors. The `tf.train.AdamOptimizer` has been replaced by `tf.keras.optimizers.Adam` in TensorFlow 2.0 and later versions. This change is part of the effort to unify TensorFlow and Keras, making model building and training more straightforward."
+    }
+]
