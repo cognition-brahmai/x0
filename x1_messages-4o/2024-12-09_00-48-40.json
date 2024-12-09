@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I output my lists as a table in Jupyter notebook? I have some rows of data:\n\n```python\ndata = [[1,2,3],\n        [4,5,6],\n        [7,8,9],\n        ]\n```\n\nI want to output this data in a table format like shown below, without using any external libraries like prettytable or pandas. How can I achieve this in my Jupyter notebook cell?\n\n```python\n+---+---+---+\n| 1 | 2 | 3 |\n+---+---+---+\n| 4 | 5 | 6 |\n+---+---+---+\n| 7 | 8 | 9 |\n+---+---+---+\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "You can achieve this by writing a simple function to format and print your data in a table-like format. Here's a way to do it using plain Python:\n\n```python\ndef print_table(data):\n    # Determine the width of the columns\n    col_width = max(len(str(item)) for row in data for item in row) + 2  # Add some padding\n\n    # Create a format string for the row separator\n    row_separator = '+' + '+'.join(['-' * col_width for _ in data[0]]) + '+'\n\n    # Print each row with separators\n    for row in data:\n        print(row_separator)\n        print('|' + '|'.join([f\" {str(item).center(col_width-2)} \" for item in row]) + '|')\n    print(row_separator)\n\n# Sample data\ndata = [\n    [1, 2, 3],\n    [4, 5, 6],\n    [7, 8, 9],\n]\n\n# Print the table\nprint_table(data)\n```\n\nThis function calculates the maximum width needed for the columns, creates a row separator, and then iterates over the rows to print each one formatted as a table. The `center()` method is used to align the numbers in the middle of each cell. This example will display your data in the desired table format directly in the Jupyter notebook output."
+    }
+]
