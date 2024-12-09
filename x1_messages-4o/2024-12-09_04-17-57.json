@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, when using a dictionary, is the order of the lists returned by the `keys()` and `values()` methods always a 1-to-1 mapping? Specifically, if the dictionary remains unaltered between calling these two methods, will the following for-loop always print \"True\" for each iteration?\n\n```python\nd = {'one':1, 'two': 2, 'three': 3}\nk, v = d.keys(), d.values()\nfor i in range(len(k)):\n    print(d[k[i]] == v[i])\n```\n\nI am unable to find any official documentation that confirms this behavior."
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, in Python, the order of elements returned by the `keys()`, `values()`, and `items()` methods of a dictionary is guaranteed to be consistent and follows the insertion order starting from Python 3.7. This means that if you iterate over `keys()` and `values()` simultaneously, the elements at each index will indeed correspond to each other, maintaining a 1-to-1 mapping as long as the dictionary is not altered between calls.\n\nTherefore, in your example:\n\n```python\nd = {'one': 1, 'two': 2, 'three': 3}\nk, v = d.keys(), d.values()\nfor i in range(len(k)):\n    print(d[k[i]] == v[i])\n```\n\nThis code will print \"True\" for each iteration because the order of the keys and the order of the values will be consistent with each other, maintaining their mutual correspondence. This behavior is guaranteed by the Python language specification starting from version 3.7, and it was an implementation detail in CPython 3.6.\n\nIf you want to make sure this behavior holds, you should ensure that your code is running on Python 3.7 or later."
+    }
+]
