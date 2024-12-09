@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I iterate over two different iterators in Python? For instance, I want to iterate over two files, 'file1' and 'file2', and print all the lines from these two files. I'd like to use something like `one_then_another(file1, file2)`. I understand that I could do this with `[file1]+[file2]`, but this approach reads both files into memory, which I want to avoid. I want a more generic solution because the iterators might not always be files. How can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To iterate over two different iterators in Python without reading them entirely into memory, you can use the `itertools.chain` function. This function allows you to iterate over multiple iterators sequentially, one after another, without needing to store their contents in memory. Here's how you can use it for your specific case with two files:\n\n```python\nfrom itertools import chain\n\ndef one_then_another(iterator1, iterator2):\n    for line in chain(iterator1, iterator2):\n        print(line, end='')\n\n# Usage example with file iterators\nwith open('file1', 'r') as file1, open('file2', 'r') as file2:\n    one_then_another(file1, file2)\n```\n\nIn this example, `itertools.chain` creates an iterator that yields elements from `iterator1` until it is exhausted, and then proceeds to elements from `iterator2`. This way, you avoid loading the entire content of both files into memory, and it works generically with any iterators, not just files."
+    }
+]
