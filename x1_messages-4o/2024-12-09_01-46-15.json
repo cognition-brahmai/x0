@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am new to PySpark, though I have some familiarity with pandas. I have a PySpark DataFrame with columns 'id', 'dogs', and 'cats'. I have instantiated Spark and created some test data. Now, I want to add a new row (4,5,7) to this DataFrame. How can I do this so that my DataFrame looks like this?\n\n```\ndf.show()\n+---+----+----+\n| id|dogs|cats|\n+---+----+----+\n|  1|   2|   0|\n|  2|   0|   1|\n|  4|   5|   7|\n+---+----+----+\n```\n\nHere is the code I have so far:\n\n```python\n# instantiate Spark\nspark = SparkSession.builder.getOrCreate()\n\n# make some test data\ncolumns = ['id', 'dogs', 'cats']\nvals = [\n     (1, 2, 0),\n     (2, 0, 1)\n]\n\n# create DataFrame\ndf = spark.createDataFrame(vals, columns)\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To add a new row to an existing PySpark DataFrame, you can use the `union` method. In PySpark, DataFrames are immutable, so you can't directly append a row to an existing DataFrame like you can in pandas. Instead, you create a new DataFrame for the row you want to add and then use `union` to combine them. Here's how you can do it:\n\n```python\nfrom pyspark.sql import Row\n\n# create a new row as a DataFrame\nnew_row = spark.createDataFrame([Row(id=4, dogs=5, cats=7)])\n\n# use union to append the new row\ndf = df.union(new_row)\n\n# show the updated DataFrame\ndf.show()\n```\n\nThis will result in:\n\n```\n+---+----+----+\n| id|dogs|cats|\n+---+----+----+\n|  1|   2|   0|\n|  2|   0|   1|\n|  4|   5|   7|\n+---+----+----+\n```\n\nThe `union` method combines two DataFrames with the same schema into a single DataFrame. Make sure that the new DataFrame (containing the row you want to add) has the same schema as the original DataFrame."
+    }
+]

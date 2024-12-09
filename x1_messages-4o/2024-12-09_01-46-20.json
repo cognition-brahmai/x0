@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there a way to print the entire HTTP request including the request line, headers, and content using the Python requests module? I am interested in seeing what is ultimately constructed from the HTTP request."
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can print the entire HTTP request including the request line, headers, and content using the `requests` module in Python by utilizing the `requests` library's `PreparedRequest` object. Here's how you can do it:\n\n```python\nimport requests\n\n# Create a request\nurl = 'http://httpbin.org/post'\ndata = {'key': 'value'}\nheaders = {'Custom-Header': 'CustomValue'}\n\n# Create a Request object\nrequest = requests.Request('POST', url, data=data, headers=headers)\n\n# Prepare the request\nprepared = request.prepare()\n\n# Function to pretty-print the request\ndef print_prepared_request(req):\n    print('{}\\n{}\\n\\n{}'.format(\n        req.method + ' ' + req.url,\n        '\\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),\n        req.body,\n    ))\n\n# Print the prepared request\nprint_prepared_request(prepared)\n\n# Send the request (optional, if you want to actually perform the request)\n# session = requests.Session()\n# response = session.send(prepared)\n# print(response.text)\n```\n\nIn this example:\n\n- We first create a `Request` object with the desired method, URL, data, and headers.\n- We then prepare the request using `prepare()`, which constructs the HTTP request.\n- The `print_prepared_request` function formats and prints the method, URL, headers, and body of the request.\n\nThis will give you a clear view of the HTTP request that is being constructed and sent. You can modify the request as needed before sending it."
+    }
+]
