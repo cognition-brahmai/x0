@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I remove all duplicate lists from a list of lists in Python? For instance, I have a list like this:\n```python\na = [[1,2],[1,2],[3,4,5],[3,4,5],[3,4,5]]\n```\nI would like to remove the duplicates and obtain a list like this:\n```python\nb = [[1,2],[3,4,5]]\n```\nI am not sure of how to go about this. Can anyone provide guidance?"
+    },
+    {
+        "role": "assistant",
+        "content": "You can remove duplicate lists from a list of lists in Python by converting each sublist into a tuple (since tuples are hashable and can be added to a set), and then using a set to remove duplicates. Finally, you can convert the unique tuples back into lists. Here's how you can do it:\n\n```python\na = [[1, 2], [1, 2], [3, 4, 5], [3, 4, 5], [3, 4, 5]]\n\n# Use a set to remove duplicates, converting sublists to tuples\nunique_tuples = set(tuple(sublist) for sublist in a)\n\n# Convert the unique tuples back to lists\nb = [list(sublist) for sublist in unique_tuples]\n\nprint(b)\n```\n\nThis will give you:\n\n```python\n[[1, 2], [3, 4, 5]]\n```\n\nNote that sets do not preserve order, so the order of the sublists in the result may differ from the original list. If you need to preserve the original order, you can use an alternative approach with a loop:\n\n```python\na = [[1, 2], [1, 2], [3, 4, 5], [3, 4, 5], [3, 4, 5]]\n\n# Initialize an empty list to store unique sublists\nb = []\n\n# Use a set to track seen sublists\nseen = set()\n\n# Iterate over the list of lists\nfor sublist in a:\n    # Convert the sublist to a tuple\n    tuple_sublist = tuple(sublist)\n    \n    # If the tuple is not in the set of seen tuples, add it to the result and mark it as seen\n    if tuple_sublist not in seen:\n        b.append(sublist)\n        seen.add(tuple_sublist)\n\nprint(b)\n```\n\nThis approach will maintain the original order of sublists while removing duplicates."
+    }
+]
