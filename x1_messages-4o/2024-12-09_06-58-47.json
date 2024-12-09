@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I reset the cursor to the beginning of the same line in Python? I'm looking to create a script where a percentage value increases over time and is displayed on the same line. For example, I want the output to look like this:\n\n```python\n>> You have finished 10%\n```\n\nWhere the `10` keeps increasing on the same line. I'm familiar with how to do this in C++, but I'm struggling to find a solution in Python."
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, you can reset the cursor to the beginning of the same line using the carriage return character (`\\r`). This allows you to overwrite the current line in the console, which is perfect for creating a dynamic progress indicator. Here's a simple example of how you can implement this in a Python script:\n\n```python\nimport time\nimport sys\n\nfor i in range(101):\n    # Print the progress percentage with a carriage return\n    sys.stdout.write(f\"\\rYou have finished {i}%\")\n    sys.stdout.flush()  # Flush the output to update the console\n    time.sleep(0.1)     # Simulate work by sleeping for a short time\n\nprint()  # Print a newline character after the loop completes\n```\n\nHere's a breakdown of how it works:\n- `\\r` is used to move the cursor back to the beginning of the line.\n- `sys.stdout.write()` prints the string to the console without adding a newline.\n- `sys.stdout.flush()` is called to ensure that the output buffer is flushed, immediately updating the console with the new percentage.\n- `time.sleep(0.1)` simulates a delay to visualize the progress incrementally.\n\nThis will update the percentage on the same line as the script progresses. Adjust the `time.sleep()` duration to control the speed of the updates as needed."
+    }
+]
