@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Can you provide an example of how to construct a GraphQL mutation with input parameters? I want to create a mutation that takes two parameters - title (of type String) and content (of type String) - and returns the title and content of the newly created post."
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! In GraphQL, a mutation is used to modify data on the server. Below is an example of how to construct a GraphQL mutation that takes `title` and `content` as input parameters and returns the `title` and `content` of the newly created post.\n\n### GraphQL Schema Definition\n\nFirst, define the mutation in your GraphQL schema:\n\n```graphql\ntype Mutation {\n  createPost(input: CreatePostInput!): Post\n}\n\ninput CreatePostInput {\n  title: String!\n  content: String!\n}\n\ntype Post {\n  title: String\n  content: String\n}\n```\n\n### GraphQL Mutation Query\n\nHere is how the mutation query would look like when you want to execute it:\n\n```graphql\nmutation CreateNewPost($input: CreatePostInput!) {\n  createPost(input: $input) {\n    title\n    content\n  }\n}\n```\n\n### Variables\n\nWhen executing the mutation, you'll pass the input parameters as variables. Here\u2019s an example of how you would structure the variables in JSON format:\n\n```json\n{\n  \"input\": {\n    \"title\": \"My First Post\",\n    \"content\": \"This is the content of my first post.\"\n  }\n}\n```\n\n### Example Usage\n\nIf you're using a GraphQL client, such as Apollo Client or GraphiQL, you would execute this mutation with the variables to create a new post:\n\n```graphql\nmutation CreateNewPost($input: CreatePostInput!) {\n  createPost(input: $input) {\n    title\n    content\n  }\n}\n```\n\nWith the variables:\n\n```json\n{\n  \"input\": {\n    \"title\": \"My First Post\",\n    \"content\": \"This is the content of my first post.\"\n  }\n}\n```\n\nThis will send a request to your GraphQL server, which will process the mutation, create a new post with the given `title` and `content`, and return the `title` and `content` of the newly created post."
+    }
+]
