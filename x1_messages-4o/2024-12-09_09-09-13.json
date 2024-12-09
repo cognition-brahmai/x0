@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I write a SQL query to calculate the average of the three highest scores for each student in a given dataset?"
+    },
+    {
+        "role": "assistant",
+        "content": "To calculate the average of the three highest scores for each student, you can use a combination of SQL window functions and aggregation. Assuming you have a table named `Scores` with columns `student_id` and `score`, the following query will achieve this:\n\n```sql\nWITH RankedScores AS (\n    SELECT\n        student_id,\n        score,\n        ROW_NUMBER() OVER (PARTITION BY student_id ORDER BY score DESC) as rn\n    FROM\n        Scores\n)\n\nSELECT\n    student_id,\n    AVG(score) as average_top_3_scores\nFROM\n    RankedScores\nWHERE\n    rn <= 3\nGROUP BY\n    student_id;\n```\n\nHere's a breakdown of how the query works:\n\n1. **RankedScores CTE**: This Common Table Expression (CTE) calculates a row number for each score within each student partition, ordered by the score in descending order. This means the highest score gets a row number of 1, the second highest gets 2, and so on.\n\n2. **Filtering**: In the main query, we filter the results to include only those scores with a row number of 3 or lower (i.e., the top three scores for each student).\n\n3. **Aggregation**: Finally, we calculate the average of these scores for each student using the `AVG` function, grouping by `student_id`.\n\nThis approach ensures that you get the average of the top three scores for each student in your dataset."
+    }
+]
