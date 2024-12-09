@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to implement One Hot Encoding using numpy. For instance, if the input is zero, I want to produce an array which looks like [1,0,0,0,0,0,0,0,0,0]. If the input is 5, the output should be [0,0,0,0,0,1,0,0,0,0]. I have tried to use the following code: np.put(np.zeros(10),5,1), but it doesn't seem to work. Is there a way to implement this in a single line of code?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can implement one-hot encoding in a single line using NumPy by utilizing the `np.eye` function, which creates a 2D array with ones on the diagonal and zeros elsewhere. Here's how you can do it:\n\n```python\nimport numpy as np\n\ndef one_hot_encode(index, size=10):\n    return np.eye(size, dtype=int)[index]\n\n# Example usage:\noutput_for_zero = one_hot_encode(0)\noutput_for_five = one_hot_encode(5)\n\nprint(\"Output for input 0:\", output_for_zero)\nprint(\"Output for input 5:\", output_for_five)\n```\n\nIn this code, `np.eye(size, dtype=int)` creates an identity matrix of the specified size, and indexing it with `[index]` extracts the desired one-hot encoded vector. This approach is concise and efficient for generating one-hot encoded arrays."
+    }
+]
