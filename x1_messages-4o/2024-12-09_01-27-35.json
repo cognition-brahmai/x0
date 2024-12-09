@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working on a web server and have a `login` fixture that creates a user and returns the necessary headers to send requests. However, for a particular test, I require two users. How can I utilize the same fixture twice within a single function? Here is a snippet of the code I am currently working with:\n\n```python\nfrom test.fixtures import login\n\nclass TestGroups(object):\n\n    def test_get_own_only(self, login, login):\n         pass\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To utilize the same `login` fixture twice within a single test function, you'll need to call the fixture separately for each user you want to create. Normally, when a fixture is used, it is injected into the test function as an argument. However, you cannot have two arguments with the same name in a function. Instead, you can directly call the fixture function within your test using the `request` fixture to access it. Here's how you can modify your test:\n\n1. Import the necessary `request` fixture from `pytest`.\n2. Call the `login` fixture function directly within your test.\n\nHere's a modified version of your test code:\n\n```python\nimport pytest\nfrom test.fixtures import login\n\nclass TestGroups(object):\n\n    @pytest.fixture\n    def user_one(self, request):\n        return request.getfixturevalue('login')\n\n    @pytest.fixture\n    def user_two(self, request):\n        return request.getfixturevalue('login')\n\n    def test_get_own_only(self, user_one, user_two):\n        # Now you have two separate users: user_one and user_two\n        # You can perform your test logic here using both users\n        pass\n```\n\nIn this modified version, I created two new fixtures, `user_one` and `user_two`, which internally call the `login` fixture using `request.getfixturevalue()`. This way, you can have two separate users within the same test function."
+    }
+]
