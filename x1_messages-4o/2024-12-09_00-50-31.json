@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Jinja2, I am trying to find a way to test if an object is an instance of a List. Is there a possibility to do so in Jinja2? If there isn't any built-in function, has anyone implemented a custom test or extension to solve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "Jinja2 does not have a built-in test specifically for checking if an object is an instance of a list. However, you can create a custom filter or test to achieve this functionality.\n\nHere's how you can implement a custom test to check if an object is a list in Jinja2:\n\n1. **Create a Custom Test:**\n\n   You can create a custom test in your Python code and then register it with the Jinja2 environment.\n\n   ```python\n   from jinja2 import Environment, FileSystemLoader\n\n   # Custom test to check if an object is a list\n   def is_list(value):\n       return isinstance(value, list)\n\n   # Create a Jinja2 environment\n   env = Environment(loader=FileSystemLoader('templates'))\n\n   # Register the custom test with the environment\n   env.tests['is_list'] = is_list\n\n   # Now you can use the 'is_list' test in your Jinja2 templates\n   template = env.get_template('your_template.html')\n   ```\n\n2. **Use the Custom Test in a Template:**\n\n   In your Jinja2 template, you can now use the custom test `is_list` to check if a variable is a list.\n\n   ```jinja\n   {% if my_variable is is_list %}\n       <!-- Do something if my_variable is a list -->\n       <p>This is a list!</p>\n   {% else %}\n       <!-- Do something if it's not a list -->\n       <p>This is not a list.</p>\n   {% endif %}\n   ```\n\nWith this setup, you can easily test for lists in your Jinja2 templates using the custom `is_list` test."
+    }
+]
