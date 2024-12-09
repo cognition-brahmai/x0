@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to convert a list of lists in python into a set, with the aim of eliminating any repeated lists and creating a new list of unique lists. My list of lists looks something like this:\n\n```python\nmat = [[1,2,3],[4,5,6],[1,2,3],[7,8,9],[4,5,6]]\n```\n\nI want to convert this into a set to have something like this:\n\n```python\n[[1,2,3],[4,5,6],[7,8,9]]\n```\n\nHowever, when I try to use the `set(mat)` function, I get a TypeError that says \"unhashable type: 'list'\". How can I solve this problem?"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering occurs because lists in Python are mutable and thus cannot be added directly to a set. Sets require their elements to be hashable, and mutable objects like lists are not hashable.\n\nTo achieve your goal of removing duplicate lists, you can convert each list into a tuple (which is hashable) and then add those tuples to a set. Finally, convert the tuples back to lists if you want your final result to be a list of lists. Here\u2019s how you can do it:\n\n```python\nmat = [[1, 2, 3], [4, 5, 6], [1, 2, 3], [7, 8, 9], [4, 5, 6]]\n\n# Convert each list to a tuple, add to a set to remove duplicates, then back to list\nunique_lists = [list(t) for t in set(tuple(lst) for lst in mat)]\n\nprint(unique_lists)\n```\n\nThis code snippet will give you the desired output:\n\n```python\n[[1, 2, 3], [4, 5, 6], [7, 8, 9]]\n```\n\nBy converting each inner list to a tuple, you make them hashable, which allows you to use a set to filter out duplicates. Then, by converting the tuples back into lists, you restore the original data structure."
+    }
+]
