@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I copy only the structure of a DataFrame in Pandas without copying the data? For example, I have a DataFrame 'df1' that was created as:\n\n```python\nimport pandas as pd\ndf1 = pd.DataFrame([[11,12],[21,22]], columns=['c1','c2'], index=['i1','i2'])\n```\n\nI was able to copy its structure into 'df2' by explicitly defining the columns and names like this:\n\n```python\ndf2 = pd.DataFrame(columns=df1.columns, index=df1.index)    \n```\n\nHowever, I do not want to copy the data, so I won't be using `df2 = df1.copy()`. I want 'df2' to contain only NaN elements. Is there a more idiomatic way of doing this?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can create a new DataFrame with the same structure as `df1` without copying the data by using the `pd.DataFrame` constructor along with the `columns` and `index` attributes from `df1`. This is a straightforward and idiomatic way to achieve your goal. Here's how you can do it:\n\n```python\nimport pandas as pd\n\n# Original DataFrame\ndf1 = pd.DataFrame([[11, 12], [21, 22]], columns=['c1', 'c2'], index=['i1', 'i2'])\n\n# Create a new DataFrame with the same structure but no data\ndf2 = pd.DataFrame(columns=df1.columns, index=df1.index)\n\n# Optionally, you can explicitly fill it with NaN (though it's not necessary as it's already NaN by default)\ndf2[:] = float('nan')\n\nprint(df2)\n```\n\n`df2` will have the same columns and index as `df1` but will contain only NaN values. This approach is clear and leverages the existing attributes of `df1` to set up the new DataFrame's structure."
+    }
+]
