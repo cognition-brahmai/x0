@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, is it possible to specify a function argument's default value in terms of other arguments? For example, I have a function that accepts two arguments and I want the second argument to be optional, with its default value being the value of the first argument. I tried implementing this as follows:\n\n```python\ndef myfunc(arg1, arg2=arg1):\n    print (arg1, arg2)\n```\n\nHowever, this approach doesn't seem to work. The workaround I thought of looks like this:\n\n```python\ndef myfunc(arg1, arg2=None):\n    if arg2 is None:\n        arg2 = arg1\n    print (arg1, arg2)\n```\n\nI would like to know if there's a more efficient or better way to achieve this."
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, you cannot directly use other function parameters as default values for an argument in the function signature. The reason your initial approach doesn't work is that default values are evaluated at the time the function is defined, not when it is called. Therefore, `arg1` is not defined when `arg2=arg1` is evaluated.\n\nThe workaround you have implemented is indeed the most common and idiomatic way to achieve this behavior in Python. It ensures that `arg2` takes the value of `arg1` when it is not explicitly provided. Here\u2019s your approach, which is efficient and clear:\n\n```python\ndef myfunc(arg1, arg2=None):\n    if arg2 is None:\n        arg2 = arg1\n    print(arg1, arg2)\n```\n\nThis pattern is widely used in Python because it handles the evaluation correctly at runtime, allowing `arg2` to default to `arg1` when necessary.\n\nIf you want to make your code even more concise, you could use a single line to set `arg2`:\n\n```python\ndef myfunc(arg1, arg2=None):\n    arg2 = arg1 if arg2 is None else arg2\n    print(arg1, arg2)\n```\n\nThis maintains the same functionality and is slightly more concise. But overall, your original workaround is the standard practice for this scenario."
+    }
+]
