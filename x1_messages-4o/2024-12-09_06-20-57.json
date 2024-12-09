@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using Flask's `send_file` function to serve a file at a specific URL. But, the name of the downloaded file is always the last part of the URL, for example, `download`, instead of the actual name `table.csv`. How can I serve the file with its correct filename using Flask?"
+    },
+    {
+        "role": "assistant",
+        "content": "When using Flask's `send_file` function to serve a file, you can specify the filename that should be used when the file is downloaded by setting the `as_attachment` parameter to `True` and providing the `download_name` parameter with the desired filename. Here's how you can do it:\n\n```python\nfrom flask import Flask, send_file\n\napp = Flask(__name__)\n\n@app.route('/download')\ndef download_file():\n    path_to_file = 'path/to/your/table.csv'  # Specify the path to your file\n    return send_file(path_to_file, as_attachment=True, download_name='table.csv')\n\nif __name__ == '__main__':\n    app.run(debug=True)\n```\n\nIn this example, when the user accesses the `/download` URL, the file located at `path/to/your/table.csv` will be sent as an attachment with the correct filename `table.csv`. The `as_attachment=True` part ensures that the file is downloaded as an attachment, and `download_name='table.csv'` specifies the name that should be used for the downloaded file."
+    }
+]
