@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there a method to alter the location of pytest's .cache directory? I require to set this directory location to the environment variable, WORKSPACE. Due to certain server permissions, which are beyond my control, I am unable to write in the directory where the tests are being executed. This is the error I am encountering:\n\n<pre><code>py.error.EACCES: [Permission denied]: open('/path/to/restricted/directory/tests/.cache/v/cache/lastfailed', 'w')</code></pre>\n\nHow can I set the path of the .cache directory to the environment variable WORKSPACE?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can alter the location of pytest's `.cache` directory by using the `--basetemp` option or by setting the `PYTEST_ADDOPTS` environment variable with the appropriate command-line options. Here's how you can do it:\n\n1. **Using the `--basetemp` option**: You can specify a base temporary directory for pytest to use, which will include the `.cache` directory. You can set this to the value of your `WORKSPACE` environment variable.\n\n   Run your pytest command like this:\n\n   ```bash\n   pytest --basetemp=$WORKSPACE\n   ```\n\n   This command will use the directory specified in the `WORKSPACE` environment variable as the base directory for temporary files, including the `.cache` directory.\n\n2. **Setting `PYTEST_ADDOPTS` environment variable**: If you want to set this option globally or don't want to modify the command each time, you can set the `PYTEST_ADDOPTS` environment variable in your shell session or script:\n\n   ```bash\n   export PYTEST_ADDOPTS=\"--basetemp=$WORKSPACE\"\n   ```\n\n   This will automatically include the `--basetemp` option with your pytest runs, redirecting the cache directory to the location specified by `WORKSPACE`.\n\nBy using either of these methods, you should be able to redirect the `.cache` directory to a location where you have write permissions, avoiding the permission error you're encountering."
+    }
+]
