@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there an internal procedure in Pytorch to detect NaNs in Tensors similar to Tensorflow's tf.is_nan and tf.check_numerics operations? I am specifically looking for a Pytorch internal routine that can function on both GPU and CPU, hence excluding numpy-based solutions like np.isnan(sometensor.numpy()).any()."
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, PyTorch provides internal methods to detect NaNs in tensors that work on both GPU and CPU. You can use the `torch.isnan()` function to identify NaN values in a tensor. This function returns a boolean tensor of the same shape as the input tensor, with `True` values where NaNs are present and `False` elsewhere.\n\nHere's an example of how you can use `torch.isnan()`:\n\n```python\nimport torch\n\n# Create a tensor with some NaN values\ntensor = torch.tensor([1.0, float('nan'), 2.0, float('nan'), 3.0])\n\n# Detect NaNs\nnan_mask = torch.isnan(tensor)\n\nprint(nan_mask)\n# Output: tensor([False,  True, False,  True, False])\n\n# Check if any NaNs are present\nhas_nan = torch.any(nan_mask).item()\n\nprint(has_nan)\n# Output: True\n```\n\nThis approach works seamlessly on both CPU and GPU. If your tensor is on a GPU, `torch.isnan()` will also operate on the GPU, maintaining efficient computation without needing to transfer data to the CPU."
+    }
+]
