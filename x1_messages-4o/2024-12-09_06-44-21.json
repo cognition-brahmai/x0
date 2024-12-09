@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using the Mock library in Python to test my application. I have a requirement where I need to assert that a specific function was not called. I have been able to find methods in the Mock library such as `mock.assert_called_with` and `mock.assert_called_once_with` that allow me to assert if a function was called. However, I am unable to find a method like `mock.assert_not_called` or something similar that would allow me to verify if a mock was not called. I have tried the following approach, but it doesn't seem to be the best or the most pythonic way:\n\n```python\ndef test_something:\n    # some actions\n    with patch('something') as my_var:\n        try:\n            # args are not important. func should never be called in this test\n            my_var.assert_called_with(some, args)\n        except AssertionError:\n            pass  # this error being raised means it's ok\n    # other stuff\n```\nIs there a better way to accomplish this?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! In the `unittest.mock` library, you can use the `assert_not_called` method to assert that a mock was not called. This is a cleaner and more explicit way to perform the check you're looking for.\n\nHere's how you can use `assert_not_called` in your test:\n\n```python\nfrom unittest.mock import patch\n\ndef test_something():\n    with patch('module_name.function_name') as mock_function:\n        # Perform actions that should not call the mocked function\n        # ...\n\n        # Assert that the mock was not called\n        mock_function.assert_not_called()\n\n    # Other test assertions\n```\n\nIn this example, replace `'module_name.function_name'` with the actual module and function you are patching. The `assert_not_called` method directly checks that the mock object has not been called during the test, making your code more readable and straightforward."
+    }
+]
