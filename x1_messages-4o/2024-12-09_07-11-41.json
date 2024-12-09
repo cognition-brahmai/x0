@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to find out the number/name of a unicode character in Python. I know how to access a unicode character when I have the name or the number, like \"\\N{BLACK SPADE SUIT}\" or \"\\u2660\" both give me '\u2660'. Now, if I have a character for which I don't know the name or the number, is there a Python function that can give me this information? For instance, something like this:\n\n```python\nwanted_function('\u2660')\n[\"BLACK SPADE SUIT\", \"u2660\"]\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! To find the Unicode name and code point of a character in Python, you can use the `unicodedata` module, which provides a way to access the Unicode database. Here's how you can achieve this:\n\n```python\nimport unicodedata\n\ndef get_unicode_info(character):\n    try:\n        # Get the Unicode name\n        name = unicodedata.name(character)\n        # Get the Unicode code point in hexadecimal format\n        code_point = f\"u{ord(character):04x}\"\n        return [name, code_point]\n    except ValueError:\n        return [\"Character not found in Unicode database\"]\n\n# Example usage\ncharacter = '\u2660'\ninfo = get_unicode_info(character)\nprint(info)  # Output: ['BLACK SPADE SUIT', 'u2660']\n```\n\nThis function `get_unicode_info` takes a character as input, retrieves its Unicode name using `unicodedata.name()`, and formats its code point using `ord()` and Python string formatting. If the character is not found in the Unicode database, it returns a message indicating that. You can use this function to find the Unicode name and code point for any character you input."
+    }
+]

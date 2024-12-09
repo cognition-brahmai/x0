@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I obtain the primary key after saving a ModelForm in Django? I am trying to redirect the user to the contact_details view that requires the primary key of the contact after the form has been validated and saved. The code I am currently using is:\n\n```python\ndef contact_create(request):\n    if request.method == 'POST':\n        form = ContactForm(request.POST)\n        if form.is_valid():\n            form.save()\n            return HttpResponseRedirect(reverse(contact_details, args=(form.pk,)))\n    else:\n        form = ContactForm()\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "When you save a form in Django, especially when dealing with a `ModelForm`, the `save()` method returns the instance of the model that has been saved. You can use this instance to access the primary key. Here's how you can modify your code to obtain the primary key after saving the form and use it to redirect the user:\n\n```python\ndef contact_create(request):\n    if request.method == 'POST':\n        form = ContactForm(request.POST)\n        if form.is_valid():\n            contact = form.save()  # Save the form and get the model instance\n            return HttpResponseRedirect(reverse('contact_details', args=(contact.pk,)))  # Use the pk of the saved instance\n    else:\n        form = ContactForm()\n\n    return render(request, 'your_template_name.html', {'form': form})\n```\n\nIn this modification:\n\n- `contact = form.save()`: This saves the form and assigns the returned instance of the model to the variable `contact`.\n- `contact.pk`: You can access the primary key of the instance using `contact.pk`.\n- `reverse('contact_details', args=(contact.pk,))`: This reverses the URL for the `contact_details` view using the primary key obtained from the saved instance.\n\nMake sure to replace `'your_template_name.html'` with the actual template you are using to render the form. Also, ensure that `'contact_details'` is the correct name of your URL pattern in your `urls.py` file."
+    }
+]

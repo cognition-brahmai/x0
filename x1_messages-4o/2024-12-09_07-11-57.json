@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, if I have a function defined as follows:\n\n```python\ndef some_func(arg1, arg2, arg3=1, arg4=2):\n```\n\nIs there a way from within the function to determine which arguments were passed by keyword?\n\nThis question came up in a conversation and I'm curious to know the answer."
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, you can determine which arguments were passed by keyword by inspecting the function's signature and comparing the received arguments with their default values. However, Python itself does not directly provide a built-in way to differentiate between positional and keyword arguments once they have been passed to the function.\n\nHere's a workaround using the `inspect` module, which allows you to examine the signature of a function and its parameters:\n\n```python\nimport inspect\n\ndef some_func(arg1, arg2, arg3=1, arg4=2):\n    # Get the current frame and extract the arguments\n    frame = inspect.currentframe()\n    args, _, _, values = inspect.getargvalues(frame)\n    \n    # Extract the function signature\n    sig = inspect.signature(some_func)\n    \n    # Determine which arguments were passed by keyword\n    passed_by_keyword = {}\n    for arg in args:\n        # Compare the passed value with the default value\n        default = sig.parameters[arg].default\n        if values[arg] != default:\n            passed_by_keyword[arg] = values[arg]\n    \n    print(\"Arguments passed by keyword:\", passed_by_keyword)\n\n# Example calls\nsome_func(10, 20, arg3=30)\nsome_func(10, 20, arg4=40)\n```\n\nThis code will output which arguments were likely passed by keyword by comparing the default values. Note that this method assumes that if a value differs from the default, it was passed explicitly (potentially as a keyword argument). However, this is not foolproof\u2014positional arguments that differ from the default values will be considered as keyword arguments by this method."
+    }
+]
