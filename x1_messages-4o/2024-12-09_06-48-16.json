@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I check if a string in a column of a Pandas DataFrame is in a list of strings? For instance, if I have a DataFrame like this:\n```python\nframe = pd.DataFrame({\n    \"a\": [\"the cat is blue\", \"the sky is green\", \"the dog is black\"]\n})\n```\nI want to check if any of the rows contain a certain word from a list `mylist = [\"dog\", \"cat\", \"fish\"]`. How can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "You can achieve this by using the `apply` function along with a lambda function to check if any word from the list is present in each string of the column. Here's one way to do it:\n\n```python\nimport pandas as pd\n\n# Create the DataFrame\nframe = pd.DataFrame({\n    \"a\": [\"the cat is blue\", \"the sky is green\", \"the dog is black\"]\n})\n\n# List of words to check\nmylist = [\"dog\", \"cat\", \"fish\"]\n\n# Check if any word from the list is in each string in the DataFrame\nframe['contains_word'] = frame['a'].apply(lambda x: any(word in x for word in mylist))\n\nprint(frame)\n```\n\nThis code adds a new column `contains_word` to the DataFrame, which will be `True` if any word from `mylist` is present in the corresponding row of column `a`, and `False` otherwise. The `apply` function is used to apply the lambda function to each element of the column, and `any` is used to check if any of the words in `mylist` are present in the string."
+    }
+]
