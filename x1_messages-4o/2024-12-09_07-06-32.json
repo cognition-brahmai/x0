@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am having trouble printing out a map object in Python 3.5. Here is the code I am working with:\n\n```python\ndef fahrenheit(T):\n    return ((float(9)/5)*T + 32)\n\ntemp = [0, 22.5, 40,100]\nF_temps = map(fahrenheit, temp)\n```\n\nI tried print the map object like this:\n\n```python\nfor i in F_temps:\n    print(F_temps)\n```\n\nBut the output I am getting is:\n\n```\n<map object at 0x7f9aa050ff28>\n<map object at 0x7f9aa050ff28>\n<map object at 0x7f9aa050ff28>\n<map object at 0x7f9aa050ff28>\n```\n\nInstead of the actual values. I think my approach worked in Python 2.7, but how can I adapt this to work in Python 3.5?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python 3.x, the `map` function returns an iterator instead of a list as it did in Python 2.x. This means you need to iterate over the `map` object to access its elements. Your current code is printing the `map` object itself instead of the elements it contains. Here's how you can modify your code to print the Fahrenheit temperatures correctly:\n\n```python\ndef fahrenheit(T):\n    return ((float(9)/5)*T + 32)\n\ntemp = [0, 22.5, 40, 100]\nF_temps = map(fahrenheit, temp)\n\n# Iterate over the map object and print each converted temperature\nfor temp in F_temps:\n    print(temp)\n```\n\nThis code will produce the output you expect:\n\n```\n32.0\n72.5\n104.0\n212.0\n```\n\nBy iterating over `F_temps`, you extract each converted temperature and print it. The `map` object can only be iterated once, so if you need to access the values again later, consider converting it to a list:\n\n```python\nF_temps_list = list(F_temps)\nprint(F_temps_list)\n```\n\nThis will give you a list of the Fahrenheit temperatures:\n\n```\n[32.0, 72.5, 104.0, 212.0]\n```"
+    }
+]
