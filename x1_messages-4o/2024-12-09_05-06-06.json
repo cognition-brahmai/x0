@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I escape the '%' character in a MySQL query in Python? I have the following query:\n\n```python\nquery = \"\"\"SELECT DATE_FORMAT(date_time,'%Y-%m') AS dd\nFROM some_table\nWHERE some_col = %s\nAND other_col = %s;\"\"\"\n\ncur.execute(query, (pram1, pram2))\n```\n\nWhen I run this code, I receive a \"ValueError: unsupported format character 'Y'\" exception. How can I make mysqldb ignore the '%' character? I can't find any information on this in the documentation."
+    },
+    {
+        "role": "assistant",
+        "content": "The issue arises because the Python string formatting syntax uses the percent sign `%` as a placeholder for variables, which conflicts with the MySQL `DATE_FORMAT` function that also uses the percent sign. To resolve this issue, you need to escape the percent signs in your SQL query so that they are interpreted correctly by the database driver rather than being treated as placeholders for parameter substitution in Python.\n\nIn Python, you can escape a percent sign by doubling it (i.e., using `%%`). Here's how you can modify your query:\n\n```python\nquery = \"\"\"SELECT DATE_FORMAT(date_time, '%%Y-%%m') AS dd\nFROM some_table\nWHERE some_col = %s\nAND other_col = %s;\"\"\"\n\ncur.execute(query, (pram1, pram2))\n```\n\nBy replacing `%Y-%m` with `%%Y-%%m`, you're telling Python's string formatter to treat `%%` as a literal `%`, so that the MySQL server receives the correct `DATE_FORMAT` syntax.\n\nThis approach should solve the `ValueError` by ensuring that the percent signs intended for MySQL's `DATE_FORMAT` function are not confused with Python's string formatting directives."
+    }
+]
