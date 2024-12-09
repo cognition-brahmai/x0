@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, I know that I can cause a thread to sleep for a specific amount of time using `time.sleep(NUM)`. But how can I make a thread sleep until a specific time, say 2AM? Do I have to calculate the number of seconds until 2AM or is there a library function that can help me do this? I would prefer not to rely on external systems like cron or equivalent systems in Windows, but want to execute this within Python itself."
+    },
+    {
+        "role": "assistant",
+        "content": "To make a thread sleep until a specific time like 2 AM in Python, you can indeed calculate the number of seconds from the current time until 2 AM and use `time.sleep()` for that duration. However, there isn't a built-in function directly in Python's standard library to sleep until a specific clock time. You can use the `datetime` module to perform this calculation. Here's how you can do it:\n\n```python\nimport time\nfrom datetime import datetime, timedelta\n\ndef sleep_until(target_hour, target_minute=0, target_second=0):\n    now = datetime.now()\n    today_target = datetime(now.year, now.month, now.day, target_hour, target_minute, target_second)\n\n    # If the target time is already past today, target tomorrow's time\n    if now >= today_target:\n        today_target += timedelta(days=1)\n\n    sleep_duration = (today_target - now).total_seconds()\n    time.sleep(sleep_duration)\n\n# Example usage: Sleep until next 2 AM\nsleep_until(2)\n```\n\n### Explanation:\n\n1. **Get Current Time**: Use `datetime.now()` to get the current time.\n2. **Calculate Target Time**: Create a `datetime` object for the target time (2 AM) on the current day.\n3. **Adjust if Needed**: If the target time has already passed for today, adjust by adding one day.\n4. **Calculate Sleep Duration**: Subtract the current time from the target time to get the number of seconds to sleep.\n5. **Sleep**: Use `time.sleep()` with the calculated duration.\n\nThis approach ensures that you accurately sleep until the next occurrence of 2 AM, whether it's later today or the next day if 2 AM has already passed."
+    }
+]
