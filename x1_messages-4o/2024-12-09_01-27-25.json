@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I prevent Python's requests library from percent encoding my URLs? I am trying to send a GET request to a URL of the following format using requests.get() in Python:\n\n'http://api.example.com/export/?format=json&key=site:dummy+type:example+group:wheel'\n\nHere is my Python script:\n\n```python\n#!/usr/local/bin/python\n\nimport requests\n\nprint(requests.__version__)\nurl = 'http://api.example.com/export/'\npayload = {'format': 'json', 'key': 'site:dummy+type:example+group:wheel'}\nr = requests.get(url, params=payload)\nprint(r.url)\n```\n\nHowever, the URL gets percent-encoded and I don't receive the expected response. The output is:\n\n```\n2.2.1\nhttp://api.example.com/export/?key=site%3Adummy%2Btype%3Aexample%2Bgroup%3Awheel&format=json\n```\n\nIt works if I pass the URL directly:\n\n```python\nurl = 'http://api.example.com/export/?format=json&key=site:dummy+type:example+group:wheel'\nr = requests.get(url)\n```\n\nIs there a way to pass the parameters in their original form - without percent encoding?"
+    },
+    {
+        "role": "assistant",
+        "content": "The `requests` library automatically percent-encodes URL parameters to ensure that they are safely transmitted over the internet. However, if you want to send the parameters without encoding them, you can construct the URL manually with the desired parameters and pass it directly to `requests.get()`.\n\nHere's how you can modify your script to achieve this:\n\n```python\n#!/usr/local/bin/python\n\nimport requests\n\nprint(requests.__version__)\nurl = 'http://api.example.com/export/?format=json&key=site:dummy+type:example+group:wheel'\nr = requests.get(url)\nprint(r.url)\n```\n\nBy constructing the URL manually as shown above, you ensure that it is sent exactly as you specify, without any percent encoding applied to the parameters.\n\nThis approach provides you with full control over the URL structure, but it also means you need to ensure the URL is constructed correctly and safely, particularly if you are concatenating user input into the URL, to avoid security risks such as injection attacks."
+    }
+]
