@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Why are dictionary objects unhashable in Python? Specifically, why can't we use a dictionary as a key for another dictionary?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, dictionary objects are considered unhashable because they are mutable. Hashable objects in Python must have a hash value that remains constant during their lifetime. This is essential for maintaining the integrity of data structures like sets and the keys of dictionaries, which rely on hash values to quickly access and store data.\n\nDictionaries, by nature, can have their contents changed by adding, removing, or altering key-value pairs. If a dictionary were used as a key in another dictionary and its content changed, it would lead to inconsistencies and errors in the hashing mechanism. The hash value would change, making it impossible to locate the dictionary in the hash table where it was originally stored.\n\nTo use a dictionary-like structure as a key, you can use an immutable equivalent, such as a `frozenset` or a tuple of key-value pairs. These structures are hashable because their contents cannot be altered, ensuring that their hash value remains constant. Here\u2019s a simple example of using a `frozenset` for this purpose:\n\n```python\n# Example of using a frozenset as a dictionary key\ndict_key = frozenset({('key1', 'value1'), ('key2', 'value2')})\nmy_dict = {dict_key: \"This is a value\"}\n\nprint(my_dict)\n```\n\nThis ensures that the key remains immutable and thus hashable."
+    }
+]
