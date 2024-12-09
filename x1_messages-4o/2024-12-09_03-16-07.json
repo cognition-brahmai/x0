@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, is there a method or function to extract the parameter names from a given function? For instance, if I have a function like this:\n\n```python\ndef foo(bar, buz):\n    pass\n```\n\nI want to be able to use some mechanism, let's call it `magical_way()`, on `foo` that would return the parameter names as a list, like so:\n\n```python\nmagical_way(foo) == [\"bar\", \"buz\"]\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, in Python, you can extract the parameter names from a given function using the `inspect` module, which provides several useful functions to get information about live objects, such as modules, classes, methods, functions, and more.\n\nHere's how you can achieve this:\n\n```python\nimport inspect\n\ndef foo(bar, buz):\n    pass\n\ndef magical_way(func):\n    # Get the signature of the function\n    signature = inspect.signature(func)\n    # Extract the parameter names\n    parameter_names = list(signature.parameters.keys())\n    return parameter_names\n\n# Example usage\nprint(magical_way(foo))  # Output: ['bar', 'buz']\n```\n\nIn this example, `inspect.signature(func)` returns a `Signature` object, which has a `parameters` attribute that is an ordered mapping of parameter names to `Parameter` objects. You can simply get the keys of this mapping to obtain the parameter names."
+    }
+]
