@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I modify Python argparse to ignore unrecognized arguments? In Python's older version, optparse, unrecognized arguments were ignored, but this was changed in argparse. There are situations where I want argparse to ignore any unrecognized arguments and parse only the ones that I've specified. For instance, when I use the following code:\n\n```python\nparser = argparse.ArgumentParser()\nparser.add_argument('--foo', dest=\"foo\")\nparser.parse_args()\n\n$python myscript.py --foo 1 --bar 2\n```\n\nI get an error: \"unrecognized arguments: --bar\". Is there a way to override this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To have `argparse` ignore unrecognized arguments, you can use the `parse_known_args()` method instead of `parse_args()`. This method will return a tuple where the first element is a `Namespace` object containing the recognized arguments, and the second element is a list of the unrecognized arguments. Here's how you can modify your code:\n\n```python\nimport argparse\n\n# Create the parser\nparser = argparse.ArgumentParser()\n\n# Add the recognized argument\nparser.add_argument('--foo', dest=\"foo\")\n\n# Parse known arguments\nargs, unknown = parser.parse_known_args()\n\n# Now you can access the recognized arguments\nprint(\"Known arguments:\", args)\n\n# If you are interested in unrecognized arguments, you can also print them\nprint(\"Unrecognized arguments:\", unknown)\n```\n\nRunning your script with the command `python myscript.py --foo 1 --bar 2` will now output:\n\n```\nKnown arguments: Namespace(foo='1')\nUnrecognized arguments: ['--bar', '2']\n```\n\nThis way, `argparse` ignores any arguments that it doesn't recognize, and you can handle them separately if needed."
+    }
+]
