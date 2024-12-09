@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm having a problem with Flask where it seems to only accept the first request parameter and ignore the rest. For example, I have the following code:\n\n```python\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/\")\ndef hello():\n    return str(request.values.get(\"param\", \"None\"))\n\napp.run(debug=True)\n```\n\nWhen I visit `http://localhost:5000/?param=a&param=bbb`, I expect an output of ['a', 'bbb'] but Flask seems to only recognize the first 'param'. Is this a limitation of Flask or is it by design?"
+    },
+    {
+        "role": "assistant",
+        "content": "Flask\u2019s `request.values.get()` method is designed to return the first value for the specified key by default. This behavior is not a limitation but rather a design choice. If you want to retrieve all values for a given key in the query string, you should use `request.values.getlist()` instead, which returns a list of all values associated with the key. Here's how you can modify your code to achieve the desired behavior:\n\n```python\nfrom flask import Flask, request\n\napp = Flask(__name__)\n\n@app.route(\"/\")\ndef hello():\n    return str(request.values.getlist(\"param\"))\n\napp.run(debug=True)\n```\n\nWith this change, visiting `http://localhost:5000/?param=a&param=bbb` will return `['a', 'bbb']` as expected. The `getlist()` method is particularly useful when handling multiple values for the same parameter in a query string."
+    }
+]
