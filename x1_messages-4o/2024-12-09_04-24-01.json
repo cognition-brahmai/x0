@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, how can I detect if an object is a list of lists? I know I can determine if an object is a list by using `type(obj) --> list`. But how can I detect if the object is a list of lists in the form of `[['a','b']['a','b'][][]]`?"
+    },
+    {
+        "role": "assistant",
+        "content": "To determine if an object is a list of lists in Python, you can iterate through the elements of the list and check if each element is also a list. Here's a function that performs this check:\n\n```python\ndef is_list_of_lists(obj):\n    if isinstance(obj, list):\n        for element in obj:\n            if not isinstance(element, list):\n                return False\n        return True\n    return False\n\n# Example usage\nobj1 = [['a', 'b'], ['c', 'd']]\nobj2 = ['a', 'b', ['c', 'd']]\nobj3 = []\n\nprint(is_list_of_lists(obj1))  # Output: True\nprint(is_list_of_lists(obj2))  # Output: False\nprint(is_list_of_lists(obj3))  # Output: True, since it's technically a list where all (zero) elements are lists\n```\n\nThis function first checks if the object is a list. If it is, it iterates through each element of the list and checks if each element is also a list. If any element is not a list, it returns `False`. Otherwise, it returns `True`. Note that an empty list will return `True` because there are no elements that contradict the condition."
+    }
+]

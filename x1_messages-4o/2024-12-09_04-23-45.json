@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I create a new column in a Panda dataframe, where the values of this new column are the sum of values from two other columns in the same dataframe? For example, if I have the following dataframe:\n\n<pre><code>A B\n1 4\n2 6\n3 9\n</code></pre>\n\nI want to add a new column C, which is the sum of columns A and B, to have a dataframe like this:\n\n<pre><code>A B C\n1 4 5\n2 6 8\n3 9 12\n</code></pre>\n\nIs it possible to achieve this using a lambda function?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can create a new column in a Pandas DataFrame by summing the values of two other columns using a lambda function. Here's how you can achieve this:\n\n```python\nimport pandas as pd\n\n# Create the initial DataFrame\ndata = {'A': [1, 2, 3], 'B': [4, 6, 9]}\ndf = pd.DataFrame(data)\n\n# Add a new column 'C' which is the sum of columns 'A' and 'B'\ndf['C'] = df.apply(lambda row: row['A'] + row['B'], axis=1)\n\nprint(df)\n```\n\nThis code will output:\n\n```\n   A  B   C\n0  1  4   5\n1  2  6   8\n2  3  9  12\n```\n\nHere's a breakdown of what happens in the code:\n\n- `df.apply(...)`: The `apply` function is used to apply a function along an axis of the DataFrame. In this case, we are applying it row-wise (`axis=1`).\n- `lambda row: row['A'] + row['B']`: This is a lambda function that takes a row as input and returns the sum of the values in columns 'A' and 'B' for that row.\n- `df['C'] = ...`: This assigns the result of the `apply` function to a new column 'C' in the DataFrame."
+    }
+]
