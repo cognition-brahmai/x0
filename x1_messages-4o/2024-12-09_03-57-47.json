@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I get a callback when a selection in a Tkinter Listbox is changed? I've found methods for getting callbacks when Text or Entry widgets are changed in Tkinter, but I haven't been successful in finding one for Listbox. Much of the event documentation I can find seems to be outdated or incomplete. Is there a way to generate an event for this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To get a callback when a selection in a Tkinter `Listbox` is changed, you can bind an event to the `<<ListboxSelect>>` virtual event. This event is triggered whenever there is a change in the selection of the `Listbox`. Here's how you can set it up:\n\n```python\nimport tkinter as tk\n\ndef on_selection_change(event):\n    # Get the widget that triggered the event\n    listbox = event.widget\n    \n    # Get the indices of the selected items\n    selected_indices = listbox.curselection()\n    \n    # Get the values of the selected items\n    selected_values = [listbox.get(i) for i in selected_indices]\n    \n    print(\"Selected indices:\", selected_indices)\n    print(\"Selected values:\", selected_values)\n\nroot = tk.Tk()\n\n# Create a Listbox\nlistbox = tk.Listbox(root)\nlistbox.pack()\n\n# Add some items to the Listbox\nfor item in [\"Item 1\", \"Item 2\", \"Item 3\", \"Item 4\"]:\n    listbox.insert(tk.END, item)\n\n# Bind the <<ListboxSelect>> event to the on_selection_change function\nlistbox.bind('<<ListboxSelect>>', on_selection_change)\n\nroot.mainloop()\n```\n\nIn this example, the `on_selection_change` function is called whenever the selection in the `Listbox` changes. The function retrieves the indices of the selected items using `listbox.curselection()` and then gets the corresponding values from the `Listbox` using a list comprehension. The selected indices and values are then printed to the console.\n\nThis setup will allow you to handle selection changes in the `Listbox` and perform any desired actions in the callback function."
+    }
+]
