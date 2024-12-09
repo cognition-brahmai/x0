@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there a more concise way to iterate over a numpy array than using the following approaches?\n\nMethod 1:\n```python\nfor x in xrange(array.shape[0]):\n    for y in xrange(array.shape[1]):\n        do_stuff(x, y)\n```\n\nMethod 2:\n```python\nfor x, y in itertools.product(map(xrange, array.shape)):\n    do_stuff(x, y)\n```\n\nI'm looking for a solution that resembles this pseudocode:\n```python\nfor x, y in array.indices:\n    do_stuff(x, y)\n```\nDoes such a solution exist?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, there is a more concise and Pythonic way to iterate over the indices of a NumPy array without using nested loops explicitly. You can achieve this using NumPy's `ndindex` function, which provides an iterator over the indices of an array. Here's how you can do it:\n\n```python\nimport numpy as np\n\n# Assuming 'array' is your NumPy array\nfor x, y in np.ndindex(array.shape):\n    do_stuff(x, y)\n```\n\nThis approach is clean and directly gives you all the indices of the array, allowing you to perform operations on each element. The `np.ndindex` function generates an iterator that returns tuples of indices, making it similar to the pseudocode you're aiming for."
+    }
+]
