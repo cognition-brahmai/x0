@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I remove columns with all NaN or NULL values in a Pandas DataFrame?"
+    },
+    {
+        "role": "assistant",
+        "content": "To remove columns with all NaN or NULL values in a Pandas DataFrame, you can use the `dropna()` method with the `axis` parameter set to `1`, which specifies that you want to operate on columns. Additionally, you need to set the `how` parameter to `'all'` so that only columns with all values as NaN or NULL are dropped.\n\nHere's an example:\n\n```python\nimport pandas as pd\nimport numpy as np\n\n# Creating a sample DataFrame with NaN values\ndata = {\n    'A': [1, 2, np.nan],\n    'B': [np.nan, np.nan, np.nan],\n    'C': [7, 8, 9],\n    'D': [np.nan, np.nan, np.nan]\n}\n\ndf = pd.DataFrame(data)\n\n# Display the original DataFrame\nprint(\"Original DataFrame:\")\nprint(df)\n\n# Removing columns with all NaN values\ndf_cleaned = df.dropna(axis=1, how='all')\n\n# Display the cleaned DataFrame\nprint(\"\\nDataFrame after removing columns with all NaN values:\")\nprint(df_cleaned)\n```\n\nIn this example, columns 'B' and 'D' will be removed from the DataFrame because they contain only NaN values. The resulting DataFrame will have columns 'A' and 'C' remaining."
+    }
+]

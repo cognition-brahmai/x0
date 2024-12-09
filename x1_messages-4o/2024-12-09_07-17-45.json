@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I truncate a string in Python without ending in the middle of a word? For instance, if my original string is \"This is really awesome.\", a naive or \"dumb\" truncate might cut it off as \"This is real...\", but I want to implement a \"smart\" truncate that would instead shorten it to \"This is really...\"."
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve a \"smart\" truncation of a string in Python, you can create a function that ensures the string is only truncated at the end of a word. This can be done by first truncating the string to the desired length and then adjusting the truncation point to the last complete word within that length. Here's a sample implementation:\n\n```python\ndef smart_truncate(text, max_length, suffix='...'):\n    if len(text) <= max_length:\n        return text\n    \n    # Truncate the text to the maximum length\n    truncated = text[:max_length]\n    \n    # Find the last whitespace in the truncated string\n    last_space = truncated.rfind(' ')\n    \n    if last_space == -1:\n        # If there's no space, it means the entire truncated string is a single word\n        return truncated + suffix\n    \n    # Truncate at the last complete word\n    smart_truncated = truncated[:last_space]\n\n    return smart_truncated + suffix\n\n# Example usage\noriginal_text = \"This is really awesome.\"\nmax_length = 14\ntruncated_text = smart_truncate(original_text, max_length)\nprint(truncated_text)  # Output: \"This is really...\"\n```\n\nIn this function:\n\n- We first check if the original text is already shorter than the desired maximum length. If so, we return it as is.\n- We truncate the text to the specified `max_length`.\n- We then find the last space character within this truncated text using `rfind`.\n- If no space is found, it means the entire string up to `max_length` is a single word, so we return it with the suffix.\n- Otherwise, we truncate the text to the last space to ensure it ends at a complete word, and then append the suffix."
+    }
+]
