@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In a recent interview, I was asked about the output of the Python statement `None is None is None`. I initially thought Python would execute the first operation `None is None`, returning `True`, and then compare `True is None`, which should return `False`. However, the correct answer appears to be `True`. Can someone explain why `None is None is None` returns `True` in Python, despite my initial understanding?"
+    },
+    {
+        "role": "assistant",
+        "content": "The statement `None is None is None` evaluates to `True` because of the way Python handles chained comparisons. \n\nIn Python, expressions like `a is b is c` are not evaluated as `(a is b) is c`. Instead, they are evaluated as `a is b and b is c`. This means that when you have a chain of comparisons, Python checks each comparison individually from left to right and combines them with a logical `and`.\n\nSo, for the expression `None is None is None`, Python evaluates it as:\n\n1. `None is None` (which is `True`)\n2. `None is None` (which is `True`)\n\nSince both comparisons are `True`, the whole expression evaluates to `True`.\n\nThis behavior is consistent with how Python handles other chained comparisons like `a < b < c`, which checks if `a < b` and `b < c` both hold true.\n\nIn your initial thought process, you were considering that it would evaluate as `(None is None) is None`, but Python's chained comparisons don't work that way. They follow the pattern of evaluating each step separately and combining them with logical `and`."
+    }
+]
