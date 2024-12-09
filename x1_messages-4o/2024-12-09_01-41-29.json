@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I remove duplicate dictionaries from a list in Python? For instance, I have a list of dictionaries as shown below:\n\n```python\nl = [\n{'firstname': 'joe', 'surname': 'bloggs'},\n{'firstname': 'john', 'surname': 'smith'},\n{'firstname': 'joe', 'surname': 'bloggs'},\n{'firstname': 'jane', 'surname': 'bloggs'}\n]\n```\n\nIn this list, the dictionary `{'firstname': 'joe', 'surname': 'bloggs'}` appears twice and I would like it to appear only once. How can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To remove duplicate dictionaries from a list in Python, you can use a combination of a set and a list comprehension to filter out the duplicates. Since dictionaries are not hashable and cannot be added directly to a set, you need to convert each dictionary to a tuple of its items, which is hashable, and then add it to the set. Here's how you can do it:\n\n```python\nl = [\n    {'firstname': 'joe', 'surname': 'bloggs'},\n    {'firstname': 'john', 'surname': 'smith'},\n    {'firstname': 'joe', 'surname': 'bloggs'},\n    {'firstname': 'jane', 'surname': 'bloggs'}\n]\n\n# Use a set to track unique dictionaries\nseen = set()\nunique_list = []\n\nfor d in l:\n    # Convert the dictionary to a tuple of key-value pairs\n    items_tuple = tuple(d.items())\n    \n    # Check if this tuple is already in the seen set\n    if items_tuple not in seen:\n        # Add it to the seen set and the unique list\n        seen.add(items_tuple)\n        unique_list.append(d)\n\nprint(unique_list)\n```\n\nThis code iterates through the list of dictionaries, converts each dictionary to a tuple of its items, and checks if that tuple has been seen before. If not, it adds the tuple to the `seen` set and the original dictionary to the `unique_list`. This way, you end up with a list of dictionaries with duplicates removed."
+    }
+]
