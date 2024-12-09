@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I extract a list or tuple of sympy.Symbol objects from a sympy expression? For instance, if I have the following expression:\n\n```python\nimport sympy\nx, y, z = sympy.symbols('x:z')\nf = sympy.exp(x + y) - sympy.sqrt(z)\n```\nIs there a method of `f` that I can use to retrieve the symbols in the expression, without having to parse `srepr(f)` or traverse through `f.args`? \nIn this specific case, I can extract the `Symbol(\"z\")` by `g.args[0].args[1].args[0]` and the tuple `(Symbol(\"x\"), Symbol(\"y\"))` by `g.args[1].args[0].args`, but these methods are specific to the expression."
+    },
+    {
+        "role": "assistant",
+        "content": "To extract a list or tuple of `sympy.Symbol` objects from a sympy expression, you can use the `.free_symbols` attribute of the expression. This attribute returns a set of all free symbols in the expression, which are essentially the variables present in the expression.\n\nHere is how you can use it with your given expression:\n\n```python\nimport sympy\n\n# Define symbols\nx, y, z = sympy.symbols('x y z')  # Using 'x y z' instead of 'x:z' for clarity\n\n# Define the expression\nf = sympy.exp(x + y) - sympy.sqrt(z)\n\n# Extract symbols\nsymbols = f.free_symbols\n\n# Convert to a list if needed\nsymbols_list = list(symbols)\n\nprint(symbols_list)  # Output: [x, y, z]\n```\n\nThis approach is much cleaner and doesn't require parsing `srepr(f)` or manually traversing through `f.args`. Note that the order of symbols in the set is not guaranteed, so if you need them in a specific order, you might need to sort them or handle them accordingly."
+    }
+]
