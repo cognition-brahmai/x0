@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working with a dataframe in Python using the Pandas library. This dataframe contains information about movies, including a column labelled 'genre', which stores a list of genres each movie belongs to. For example, if I query \"df['genre']\", the output may look something like this:\n\n```python\n0       ['comedy', 'sci-fi']\n1       ['action', 'romance', 'comedy']\n2       ['documentary']\n3       ['crime','horror']\n...\n```\n\nI am trying to find a way to query this dataframe such that it returns whether a movie belongs to a certain genre. I am looking for a solution similar to \"df['genre'].contains('comedy')\" that would return either 0 or 1. I know that in a list, I can use the 'in' keyword, such as \"'comedy' in  ['comedy', 'sci-fi']\". However, this doesn't seem to work in pandas. I've tried using \"df['genre'].str.contains()\", but it doesn't work for the list data type. How can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve this in Pandas, you can use the `apply` function along with a lambda function that checks for membership in each list. Here's how you can do it:\n\n```python\nimport pandas as pd\n\n# Sample data\ndata = {\n    'genre': [\n        ['comedy', 'sci-fi'],\n        ['action', 'romance', 'comedy'],\n        ['documentary'],\n        ['crime', 'horror']\n    ]\n}\n\n# Create DataFrame\ndf = pd.DataFrame(data)\n\n# Define the genre you want to check for\ntarget_genre = 'comedy'\n\n# Use apply with a lambda function to check for membership\ndf['is_comedy'] = df['genre'].apply(lambda x: target_genre in x).astype(int)\n\nprint(df)\n```\n\nThis will add a new column `is_comedy` to your DataFrame, where each entry will be `1` if 'comedy' is in the list of genres for that row and `0` otherwise. The `apply` function iterates over each row in the `genre` column, and the lambda function checks if the `target_genre` is in the list. The `astype(int)` converts the boolean output to integers (1 for `True` and 0 for `False`)."
+    }
+]
