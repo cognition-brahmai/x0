@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I modify my Python 2.7 code to only list files, not folders, in a specific directory? I'm currently using the following code:\n\n```python\nallFiles = os.listdir(myPath)\nfor module in allFiles:\n    if 'Module' in module: #if the word module is in the filename\n        dirToScreens = os.path.join(myPath, module)    \n        allSreens = os.listdir(dirToScreens)\n```\n\nHowever, I need to change the line `allSreens = os.listdir(dirToScreens)` to get a list of just files. When I try to use the following code:\n\n```python\nallScreens = [ f for f in os.listdir(dirToScreens) if os.isfile(join(dirToScreens, f)) ]\n```\n\nI receive an error message that says \"module object has no attribute isfile\". What am I doing wrong and how can I correct this?"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering is because the `os` module does not have a function called `isfile` directly available. Instead, you need to use `os.path.isfile` to check if a path is a file. Here's how you can modify your code to list only files in a directory:\n\n```python\nimport os\n\nallFiles = os.listdir(myPath)\nfor module in allFiles:\n    if 'Module' in module:  # if the word module is in the filename\n        dirToScreens = os.path.join(myPath, module)\n        allScreens = [f for f in os.listdir(dirToScreens) if os.path.isfile(os.path.join(dirToScreens, f))]\n\n        # Now `allScreens` contains only files, no directories.\n        print(allScreens)  # Just as an example, you can process the files as needed\n```\n\nHere\u2019s what was changed:\n\n1. Use `os.path.isfile` instead of `os.isfile`.\n2. Make sure to use `os.path.join` to construct the full path to the file, which is needed by `os.path.isfile` to determine if the path is indeed a file.\n\nThis code will filter out directories and only list files present in `dirToScreens`."
+    }
+]
