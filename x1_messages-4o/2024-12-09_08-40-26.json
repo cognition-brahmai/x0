@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Why am I unable to set a global variable in Python? I am experimenting with global variables, and I understand they are not recommended for use, but I'm still curious. I tried to set a global variable with the following code:\n\n```python\nG = None\n\ndef foo():\n    if G is None:\n        G = 1\n\nfoo()\n```\nWhen I run this code, I am getting an `UnboundLocalError: local variable 'G' referenced before assignment`. What am I doing wrong?"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you are encountering is due to the way Python handles variable scope. In your `foo()` function, when you assign a value to `G`, Python treats `G` as a local variable within that function. However, since you are trying to read the value of `G` before assigning to it, Python raises an `UnboundLocalError` because it hasn't been initialized in the local scope yet.\n\nTo modify a global variable inside a function, you need to declare it as `global` within the function. This tells Python that you intend to use the global `G`, not a local variable. Here's how you can modify your code:\n\n```python\nG = None\n\ndef foo():\n    global G  # Declare G as global to modify the global variable\n    if G is None:\n        G = 1\n\nfoo()\nprint(G)  # This will now correctly print 1\n```\n\nBy including the `global G` statement inside the function, you inform Python that `G` refers to the global variable defined outside the function. This allows you to modify the global `G` within the function."
+    }
+]
