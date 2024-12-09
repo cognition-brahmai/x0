@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I effectively suppress previous exceptions when I raise my own exception in response? For instance, when I try to import a module and it's not installed, I want to raise an error message. However, I don't want the \"During handling of the above exception...\" line and the lines above it to appear. Here is my current approach:\n\n```python\ntry:\n   import someProprietaryModule\nexcept ImportError:\n   raise ImportError('It appears that <someProprietaryModule> is not installed...')\n```\n\nThis results in the following output if the module is not installed:\n\n```python\n(traceback data)\nImportError: unknown module: someProprietaryModule\n\nDuring handling of the above exception, another exception occurred:\n\n(traceback data)\nImportError: It appears that <someProprietaryModule> is not installed...\n```\n\nI have tried the following solution, but it feels like a hack:\n\n```python\n_moduleInstalled = True\ntry:\n   import someProprietaryModule\nexcept ImportError:\n   _moduleInstalled = False\nif not _moduleInstalled: \n   raise ImportError('It appears that <someProprietaryModule> is not installed...')\n```\n\nIs there a better way to handle this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To suppress the context of the previous exception when raising a new exception in Python, you can use the `from None` construct. This effectively cuts the traceback linkage between the two exceptions, so you won't see the \"During handling of the above exception, another exception occurred\" message.\n\nHere's how you can modify your code to achieve this:\n\n```python\ntry:\n    import someProprietaryModule\nexcept ImportError:\n    raise ImportError('It appears that <someProprietaryModule> is not installed...') from None\n```\n\nBy using `from None`, you're explicitly telling Python that the new exception is not directly caused by the previous one, even though it occurred in the except block. This way, the output will only show the new `ImportError` message without referencing the initial `ImportError`."
+    }
+]
