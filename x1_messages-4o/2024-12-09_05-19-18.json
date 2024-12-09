@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to import a module from a specific directory using Python. I have tried to append the path using `sys.path.append(mod_directory)`. However, when I open the Python interpreter, the `mod_directory` gets added to the end of the `sys.path` list. If I set the `PYTHONPATH` variable before opening the Python interpreter, the directory gets added to the start of the list, allowing me to import the module. But, I am unable to import the module when it gets appended to the end of the list. Can someone clarify why this issue is happening and how can I add the `mod_directory` to the beginning of the list from inside a Python script?"
+    },
+    {
+        "role": "assistant",
+        "content": "When you append a directory to `sys.path` using `sys.path.append(mod_directory)`, it indeed adds the directory to the end of the list. The `sys.path` list is used by Python to determine which directories to search for modules when executing an `import` statement. The directories are searched in the order they appear in the list, from start to end. Therefore, if there is another module with the same name in a directory that appears earlier in `sys.path`, it will be imported instead of the module in `mod_directory`.\n\nTo resolve this issue and ensure that your specific directory is searched first, you should insert it at the beginning of the `sys.path` list. You can do this using `sys.path.insert(0, mod_directory)`. This will prioritize your directory over others, allowing Python to find the module you want to import first.\n\nHere's how you can modify your script:\n\n```python\nimport sys\n\nmod_directory = '/path/to/your/module'\nsys.path.insert(0, mod_directory)\n\n# Now you can import your module as usual\nimport your_module_name\n```\n\nThis will ensure that `mod_directory` is the first directory searched when you try to import a module, thus resolving the issue you\u2019re facing."
+    }
+]
