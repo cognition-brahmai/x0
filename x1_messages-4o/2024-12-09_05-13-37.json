@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I convert a column in a Pandas DataFrame that consists of datetime64 objects to strings? I want the dates to be displayed in the format '01-11-2013' for the date November 1, 2013. I have attempted to use the code `df['DateStr'] = df['DateObj'].strftime('%d%m%Y')`, but it results in the following error: `AttributeError: 'Series' object has no attribute 'strftime'`."
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering is because `strftime` is a method for datetime objects, not for Pandas Series. To apply `strftime` to each element in a Pandas Series, you can use the `dt` accessor which allows vectorized operations on datetime-like data. Here's how you can convert the datetime64 column to a string with the desired format:\n\n```python\nimport pandas as pd\n\n# Sample DataFrame\ndata = {'DateObj': pd.to_datetime(['2013-11-01', '2021-06-15', '2022-01-30'])}\ndf = pd.DataFrame(data)\n\n# Convert the datetime64 column to a string with the format '01-11-2013'\ndf['DateStr'] = df['DateObj'].dt.strftime('%d-%m-%Y')\n\nprint(df)\n```\n\nThis code will convert the `DateObj` column into strings formatted as 'dd-mm-yyyy' and store them in a new column `DateStr`. The `dt.strftime('%d-%m-%Y')` part formats each date in the Series according to the specified format."
+    }
+]
