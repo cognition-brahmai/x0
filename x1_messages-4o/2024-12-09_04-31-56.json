@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am developing a Django webapp and I want to check if the app is running on the Heroku platform. This is because I would like to conditionally enable debugging among other things. Is there a simple way to detect Heroku's environment, possibly through an environment variable? I am aware that I can alternatively detect if the app is running on a developer machine, but that approach doesn't seem right to me."
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can easily detect if your Django web application is running on Heroku by checking for specific environment variables that are set by Heroku. One common approach is to look for the `DYNO` environment variable, which Heroku sets automatically for your app when it's running on their platform.\n\nHere's a simple way to implement this in your Django settings:\n\n1. **Detect Heroku Environment**: Check for the presence of the `DYNO` environment variable.\n\n2. **Conditionally Enable Debugging and Other Settings**:\n\n```python\nimport os\n\n# Default to False for safety\nON_HEROKU = 'DYNO' in os.environ\n\nif ON_HEROKU:\n    # Heroku specific settings\n    DEBUG = False  # Disable debugging on Heroku for security\n    # Other Heroku specific settings\nelse:\n    # Development specific settings\n    DEBUG = True  # Enable debugging in development\n    # Other development specific settings\n```\n\nIn this setup, you can easily toggle settings based on whether your app is running on Heroku or not. This approach is clean and convenient since it leverages Heroku's built-in environment variables without requiring any additional configuration on your part.\n\nRemember to keep your `DEBUG` setting as `False` in production to avoid leaking sensitive information."
+    }
+]
