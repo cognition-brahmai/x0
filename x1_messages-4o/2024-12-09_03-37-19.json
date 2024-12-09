@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I create a read-only class property in Python? I tried to do it using the following code:\n\n```python\nclass foo:\n    x = 4\n    @property\n    @classmethod\n    def number(cls):\n        return x\n```\n\nHowever, when I call `foo.number`, instead of getting `4`, I'm getting `<property object at 0x101786c58>`. How can I correct this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To create a read-only class property in Python, you can use a combination of the `property` decorator and a class method. In your example, the issue arises because the `property` decorator is typically used with instance methods, not class methods. However, you can achieve the desired behavior by using a slightly different approach. Here's how you can do it:\n\n```python\nclass Foo:\n    _x = 4\n\n    @classmethod\n    @property\n    def number(cls):\n        return cls._x\n\n# Usage\nprint(Foo.number)  # Output: 4\n```\n\nIn this example, `_x` is a class attribute, and `number` is a class property that allows read-only access to `_x`. The `@classmethod` decorator is used to access class-level attributes, and the `@property` decorator makes `number` a read-only property. This way, you can access `Foo.number` to get the value `4`."
+    }
+]
