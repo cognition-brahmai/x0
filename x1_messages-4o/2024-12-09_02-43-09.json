@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I display multiple images, which are loaded as NumPy arrays, in a single IPython Notebook cell? I know that I can use `plt.imshow(ima)` to display a single image but I want to display more than one. When I try to use a loop to display the images, I simply get a broken image link.\n\n```python\nfor ima in images:\n    display(Image(ima))\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To display multiple images in a single IPython Notebook cell, you can make use of matplotlib's subplot functionality. This allows you to create a grid of plots and display an image in each plot. Here's how you can do it:\n\n```python\nimport matplotlib.pyplot as plt\nimport numpy as np\n\n# Assuming `images` is a list of NumPy arrays representing the images\nimages = [...]  # Your list of images here\n\n# Determine the number of images to display\nnum_images = len(images)\n\n# Set up the figure and the axes\nfig, axes = plt.subplots(1, num_images, figsize=(15, 5))  # Adjust the figsize as needed\n\n# If there's only one image, axes won't be a list, so we need to handle that case\nif num_images == 1:\n    axes = [axes]\n\n# Iterate over the images and the axes\nfor ax, ima in zip(axes, images):\n    ax.imshow(ima)\n    ax.axis('off')  # Hide the axes\n\n# Display the plot\nplt.show()\n```\n\nThis code will create a single row of subplots and display each image in its respective subplot. The `figsize` can be adjusted to control the overall size of the output. Additionally, `ax.axis('off')` is used to hide the axes for a cleaner display of the images."
+    }
+]

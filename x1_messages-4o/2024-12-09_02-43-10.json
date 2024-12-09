@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am currently working on a Django project and I am using Pylint for static code analysis. While using a piece of code from Django REST framework tutorial, Pylint raises a warning message (w0707) on my `get_object` method within the `SnippetDetail` class. The code is as follows:\n\n```python\nclass SnippetDetail(APIView):\n    \"\"\"\n    Retrieve, update or delete a snippet instance.\n    \"\"\"\n    def get_object(self, pk):\n        try:\n            return Snippet.objects.get(pk=pk)\n        except Snippet.DoesNotExist:\n            raise Http404\n```\n\nThe warning message I receive from Pylint is as follows:\n\n```python\nConsider explicitly re-raising using the 'from' keyword\n```\n\nI'm not quite sure how I should modify my code to correct this issue. Could you provide a solution or explain what Pylint is suggesting?"
+    },
+    {
+        "role": "assistant",
+        "content": "Pylint is suggesting that when you catch an exception and raise a new one, it's often helpful to use the `from` keyword to explicitly indicate that the new exception was raised while handling another exception. This can provide better context and traceback information, making it easier to debug issues.\n\nIn your `get_object` method, you can modify the code to include the `from` keyword when raising the `Http404` exception. Here\u2019s how you can do it:\n\n```python\nfrom django.http import Http404\nfrom rest_framework.exceptions import NotFound\n\nclass SnippetDetail(APIView):\n    \"\"\"\n    Retrieve, update or delete a snippet instance.\n    \"\"\"\n    def get_object(self, pk):\n        try:\n            return Snippet.objects.get(pk=pk)\n        except Snippet.DoesNotExist as e:\n            raise Http404 from e\n```\n\nBy using `raise Http404 from e`, you\u2019re explicitly stating that the `Http404` exception is being raised in response to the `Snippet.DoesNotExist` exception. This can help with debugging by maintaining the context of the original exception."
+    }
+]
