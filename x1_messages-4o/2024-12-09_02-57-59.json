@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a problem with a Python class I am creating, specifically with its constructor and default values. When I try to use the Node class below, the 'wordList' and 'adjacencyList' variables seem to be shared between all instances of Node. Here's the code I'm working with:\n\n```python\nclass Node:\n    def __init__(self, wordList = [], adjacencyList = []):\n        self.wordList = wordList\n        self.adjacencyList = adjacencyList\n\na = Node()\nb = Node()\na.wordList.append(\"hahaha\")\nb.wordList  # returns ['hahaha']\nb.adjacencyList.append(\"hoho\")\na.adjacencyList  # returns ['hoho']\n```\n\nIs there a way to keep using the default values (empty list in this case) for the constructor parameters but have each instance of 'a' and 'b' possess their own unique 'wordList' and 'adjacencyList' variables? I am using python 3.1.2."
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering is due to the way default mutable arguments work in Python. When you use a mutable object (like a list or dictionary) as a default value for a function or method parameter, the same object is used across all calls to that function or method. This is why, in your case, the `wordList` and `adjacencyList` lists are shared across all instances of the `Node` class.\n\nTo resolve this issue, you should use `None` as the default value and then assign a new list inside the constructor if the argument is `None`. Here's how you can modify your code:\n\n```python\nclass Node:\n    def __init__(self, wordList=None, adjacencyList=None):\n        if wordList is None:\n            wordList = []\n        if adjacencyList is None:\n            adjacencyList = []\n        self.wordList = wordList\n        self.adjacencyList = adjacencyList\n\na = Node()\nb = Node()\na.wordList.append(\"hahaha\")\nprint(b.wordList)  # Now returns []\nb.adjacencyList.append(\"hoho\")\nprint(a.adjacencyList)  # Now returns []\n```\n\nWith this change, each instance of `Node` will have its own separate `wordList` and `adjacencyList`, and they won't interfere with each other."
+    }
+]

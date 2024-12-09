@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm trying to add 3 months to a date in a Pandas dataframe while keeping it in the date format, so I can use it to look up a range. However, when I try to calculate the future date by adding a future period to the existing date, I encounter an error. Can anyone help me solve this? Below is the code I've tried and the error I'm getting:\n\n```python\n#create dataframe\ndf = pd.DataFrame([pd.Timestamp('20161011'), pd.Timestamp('20161101') ], columns=['date'])\n\n#create a future month period\nplus_month_period = 3\n\n#calculate date + future period\ndf['future_date'] = plus_month_period.astype(\"timedelta64[M]\")\n```\n\nAnd the error message is:\n\n```python\nAttributeError: 'int' object has no attribute 'astype'\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering is because you're trying to use the `astype` method on an integer, which is not correct. Instead, you should use the `DateOffset` feature from Pandas to add a specific number of months to your dates. Here's how you can modify your code to achieve the desired result:\n\n```python\nimport pandas as pd\n\n# Create dataframe\ndf = pd.DataFrame([pd.Timestamp('20161011'), pd.Timestamp('20161101')], columns=['date'])\n\n# Create a future month period\nplus_month_period = 3\n\n# Calculate date + future period using DateOffset\ndf['future_date'] = df['date'] + pd.DateOffset(months=plus_month_period)\n\nprint(df)\n```\n\nThis code will add three months to each date in the 'date' column and store the result in the 'future_date' column. The `pd.DateOffset` function is a convenient way to add time-based offsets to dates in Pandas."
+    }
+]

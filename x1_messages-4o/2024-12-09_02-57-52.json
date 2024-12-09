@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python numpy, there is an unwrap function which unwraps radian phase p by changing absolute jumps greater than discont to their 2*pi complement along the given axis. I'm interested in doing the reverse. How can I wrap an array of phases, in other words, how can I convert all angles to constrain them between -\u03c0 and \u03c0? I tried using a for loop as shown below, but I'm wondering if there is a simpler or faster method.\n\n```python\nfor i, a in enumerate(phases):\n    while a < pi:\n        a += 2 * pi\n    while a > pi:\n        a -= 2 * pi\n    phases[i] = a\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "You can achieve this in a more efficient and concise manner using NumPy's vectorized operations. Here's how you can wrap an array of phases to be constrained between \\(-\\pi\\) and \\(\\pi\\):\n\n```python\nimport numpy as np\n\ndef wrap_phases(phases):\n    # Use modulo to wrap the phases to the range [0, 2*pi)\n    wrapped_phases = np.mod(phases + np.pi, 2 * np.pi)\n    # Shift the range from [0, 2*pi) to [-pi, pi)\n    wrapped_phases = wrapped_phases - np.pi\n    return wrapped_phases\n\n# Example usage\nphases = np.array([0, 2*np.pi, 3*np.pi, -4*np.pi, 5])\nwrapped_phases = wrap_phases(phases)\nprint(wrapped_phases)\n```\n\n### Explanation:\n1. **Addition and Modulo Operation**: \n   - First, add \\(\\pi\\) to shift the range from \\([-\u03c0, \u03c0]\\) to \\([0, 2\\pi]\\).\n   - Use `np.mod` to apply the modulo operation with \\(2\\pi\\), which wraps values into the range \\([0, 2\\pi)\\).\n\n2. **Adjust Range**:\n   - Subtract \\(\\pi\\) to shift the range back to \\([-\u03c0, \u03c0]\\).\n\nThis vectorized approach is much faster and cleaner than using a loop, especially for large arrays, because it leverages NumPy's optimized operations."
+    }
+]
