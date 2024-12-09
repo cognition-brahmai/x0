@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "What is the equivalent of GetTickCount() function in Linux? Currently, I am using Python's time.time() function which I believe calls through to gettimeofday(). However, I am concerned that the time returned (the unix epoch), may change erratically if the clock is messed with, such as by NTP. Is there a simple process or system wall time function available in C or Python that only increases positively at a constant rate?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Linux, if you are looking for a function similar to `GetTickCount()` that provides a monotonically increasing value, you can use `clock_gettime()` with the `CLOCK_MONOTONIC` clock in C. This clock is not affected by adjustments to the system time (e.g., via NTP) and only increases at a constant rate since the system was booted.\n\nHere's a simple example in C:\n\n```c\n#include <stdio.h>\n#include <time.h>\n\nint main() {\n    struct timespec ts;\n    clock_gettime(CLOCK_MONOTONIC, &ts);\n    printf(\"Monotonic time: %ld.%09ld seconds\\n\", ts.tv_sec, ts.tv_nsec);\n    return 0;\n}\n```\n\nIn Python, you can achieve similar functionality using the `time.monotonic()` function, which provides a monotonically increasing clock that cannot go backwards:\n\n```python\nimport time\n\nmonotonic_time = time.monotonic()\nprint(f\"Monotonic time: {monotonic_time} seconds\")\n```\n\nBoth of these options provide a time measurement that increases at a constant rate and is not affected by system time changes."
+    }
+]
