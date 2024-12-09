@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to sum a list of counters in Python like this: \n\n```python\ncounter_list = [Counter({\"a\":1, \"b\":2}), Counter({\"b\":3, \"c\":4})]\n```\n\nI want to get the following output: `Counter({'b': 5, 'c': 4, 'a': 1})`. I tried summing up the counters using a loop and it worked:\n\n```python\ncounter_master = Counter()\nfor element in counter_list:\n    counter_master = counter_master + element\n```\n\nHowever, when I tried this: `counter_master = sum(counter_list)`, I got a TypeError: `unsupported operand type(s) for +: 'int' and 'Counter'`. I am confused because I know it's possible to add counters together. So why am I not able to sum them up?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're facing is due to how the `sum` function works in Python. The `sum` function is primarily designed for summing numbers and it uses `0` as the starting point by default, which causes the `TypeError` when it tries to add `0` (an integer) to a `Counter` object.\n\nTo sum a list of `Counter` objects, you can use the `sum` function with an appropriate starting value, which should be an empty `Counter`. Here's how you can do it:\n\n```python\nfrom collections import Counter\n\ncounter_list = [Counter({\"a\": 1, \"b\": 2}), Counter({\"b\": 3, \"c\": 4})]\ncounter_master = sum(counter_list, Counter())\n\nprint(counter_master)\n```\n\nBy providing `Counter()` as the starting value, you're allowing the `sum` function to correctly add the `Counter` objects together. This will give you the desired output: `Counter({'b': 5, 'c': 4, 'a': 1})`."
+    }
+]

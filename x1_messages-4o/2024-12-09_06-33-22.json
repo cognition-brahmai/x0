@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working on a Python project where I need to check if a given parameter is a Python module. I attempted to use 'isinstance' function but it threw an error because there's no type like module or package. I am aware that I can use 'type' function to get the type of the parameter but I am not sure what to compare it with. I also tried creating a simple module to find methods in modules and get help texts for them. How can I check if a parameter is a Python module in pythonic way?\n\nHere is my attempt:\n\n```python\n>>> os\n<module 'os' from '/usr/lib/python2.6/os.pyc'>\n\n>>> isinstance(os, module)\nTraceback (most recent call last):\n  File \"/usr/lib/gedit-2/plugins/pythonconsole/console.py\", line 290, in __run\n    r = eval(command, self.namespace, self.namespace)\n  File \"<string>\", line 1, in <module>\nNameError: name 'module' is not defined\n\n>>> type(os)\n<type 'module'>    \n\ndef gethelp(module, sstring):\n    for func in listseek(dir(module), sstring):\n        help(module.__dict__[func])\n```\n\nBut I need to check if the module is a module before running the loop."
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, you can check if a given parameter is a module by comparing its type to the built-in `types.ModuleType`. Here's how you can do it:\n\n```python\nimport types\nimport os\n\ndef is_module(obj):\n    return isinstance(obj, types.ModuleType)\n\n# Example usage\nprint(is_module(os))  # Should return True\nprint(is_module(42))  # Should return False\n```\n\nIn this code, we import the `types` module, which contains the `ModuleType` that represents the type of all module objects. The `is_module` function uses `isinstance` to check if the provided object is of type `ModuleType`.\n\nYou can then use this `is_module` function to check if a parameter is a module before proceeding with your logic for processing modules."
+    }
+]

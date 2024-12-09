@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Can someone explain how the unary bit-wise operation ~ (invert) works in Python? I have the following code:\n\n```python\na = 1\nprint(~a)  #-2\nb = 15\nprint(~b)  #-16\n```\n\nI am confused about the output. I thought `~a` would be something like this:\n\n```\n0001 = a\n1110 = ~a \n```\n\nWhy is this not the case?"
+    },
+    {
+        "role": "assistant",
+        "content": "The confusion arises from how the bitwise NOT operator `~` works in Python, which is based on two's complement notation for representing signed integers.\n\nHere's how it works:\n\n1. **Binary Representation**: In Python, integers are represented using a system known as two's complement. This system allows for the representation of both positive and negative numbers.\n\n2. **Two's Complement**: To find the two's complement of a number, you invert all the bits and add 1 to the least significant bit (LSB).\n\nLet's break down the operations for your examples:\n\n- **For `a = 1`:**\n  - The binary representation of `1` is `0001` (considering it in a 4-bit system for simplicity, but Python uses a larger bit-length).\n  - Inverting the bits: `1110`\n  - In two's complement, `1110` represents `-2`.\n\n- **For `b = 15`:**\n  - The binary representation of `15` is `1111` (again, considering it in a 4-bit system).\n  - Inverting the bits: `0000`\n  - In two's complement, `0000` represents `-16`.\n\nWhat's happening here is that the `~` operator inverts all the bits of the number. In the case of two's complement:\n\n- `~x` is equivalent to `-x - 1`.\n\nSo, for your examples:\n- `~1` results in `-1 - 1 = -2`.\n- `~15` results in `-15 - 1 = -16`.\n\nThis is why you see those results when using the `~` operator in Python."
+    }
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I delete rows in a Python pandas DataFrame where the column 'Event Name' matches a specific pattern? The pattern I have is \"( \\\\((MoM|QoQ)\\\\))\" and I need to apply this to a dataframe with over 100k rows."
+    },
+    {
+        "role": "assistant",
+        "content": "To delete rows in a pandas DataFrame where the 'Event Name' column matches a specific pattern, such as \"( \\\\((MoM|QoQ)\\\\))\", you can use the `str.contains()` method combined with boolean indexing. Here's a step-by-step guide on how you can achieve this:\n\n1. Import the necessary libraries.\n2. Use the `str.contains()` method to create a boolean mask for the rows that match the pattern.\n3. Invert the mask to select rows that do not match the pattern.\n4. Use this inverted mask to filter the DataFrame.\n\nHere's the complete code:\n\n```python\nimport pandas as pd\n\n# Sample DataFrame\ndata = {\n    'Event Name': ['Event1 (MoM)', 'Event2', 'Event3 (QoQ)', 'Event4'],\n    'Value': [10, 20, 30, 40]\n}\n\ndf = pd.DataFrame(data)\n\n# Pattern to match\npattern = r\"\\s+\\((MoM|QoQ)\\)$\"\n\n# Create a boolean mask for rows that match the pattern\nmask = df['Event Name'].str.contains(pattern, regex=True)\n\n# Invert the mask to select rows that do not match the pattern\ndf_filtered = df[~mask]\n\n# Display the resulting DataFrame\nprint(df_filtered)\n```\n\nExplanation:\n- `str.contains(pattern, regex=True)` finds rows where 'Event Name' matches the specified regex pattern.\n- The `~` operator is used to invert the boolean mask, so you can select rows that do not match the pattern.\n- The resulting `df_filtered` DataFrame will contain only the rows where 'Event Name' does not match the pattern.\n\nThis method should work efficiently even for a DataFrame with over 100k rows."
+    }
+]
