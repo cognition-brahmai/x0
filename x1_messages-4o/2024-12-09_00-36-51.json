@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I achieve a non-shuffled train/test split in sklearn? Currently, I am using the following code:\n\n```python\nfrom sklearn.model_selection import train_test_split\ntrain_test_split([1,2,3,4,5,6])\n```\n\nThis returns a random shuffled output like `[[1, 6, 4, 2], [5, 3]]`. However, I want to achieve a non-shuffled output like `[[1,2,3,4], [5,6]]`. \n\nCurrently, I am using the following code to achieve this:\n\n```python\ntrain, test = data[:int(len(data) * 0.75)], data[int(len(data) * 0.75):]\n```\n\nBut, I am hoping for a more concise solution. I have opened an issue on sklearn which you can see [here](https://github.com/scikit-learn/scikit-learn/issues/8844).\n\nMoreover, my PR has been merged indicating that you can pass the parameter `shuffle=False` to `train_test_split` to obtain a non-shuffled split in scikit-learn version 0.19. But, is there any other way to achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, there is a more concise way to achieve a non-shuffled train/test split using the `train_test_split` function from `sklearn.model_selection`. As you've mentioned, starting from scikit-learn version 0.19, you can simply set the `shuffle` parameter to `False` to prevent the data from being shuffled. Here's how you can do it:\n\n```python\nfrom sklearn.model_selection import train_test_split\n\ndata = [1, 2, 3, 4, 5, 6]\ntrain, test = train_test_split(data, test_size=0.25, shuffle=False)\n\nprint(\"Train:\", train)\nprint(\"Test:\", test)\n```\n\nThis will give you the desired non-shuffled output:\n\n```\nTrain: [1, 2, 3, 4]\nTest: [5, 6]\n```\n\nWith this approach, you no longer need to manually slice the data. The `train_test_split` function will handle the partitioning for you while preserving the order of the data."
+    }
+]
