@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I execute a query in SQLAlchemy where I need to bind the list [123, 456] to the IN clause at execution time? The SQL query I'm trying to replicate is:\n\n```sql\nSELECT id, name FROM user WHERE id IN (123, 456)\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "In SQLAlchemy, you can execute a query with a dynamic list of values for an `IN` clause using the `in_` method. To bind the list at execution time, you can use a parameterized query. Here's how you can achieve this:\n\n```python\nfrom sqlalchemy import create_engine, select, Table, MetaData, Column, Integer, String\nfrom sqlalchemy.sql import bindparam\n\n# Setup the database engine and metadata\nengine = create_engine('your_database_url')\nmetadata = MetaData()\n\n# Define the user table\nuser_table = Table('user', metadata,\n                   Column('id', Integer),\n                   Column('name', String))\n\n# Create a list of IDs you want to bind to the query\nids_to_lookup = [123, 456]\n\n# Construct the query\nquery = select(user_table.c.id, user_table.c.name).where(user_table.c.id.in_(bindparam('ids')))\n\n# Execute the query\nwith engine.connect() as connection:\n    result = connection.execute(query, {'ids': ids_to_lookup})\n    for row in result:\n        print(row)\n\n```\n\n### Explanation:\n1. **`in_` method**: The `in_` method is used to generate an SQL `IN` clause.\n2. **`bindparam`**: This function is used to create a bind parameter that you can substitute with a list at execution time.\n3. **Parameterized Execution**: When executing the query, pass a dictionary where the key is the parameter name (`'ids'` in this case) and the value is the list of IDs you want to bind.\n\nThis approach is efficient and prevents SQL injection while allowing you to dynamically bind a list of values to your SQL query."
+    }
+]
