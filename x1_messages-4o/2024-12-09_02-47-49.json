@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, do overridden methods inherit decorators? For instance, consider the following classes A and B. Class B inherits from Class A and overrides a decorated method. Will the overridden method in Class B maintain the decorator as in the following code?\n\n```python\nclass A:\n    @memoized\n    def fun(self, arg):\n        return None\n\n\nclass B(A):\n    def fun(self, arg):\n        #computations\n        return something\n```\n\nSo, does calling B.fun() maintain the decorator?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, when you override a method in a subclass, the overridden method does not automatically inherit decorators that were applied to the method in the superclass. Decorators are applied at the time the function is defined, so when you define `fun` in class `B`, it does not inherit any decorators from `fun` in class `A`. \n\nIn your example, the `fun` method in class `B` will not have the `@memoized` decorator unless you explicitly apply it again in the subclass. If you want the overridden method in `B` to maintain the decorator, you need to apply the `@memoized` decorator explicitly to the `fun` method in `B` as well, like this:\n\n```python\nclass B(A):\n    @memoized\n    def fun(self, arg):\n        # computations\n        return something\n```\n\nBy doing this, you ensure that the `fun` method in class `B` has the same decorator as in class `A`."
+    }
+]
