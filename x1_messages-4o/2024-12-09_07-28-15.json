@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working with a DataFrame in Pandas, where I want to add a new column that is the result of division of two existing columns. I am using the following code to perform the operation: `df['$/hour'] = df['$']/df['hours']`. Although this works, I am encountering an issue when the value in ['hours'] is less than 1. In such cases, the resulting value in ['$/hour'] is greater than the value in ['$'], which is not the desired output. How can I modify the operation so that if ['hours'] < 1, then df['$/hour'] equals df['$']?"
+    },
+    {
+        "role": "assistant",
+        "content": "You can achieve this by using the `numpy.where` function, which allows you to set conditions for your operations. In this case, you want to check if the value in the `['hours']` column is less than 1, and if so, set the `['$/hour']` to the value in `['$']`. Otherwise, perform the division. Here's how you can do it:\n\n```python\nimport numpy as np\nimport pandas as pd\n\n# Assuming you already have your DataFrame 'df'\ndf['$/hour'] = np.where(df['hours'] < 1, df['$'], df['$'] / df['hours'])\n```\n\nThis code will check each row in the `['hours']` column. If it's less than 1, it assigns the value from `['$']` to `['$/hour']`. Otherwise, it performs the division of `['$']` by `['hours']`."
+    }
+]
