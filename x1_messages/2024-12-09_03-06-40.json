@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In JavaScript, write a function that uses the Fetch API to make a GET request to a provided URL. The function should return a Promise that resolves with the JSON response if the status code is in the 200 range, and rejects otherwise. PLAINFORMAT"
+    },
+    {
+        "role": "assistant",
+        "content": "Sure! Here's a function that uses the Fetch API to make a GET request to a provided URL and returns a Promise that resolves with the JSON response if the status code is in the 200 range, and rejects otherwise:\n\n```javascript\nfunction fetchJson(url) {\n  return fetch(url)\n    .then(response => {\n      if (response.ok) {\n        return response.json();\n      } else {\n        return Promise.reject(new Error('Request failed with status code ' + response.status));\n      }\n    })\n    .catch(error => {\n      console.error('An error occurred:', error);\n      throw error;\n    });\n}\n```\n\nYou can use this function by passing the URL you want to fetch as an argument. For example:\n\n```javascript\nfetchJson('https://api.example.com/data')\n  .then(data => {\n    console.log(data);\n  })\n  .catch(error => {\n    console.error('Error fetching data:', error);\n  });\n```\n\nThis function handles the fetching of the URL, checks if the response is successful (status code in the 200 range), parses the JSON response, and handles any errors that may occur during the process."
+    }
+]
