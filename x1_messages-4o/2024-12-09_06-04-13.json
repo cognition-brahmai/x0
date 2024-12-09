@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, I am using `concurrent.futures.ThreadPoolExecutor` to execute a number of tasks concurrently. I want my program to wait until all these tasks have finished before it continues with the rest of the execution. How can I accomplish this without having to save all the futures and call `wait` on them? Is there a method I can call on the executor itself?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can accomplish this by using the `shutdown` method of the `ThreadPoolExecutor` class. When you call `shutdown(wait=True)` on the executor, it will wait for all the tasks to complete before proceeding with the rest of the program. This way, you don't need to save all the futures or call `wait` on them individually.\n\nHere's an example of how you can use it:\n\n```python\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef task(n):\n    print(f\"Task {n} is starting.\")\n    # Simulate a task taking some time\n    import time\n    time.sleep(1)\n    print(f\"Task {n} is completed.\")\n    return n\n\n# Create a ThreadPoolExecutor\nwith ThreadPoolExecutor(max_workers=5) as executor:\n    # Submit tasks to the executor\n    for i in range(10):\n        executor.submit(task, i)\n    \n    # The executor will automatically wait for all tasks to complete when exiting the `with` block\n    # This is equivalent to executor.shutdown(wait=True)\n\nprint(\"All tasks are completed. Continuing with the rest of the program.\")\n```\n\nIn this example, the `with` statement is used to create a context manager for the `ThreadPoolExecutor`. When the block is exited, `shutdown(wait=True)` is called automatically. This ensures that all tasks have been completed before the program continues with the rest of the execution."
+    }
+]
