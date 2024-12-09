@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a pandas dataframe which contains NaN values in some cells. I want to retrieve indices of columns containing NaN values for each row. For instance, if the dataframe is as follows:\n\n```\n      A    B    C    D\n0  11.4  1.3  2.0  NaN\n1  11.4  1.3  NaN  NaN\n2  11.4  1.3  2.8  0.7\n3  NaN   NaN  2.8  0.7\n```\n\nI want to get a list like this: `[ ['D'],['C','D'],['A','B'] ]`, which represents the column indices with NaN values in each row. I've already added a column with the count of NaN for each row and got the indices of each row containing NaN values. I'm looking for a pandas way to be able to deal with my huge dataset without having to test each column for each row with `if df.ix[i][column] == NaN:`. How can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "You can achieve this by leveraging the `apply` function along with a lambda function to iterate over each row and check for `NaN` values. Here's a concise way to do it using pandas:\n\n```python\nimport pandas as pd\nimport numpy as np\n\n# Sample DataFrame\ndata = {\n    'A': [11.4, 11.4, 11.4, np.nan],\n    'B': [1.3, 1.3, 1.3, np.nan],\n    'C': [2.0, np.nan, 2.8, 2.8],\n    'D': [np.nan, np.nan, 0.7, 0.7]\n}\n\ndf = pd.DataFrame(data)\n\n# Function to get column names with NaN values for each row\nnan_columns = df.apply(lambda row: row.index[row.isna()].tolist(), axis=1)\n\n# Convert the result into a list\nnan_columns_list = nan_columns.tolist()\n\nprint(nan_columns_list)\n```\n\nThis will output:\n\n```\n[['D'], ['C', 'D'], [], ['A', 'B']]\n```\n\nExplanation:\n- `df.apply(...)` applies a function along the rows (axis=1).\n- `row.index[row.isna()]` retrieves the index (column names) where the value is `NaN`.\n- `.tolist()` converts the resulting index objects to a list.\n\nThis approach efficiently handles large datasets by leveraging vectorized operations in pandas, avoiding explicit loops or condition checks for each element."
+    }
+]
