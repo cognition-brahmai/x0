@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a generator (numbers) and a value (number), and I want to iterate over these as if they were one sequence. I tried to use the following code, but it creates three tuples only to immediately discard them and also copies items in my_generator once:\n\n```python\ni for i in tuple(my_generator) + (my_value,)\n```\n\nI also have a function that seems to be a better approach:\n\n```python\ndef con(seq, item):\n    for i in seq:\n        yield seq\n    yield item\n\ni for i in con(my_generator, my_value)\n```\n\nHowever, I'm wondering if it's possible to accomplish this without defining a function."
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! You can achieve this without defining a separate function by using the `itertools.chain` function from the `itertools` module. This function allows you to chain multiple iterables together without creating unnecessary tuples or copies. Here's how you can use it:\n\n```python\nimport itertools\n\n# Assuming my_generator is your generator and my_value is your value\ncombined = itertools.chain(my_generator, (my_value,))\n\n# You can iterate over the combined sequence like this\nfor i in combined:\n    print(i)\n```\n\nThis approach efficiently chains the generator and the single value together into one iterable sequence. The `itertools.chain` function is optimized for such operations and doesn't create intermediate copies, making it memory-efficient."
+    }
+]
