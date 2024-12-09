@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I store a \"blob\" of binary data using Django's ORM, with a PostgreSQL backend? I'm currently trying to use a TextField but I am encountering errors when my binary data doesn't strictly conform to the model's encoding type, which is unicode by default. An example of the error I receive is \"psycopg2.DataError: invalid byte sequence for encoding \"UTF8\": 0xe22665\". Using ImageField or FileField is impractical for my application; is there a workaround for this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To store binary data in a Django model with a PostgreSQL backend, you should use Django's `BinaryField`. `BinaryField` is specifically designed to handle binary data, which makes it a suitable choice for storing blobs.\n\nHere's how you can define a model with a `BinaryField`:\n\n```python\nfrom django.db import models\n\nclass MyModel(models.Model):\n    binary_data = models.BinaryField()\n\n    # Add other fields as necessary\n```\n\nWhen using `BinaryField`, you can store any binary data directly without worrying about encoding issues. This field type is mapped to the `bytea` type in PostgreSQL, which is ideal for storing binary data.\n\nHere's an example of how to save binary data to your model:\n\n```python\n# Assuming `MyModel` is imported\n\n# Your binary data\nblob_data = b'\\xe2\\x26\\x65\\x00\\xff'\n\n# Create an instance of MyModel and save the binary data\nmy_instance = MyModel(binary_data=blob_data)\nmy_instance.save()\n```\n\nAnd to retrieve the binary data:\n\n```python\n# Retrieve the instance\nretrieved_instance = MyModel.objects.get(id=my_instance.id)\n\n# Access the binary data\nretrieved_blob_data = retrieved_instance.binary_data\n```\n\nMake sure that the binary data you are working with is treated as bytes (prefix your data with `b'...'` if necessary) to ensure it's handled correctly by the ORM and the database. This approach should resolve the encoding errors you were encountering with `TextField`."
+    }
+]
