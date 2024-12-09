@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I create a custom exception in Python that prints a default message when raised without any arguments? For example, I want to be able to call a custom exception like this:\n\n```python\nclass CustomException(Exception):\n    pass # some code\n\nraise CustomException()\n```\n\nAnd I want the output to be:\n\n```python\nTraceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\n__main__.CustomException: This is a default message!\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To create a custom exception in Python that prints a default message when raised without any arguments, you can override the `__init__` method to set a default message and the `__str__` method to return that message. Here's how you can do it:\n\n```python\nclass CustomException(Exception):\n    def __init__(self, message=\"This is a default message!\"):\n        super().__init__(message)\n        self.message = message\n\n    def __str__(self):\n        return self.message\n\n# Example usage\ntry:\n    raise CustomException()\nexcept CustomException as e:\n    print(e)  # This will print: This is a default message!\n```\n\nIn this implementation:\n\n- The `__init__` method sets a default value for the `message` parameter and calls the parent class's `__init__` method with this message.\n- The `__str__` method is overridden to return the message, ensuring that when the exception is printed, the message is displayed.\n\nThis way, when you raise `CustomException()` without any arguments, it will display the default message you've set."
+    }
+]
