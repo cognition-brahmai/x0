@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I efficiently return only those rows from a pandas DataFrame in Python, which contain missing values?"
+    },
+    {
+        "role": "assistant",
+        "content": "To efficiently return only the rows from a pandas DataFrame that contain missing values, you can use the `isnull()` method combined with `any()` to identify rows with any missing values. Here's a step-by-step approach:\n\n1. Use `isnull()` to create a DataFrame of the same shape as your original DataFrame, where each entry is `True` if the corresponding entry in the original DataFrame is missing, and `False` otherwise.\n\n2. Use `any(axis=1)` on the result to get a boolean Series indicating which rows contain at least one missing value.\n\n3. Use this boolean Series to filter the original DataFrame.\n\nHere\u2019s how you can do it in code:\n\n```python\nimport pandas as pd\nimport numpy as np\n\n# Example DataFrame\ndata = {\n    'A': [1, 2, np.nan, 4],\n    'B': [np.nan, 2, 3, 4],\n    'C': [1, np.nan, 3, 4]\n}\n\ndf = pd.DataFrame(data)\n\n# Identify rows with any missing values\nrows_with_missing_values = df.isnull().any(axis=1)\n\n# Filter the DataFrame to get only those rows\nresult = df[rows_with_missing_values]\n\nprint(result)\n```\n\nIn this example, `result` will contain only the rows from the original DataFrame `df` that have at least one missing value. This approach is efficient and leverages pandas' built-in functionalities to handle missing data."
+    }
+]
