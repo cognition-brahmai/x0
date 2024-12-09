@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm using Flask-SQLAlchemy to query a database of users. When I use the following code:\n\n```python\nuser = models.User.query.filter_by(username=\"ganye\").first()\n```\n\nI get the expected return:\n\n```python\n<User u'ganye'>\n```\n\nHowever, when I try to query the same username but with uppercase letters like this:\n\n```python\nuser = models.User.query.filter_by(username=\"GANYE\").first()\n```\n\nI get `None` as a return. Is there a way to query the database in a case insensitive way, so that the second example will still return the user?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can perform a case-insensitive query using SQLAlchemy by using the `ilike()` method instead of `filter_by()`. The `ilike()` function performs a case-insensitive match, which is what you need in this situation.\n\nHere's how you can modify your query:\n\n```python\nfrom sqlalchemy import func\n\nuser = models.User.query.filter(func.lower(models.User.username) == func.lower(\"GANYE\")).first()\n```\n\nAlternatively, if you are using PostgreSQL, you can use the `ilike()` function directly:\n\n```python\nuser = models.User.query.filter(models.User.username.ilike(\"GANYE\")).first()\n```\n\nBoth of these methods should return the user regardless of the case used in the query. Note that the `ilike()` method is specific to PostgreSQL, while the `func.lower()` method can be used with various database backends."
+    }
+]
