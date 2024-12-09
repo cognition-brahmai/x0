@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Django, I am trying to check if a string contains another string within a template. Here is my code:\n\n```django\n{% if 'index.html' in  \"{{ request.build_absolute_uri  }}\" %} \n    'hello'\n{% else %}      \n    'bye'\n{% endif %}\n```\n\nHowever, even though the URL `\"http://127.0.0.1:8000/login?next=/index.html\"` does contain the string `\"index.html\"`, it still prints 'bye'. When I run the same code in a Python shell, it works perfectly. What could be the issue here?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering is due to how Django template language handles string comparisons and expressions. In Django templates, when you use `{{ ... }}` to output a variable, it outputs it as a string in the rendered HTML. However, when you're doing comparisons or checks within `{% if ... %}` tags, you don't need to use `{{ ... }}` to access the variable; you directly reference the variable.\n\nThe problem with your current code is that you are trying to use `{{ request.build_absolute_uri }}` as a string within the `{% if ... %}` tag, which is incorrect. Django templates don't evaluate the variable as expected in this context because it's been converted to a string literal due to the surrounding quotes.\n\nHere's the corrected version of your code:\n\n```django\n{% if 'index.html' in request.build_absolute_uri %}\n    'hello'\n{% else %}\n    'bye'\n{% endif %}\n```\n\nIn this corrected version, you directly reference `request.build_absolute_uri` without using `{{ ... }}` and without surrounding it with quotes. This way, Django can evaluate the expression correctly, and it will check if `'index.html'` is a substring of `request.build_absolute_uri`."
+    }
+]

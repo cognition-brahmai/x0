@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I print a newline in Bash? When I try to do it using the echo command, it just prints \\n as literal text. For example, when I execute the following command:\n```bash\n$ echo -e \"Hello,\\nWorld!\"\n```\nit simply outputs:\n```bash\nHello,\\nWorld!\n```\ninstead of printing \"World!\" on a new line. How can I solve this issue?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're experiencing is due to the fact that the `echo` command's `-e` option is not universally supported to interpret escape sequences like `\\n` across all systems or shell configurations.\n\nTo print a newline in Bash, you can use the following methods:\n\n1. **Using `echo` with `-e` option**: Make sure your shell supports it. Some shells might require different syntax.\n\n   ```bash\n   echo -e \"Hello,\\nWorld!\"\n   ```\n\n2. **Using `printf`**: This is a more portable and reliable method across different environments.\n\n   ```bash\n   printf \"Hello,\\nWorld!\\n\"\n   ```\n\n3. **Using ANSI-C Quoting**: This method works in Bash.\n\n   ```bash\n   echo $'Hello,\\nWorld!'\n   ```\n\n4. **Using `echo` without `-e`**: If your shell does not support `-e`, try using the command without it.\n\n   ```bash\n   echo \"Hello,\nWorld!\"\n   ```\n\nChoose the method that suits your environment and requirement the best. Using `printf` is typically the most reliable choice across different Unix-like systems."
+    }
+]
