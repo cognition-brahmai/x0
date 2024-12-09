@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using Matplotlib in Python to plot simple x-y datasets. When I zoom in very close on different sections of the plotted graph using the Figure View, which appears when you execute `plt.show()`, the x-axis values change from standard number form (like 1050, 1060, 1070 etc.) to scientific form with exponential notation (like 1, 1.5, 2.0 with the x-axis label given as `+1.057e3`). Can I force Matplotlib to retain the simple numbering of the axis, rather than using exponential form?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can force Matplotlib to retain the simple numbering of the axis instead of using scientific notation. You can achieve this by setting the `ScalarFormatter` for the axis and disabling the offset and scientific notation. Here is how you can do it:\n\n```python\nimport matplotlib.pyplot as plt\nimport matplotlib.ticker as ticker\n\n# Example data\nx = [1050, 1060, 1070, 1080, 1090]\ny = [10, 20, 15, 25, 30]\n\n# Plot the data\nplt.plot(x, y)\n\n# Get the current axis\nax = plt.gca()\n\n# Use ScalarFormatter and disable the offset and scientific notation\nax.xaxis.set_major_formatter(ticker.ScalarFormatter())\nax.xaxis.get_major_formatter().set_useOffset(False)\nax.xaxis.get_major_formatter().set_scientific(False)\n\n# Show the plot\nplt.show()\n```\n\nIn this code:\n\n- `ScalarFormatter()` is used to format the ticks on the x-axis.\n- `set_useOffset(False)` disables the offset notation, which is what adds the `+1.057e3` label.\n- `set_scientific(False)` prevents the axis from using scientific notation.\n\nThis will keep the x-axis labels in a simple number format even when you zoom in. Adjust these settings for the y-axis in a similar manner if needed."
+    }
+]
