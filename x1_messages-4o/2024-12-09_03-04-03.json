@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I check if a value exists in a list while selecting from a pandas DataFrame? I have tried the following two approaches:\n\nThe first approach, which looks messy, is this:\n\n```python\ndf_cut = df_new[\n             (\n             (df_new['l_ext']==31) |\n             (df_new['l_ext']==22) |\n             (df_new['l_ext']==30) |\n             (df_new['l_ext']==25) |\n             (df_new['l_ext']==64)\n             )\n            ]\n```\n\nThe second approach, which doesn't work, is this:\n\n```python\ndf_cut = df_new[(df_new['l_ext'] in [31, 22, 30, 25, 64])]\n```\n\nIs there a more elegant and working solution to this problem?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, there is a more elegant way to check if a value exists in a list when selecting from a pandas DataFrame. You can use the `isin()` method, which is specifically designed for this purpose. Here's how you can use it:\n\n```python\ndf_cut = df_new[df_new['l_ext'].isin([31, 22, 30, 25, 64])]\n```\n\nThis approach is clean and efficient, and it will give you the desired subset of the DataFrame where the values in the `'l_ext'` column match any of the values in your list `[31, 22, 30, 25, 64]`."
+    }
+]
