@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "After upgrading to Django 3.0, I am encountering a TemplateSyntaxError which states that 'staticfiles' is not a registered tag library. The error message is as follows:\n\n```\nIn template /Users/alasdair//myproject/myapp/templates/index.html, error at line 1\n'staticfiles' is not a registered tag library. Must be one of: admin_list admin_modify admin_urls cache i18n l10n log static tz\n```\n\nThis error occurs when I try to load my template, which is as follows:\n\n```\n{% load staticfiles %}\n<img src=\"{% static 'my_image.html' %}\">\n```\n\nHow can I resolve this issue?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering is due to the fact that Django 3.0 has deprecated the `{% load staticfiles %}` tag. Instead, you should use the `{% load static %}` tag. The `staticfiles` template tag library was replaced with `static` to simplify the usage and align with the rest of Django's conventions.\n\nTo resolve this issue, you need to update your template to load the correct tag library. Here's how you can fix it:\n\n```django\n{% load static %}\n<img src=\"{% static 'my_image.html' %}\">\n```\n\nThis change will ensure that your template correctly loads the static tag library and resolves the `TemplateSyntaxError` you're encountering. After making this modification, your templates should work without any issues related to the static files."
+    }
+]
