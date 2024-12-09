@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I select literal values in an SQLAlchemy query? I have a query which looks like this:\n\n```python\nquery = session.query(Item) \\\n    .filter(Item.company_id == company_id) \\\n    .order_by(Item.id)\n```\n\nIt's a pretty basic query. But I want to append an additional value into the mix, and have it returned to me. In raw SQL, I would do this:\n\n```sql\nSELECT *, 0 as subscribed\nFROM items\nWHERE company_id = 34\nORDER BY id\n```\n\nHow can I manually add that value via SQLAlchemy?"
+    },
+    {
+        "role": "assistant",
+        "content": "To add a literal value to your query in SQLAlchemy, similar to how you would do it in raw SQL, you can use the `literal` function from `sqlalchemy.sql.expression`. This allows you to select constant values along with your columns from the table. Here's how you can modify your query to include a literal value:\n\n```python\nfrom sqlalchemy.sql import literal\n\nquery = session.query(Item, literal(0).label('subscribed')) \\\n    .filter(Item.company_id == company_id) \\\n    .order_by(Item.id)\n```\n\nIn this example, `literal(0).label('subscribed')` adds a constant column named `subscribed` with a value of `0` to each row in the result set, similar to your raw SQL query. The `label` method is used to name the column in the result set."
+    }
+]
