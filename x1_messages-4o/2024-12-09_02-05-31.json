@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I enable minor ticks only on the y-axis in a linear vs linear plot using Matplotlib? When I use the `minor_ticks_on` function, I observe that the minor ticks appear on both the x and y axes. How can I limit this to the y-axis only?"
+    },
+    {
+        "role": "assistant",
+        "content": "To enable minor ticks only on the y-axis in a Matplotlib plot, you can use the `set_minor_locator` method specifically for the y-axis. The `minor_ticks_on` function affects both axes, but by directly modifying the y-axis using its `set_minor_locator` method, you can control the appearance of minor ticks independently.\n\nHere's how you can achieve this:\n\n1. Import the required modules.\n2. Create your plot.\n3. Use `set_minor_locator` on the y-axis to specify the minor tick locations.\n\nHere's a code example to demonstrate:\n\n```python\nimport matplotlib.pyplot as plt\nimport matplotlib.ticker as ticker\nimport numpy as np\n\n# Sample data\nx = np.linspace(0, 10, 100)\ny = np.sin(x)\n\n# Create the plot\nfig, ax = plt.subplots()\n\nax.plot(x, y)\n\n# Set major ticks locator for y-axis (optional)\nax.yaxis.set_major_locator(ticker.AutoLocator())\n\n# Set minor ticks locator for y-axis\nax.yaxis.set_minor_locator(ticker.AutoMinorLocator())\n\n# Optionally, customize the appearance of the minor ticks\nax.tick_params(axis='y', which='minor', length=4, color='r')\n\n# Show the plot\nplt.show()\n```\n\nExplanation:\n- `AutoMinorLocator()`: Automatically chooses the number of minor ticks based on the scale of the axis.\n- `ax.yaxis.set_minor_locator()`: Applies the minor tick settings only to the y-axis.\n- `ax.tick_params()`: Customizes the appearance of the ticks. Here, `axis='y'` ensures the customization applies only to the y-axis, and `which='minor'` specifies that it should affect minor ticks.\n\nThis will enable minor ticks only on the y-axis, while the x-axis will remain without minor ticks unless explicitly set."
+    }
+]
