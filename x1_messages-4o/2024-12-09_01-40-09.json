@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a class in Python named 'Foo' which has an '__eq__' method defined for comparing attributes for equality. How can I compare two instances of this class for reference equality, meaning to check if they are the same instance? When I try to compare two instances of 'Foo', it returns 'True' even though they are different objects. The code I used is as follows:\n\n```python\nclass Foo(object):\n    # init code...\n\n    def __eq__(self, other):\n        # usual eq code here....\n\nf1 = Foo()\nf2 = Foo()\nprint(f1 == f2)\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, when you define the `__eq__` method in a class, it overrides the default behavior of the `==` operator to compare instances based on the criteria you specify in that method. This is why `f1 == f2` returns `True` even if they are different objects, as long as they meet the equality criteria defined in your `__eq__` method.\n\nTo compare two instances for reference equality (i.e., to check if they are the exact same instance), you should use the `is` operator instead of `==`. The `is` operator checks whether two variables refer to the same object in memory.\n\nHere's how you can modify your code to achieve reference equality check:\n\n```python\nclass Foo(object):\n    # init code...\n\n    def __eq__(self, other):\n        # usual eq code here....\n        pass\n\nf1 = Foo()\nf2 = Foo()\n\n# Check for reference equality\nprint(f1 is f2)  # This will print False since f1 and f2 are different instances.\n\n# Optionally, check if two variables reference the same object\nf3 = f1\nprint(f1 is f3)  # This will print True since f1 and f3 reference the same instance.\n```\n\nThis way, you can distinguish between comparing the content of the objects (`==`) and comparing the objects themselves for identity (`is`)."
+    }
+]
