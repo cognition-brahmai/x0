@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I sum the columns in a 2D list in Python? For instance, I have a 2D list as shown below:\n\n```python\nmy_list =  [ [1,2,3,4],\n             [2,4,5,6] ]\n```\n\nI am able to get the row totals using a list comprehension:\n\n```python\nrow_totals = [ sum(x) for x in my_list ]\n```\n\nHowever, I am struggling to get the column totals without using a double `for` loop. The expected output is:\n\n```python\n[3,6,8,10]\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To sum the columns of a 2D list in Python without using a double `for` loop, you can use the `zip` function in combination with a list comprehension. The `zip` function can transpose the 2D list, allowing you to sum each column as if it were a row. Here's how you can achieve this:\n\n```python\nmy_list = [ [1, 2, 3, 4],\n            [2, 4, 5, 6] ]\n\n# Use zip to transpose the 2D list, then sum each \"row\" of the transposed list\ncolumn_totals = [sum(column) for column in zip(*my_list)]\n\nprint(column_totals)\n```\n\nLet's break down what's happening here:\n\n- `zip(*my_list)` transposes the 2D list. It takes elements from each row at the same index and groups them into tuples, effectively converting columns into rows.\n- The list comprehension `[sum(column) for column in zip(*my_list)]` iterates over each transposed column and calculates the sum.\n\nThis will give you the expected output:\n\n```python\n[3, 6, 8, 10]\n```"
+    }
+]
