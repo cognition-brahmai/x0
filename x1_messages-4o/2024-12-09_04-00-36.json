@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I recently encountered a TypeError in Django 1.11 which stated that the context must be a dict rather than Context. The error was prompted by the following line of code in my form: `message = get_template('email_forms/direct_donation_form_email.html').render(Context(ctx))`. I understand this issue is related to Django 1.11, but I'm not sure how to resolve it. Can you provide guidance on how to fix this error?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Django 1.11, the `Context` class is not required to render a template. Instead, you should use a regular Python dictionary for the context. The error you are encountering is due to passing a `Context` object to the `render` method, which expects a dictionary.\n\nHere's how you can fix this error:\n\n1. Replace the `Context(ctx)` with just `ctx`, assuming `ctx` is already a dictionary.\n\nHere's the modified line of code:\n\n```python\nfrom django.template.loader import get_template\n\nmessage = get_template('email_forms/direct_donation_form_email.html').render(ctx)\n```\n\nMake sure that `ctx` is a dictionary containing all the context variables you need for rendering your template.\n\nIf `ctx` was initially a `Context` object, convert it to a dictionary before passing it to `render`:\n\n```python\nfrom django.template.loader import get_template\n\n# Assuming `ctx` was a Context object, convert it to a dictionary\nctx_dict = dict(ctx)\n\nmessage = get_template('email_forms/direct_donation_form_email.html').render(ctx_dict)\n```\n\nWith these changes, your code should work correctly in Django 1.11."
+    }
+]
