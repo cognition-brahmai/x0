@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm currently learning regex and am trying to define a regular expression in Python that only allows integers, not decimal numbers. I've been able to create a regular expression that allows numbers using '\\d', but it also allows decimal numbers, which is not what I want. My current code is:\n\n```\nprice = TextField(_('Price'), [\n    validators.Regexp('\\d', message=_('This is not an integer number, please see the example and try again')),\n    validators.Optional()])\n```\n\nHow can I modify this code so that it only allows integer inputs?"
+    },
+    {
+        "role": "assistant",
+        "content": "To ensure that your regular expression only allows integer inputs (i.e., whole numbers without any decimal points), you can update your regular expression to match one or more digits from the start to the end of the input. Here's how you can modify your code:\n\n```python\nprice = TextField(_('Price'), [\n    validators.Regexp(r'^\\d+$', message=_('This is not an integer number, please see the example and try again')),\n    validators.Optional()])\n```\n\nHere's a breakdown of the regular expression `r'^\\d+$'`:\n\n- `^`: Asserts the start of the string.\n- `\\d+`: Matches one or more digits. The `+` ensures that there is at least one digit present.\n- `$`: Asserts the end of the string.\n\nBy using `^` at the beginning and `$` at the end, you are ensuring that the entire input string is checked, and only strings that consist entirely of digits will match. This effectively excludes decimal numbers and any other non-integer inputs."
+    }
+]
