@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I replace all strings in a pandas dataframe that contain a specific substring? For instance, in the dataframe below\n\n```python\nimport pandas as pd\ndf = pd.DataFrame({'name': ['Bob', 'Jane', 'Alice'], \n                   'sport': ['tennis', 'football', 'basketball']})\n```\nI would like to replace every string that contains the substring 'ball' (as in 'football' and 'basketball') with 'ball sport'. What would be an effective way to do this, similar to how I can replace exact strings like this:\n\n```python\ndf.replace({'sport': {'football': 'ball sport'}})\n```\nBut instead replacing any string that contains a specific substring, such as 'ball' in this case?"
+    },
+    {
+        "role": "assistant",
+        "content": "To replace strings in a pandas DataFrame that contain a specific substring, you can use the `applymap` function combined with a lambda function. This approach allows you to examine each element of the DataFrame, check for the presence of the substring, and replace it accordingly. Here's how you can do it for your example:\n\n```python\nimport pandas as pd\n\ndf = pd.DataFrame({'name': ['Bob', 'Jane', 'Alice'], \n                   'sport': ['tennis', 'football', 'basketball']})\n\n# Function to replace strings containing the substring 'ball'\ndef replace_substring(value):\n    if 'ball' in value:\n        return 'ball sport'\n    return value\n\n# Apply the function to the 'sport' column\ndf['sport'] = df['sport'].apply(replace_substring)\n\nprint(df)\n```\n\nThis will output:\n\n```\n    name      sport\n0    Bob     tennis\n1   Jane  ball sport\n2  Alice  ball sport\n```\n\nThis method iterates over each element in the 'sport' column, checks if the substring 'ball' is present, and replaces the entire string with 'ball sport' if it is."
+    }
+]
