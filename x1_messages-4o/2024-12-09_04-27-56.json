@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How should I annotate a @classmethod in Python that returns an instance of cls? I have a class called 'Foo' and a classmethod within it, 'with_stuff_appended', which appends some text to a string and returns an instance of the class. However, this method could also be called on any subclass of 'Foo', so simply annotating with -> \"Foo\" doesn't seem accurate. Here's an example of the code I'm working with:\n\n```python\nclass Foo(object):\n    def __init__(self, bar: str):\n        self.bar = bar\n\n    @classmethod\n    def with_stuff_appended(cls, bar: str) -> ???:\n        return cls(bar + \"stuff\")\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, when you're defining a class method that is intended to return an instance of the class (or subclass) it belongs to, you can use the `TypeVar` from the `typing` module to create a generic type variable. This allows you to specify that the return type should match the type of the invoking class, whether it's the base class or a subclass.\n\nHere's how you can annotate the `with_stuff_appended` method in your `Foo` class:\n\n```python\nfrom typing import Type, TypeVar\n\nT = TypeVar('T', bound='Foo')\n\nclass Foo(object):\n    def __init__(self, bar: str):\n        self.bar = bar\n\n    @classmethod\n    def with_stuff_appended(cls: Type[T], bar: str) -> T:\n        return cls(bar + \"stuff\")\n```\n\nExplanation:\n\n- We define a `TypeVar` `T` that is bound to `Foo`. This indicates that `T` can be `Foo` or any subclass of `Foo`.\n- The `cls` parameter in the `with_stuff_appended` method is annotated with `Type[T]`, which means that `cls` is a class object of type `T`.\n- The return type of the method is `T`, which ensures that the method returns an instance of the class type that it was called on.\n\nThis setup allows for accurate type checking, ensuring that if `with_stuff_appended` is called on a subclass of `Foo`, it will return an instance of that subclass."
+    }
+]
