@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I add a placeholder attribute to a field when I initialize it in WTForms? I attempted to add the attribute using the following code, but it seems to be invalid. How can I correctly add a placeholder attribute with a specific value?\n\n```python\nabc = TextField('abc', validators=[Required(), Length(min=3, max=30)], placeholder=\"test\")\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "In WTForms, the `TextField` (or `StringField` in the newer versions) does not directly accept a `placeholder` argument. Instead, you can add a placeholder by using the `render_kw` parameter, which allows you to pass additional HTML attributes to the field. Here's how you can do it:\n\n```python\nfrom wtforms import StringField\nfrom wtforms.validators import DataRequired, Length\n\nabc = StringField('abc', \n                  validators=[DataRequired(), Length(min=3, max=30)],\n                  render_kw={\"placeholder\": \"test\"})\n```\n\nIn this example, `render_kw` is a dictionary where you can specify any HTML attributes you want to include in the rendered input tag. By passing `{\"placeholder\": \"test\"}` to `render_kw`, you're instructing WTForms to add a `placeholder=\"test\"` attribute to the HTML input element when it's rendered."
+    }
+]
