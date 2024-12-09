@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm trying to update my MongoDB from Python with the following line of code: `self.word_counts[source].update({'date':posttime},{\"$inc\" : words},{'upsert':True})`. However, I'm encountering an error which states `raise TypeError(\"upsert must be an instance of bool\")`. I'm confused because `True` is an instance of bool. How should I correctly write this update?"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering is likely because the syntax for the `update` method in PyMongo requires the `upsert` option to be passed as a keyword argument, rather than being included in the document update arguments.\n\nHere's how you can correctly format the update operation:\n\n```python\nself.word_counts[source].update(\n    {'date': posttime},  # The query to match documents\n    {\"$inc\": words},     # The update operation\n    upsert=True          # Correctly specify 'upsert' as a keyword argument\n)\n```\n\nMake sure that `words` is a dictionary where the keys are the fields you want to increment, and the values are the amounts by which you want to increment them.\n\nIf you are using a MongoDB version that supports `update_one` or `update_many`, you might want to use those methods instead, as they are more modern and provide clearer semantics:\n\n```python\nself.word_counts[source].update_one(\n    {'date': posttime},  # The query to match documents\n    {\"$inc\": words},     # The update operation\n    upsert=True          # Correctly specify 'upsert' as a keyword argument\n)\n```\n\nThis should resolve the error you're encountering."
+    }
+]
