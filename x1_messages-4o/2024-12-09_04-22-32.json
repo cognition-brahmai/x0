@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to pass an integer argument to a base command in Django. Consider my code:\n\n```python\nfrom django.core.management import BaseCommand\n\nclass Command(BaseCommand):\n    def handle(self, *args, **options, number_argument):\n        square = number_argument ** 2\n        print(square)\n```\n\nI want to execute the command `python manage.py square_command 4` in the terminal so that it returns 16. Is there a way to pass an argument through the terminal to the command I want to run in Django?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Django, to pass arguments to a management command, you can use the `add_arguments` method to define the arguments your command should accept. Here is how you can modify your code to accept an integer argument:\n\n```python\nfrom django.core.management import BaseCommand\n\nclass Command(BaseCommand):\n    help = 'Calculate the square of a given number'\n\n    def add_arguments(self, parser):\n        parser.add_argument('number_argument', type=int, help='The number to be squared')\n\n    def handle(self, *args, **options):\n        number_argument = options['number_argument']\n        square = number_argument ** 2\n        self.stdout.write(str(square))\n```\n\n### Explanation:\n\n1. **`add_arguments` Method**: This method is used to specify the arguments your command accepts. Here, `parser.add_argument('number_argument', type=int, help='The number to be squared')` tells Django to expect an integer argument named `number_argument`.\n\n2. **`handle` Method**: In the `handle` method, you retrieve the argument using `options['number_argument']`.\n\n3. **Execution**: You can now execute the command using:\n   ```\n   python manage.py square_command 4\n   ```\n   This will output `16`, as expected.\n\nThis setup allows you to pass an integer argument to your custom Django management command, and the command will calculate and print the square of the provided number."
+    }
+]
