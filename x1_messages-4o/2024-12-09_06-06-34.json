@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I place the legend outside of the plot using pandas and matplotlib? I am currently working with the following code:\n\n```python\nimport pandas as pd\nimport matplotlib.pyplot as plt\na = {'Test1': {1: 21867186, 4: 20145576, 10: 18018537},\n    'Test2': {1: 23256313, 4: 21668216, 10: 19795367}}\n\nd = pd.DataFrame(a).T\n\nf = plt.figure()\n\nplt.title('Title here!', color='black')\nplt.legend(loc='center left', bbox_to_anchor=(1, 0.5))\nd.plot(kind='bar', ax=f.gca())\nplt.show()\n```\n\nHowever, the legend is not appearing outside the plot as expected. How can I resolve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering is likely due to the order of operations in your code. You are calling `plt.legend()` before the plot is created with `d.plot()`. The legend should be configured after the plot is generated. Here's how you can place the legend outside of the plot:\n\n```python\nimport pandas as pd\nimport matplotlib.pyplot as plt\n\n# DataFrame creation\na = {'Test1': {1: 21867186, 4: 20145576, 10: 18018537},\n     'Test2': {1: 23256313, 4: 21668216, 10: 19795367}}\n\nd = pd.DataFrame(a).T\n\n# Create a figure and axis\nf, ax = plt.subplots()\n\n# Plotting the DataFrame\nd.plot(kind='bar', ax=ax)\n\n# Set title\nplt.title('Title here!', color='black')\n\n# Place the legend outside the plot\nax.legend(loc='center left', bbox_to_anchor=(1, 0.5))\n\n# Show plot\nplt.show()\n```\n\nHere's what the code does:\n\n- The `d.plot(kind='bar', ax=ax)` line creates the bar plot on the axis `ax`.\n- The `ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))` line moves the legend outside the plot area, to the center-left of the plot, by anchoring it at `(1, 0.5)` which is just outside the figure on the right side.\n- Make sure you call `ax.legend()` after `d.plot()` to ensure the plot elements are present when configuring the legend.\n\nThis should resolve the issue and place the legend outside the plot as intended."
+    }
+]

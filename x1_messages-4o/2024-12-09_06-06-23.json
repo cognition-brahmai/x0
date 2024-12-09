@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "What is the difference between extras_require() and install_requires() in setup.py? I am aware that both are used for installing Python dependencies, but I am unable to comprehend the difference between them."
+    },
+    {
+        "role": "assistant",
+        "content": "In `setup.py`, both `install_requires` and `extras_require` are used to specify dependencies for a Python package, but they serve different purposes:\n\n1. **install_requires**:\n   - This is used to specify the core dependencies that are necessary for the package to function. When someone installs your package, the packages listed under `install_requires` will be automatically installed.\n   - It is typically a list of packages with optional version specifiers.\n   - Example:\n     ```python\n     install_requires=[\n         'numpy>=1.18.0',\n         'requests==2.25.1',\n     ],\n     ```\n\n2. **extras_require**:\n   - This is used to specify optional dependencies. These are not installed by default when the package is installed, but they can be installed upon request. This is useful for including dependencies that are only needed for certain features or for development and testing.\n   - It is a dictionary where the keys are the names of the optional features, and the values are lists of packages required for those features.\n   - Example:\n     ```python\n     extras_require={\n         'dev': ['pytest', 'check-manifest'],\n         'docs': ['sphinx'],\n     },\n     ```\n   - Users can install these optional dependencies using the syntax: `pip install package_name[dev]`.\n\nIn summary, use `install_requires` for mandatory dependencies and `extras_require` for optional ones, allowing users to choose whether or not to install them based on their needs."
+    }
+]
