@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I use pathlib to recursively iterate over all subdirectories of a given directory in Python? The code I'm currently using:\n```\np = Path('docs')\nfor child in p.iterdir(): child\n```\nonly seems to iterate over the immediate children of a given directory. I am aware that this is possible with `os.walk()` or `glob`, but I prefer using pathlib because I enjoy working with the path objects."
+    },
+    {
+        "role": "assistant",
+        "content": "To recursively iterate over all subdirectories of a given directory using `pathlib`, you can make use of the `rglob()` method, which is designed to search recursively. Here's how you can modify your code to achieve this:\n\n```python\nfrom pathlib import Path\n\np = Path('docs')\nfor child in p.rglob('*'):\n    print(child)\n```\n\nIn this code, `rglob('*')` is used to match all files and directories recursively starting from the `p` directory. This will give you a generator that yields `Path` objects for each file and subdirectory, allowing you to work with them directly as `pathlib` objects. You can adjust the pattern within `rglob()` if you want to filter the results to certain file types or names."
+    }
+]
