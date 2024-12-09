@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a pandas dataframe similar to this:\n\n```\nApples   Bananas   Grapes   Kiwis\n2        3         nan      1\n1        3         7        nan\nnan      nan       2        3\n```\n\nI want to add a column that sums up all the previous columns. For example, the desired dataframe should look like this:\n\n```\nApples   Bananas   Grapes   Kiwis   Fruit Total\n2        3         nan      1        6\n1        3         7        nan      11\nnan      nan       2        3        5\n```\n\nI understand that one way to do it is by summing up all columns explicitly like `df['Apples'] + df['Bananas']` and so on. However, my dataframe is quite large and doing it this way would be impractical. I tried using `df['Fruit Total']=df[-4:-1].sum` hoping to sum all columns in one line of code, but that didn't work. Is there any other way to sum up all columns without doing it explicitly?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! You can use the `sum()` function along with the `axis=1` parameter to sum across all columns for each row in a more efficient way. Here\u2019s how you can achieve this:\n\n```python\nimport pandas as pd\nimport numpy as np\n\n# Create your DataFrame\ndata = {\n    'Apples': [2, 1, np.nan],\n    'Bananas': [3, 3, np.nan],\n    'Grapes': [np.nan, 7, 2],\n    'Kiwis': [1, np.nan, 3]\n}\n\ndf = pd.DataFrame(data)\n\n# Sum across the rows\ndf['Fruit Total'] = df.sum(axis=1)\n\n# Display the DataFrame\nprint(df)\n```\n\nThis code will add a new column called 'Fruit Total' which contains the sum of all the fruits for each row. The `axis=1` parameter tells the `sum` function to operate along each row (rather than the default, which is column-wise). This approach efficiently sums all the columns without needing to specify them explicitly."
+    }
+]
