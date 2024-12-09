@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I handle the `KeyboardInterrupt` exception globally in Python without enclosing my entire script in a large try/except statement?"
+    },
+    {
+        "role": "assistant",
+        "content": "Handling the `KeyboardInterrupt` exception globally in Python without wrapping your entire script in a big `try/except` block can be done by defining a custom signal handler. This allows you to execute specific code when a `KeyboardInterrupt` (usually triggered by pressing `Ctrl+C`) is received. Here's how you can do it:\n\n1. **Import the `signal` module**: This module provides mechanisms to use signal handlers in Python.\n\n2. **Define a signal handler function**: This function will be called when the interrupt signal (SIGINT) is received.\n\n3. **Register the signal handler**: Use `signal.signal` to associate your handler function with the `SIGINT` signal.\n\nHere's an example:\n\n```python\nimport signal\nimport sys\nimport time\n\ndef signal_handler(sig, frame):\n    print(\"\\nKeyboardInterrupt received. Exiting gracefully...\")\n    sys.exit(0)\n\n# Register the signal handler\nsignal.signal(signal.SIGINT, signal_handler)\n\n# Your main code logic here\ndef main():\n    print(\"Running your script. Press Ctrl+C to interrupt.\")\n    while True:\n        # Simulate some work being done\n        time.sleep(1)\n\nif __name__ == \"__main__\":\n    main()\n```\n\n### Explanation:\n- **`signal.signal(signal.SIGINT, signal_handler)`**: This line sets up the handler function to be called when the SIGINT signal is received. SIGINT is the signal sent when you press `Ctrl+C`.\n- **`signal_handler` Function**: This function will execute the code you want to run when a `KeyboardInterrupt` occurs. In this example, it prints a message and exits the program gracefully using `sys.exit(0)`.\n- **`while True` Loop**: Simulates a long-running process that can be interrupted.\n\nThis approach allows you to handle `KeyboardInterrupt` globally without wrapping your entire script in a `try/except` block, making your code cleaner and more maintainable."
+    }
+]
