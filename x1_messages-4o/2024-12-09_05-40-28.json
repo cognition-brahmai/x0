@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I use a ProjectionExpression with reserved words when retrieving data from my DynamoDB database using boto3 in Python? I am able to retrieve data with this code:\n\n```python\ndynamodb = boto3.resource('dynamodb')\ntable = dynamodb.Table(table_name)\nresponse = table.scan(ProjectionExpression='Id,Name')['Items']\n```\n\nHowever, when I try to retrieve an attribute named with a reserved word, for example `CONNECTION`, with the following code:\n\n```python\nresponse = table.scan(ProjectionExpression='Id,Name,Connection')['Items']\n```\n\nI receive the following error:\n\n```\nAn error occurred (ValidationException) when calling the Scan\noperation: Invalid ProjectionExpression: Attribute name is a reserved\nkeyword; reserved keyword: Connection\n```\n\nIs there an aliasing technique for simple projections from boto3 that can help me resolve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "When working with DynamoDB and using reserved keywords in your `ProjectionExpression`, you need to use expression attribute names to avoid conflicts. Expression attribute names are placeholders that you define in your request to substitute for the reserved keywords.\n\nHere's how you can modify your code to use expression attribute names:\n\n```python\ndynamodb = boto3.resource('dynamodb')\ntable = dynamodb.Table(table_name)\n\n# Use expression attribute names to substitute reserved words\nresponse = table.scan(\n    ProjectionExpression='#id, #name, #conn',\n    ExpressionAttributeNames={\n        '#id': 'Id',\n        '#name': 'Name',\n        '#conn': 'Connection'\n    }\n)['Items']\n\nprint(response)\n```\n\nIn this example, `#id`, `#name`, and `#conn` are placeholders for `Id`, `Name`, and `Connection`, respectively. This way, you can safely use reserved keywords in your projection expression."
+    }
+]
