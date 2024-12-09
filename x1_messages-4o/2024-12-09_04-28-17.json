@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I sort a model in Django using Postgresql's \"NULLS LAST\" option? I attempted to do this using the code `MyModel.objects.all().extra(order_by=('-price', 'NULLS LAST'))` but I received an error saying \"Cannot resolve keyword 'NULLS LAST' into field\". How can I solve this issue?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Django, to sort a queryset with PostgreSQL using the `NULLS LAST` option, you need to utilize the `OrderBy` expression available in Django's ORM. The `extra()` method you attempted to use is deprecated and not recommended for new code. Instead, you can achieve the desired ordering with the help of the `F` expression and `Func`.\n\nHere's how you can do it:\n\n```python\nfrom django.db.models import F, Func\n\n# For descending order with NULLS LAST\nMyModel.objects.all().order_by(\n    F('price').desc(nulls_last=True)\n)\n\n# For ascending order with NULLS LAST\nMyModel.objects.all().order_by(\n    F('price').asc(nulls_last=True)\n)\n```\n\nIn this example, `F('price').desc(nulls_last=True)` orders the results by the `price` field in descending order with NULL values coming last. Similarly, `asc(nulls_last=True)` is used for ascending order with NULL values last.\n\nThis approach leverages Django's ORM capabilities to handle complex SQL constructs like `NULLS LAST`, and it is both efficient and clean."
+    }
+]
