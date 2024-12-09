@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm having trouble with the Path.glob() method from the Pathlib module in Python 3.6. When I try to loop over the results of a pathlib-glob-search, the loop is not executed even though the glob method has found files. Here's my code:\n\n```python\nfrom pathlib import Path\n\ndir = Path.cwd()\nfiles = dir.glob('*.txt')\nprint(list(files))\n# Output: [WindowsPath('C:/whatever/file1.txt'), WindowsPath('C:/whatever/file2.txt')]\n\nfor file in files:\n    print(file)\n    print('Check.')\n# No output\n```\nHow can I properly loop over the results of a pathlib-glob-search?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're facing is due to the fact that the iterator returned by `Path.glob()` is being exhausted when you convert it to a list with `list(files)`. After you've exhausted the iterator, it can't be used again. Here's how you can properly loop over the results:\n\n1. If you need to print the list of files and iterate over them, you should store the list in a variable first.\n\nHere's the corrected code:\n\n```python\nfrom pathlib import Path\n\ndir = Path.cwd()\nfiles = list(dir.glob('*.txt'))  # Convert the iterator to a list and store it\n\nprint(files)  # This will print the list of files\n\nfor file in files:\n    print(file)\n    print('Check.')\n```\n\nBy converting the iterator to a list at the very beginning and storing it in the `files` variable, you ensure that you can both print the list of files and iterate over them afterward. The list can be iterated over as many times as needed."
+    }
+]
