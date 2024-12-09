@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I recently switched from CUDA 8.0 to CUDA 9.0 RC and I'm encountering a warning message that I haven't seen before. The warning pertains to a line of code: \"__host__ __device__ ~Foo() = default;\". The warning message is \"path/to/Foo.cuh(69): warning: __host__ annotation on a defaulted function(\"~Foo\") is ignored\". Previously, I didn't receive this warning. Is it normal to receive this warning? Is there something wrong with indicating that I want the default destructor on both the device and the host side?"
+    },
+    {
+        "role": "assistant",
+        "content": "The warning you're encountering is related to how CUDA 9.0 handles certain annotations on defaulted functions. In CUDA, the `__host__` and `__device__` annotations specify whether a function should be callable from the host (CPU) or the device (GPU), respectively. When you use `= default` for a destructor, the compiler automatically generates the implementation, and the `__host__` and `__device__` qualifiers can sometimes lead to unexpected behavior or warnings.\n\nIn CUDA 9.0, the warning you're seeing means that the `__host__` annotation is being ignored for the defaulted destructor. This is because, for defaulted special member functions, CUDA doesn't allow specifying both `__host__` and `__device__` attributes together. This behavior was less strictly enforced in earlier versions, which is why you didn't see the warning with CUDA 8.0.\n\nTo address this warning, you should explicitly define the destructor instead of defaulting it, and then apply the `__host__` and `__device__` annotations to the explicitly defined destructor. For example:\n\n```cpp\nclass Foo {\npublic:\n    __host__ __device__ ~Foo() {}\n    // other members...\n};\n```\n\nBy explicitly defining the destructor, you can ensure that it has both `__host__` and `__device__` attributes without receiving the warning. This approach provides the same functionality but aligns with the stricter checking in CUDA 9.0."
+    }
+]
