@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I sort a dictionary by its values in descending order, then by its key in descending order if the values are the same? For example, if I have the dictionaries {12:2, 9:1, 14:2} and {100:1, 90:4, 99:3, 92:1, 101:1}, I would like them to be sorted to [(14,2), (12,2), (9,1)] and [(90,4), (99,3), (101,1), (100,1), (92,1)] respectively."
+    },
+    {
+        "role": "assistant",
+        "content": "To sort a dictionary by its values in descending order, and then by its keys in descending order if the values are the same, you can use Python's `sorted()` function with a custom sorting key. Here\u2019s how you can do it:\n\n```python\ndef sort_dict_by_value_then_key_desc(d):\n    # Sort by value descending, then by key descending\n    return sorted(d.items(), key=lambda item: (item[1], item[0]), reverse=True)\n\n# Example dictionaries\ndict1 = {12: 2, 9: 1, 14: 2}\ndict2 = {100: 1, 90: 4, 99: 3, 92: 1, 101: 1}\n\n# Sort the dictionaries\nsorted_dict1 = sort_dict_by_value_then_key_desc(dict1)\nsorted_dict2 = sort_dict_by_value_then_key_desc(dict2)\n\nprint(sorted_dict1)\nprint(sorted_dict2)\n```\n\n### Explanation:\n- `d.items()` returns a view of the dictionary's items, which is a set-like object providing a view on the dictionary\u2019s `(key, value)` pairs.\n- `key=lambda item: (item[1], item[0])` specifies the sorting key. Here, `item[1]` is the value and `item[0]` is the key.\n- `reverse=True` makes the sort order descending for both the value and the key.\n\n### Output:\nFor the given examples, the output will be:\n- For `dict1 = {12: 2, 9: 1, 14: 2}`, the sorted result will be `[(14, 2), (12, 2), (9, 1)]`.\n- For `dict2 = {100: 1, 90: 4, 99: 3, 92: 1, 101: 1}`, the sorted result will be `[(90, 4), (99, 3), (101, 1), (100, 1), (92, 1)]`.\n\nThis approach leverages the tuple sorting capability in Python, where tuples are compared lexicographically."
+    }
+]
