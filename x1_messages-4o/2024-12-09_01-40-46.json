@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a pandas DataFrame with varying column names such as Result1, Test1, Result2, Test2, Result3, Test3, and so on. The number of columns with the string \"Test\" in their name isn't consistent as it depends on a previous function. How can I drop all the columns from the DataFrame whose name contains the string \"Test\"?"
+    },
+    {
+        "role": "assistant",
+        "content": "You can drop all the columns from a pandas DataFrame whose names contain the string \"Test\" using the `filter` method along with `drop`. Here's how you can do it:\n\n```python\nimport pandas as pd\n\n# Sample DataFrame\ndata = {\n    'Result1': [1, 2, 3],\n    'Test1': [4, 5, 6],\n    'Result2': [7, 8, 9],\n    'Test2': [10, 11, 12],\n    'Result3': [13, 14, 15],\n    'Test3': [16, 17, 18]\n}\n\ndf = pd.DataFrame(data)\n\n# Drop columns with 'Test' in their name\ndf = df.drop(df.filter(like='Test').columns, axis=1)\n\nprint(df)\n```\n\nThis code will remove all columns whose names contain the string \"Test\" from the DataFrame. The `filter` method is used to select columns based on a substring, and then `drop` removes those columns from the DataFrame."
+    }
+]
