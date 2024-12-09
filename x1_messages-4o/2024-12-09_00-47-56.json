@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using Beautiful Soup to parse a web page and I am trying to find all objects with a specific CSS class. It works fine when an object has only the class I am looking for. For example, if a page has `<div class=\"class1\">` and `<p class=\"class1\">`, then `soup.findAll(True, 'class1')` will find them both. But, if an object has multiple classes like `<p class=\"class1 class2\">`, it's not being found. How can I find all objects with a certain class, regardless of whether they have other classes too?"
+    },
+    {
+        "role": "assistant",
+        "content": "When using Beautiful Soup to find elements with a specific class, you can utilize the `class_` parameter in the `find_all` method. This parameter allows you to specify the class you're interested in, and it will match elements that have that class, even if they have additional classes. Here's how you can do it:\n\n```python\nfrom bs4 import BeautifulSoup\n\n# Let's say you have your HTML content in a variable called `html_content`\nhtml_content = '''\n<div class=\"class1\"></div>\n<p class=\"class1\"></p>\n<p class=\"class1 class2\"></p>\n<span class=\"class2\"></span>\n'''\n\n# Parse the HTML content\nsoup = BeautifulSoup(html_content, 'html.parser')\n\n# Find all elements with the class 'class1'\nelements = soup.find_all(class_='class1')\n\n# Print the found elements\nfor element in elements:\n    print(element)\n```\n\nThis will output:\n\n```\n<div class=\"class1\"></div>\n<p class=\"class1\"></p>\n<p class=\"class1 class2\"></p>\n```\n\nUsing `class_='class1'` ensures that all elements containing the class \"class1\" are found, regardless of whether they have additional classes."
+    }
+]
