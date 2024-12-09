@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm trying to use the python-requests library to send a request where the URL looks like: http://example.com/api/add.json?name='hello'&data[]='hello'&data[]='world'. Generally, I build a dictionary and use it like this:\n\n```python\ndata = {'name': 'hello', 'data': 'world'}\nresponse = requests.get('http://example.com/api/add.json', params=data)\n```\n\nThis works for most URLs but I'm not sure how to handle the URL structure from above. I do not want to manually build strings. Is there a feature in the requests library or Python that I am not aware of to handle this? Also, how is this type of parameter referred to so I can search more about it?"
+    },
+    {
+        "role": "assistant",
+        "content": "In the URL structure you're trying to construct, the `data[]` parameter is used to represent an array of values. The `requests` library can handle this by allowing you to pass a list of values for a key in the `params` dictionary. Here's how you can modify your code to achieve this:\n\n```python\nimport requests\n\n# Create a dictionary for the parameters\ndata = {\n    'name': 'hello',\n    'data': ['hello', 'world']  # Pass a list for the 'data' key\n}\n\n# Make the GET request with the parameters\nresponse = requests.get('http://example.com/api/add.json', params=data)\n\n# Print the URL to verify the structure\nprint(response.url)\n```\n\nThis will construct the URL as `http://example.com/api/add.json?name=hello&data=hello&data=world`, which is what you're aiming to achieve.\n\nThe feature you're using is typically referred to as \"query string parameters\" in URLs, and when you use the same key with multiple values, it is often called \"repeated parameters\" or \"array parameters.\" The `requests` library simplifies handling such cases by allowing lists to be provided for parameter values. This is a common pattern in web development when dealing with query strings that need to represent arrays of values."
+    }
+]
