@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using matplotlib's imshow() method to represent a small numpy matrix. However, it seems to do some smoothing between pixels which is misleading for my figures in presentations. The figure in question is a 28x28 image and I would like to see large squares of single colors representing each pixel (as matlab would display when using imagesc()). Instead, the pixels are blurred with neighboring pixels. How can I disable this behavior?"
+    },
+    {
+        "role": "assistant",
+        "content": "To display a 28x28 image using `imshow()` from Matplotlib without any smoothing or interpolation, you need to set the `interpolation` parameter to `'nearest'`. This will ensure that each pixel is represented as a distinct block of color without blending into its neighbors. Here is how you can do it:\n\n```python\nimport matplotlib.pyplot as plt\nimport numpy as np\n\n# Example 28x28 image\nimage = np.random.rand(28, 28)\n\n# Display the image\nplt.imshow(image, interpolation='nearest', cmap='gray')\nplt.axis('off')  # Optional: turn off axis\nplt.show()\n```\n\nIn this code:\n\n- `interpolation='nearest'` ensures that each pixel is displayed as a solid block of color.\n- `cmap='gray'` is used to display the image in grayscale. You can change the colormap according to your preference.\n- `plt.axis('off')` is optional and removes the axis ticks and labels for a cleaner look, often preferred for presentation purposes.\n\nThis configuration will display your image with each pixel as a large square of a single color, similar to how MATLAB's `imagesc()` would display it."
+    }
+]
