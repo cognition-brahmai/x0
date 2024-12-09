@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm trying to implement the \"Samurai principle\" in my functions, and I am attempting to use the `raise` statement in a conditional expression, like so: `return <value> if <bool> else raise <exception>`. However, it seems that my implementation is incorrect. Is there a better or more correct way to do this?"
+    },
+    {
+        "role": "assistant",
+        "content": "The \"Samurai principle\" in programming generally refers to the idea that functions should either complete their task successfully or fail fast and loudly, without ambiguity. When you're trying to apply this principle using a conditional expression and the `raise` statement in Python, you might encounter issues because the `raise` statement is not an expression and can't be used directly in a conditional expression.\n\nHowever, you can achieve similar functionality by using a lambda function or a helper function. Here\u2019s an example of how you can apply this principle correctly using a helper function:\n\n```python\ndef raise_exception(exception):\n    raise exception\n\ndef your_function(value, condition):\n    return value if condition else raise_exception(ValueError(\"Condition failed\"))\n\n# Usage\ntry:\n    result = your_function(\"Success\", True)\n    print(result)  # This will print \"Success\"\n    \n    result = your_function(\"Fail\", False)\n    print(result)  # This will not be reached\nexcept ValueError as e:\n    print(e)  # This will print \"Condition failed\"\n```\n\nIn this example, `raise_exception` is a helper function that raises the desired exception. The `your_function` uses this helper function to either return the given value or raise an exception based on the condition.\n\nThis approach maintains readability and adheres to the \"Samurai principle\" by ensuring that the function fails loudly when the condition is not met."
+    }
+]
