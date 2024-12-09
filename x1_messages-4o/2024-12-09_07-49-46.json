@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using Pandas and I have encountered a Future Warning when applying a function to multiple columns of a groupby object. The warning suggests that I use a list as an index instead of tuples. How can I do this? Here is the code I am running:\n\n```python\ndf = pd.DataFrame([[1,2,3],[4,5,6],[7,8,9]])\ndf.groupby([0,1])[1,2].apply(sum)\n```\nUpon running this code, I receive the following warning: \n```python\n<stdin>:1: FutureWarning: Indexing with multiple keys (implicitly converted to a tuple of keys) will be deprecated, use a list instead.\n     1  2\n0 1      \n1 2  2  3\n4 5  5  6\n7 8  8  9\n```\nHow can I resolve this issue?"
+    },
+    {
+        "role": "assistant",
+        "content": "The warning you are encountering is due to the way you're indexing columns in the `groupby` operation. In your code, you're using a tuple to specify multiple columns `[1,2]`, which will be deprecated in future versions of Pandas. Instead, you should use a list to specify the columns you want to operate on.\n\nHere\u2019s how you can modify your code to eliminate the warning:\n\n```python\nimport pandas as pd\n\ndf = pd.DataFrame([[1,2,3],[4,5,6],[7,8,9]])\n\n# Use a list to specify the columns\nresult = df.groupby([0, 1])[[1, 2]].apply(sum)\n\nprint(result)\n```\n\nBy using `[[1, 2]]` instead of `[1, 2]`, you are explicitly indicating that you want to select multiple columns as a list, which aligns with the future behavior of Pandas and eliminates the warning."
+    }
+]
