@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm trying to get Pyflakes to ignore a specific statement in my code. Many of our modules start with a block of code that attempts to import 'json' and, if unsuccessful, imports 'simplejson' as 'json' as a fallback for Python 2.4. However, Pyflakes gives a warning for this stating there's a \"redefinition of unused 'json' from line 12\". How can I make Pyflakes ignore this warning?\n\nHere's the code and the warning:\n\nCode:\n```python\ntry:\n    import json\nexcept ImportError:\n    from django.utils import simplejson as json  # Python 2.4 fallback.\n```\nWarning:\n```bash\nfoo/bar.py:14: redefinition of unused 'json' from line 12\n```\nI would normally consult the documentation, but the link isn't working. If there's no answer, I'll go through the source code."
+    },
+    {
+        "role": "assistant",
+        "content": "To make Pyflakes ignore a specific warning, you can use a `# noqa` comment at the end of the line you want to ignore. This tells Pyflakes (and other linters like Flake8) to skip checking that line for warnings or errors. Here's how you can modify your code to suppress the specific warning about redefinition:\n\n```python\ntry:\n    import json  # noqa\nexcept ImportError:\n    from django.utils import simplejson as json  # noqa\n```\n\nBy adding `# noqa` at the end of both import lines, Pyflakes will ignore the redefinition warning and any other warnings for those lines.\n\nIf you have multiple linter tools and want to be more specific, you can use `# noqa: F811` which specifically targets the redefinition warning (F811) in Flake8, which is compatible with Pyflakes. However, just `# noqa` should suffice for Pyflakes alone.\n\nRemember to ensure that using `# noqa` is acceptable in your codebase or project, as it might flag the line to be skipped by other linters or reviewers."
+    }
+]
