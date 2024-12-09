@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am currently working on a Python testing script where I've used the following pattern multiple times:\n\n```python\nsys.path.insert(0, \"somedir\")\nmod =  __import__(mymod)\nsys.path.pop(0)\n```\n\nIs there a more concise or efficient method to temporarily modify the system path in Python?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, there is a more concise and efficient way to temporarily modify the system path in Python by using a context manager. This approach ensures that the modification to `sys.path` is both cleaner and safer, automatically handling the insertion and removal of the path. Here's an example of how you can implement it:\n\n```python\nimport sys\nfrom contextlib import contextmanager\n\n@contextmanager\ndef add_sys_path(path):\n    # Insert the path at the start of sys.path\n    sys.path.insert(0, path)\n    try:\n        # Yield control back to the calling context\n        yield\n    finally:\n        # Ensure the path is removed after the context is done\n        sys.path.pop(0)\n\n# Usage example\nwith add_sys_path(\"somedir\"):\n    mod = __import__(mymod)\n```\n\nIn this example, the `add_sys_path` function is a context manager that temporarily adds a directory to `sys.path`. The `yield` statement allows the code within the `with` block to execute, and the `finally` block ensures that the directory is removed from `sys.path` after the execution is complete, even if an error occurs within the block. This method provides a safer and more readable way to handle temporary modifications to `sys.path`."
+    }
+]
