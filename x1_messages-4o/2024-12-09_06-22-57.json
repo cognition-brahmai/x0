@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I create a function in Python that returns 1 if a hostname resolves and 0 if it does not? I have been unable to find any useful resources or solutions for this issue."
+    },
+    {
+        "role": "assistant",
+        "content": "To create a function in Python that checks if a hostname resolves and returns `1` if it does and `0` if it does not, you can use the `socket` module. Here's a simple function that achieves this:\n\n```python\nimport socket\n\ndef check_hostname(hostname):\n    try:\n        # Try to resolve the hostname to an IP address\n        socket.gethostbyname(hostname)\n        return 1  # Hostname resolves\n    except socket.error:\n        return 0  # Hostname does not resolve\n\n# Example usage:\nhostname = \"example.com\"\nresult = check_hostname(hostname)\nprint(f\"The result for {hostname} is: {result}\")\n```\n\n### Explanation:\n\n- The `socket.gethostbyname()` function attempts to resolve the given hostname to an IP address.\n- If the hostname resolves successfully, the function returns `1`.\n- If the hostname does not resolve (e.g., due to a non-existent domain), a `socket.error` exception is raised, and the function returns `0`.\n\nYou can test this function with different hostnames to see how it behaves. Make sure you have an active internet connection when using this function, as it requires DNS resolution."
+    }
+]
