@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working with Object-Oriented hierarchy in Python and I have a problem with inheriting docstrings. For instance, I have a superclass 'Swallow' and a subclass 'AfricanSwallow'. The superclass has a method 'airspeed' with a docstring. But when I inherit this method in the subclass, the docstring doesn't get inherited. I am aware of the template method pattern where I can retain the docstring. But I was wondering if there's another way, perhaps a decorator, that can help me inherit docstrings. Can you provide a solution to this?\n\nHere is the code for better understanding:\n```python\nclass Swallow(object):\n    def airspeed(self):\n        \"\"\"Returns the airspeed (unladen)\"\"\"\n        raise NotImplementedError\n\nclass AfricanSwallow(Swallow):\n    def airspeed(self):\n        # whatever\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, docstrings are not automatically inherited when methods are overridden in subclasses. However, you can create a custom decorator that copies the docstring from the superclass method to the subclass method. Here's how you can do it:\n\n```python\ndef inherit_docstring_from(superclass_method):\n    def decorator(subclass_method):\n        subclass_method.__doc__ = superclass_method.__doc__\n        return subclass_method\n    return decorator\n\nclass Swallow(object):\n    def airspeed(self):\n        \"\"\"Returns the airspeed (unladen)\"\"\"\n        raise NotImplementedError\n\nclass AfricanSwallow(Swallow):\n    @inherit_docstring_from(Swallow.airspeed)\n    def airspeed(self):\n        # whatever implementation for AfricanSwallow\n        pass\n\n# Example usage\nprint(AfricanSwallow.airspeed.__doc__)\n```\n\nIn this solution, the `inherit_docstring_from` decorator takes a reference to the superclass method and copies its docstring to the subclass method. You apply this decorator to the `airspeed` method in `AfricanSwallow`, and it will now have the docstring of the `airspeed` method from `Swallow`."
+    }
+]
