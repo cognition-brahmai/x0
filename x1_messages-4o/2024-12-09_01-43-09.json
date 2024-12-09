@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How do I add a new column 'D' to my dataframe in pandas using a dictionary? I have the following dataframe:\n\n<pre><code>\nU,L\n111,en\n112,en\n112,es\n113,es\n113,ja\n113,zh\n114,es\n</code></pre>\n\nAnd I want to add data from the following dictionary:\n\n<pre><code>\nd = {112: 'en', 113: 'es', 114: 'es', 111: 'en'}\n</code></pre>\n\nI want the resulting dataframe to appear as:\n\n<pre><code>\nU,L,D\n111,en,en\n112,en,en\n112,es,en\n113,es,es\n113,ja,es\n113,zh,es\n114,es,es\n</code></pre>\n\nI have tried using the `pd.join()` method but I can't figure out how it works with dictionaries. Can you help me solve this issue?"
+    },
+    {
+        "role": "assistant",
+        "content": "To add a new column 'D' to your dataframe using a dictionary, you can use the `map()` function in pandas. This function allows you to map the values of a Series according to an input mapping (in this case, your dictionary). Here's how you can do it:\n\n```python\nimport pandas as pd\n\n# Your dataframe\ndata = {\n    'U': [111, 112, 112, 113, 113, 113, 114],\n    'L': ['en', 'en', 'es', 'es', 'ja', 'zh', 'es']\n}\ndf = pd.DataFrame(data)\n\n# Your dictionary\nd = {112: 'en', 113: 'es', 114: 'es', 111: 'en'}\n\n# Adding new column 'D' using the map function\ndf['D'] = df['U'].map(d)\n\n# Display the resulting dataframe\nprint(df)\n```\n\nThis will give you the desired output:\n\n```\n     U   L  D\n0  111  en  en\n1  112  en  en\n2  112  es  en\n3  113  es  es\n4  113  ja  es\n5  113  zh  es\n6  114  es  es\n```\n\nExplanation:\n- The `map()` function is applied to the column 'U' of your dataframe.\n- It uses the dictionary `d` to map each value in 'U' to a corresponding value in the dictionary, and assigns these mapped values to the new column 'D'."
+    }
+]
