@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I compare two directory trees and get a list of corresponding files whose content differ? I usually use the command 'diff -r dir1/ dir2/' but it outputs the exact differences between the files. I am looking for a command line option to 'diff' that gives me just the filenames of differing files, but I could not find anything on the man page. Can you suggest a solution?"
+    },
+    {
+        "role": "assistant",
+        "content": "To compare two directory trees and get a list of corresponding files whose content differs, you can use a combination of command-line tools to achieve this. While the `diff -r` command shows the exact differences, you can filter the output to display only the filenames of differing files. Here's a way to do it using `diff` along with `grep` and `awk`:\n\n```bash\ndiff -qr dir1/ dir2/ | grep -v '^Only in' | awk '{print $2}'\n```\n\nExplanation:\n- `diff -qr dir1/ dir2/`: The `-q` option tells `diff` to report only when files differ, not the specifics of the differences. The `-r` option is for recursive comparison.\n- `grep -v '^Only in'`: This filters out lines that indicate files only present in one of the directories, focusing only on files present in both directories with differing content.\n- `awk '{print $2}'`: This extracts the filenames from the `diff` output where differences are found.\n\nThis command will output a list of filenames where the contents differ between the two directories."
+    }
+]

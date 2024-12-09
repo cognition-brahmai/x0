@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using the pyyaml library in Python and when I try to dump a string using the yaml.dump() function, it includes tags such as !!python/unicode. I want to know how to dump the string without these tags. What parameter do I need to add to the yaml.dump() function to prevent these tags from being included? For example, when I execute this code:\n\n```python\nimport yaml\nyaml.dump(u'abc')\n```\nI get:\n```python\n\"!!python/unicode 'abc'\\n\"\n```\nWhat I want is to get this result:\n```python\n'abc\\n'\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To prevent the `!!python/unicode` tag from appearing in your YAML output when using the `yaml.dump()` function in PyYAML, you can set the `allow_unicode` parameter to `True` and the `default_style` to `None`. By default, PyYAML might add these tags to indicate the data type, especially when dealing with Unicode strings. Here's how you can achieve the desired output:\n\n```python\nimport yaml\n\n# Dump the string without including the !!python/unicode tag\noutput = yaml.dump(u'abc', allow_unicode=True, default_style=None)\nprint(output)\n```\n\nThis code will output:\n\n```\n'abc\\n'\n```\n\nBy specifying `allow_unicode=True`, you're instructing PyYAML to handle Unicode strings properly without adding the `!!python/unicode` tag. The `default_style=None` ensures that the output does not enforce any specific style, allowing it to remain simple."
+    }
+]

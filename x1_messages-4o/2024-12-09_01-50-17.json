@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I split a list into N approximately equal parts while preserving the order of the elements? For example, if I have a list with 7 elements and I want to split it into 2 parts, the first part should have 3 elements and the second part should have 4 elements. I have tried to use a function that yields successive n-sized chunks from my list but it gives me chunks of 3 instead of 3 chunks. I could transpose this but it would destroy the order of my items. I need a function like `even_split(L, n)` that breaks L into n parts."
+    },
+    {
+        "role": "assistant",
+        "content": "To split a list into `N` approximately equal parts while preserving the order of the elements, you can create a function that distributes the elements as evenly as possible. Here's an example of how you can implement such a function:\n\n```python\ndef even_split(lst, n):\n    # Calculate the size of each chunk\n    k, m = divmod(len(lst), n)\n    # Create the chunks\n    return [lst[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(n)]\n\n# Example usage:\nmy_list = [1, 2, 3, 4, 5, 6, 7]\nparts = even_split(my_list, 2)\nprint(parts)\n```\n\n### Explanation:\n- `k` is the minimum size of each chunk.\n- `m` is the number of chunks that need to be one element larger.\n- The list comprehension iterates over the range of `n` (the number of parts you want), and for each part, it calculates the start and end indices to slice the list `lst`.\n- The `min(i, m)` ensures that the first `m` chunks receive an extra element.\n\nWhen you run the above code with `my_list = [1, 2, 3, 4, 5, 6, 7]` and `n = 2`, it will output:\n\n```\n[[1, 2, 3], [4, 5, 6, 7]]\n```\n\nThis function should work for any list and any positive integer `n`."
+    }
+]
