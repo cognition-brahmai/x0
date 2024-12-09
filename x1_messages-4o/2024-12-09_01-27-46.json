@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, when I call the method `object.__repr__()`, I get a response like this: `<__main__.Test object at 0x2aba1c0cf890>`. I want to know if there's a way to access the memory address if I overload the `__repr__()` method. Is there any other approach apart from calling `super(Class, obj).__repr__()` and using regex to extract it?"
+    },
+    {
+        "role": "assistant",
+        "content": "When you overload the `__repr__()` method in a Python class, you can indeed lose the default representation that includes the memory address of the object. However, you can still access the memory address directly using the built-in `id()` function and the `hex()` function to convert it to a hexadecimal format, which is similar to the default `__repr__()` output.\n\nHere's how you can do it:\n\n```python\nclass Test:\n    def __repr__(self):\n        # Access the memory address using id() and convert it to hexadecimal\n        memory_address = hex(id(self))\n        return f\"<{self.__class__.__module__}.{self.__class__.__name__} object at {memory_address}>\"\n\n# Example usage\nobj = Test()\nprint(repr(obj))\n```\n\nIn this example, `id(self)` gives you the memory address of the object, and `hex()` converts it to a hexadecimal string, replicating the format used in Python's default `__repr__()` method.\n\nThis approach allows you to customize the string representation of your object while still including the memory address without resorting to using `super()` or regex."
+    }
+]
