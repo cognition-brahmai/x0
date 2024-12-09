@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am currently running some unit tests that might either take a long time before failing or run indefinitely. In a successful test run they will always complete within a certain amount of time. Is it possible to create a pytest unit test that will fail if it does not complete within a certain amount of time? How can I limit the maximum running time for a unit test?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can set a time limit for your `pytest` unit tests using the `pytest-timeout` plugin. This plugin allows you to specify a timeout for your tests, after which they will automatically fail if they have not completed. Here's how you can use it:\n\n1. First, you need to install the `pytest-timeout` plugin. You can do this using pip:\n\n   ```bash\n   pip install pytest-timeout\n   ```\n\n2. Once you have the plugin installed, you can add a timeout to your tests in different ways:\n\n   - **Using a decorator:** You can specify a timeout for individual test functions using the `@pytest.mark.timeout` decorator.\n\n     ```python\n     import pytest\n\n     @pytest.mark.timeout(5)  # Set timeout to 5 seconds\n     def test_example():\n         # Your test code here\n         pass\n     ```\n\n   - **Using command-line options:** You can set a global timeout for all tests by using the `--timeout` option when running `pytest`.\n\n     ```bash\n     pytest --timeout=5  # Set timeout to 5 seconds for all tests\n     ```\n\n   - **Using pytest configuration file:** You can also specify a default timeout in the `pytest.ini` configuration file.\n\n     ```ini\n     # pytest.ini\n     [pytest]\n     timeout = 5  # Set default timeout to 5 seconds for all tests\n     ```\n\n3. Run your tests as usual with `pytest`, and it will enforce the timeout you have specified. If a test exceeds the specified time limit, it will fail with a timeout error.\n\nBy using the `pytest-timeout` plugin, you can effectively manage the execution time of your unit tests and ensure they do not run indefinitely."
+    }
+]
