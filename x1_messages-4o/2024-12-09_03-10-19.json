@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am currently working on a Python program where I have a blank exception class called 'ExampleException' which inherits from the base Exception class. My code currently looks like this:\n\n```python\nclass ExampleException (Exception):\n    pass\n```\n\nI am wondering how I could pass a variable to this exception when it is raised and then retrieve that variable when I handle it in the try-except block. Could you guide me as to how this can be achieved?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! You can modify your `ExampleException` class to accept additional arguments when it's raised. This involves defining an `__init__` method within your exception class to store the passed variable. You can then retrieve this variable when handling the exception in a `try-except` block. Here's how you can do it:\n\n```python\nclass ExampleException(Exception):\n    def __init__(self, message, variable):\n        super().__init__(message)\n        self.variable = variable\n\n# Example usage\ntry:\n    # Raise an exception with a message and a variable\n    raise ExampleException(\"An error occurred\", 42)\nexcept ExampleException as e:\n    # Handle the exception and access the variable\n    print(f\"Caught an exception: {e}\")\n    print(f\"Variable value: {e.variable}\")\n```\n\nIn this example:\n\n1. `ExampleException` now takes two arguments in its constructor: `message` and `variable`.\n2. The `super().__init__(message)` call initializes the base `Exception` class with the message.\n3. The `variable` is stored as an instance attribute of the exception.\n4. When you raise `ExampleException`, you pass both the message and the variable.\n5. In the `except` block, you can access `e.variable` to retrieve the passed variable."
+    }
+]
