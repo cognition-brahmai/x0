@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using matplotlib version 0.99 and I am facing an issue with changing the border width of a subplot. Here is my code:\n\n```\nfig = plt.figure(figsize = (4.1, 2.2))\nax = fig.add_subplot(111)\n\nax.patch.set_linewidth(0.1) \nax.get_frame().set_linewidth(0.1) \n```\n\nThe last two lines, which are supposed to change the border width, are not working as expected. However, the following command works perfectly:\n\n```\nlegend.get_frame().set_linewidth(0.1)\n```\n\nHow can I change the subplot border width effectively?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Matplotlib version 0.99, the interface for modifying the subplot border width is a bit different from more recent versions. The `Axes` object (which `ax` represents) doesn't have a direct method to change the border width. Instead, you need to work with the spines of the `Axes`. Spines are the borders of the plot, and you can modify each spine individually.\n\nHere's how you can change the border width of a subplot by adjusting the spines:\n\n```python\nimport matplotlib.pyplot as plt\n\nfig = plt.figure(figsize=(4.1, 2.2))\nax = fig.add_subplot(111)\n\n# Set the linewidth for each spine\nfor spine in ax.spines.values():\n    spine.set_linewidth(0.1)\n\nplt.show()\n```\n\nThis code iterates over each spine of the `Axes` and sets its linewidth to 0.1. This approach should effectively change the subplot border width in Matplotlib version 0.99."
+    }
+]
