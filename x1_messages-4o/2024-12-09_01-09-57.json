@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am currently aggregating students per year using PySpark. My aim is to determine the total number of students for each year. However, I have discovered that many IDs are duplicated, which leads to incorrect and inflated results. How can I aggregate the students by year, count the total number of students per year and avoid counting duplicate IDs? Here is the code I am using:\n\n```python\nfrom pyspark.sql.functions import col\nimport pyspark.sql.functions as fn\n\ngr = Df2.groupby(['Year'])\ndf_grouped = gr.agg(fn.count(col('Student_ID')).alias('total_student_by_year'))\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To ensure that you are not counting duplicate student IDs when aggregating the total number of students per year, you need to remove duplicates before performing the count. You can achieve this by first using the `dropDuplicates` method, which will remove duplicate records based on the `Student_ID`. Here's how you can modify your code:\n\n```python\nfrom pyspark.sql.functions import col\nimport pyspark.sql.functions as fn\n\n# Drop duplicate Student_IDs\ndf_unique = Df2.dropDuplicates(['Student_ID'])\n\n# Group by 'Year' and count the distinct Student_IDs\ngr = df_unique.groupby(['Year'])\ndf_grouped = gr.agg(fn.count(col('Student_ID')).alias('total_student_by_year'))\n\n# Show the result\ndf_grouped.show()\n```\n\nThis approach will ensure that each `Student_ID` is only counted once per year, thus providing an accurate count of unique students for each year."
+    }
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I test if a variable holds a lambda function? I am trying to check the type in a unit test, like so: `self.assertEquals(lambda, type(myVar))`. The type seems to be \"function\", but I didn't see any obvious built-in type to match it. I know I could write `self.assertEquals(type(lambda m: m), type(myVar))`, but it feels clumsy. Is there a more elegant solution to this?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, lambda functions are indeed of the type `function`. Therefore, when you want to check if a variable holds a lambda function, you would typically check if it's a function type. However, distinguishing between a named function and a lambda function using just the type is not directly possible because both have the same type.\n\nIf you specifically want to detect whether a function is a lambda, you can check the `__name__` attribute of the function. Lambda functions have their `__name__` attribute set to `'<lambda>'`. Here's how you can do it:\n\n```python\nimport types\n\ndef is_lambda_function(obj):\n    return isinstance(obj, types.LambdaType) and obj.__name__ == '<lambda>'\n\n# Example usage in a unit test\nself.assertTrue(is_lambda_function(myVar))\n```\n\nThis function checks two things:\n1. Whether the object is an instance of `types.LambdaType`, which is typically the same as checking if it's a `function`.\n2. Whether the `__name__` attribute of the function is `'<lambda>'`, which is unique to lambda functions.\n\nBy using this approach, your unit test can more elegantly verify if `myVar` is a lambda function."
+    }
+]
