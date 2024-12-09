@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I use Python's pandas library to select columns from a dataframe that only contain zero values? For instance, given this dataframe:\n\n<pre><code>\ndf\n   0  1  2  3  4  5  6  7\n0  0  0  0  1  0  0  1  0\n1  1  1  0  0  0  1  1  1\n</code></pre>\n\nI would like to select the columns with all zeros, as in the following expected output:\n\n<pre><code>\n   2  4\n0  0  0\n1  0  0\n</code></pre>"
+    },
+    {
+        "role": "assistant",
+        "content": "To select columns from a pandas DataFrame that contain only zero values, you can use the `all()` method along with boolean indexing. Here's how you can achieve this:\n\n```python\nimport pandas as pd\n\n# Create the DataFrame\ndata = {\n    0: [0, 1],\n    1: [0, 1],\n    2: [0, 0],\n    3: [1, 0],\n    4: [0, 0],\n    5: [0, 1],\n    6: [1, 1],\n    7: [0, 1]\n}\ndf = pd.DataFrame(data)\n\n# Select columns that contain all zero values\nzero_columns = df.columns[(df == 0).all()]\n\n# Create a new DataFrame with only the zero columns\nzero_df = df[zero_columns]\n\nprint(zero_df)\n```\n\n### Explanation:\n1. **Comparison**: `(df == 0)` creates a boolean DataFrame where each element is `True` if it is zero, otherwise `False`.\n2. **Check All**: `(df == 0).all()` checks each column to see if all of its values are `True` (i.e., all values are zero).\n3. **Column Selection**: `df.columns[(df == 0).all()]` gives the column labels where the condition is met.\n4. **Subset DataFrame**: `df[zero_columns]` creates a new DataFrame that contains only the specified columns.\n\nUsing this approach, you can filter columns with all zero values accurately."
+    }
+]
