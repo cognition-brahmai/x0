@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, is there a way to use the `rstrip` command such that it only removes one exact string sequence rather than treating all letters individually? For instance, if I use the command `\"Boat.txt\".rstrip(\".txt\")`, I would expect the output to be `'Boat'`. However, I get `'Boa'` instead. How can I use `rstrip` in a way that respects the order and gives me the expected output?"
+    },
+    {
+        "role": "assistant",
+        "content": "The `rstrip` method in Python treats its argument as a set of characters to remove from the end of the string, not as a substring. This is why `\"Boat.txt\".rstrip(\".txt\")` results in `'Boa'`, as it removes any combination of characters `'.'`, `'t'`, and `'x'` found at the end of the string.\n\nTo remove an exact string sequence from the end of a string, you can use string slicing with the `str.endswith` method to check if the string ends with the specified substring. Here's how you can do it:\n\n```python\ndef remove_suffix(string, suffix):\n    if string.endswith(suffix):\n        return string[:-len(suffix)]\n    return string\n\nresult = remove_suffix(\"Boat.txt\", \".txt\")\nprint(result)  # Output: 'Boat'\n```\n\nThis function, `remove_suffix`, checks if the input `string` ends with the specified `suffix`. If it does, it returns the string minus the length of the suffix; otherwise, it returns the original string unchanged."
+    }
+]

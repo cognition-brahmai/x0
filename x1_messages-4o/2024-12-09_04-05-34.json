@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to define a set of constants in a Python class like so:\n\n```python\nclass Foo(object):\n   (NONEXISTING,VAGUE,CONFIRMED) = (0,1,2)\n   def __init__(self):\n       self.status = VAGUE\n```\nHowever, I am encountering a `NameError: global name 'VAGUE' is not defined`. Is there a way to define these constants so that they are visible within the class without having to resort to using `global` or `self.NONEXISTING = 0` etc.?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering is due to the fact that `VAGUE` is defined as a class attribute, but you're trying to access it as if it were an instance attribute. In Python, class attributes should be accessed using the class name within methods, unless they are specifically defined as instance attributes.\n\nHere's how you can modify your code to make it work:\n\n```python\nclass Foo(object):\n    (NONEXISTING, VAGUE, CONFIRMED) = (0, 1, 2)\n    \n    def __init__(self):\n        # Access the class attribute using the class name\n        self.status = Foo.VAGUE\n\n# Example usage\nfoo_instance = Foo()\nprint(foo_instance.status)  # Output: 1\n```\n\nIn this revised version, `Foo.VAGUE` is used to access the class attribute `VAGUE` within the `__init__` method. By doing this, you avoid the `NameError` because you're explicitly referencing the attribute as a part of the `Foo` class."
+    }
+]
