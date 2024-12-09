@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is it possible to filter a QuerySet in Django after it has been created? For example, I have a QuerySet that contains all active users. Can I then filter this QuerySet to separate it into two different QuerySets, one for users who have been deleted and one for users who have not been deleted? Here is the code I have right now:\n\n```python\neveryone = User.objects.filter(is_active=True)  # this would of course return all users that's active\nnot_deleted = User.objects.filter(is_active=True, is_deleted=False)  # return user that's active and not deleted\nis_deleted = User.objects.filter(is_active=True, is_deleted=True)  # return user that's active and is already deleted\n```\n\nI want to know if there is a way to use the `everyone` QuerySet and filter out `is_deleted=True` or `is_deleted=False`. I believe that this could potentially make my queries faster and more efficient."
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can further filter an existing `QuerySet` in Django without hitting the database again for the initial conditions that were already applied. When you filter a `QuerySet`, Django does not immediately query the database. Instead, the query is only executed when the data is actually needed. This means you can chain filters together to further refine your results.\n\nGiven your example, you can filter the `everyone` `QuerySet` to get `not_deleted` and `is_deleted` like this:\n\n```python\n# Initial QuerySet with active users\neveryone = User.objects.filter(is_active=True)\n\n# Further filtering `everyone` QuerySet\nnot_deleted = everyone.filter(is_deleted=False)\nis_deleted = everyone.filter(is_deleted=True)\n```\n\nBy doing this, you are leveraging the already established conditions in the `everyone` `QuerySet`, which can lead to more efficient querying because you are not repeating the `is_active=True` condition in the database query. This approach can also improve code readability and maintainability by avoiding repetition."
+    }
+]
