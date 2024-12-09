@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using matplotlib in Python and I am having trouble increasing the font size of a part of the title in my plot. My current code looks like this:\n\n```python\nplt.title('Temperature \\n Humidity')\n```\n\nI want to increase the font size of the word 'Temperature' without changing the font size of 'Humidity'. I tried using the following code:\n\n```python\nplt.title('Temperature \\n Humidity', fontsize=100)\n```\n\nHowever, this increases the font size of both words. How can I only increase the font size of 'Temperature'?"
+    },
+    {
+        "role": "assistant",
+        "content": "To increase the font size of only a part of the title in a `matplotlib` plot, you can use the `matplotlib.text` module to create a more customized title. Unfortunately, the `plt.title()` function doesn't support HTML-like formatting directly, but you can achieve this by combining multiple `text` objects. Here's how you can do it:\n\n```python\nimport matplotlib.pyplot as plt\n\n# Plot your data\nplt.plot([1, 2, 3], [1, 4, 9])  # Example plot\n\n# Use the `text()` function to add the title with different font sizes\nplt.text(0.5, 1.05, 'Temperature', fontsize=20, ha='center', transform=plt.gca().transAxes)\nplt.text(0.5, 0.95, 'Humidity', fontsize=10, ha='center', transform=plt.gca().transAxes)\n\nplt.show()\n```\n\nIn this code:\n- `plt.text()` is used to position the text at a specific location in the plot.\n- The `transform=plt.gca().transAxes` argument makes the text positioning relative to the axes, where `(0.5, 1.05)` and `(0.5, 0.95)` specify the horizontal alignment and vertical position of the text, respectively. Adjust these values as needed to get the desired layout.\n- `fontsize` is set individually for each text element to control their sizes separately. \n\nThis method allows for more flexible formatting of plot titles and other text elements in your plots."
+    }
+]
