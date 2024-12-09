@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I pass a parameter to a fabric task when calling \"fab\" from the command line? Specifically, I want to pass a parameter to a task defined as such: \n\n```python\ndef task(something=''):\n    print \"You said %s\" % something\n```\n\nI would like to be able to execute the task and pass a parameter in the following way:\n\n```bash\n$ fab task \"hello\"\nYou said hello\n\nDone.\n```\n\nIs it possible to do this without prompting with `fabric.operations.prompt`?"
+    },
+    {
+        "role": "assistant",
+        "content": "To pass parameters to a Fabric task from the command line, you can use keyword arguments. Fabric allows you to specify task arguments in the form of `key=value` pairs when calling `fab` from the command line. Here's how you can modify your task and call it with a parameter:\n\nFirst, ensure your task accepts the parameter as a keyword argument:\n\n```python\nfrom fabric import task\n\n@task\ndef my_task(c, something=''):\n    print(f\"You said {something}\")\n```\n\nThen, you can call the task from the command line like this:\n\n```bash\n$ fab my_task:something=\"hello\"\n```\n\nThis will result in the output:\n\n```\nYou said hello\n```\n\n### Explanation:\n- The `@task` decorator is used from Fabric to define tasks.\n- The task function takes `c` as the first parameter, which is a connection object used by Fabric (required for tasks).\n- The `something` parameter is specified with a default value, allowing you to pass it via command line using `key=value`.\n- When you run the command, Fabric will parse `something=\"hello\"` and pass `\"hello\"` as the argument to the `something` parameter.\n\nMake sure you have Fabric 2.x or later, as the syntax for Fabric 1.x differs."
+    }
+]
