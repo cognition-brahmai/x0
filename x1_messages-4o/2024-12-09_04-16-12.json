@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using pytest to run tests in my Python project. I have a series of tests defined like this:\n\n```python\ndef test_func_one():\n    ...\n\ndef test_func_two():\n    ...\n\ndef test_func_three():\n    ...\n```\n\nIs there a way to disable a specific test function, so pytest will not run it? I'm looking for a solution that might use a decorator or something similar, which I could add to the functions to prevent pytest from running just that particular test. Ideally, I would like the code to look something like this:\n\n```python\n@pytest.disable()\ndef test_func_one():\n    ...\n\ndef test_func_two():\n    ...\n\ndef test_func_three():\n    ...\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can easily disable a specific test function in pytest using the `@pytest.mark.skip` or `@pytest.mark.skipif` decorator. These decorators can be applied to specific test functions to prevent them from running. Here's how you can use them:\n\n1. **Using `@pytest.mark.skip`**:\n   This decorator will skip the test unconditionally. You can add a reason to document why it's being skipped.\n\n   ```python\n   import pytest\n\n   @pytest.mark.skip(reason=\"Temporarily disabled for debugging\")\n   def test_func_one():\n       ...\n\n   def test_func_two():\n       ...\n\n   def test_func_three():\n       ...\n   ```\n\n2. **Using `@pytest.mark.skipif`**:\n   This decorator skips the test conditionally based on an expression. It\u2019s useful if you want to skip the test only under certain conditions.\n\n   ```python\n   import pytest\n\n   @pytest.mark.skipif(True, reason=\"Skipping this test conditionally\")\n   def test_func_one():\n       ...\n\n   def test_func_two():\n       ...\n\n   def test_func_three():\n       ...\n   ```\n\nIn both cases, when you run pytest, it will report that the test has been skipped and provide the reason specified. This approach is helpful for temporarily disabling tests during development or maintenance without removing the test code."
+    }
+]
