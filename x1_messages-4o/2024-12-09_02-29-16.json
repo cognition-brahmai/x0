@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to figure out how to document a function that returns a `tuple` in PyCharm such that it can be used for type hinting. Here is an example of the function I am trying to document:\n\n```python\ndef fetch_abbrev_customer_info(customer_id):\n  \"\"\"Pulls abbreviated customer data from the database for the Customer\n       with the specified PK value.\n\n       :type customer_id:int The ID of the Customer record to fetch.\n\n       :rtype:???\n  \"\"\"\n  ... magic happens here ...\n\n  return customer_obj.fullname, customer_obj.status #, etc.\n```\nI am not sure what to put in the `:rtype:` annotation to indicate that the function returns a tuple. What should I use in place of the `???`?"
+    },
+    {
+        "role": "assistant",
+        "content": "To document a function in PyCharm and use type hinting effectively, you can specify the return type using Python's `typing` module. For a function that returns a tuple, you can use `Tuple` from the `typing` module.\n\nIn your specific case, if the function returns a tuple containing, for example, a `str` and an `int`, you would specify it like this:\n\n```python\nfrom typing import Tuple\n\ndef fetch_abbrev_customer_info(customer_id: int) -> Tuple[str, str]:\n    \"\"\"Pulls abbreviated customer data from the database for the Customer\n    with the specified PK value.\n\n    :param customer_id: The ID of the Customer record to fetch.\n    :type customer_id: int\n\n    :return: A tuple containing the customer's fullname and status.\n    :rtype: Tuple[str, str]\n    \"\"\"\n    # ... magic happens here ...\n\n    return customer_obj.fullname, customer_obj.status\n```\n\nReplace `str` and `str` in `Tuple[str, str]` with the actual types of the elements in the tuple you are returning. If your tuple has more elements or different types, adjust the `Tuple` annotation accordingly."
+    }
+]
