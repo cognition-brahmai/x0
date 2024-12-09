@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I write a function that groups list items with adjacent values?"
+    },
+    {
+        "role": "assistant",
+        "content": "To write a function that groups list items with adjacent values, you can iterate through the list and group items that are consecutive. Here's a Python function that achieves this:\n\n```python\ndef group_adjacent(lst):\n    if not lst:\n        return []\n\n    lst.sort()  # Ensure the list is sorted\n    grouped = []\n    current_group = [lst[0]]\n\n    for i in range(1, len(lst)):\n        if lst[i] == lst[i - 1] + 1:\n            current_group.append(lst[i])\n        else:\n            grouped.append(current_group)\n            current_group = [lst[i]]\n\n    grouped.append(current_group)\n    return grouped\n\n# Example usage\ninput_list = [3, 1, 2, 5, 6, 8, 9, 10]\nresult = group_adjacent(input_list)\nprint(result)\n```\n\n### Explanation:\n\n1. **Sorting**: The list is sorted to ensure that all adjacent numbers are next to each other.\n\n2. **Initialization**:\n   - `grouped` is used to store the final groups of adjacent numbers.\n   - `current_group` is used to collect numbers that are consecutive.\n\n3. **Iteration**:\n   - Iterate through the sorted list starting from the second element.\n   - If the current number is consecutive to the previous number (`lst[i] == lst[i - 1] + 1`), add it to `current_group`.\n   - If not, close the current group by appending it to `grouped`, and start a new group with the current number.\n\n4. **Finalization**: After the loop, append the last accumulated group to `grouped`.\n\nThis function will return a list of lists, where each sublist contains a group of consecutive numbers from the original list."
+    }
+]
