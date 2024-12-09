@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a decorated function named `collect_data` in Python. The decorator `check_domain` is defined as shown in the code. However, when I try to get the function name using `collect_data.__name__`, I get the name `wrapper` instead of `collect_data`. How can I get the actual function name (`collect_data`) instead of the wrapper function name?\n\nDecorator code:\n\n```python\ndef check_domain(func):\n\n    def wrapper(domain_id, *args, **kwargs):\n        domain = get_object_or_None(Domain, id=domain_id)\n        if not domain:\n            return None\n        return func(domain_id, *args, **kwargs)\n\n    return wrapper\n```\n\nFunction code:\n\n```python\n@check_domain\ndef collect_data(domain_id, from_date, to_date):\n    do_stuff(...)\n```\n\nWhen I try `collect_data.__name__`, I get `wrapper` instead of `collect_data`."
+    },
+    {
+        "role": "assistant",
+        "content": "The behavior you're observing is due to the fact that the decorator `check_domain` returns the `wrapper` function, which effectively replaces `collect_data`. This is why `collect_data.__name__` returns `'wrapper'`. To preserve the metadata of the original function (like the function name, docstring, etc.), you can use the `functools.wraps` decorator within your `check_domain` decorator. Here's how you can modify your code:\n\n```python\nfrom functools import wraps\n\ndef check_domain(func):\n    @wraps(func)\n    def wrapper(domain_id, *args, **kwargs):\n        domain = get_object_or_None(Domain, id=domain_id)\n        if not domain:\n            return None\n        return func(domain_id, *args, **kwargs)\n\n    return wrapper\n\n@check_domain\ndef collect_data(domain_id, from_date, to_date):\n    do_stuff(...)\n\n# Now, when you call\nprint(collect_data.__name__)\n```\n\nBy adding `@wraps(func)` to the `wrapper` function, you ensure that the metadata of `func` (in this case, `collect_data`) is copied over to `wrapper`. This includes the function name, so `collect_data.__name__` will now correctly return `'collect_data'`."
+    }
+]
