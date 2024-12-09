@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there a straightforward method to position the y-axis label on the right-hand side of a plot in matplotlib? I am aware that the tick labels can be moved to the right side using `ax.yaxis.tick_right()`, but I'm interested in knowing if the same can be done for the axis label. An approach I considered was:\n\n```python\nax.yaxis.tick_right()\nax2 = ax.twinx()\nax2.set_ylabel('foo')\n```\n\nHowever, this doesn't result in all labels (tick and axis labels) being placed on the right-hand side while maintaining the y-axis extent. Essentially, I am looking for a way to shift all the y-axis labels from the left to the right."
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can position the y-axis label on the right-hand side of a plot in Matplotlib by using the `set_label_position` method along with `tick_right`. Here's how you can achieve this without creating a twin axis:\n\n```python\nimport matplotlib.pyplot as plt\n\n# Sample data\nx = [1, 2, 3, 4, 5]\ny = [10, 20, 25, 30, 40]\n\n# Create a plot\nfig, ax = plt.subplots()\n\n# Plot the data\nax.plot(x, y)\n\n# Move the y-axis label and ticks to the right\nax.yaxis.tick_right()\nax.yaxis.set_label_position(\"right\")\nax.set_ylabel('foo')\n\n# Show the plot\nplt.show()\n```\n\nIn this code:\n\n- `ax.yaxis.tick_right()` moves the tick marks and tick labels to the right side of the plot.\n- `ax.yaxis.set_label_position(\"right\")` moves the y-axis label to the right side as well.\n- `ax.set_ylabel('foo')` assigns the label 'foo' to the y-axis, which now appears on the right.\n\nThis approach will ensure that all the y-axis labels (tick labels and axis label) are on the right side of the plot."
+    }
+]
