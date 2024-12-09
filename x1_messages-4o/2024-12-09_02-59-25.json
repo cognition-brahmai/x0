@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I reset my form to its original state with all fields clean after it has been submitted and validated? Currently, when I submit a form and it is valid, it retains the previously submitted data. Here's my current code:\n\n```python\n@mod.route('/', methods=['GET', 'POST'])\ndef home():\n    form = NewRegistration()\n\n    if form.validate_on_submit():\n        #save in db\n\n        flash(gettext(u'Thanks for the registration.'))\n\n    return render_template(\"users/registration.html\", form=form)\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To reset your form to its original state with all fields cleared after it has been submitted and validated, you need to create a new instance of the form after processing the submission. This ensures that the form rendered in your template is a fresh copy without any pre-filled data. Modify your `home` function to create a new form instance after the data has been processed and saved. Here's an updated version of your code:\n\n```python\n@mod.route('/', methods=['GET', 'POST'])\ndef home():\n    form = NewRegistration()\n\n    if form.validate_on_submit():\n        # Save in db\n\n        flash(gettext(u'Thanks for the registration.'))\n\n        # Create a new form instance after a successful submission\n        form = NewRegistration()\n\n    return render_template(\"users/registration.html\", form=form)\n```\n\nIn this version, after the form is successfully validated and any necessary actions (e.g., saving to the database) are completed, a new instance of `NewRegistration` is created. This new instance is then passed to the template, ensuring that the form fields are reset to their initial state."
+    }
+]
