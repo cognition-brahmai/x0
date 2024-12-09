@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I select rows from a SQLite table by rowid using a list in Python sqlite3 \u2013 DB-API 2.0? For instance, the following code works:\n\n```python\ncursor.execute(\"select * from sqlitetable where rowid in (2,3);\")\n```\n\nHowever, when I try to pass a Python list as a parameter to the SQL query like this:\n\n```python\ncursor.execute(\"select * from sqlitetable where rowid in (?) \", [[2,3]] )\n```\n\nI receive an error: \n\n```python\nsqlite3.InterfaceError: Error binding parameter 0 - probably unsupported type.\n```\n\nIs there a solution to this problem that does not involve converting the list into a string?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering is due to the way SQLite's parameter substitution works. When you use placeholders like `?`, SQLite expects a single value to replace each placeholder, not a list. To pass a list of values for an `IN` clause, you can dynamically construct your query string with the appropriate number of placeholders.\n\nHere's a way to accomplish this:\n\n```python\nrowid_list = [2, 3]\nplaceholders = ', '.join('?' for _ in rowid_list)\nquery = f\"SELECT * FROM sqlitetable WHERE rowid IN ({placeholders})\"\ncursor.execute(query, rowid_list)\n```\n\n### Explanation\n\n1. **Placeholders Creation**: The `', '.join('?' for _ in rowid_list)` generates a string like `'?, ?'` based on the length of `rowid_list`. This ensures that you have the correct number of placeholders for the query.\n\n2. **Query Construction**: The `query` string is constructed using an f-string, incorporating the placeholders.\n\n3. **Executing the Query**: The `cursor.execute()` method is called with the constructed query and the `rowid_list` as arguments. SQLite will substitute each `?` with the corresponding value from `rowid_list`.\n\nThis method avoids manually constructing a string of IDs, thus maintaining the safety and efficiency of parameterized queries."
+    }
+]
