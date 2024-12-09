@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I get the dimensions of an image without loading the complete image into memory using Python? I am currently using PIL in the following way:\n\n```python\nfrom PIL import Image\nim = Image.open(image_filename)\nwidth, height = im.size\n```\n\nBut this loads the entire image into memory. I am only interested in image sizes for statistical purposes and do not need the image contents. I want to make my processing faster."
+    },
+    {
+        "role": "assistant",
+        "content": "To get the dimensions of an image without loading the entire image into memory, you can use the `Image` module from PIL (Pillow) in a slightly different way by leveraging the `Image.open()` method with a context manager. This allows you to access the image's metadata, such as dimensions, without fully loading the image data into memory.\n\nHere's how you can achieve that:\n\n```python\nfrom PIL import Image\n\ndef get_image_dimensions(image_filename):\n    with Image.open(image_filename) as img:\n        width, height = img.size\n    return width, height\n\n# Example usage\nimage_filename = 'your_image.jpg'\nwidth, height = get_image_dimensions(image_filename)\nprint(f\"Width: {width}, Height: {height}\")\n```\n\nIn this code, the `with` statement ensures that the image file is properly closed after you're done with it, and it allows you to access the dimensions without loading the entire image into memory. This method should be efficient for your statistical processing needs."
+    }
+]
