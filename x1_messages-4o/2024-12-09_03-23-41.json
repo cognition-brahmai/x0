@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I implement a subscriptable class in Python? I understand that to implement a subscriptable object, I just need to implement the `__getitem__` method in the object's class definition. However, I want to implement a subscriptable class. For instance, I have the following class:\n\n```python\nclass Fruit(object):\n    Apple = 0\n    Pear = 1\n    Banana = 2\n```\n\nI want to be able to access the attributes of the class like so: `Fruit['Apple'], Fruit['Banana']` which would output: `0 2`. I am aware that `getattr` can achieve something similar, but I find subscript accessing more elegant. How can I implement this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve subscript access to class attributes in Python, you can implement the `__getitem__` method in the class's metaclass. By doing this, you'll allow the class itself (not instances of the class) to be subscriptable. Here's how you can do it:\n\n1. Define a custom metaclass with the `__getitem__` method.\n2. Use this metaclass for your `Fruit` class.\n\nHere's how you can implement it:\n\n```python\nclass SubscriptableMeta(type):\n    def __getitem__(cls, key):\n        return getattr(cls, key)\n\nclass Fruit(metaclass=SubscriptableMeta):\n    Apple = 0\n    Pear = 1\n    Banana = 2\n\n# Now you can access the class attributes using subscript notation\nprint(Fruit['Apple'])   # Output: 0\nprint(Fruit['Banana'])  # Output: 2\n```\n\n### Explanation:\n\n- **SubscriptableMeta**: This is a custom metaclass that overrides the `__getitem__` method. It uses `getattr` to retrieve the attribute of the class by name.\n- **Fruit Class**: By specifying `metaclass=SubscriptableMeta`, the `Fruit` class uses the custom metaclass, making it subscriptable.\n\nThis approach gives you the elegant syntax of subscript access for class attributes while maintaining the readability and functionality of your code."
+    }
+]
