@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using Anaconda for Python and when I switch to the virtual environment by using `source activate my_env`, it changes my prompt and adds (my_env) at the start of my PS1. I've tried disabling this by adding `export VIRTUAL_ENV_DISABLE_PROMPT=1` to my bashrc, but it didn't work. How can I disable this prompt change?"
+    },
+    {
+        "role": "assistant",
+        "content": "If setting `VIRTUAL_ENV_DISABLE_PROMPT=1` in your `.bashrc` didn't work, you might try a different approach to prevent the virtual environment name from appearing in your shell prompt. Here's a method you can use:\n\n1. **Customizing the Activation Script:**\n   You can modify the activation script of your virtual environment. This script is typically located at `my_env/bin/activate` (replace `my_env` with your actual environment name).\n\n   Open the `activate` script in a text editor and look for the following line:\n\n   ```bash\n   PS1=\"(`basename \\\"$VIRTUAL_ENV\\\"`) $PS1\"\n   ```\n\n   Comment out or remove this line to prevent the prompt from being modified:\n\n   ```bash\n   # PS1=\"(`basename \\\"$VIRTUAL_ENV\\\"`) $PS1\"\n   ```\n\n2. **Using a Custom PS1:**\n   Alternatively, you can set a custom PS1 in your `.bashrc` that overrides any changes made by the virtual environment activation. Add the following line to your `.bashrc`:\n\n   ```bash\n   export PS1='YourCustomPrompt>'\n   ```\n\n   Replace `'YourCustomPrompt>'` with whatever prompt format you prefer.\n\n3. **Check for Other Scripts:**\n   Ensure there are no other scripts or configurations that might be overriding your settings. Sometimes, other files like `.bash_profile` or `.profile` might also contain configurations that affect your shell's behavior.\n\nAfter making these changes, make sure to reload your shell or source your `.bashrc` file to apply the changes:\n\n```bash\nsource ~/.bashrc\n```\n\nThese steps should help you disable the virtual environment name from appearing in your prompt."
+    }
+]
