@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, when I dump a string that contains unicode characters as json, it produces unicode escape sequences. For instance, the following code:\n\n```python\ntext = \"\u2302\u2698\u3044\u306e\u6cd5\u5ac1\"\nprint(text) # output: \u2302\u2698\u3044\u306e\u6cd5\u5ac1\n\nimport json\njson_text = json.dumps(text)\nprint(json_text) # output: \"\\u2302\\u2698\\u3044\\u306e\\u6cd5\\u5ac1\"\n```\ngives me \"\\u2302\\u2698\\u3044\\u306e\\u6cd5\\u5ac1\" as the output. However, I'd like to get \"\u2302\u2698\u3044\u306e\u6cd5\u5ac1\" as the output. How can I dump unicode characters as characters instead of escape sequences in Python?"
+    },
+    {
+        "role": "assistant",
+        "content": "To ensure that the `json.dumps` function outputs Unicode characters as-is, instead of using Unicode escape sequences, you can use the `ensure_ascii` parameter and set it to `False`. By default, `ensure_ascii` is set to `True`, which means that all non-ASCII characters are escaped. Setting it to `False` allows the characters to be represented directly in the output.\n\nHere's how you can modify your code:\n\n```python\ntext = \"\u2302\u2698\u3044\u306e\u6cd5\u5ac1\"\nprint(text)  # output: \u2302\u2698\u3044\u306e\u6cd5\u5ac1\n\nimport json\njson_text = json.dumps(text, ensure_ascii=False)\nprint(json_text)  # output: \"\u2302\u2698\u3044\u306e\u6cd5\u5ac1\"\n```\n\nBy setting `ensure_ascii=False`, you instruct the `json.dumps` function to output the actual Unicode characters."
+    }
+]
