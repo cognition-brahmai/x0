@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I retrieve the current port number that Flask is connected to using Flask in Python? My goal is to start a server on a random port using port 0 but I also need to know which port I am on. I have thought of a workaround, which is to iterate through ports starting with 49152 and attempt to use that port through `app.run(port=PORT)`. If I encounter an `Address already in use` error, I would catch it and try the next port. But, is there a more direct way to solve this problem?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, there is a more direct way to solve this problem in Flask without manually iterating through ports. When you specify `port=0`, Flask will automatically bind to an available port. You can retrieve the port number that Flask is actually using by accessing the server's socket information.\n\nHere\u2019s how you can do it:\n\n1. Start the Flask app with the `port=0` parameter to allow the operating system to select an available port.\n2. Use the `werkzeug.serving` module to access the socket information after the server starts.\n\nHere's a code example demonstrating how to retrieve the current port number:\n\n```python\nfrom flask import Flask\nimport socket\n\napp = Flask(__name__)\n\n@app.route('/')\ndef hello():\n    return \"Hello, World!\"\n\nif __name__ == '__main__':\n    # Bind to port 0 to allow the OS to choose an available port.\n    app.run(port=0, use_reloader=False)\n\n    # Get the address and port number that Flask is using.\n    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:\n        s.bind(('', 0))  # Bind to any available address and port.\n        address, port = s.getsockname()\n        print(f\"Flask is running on port {port}\")\n```\n\nIn this example, the `socket.getsockname()` method is used to retrieve the address and port number that the server is actually using after it has started.\n\nThis way, you can start your Flask server on a random available port and know exactly which port it is running on without the need to manually iterate through ports."
+    }
+]
