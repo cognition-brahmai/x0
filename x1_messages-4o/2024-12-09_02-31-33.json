@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm trying to automate my workflow using pip to install from a git repository. However, I've noticed that underscores in the repository name get changed to dashes when installed with \"pip install -e ...\". Is there any way to stop this conversion? I would like the repository 'foo_bar' to be ' ~/src/foo_bar' and not ' ~/src/foo-bar'."
+    },
+    {
+        "role": "assistant",
+        "content": "The behavior you're observing is due to the way Python packages are normalized according to the naming conventions in PEP 503, which specifies that underscores in package names are converted to hyphens. This is a standard practice in Python packaging to ensure consistency and compatibility across different systems.\n\nHowever, if you specifically want the local directory to retain the underscore and not be converted to a dash, you might consider a workaround:\n\n1. **Clone the Repository Manually**: Instead of relying on `pip` to clone and install the repository for you, manually clone the repository into the desired directory with the underscore:\n\n   ```bash\n   git clone https://github.com/yourusername/foo_bar.git ~/src/foo_bar\n   ```\n\n2. **Install in Editable Mode**: Navigate into the cloned directory and install it in editable mode using pip:\n\n   ```bash\n   cd ~/src/foo_bar\n   pip install -e .\n   ```\n\nBy manually cloning the repository, you maintain control over the directory name, ensuring the underscores are preserved. The `-e .` command then installs the package in editable mode from the current directory.\n\nKeep in mind that this approach requires you to manually update the repository when necessary, as opposed to having `pip` manage it directly from the remote source."
+    }
+]
