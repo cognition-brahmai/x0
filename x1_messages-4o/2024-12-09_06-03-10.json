@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I find the previous Monday's date from the current date in Python? I am attempting to find today's date as well as Monday's date in order to construct a date range query in Django using `created__range=(start_date, end_date)`. I have considered using `datetime.weekday()`, but I'm not sure how to proceed."
+    },
+    {
+        "role": "assistant",
+        "content": "To find the previous Monday's date from the current date in Python, you can use the `datetime` module. Here's a step-by-step guide to achieve this:\n\n1. Get the current date.\n2. Determine the current weekday using `datetime.weekday()`. This function returns the day of the week as an integer, where Monday is 0 and Sunday is 6.\n3. Calculate the difference in days between the current day and the most recent Monday.\n4. Subtract this difference from the current date to get the previous Monday's date.\n\nHere's a Python code snippet to demonstrate this:\n\n```python\nfrom datetime import datetime, timedelta\n\n# Get today's date\ntoday = datetime.today()\n\n# Find the current weekday (0 is Monday, 6 is Sunday)\ncurrent_weekday = today.weekday()\n\n# Calculate the difference to the most recent Monday\ndays_since_monday = current_weekday  # Monday is 0, so no adjustment needed\n\n# Subtract the difference from today to get the previous Monday\nprevious_monday = today - timedelta(days=days_since_monday)\n\n# Print today's date and the previous Monday's date\nprint(\"Today's date:\", today.date())\nprint(\"Previous Monday's date:\", previous_monday.date())\n```\n\nWith this code, you can easily find both today's date and the previous Monday's date. You can then use these dates to construct your date range query in Django like this:\n\n```python\nstart_date = previous_monday.date()\nend_date = today.date()\n\n# Use the dates in your Django query\nqueryset = YourModel.objects.filter(created__range=(start_date, end_date))\n```\n\nThis will give you a queryset of objects created from the most recent Monday up to today."
+    }
+]
