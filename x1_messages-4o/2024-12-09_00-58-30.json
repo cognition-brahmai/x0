@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I select NULL values in SQLAlchemy? I have a PostgreSQL table \"people\" with a \"name\" column and a \"marriage_status\" column. I want to select all people who are not known to be married, including those with NULL \"marriage_status\". However, when I use SQLAlchemy to access the database with the filter \"or_(people.marriage_status!='married', people.marriage_status is None)\", it gets translated to \"WHERE people.marriage_status != %(status_1)s OR False\" which doesn't work as expected."
+    },
+    {
+        "role": "assistant",
+        "content": "In SQLAlchemy, when dealing with NULL values, you need to use the `is_()` method instead of Python's `is` keyword, because SQLAlchemy needs to generate the correct SQL syntax for handling NULL values.\n\nTo select all people who are not known to be married, including those with a NULL `marriage_status`, you need to modify your query as follows:\n\n```python\nfrom sqlalchemy import or_, null\nfrom sqlalchemy.orm import sessionmaker\n\n# Assuming you have already set up your engine and Base\nSession = sessionmaker(bind=engine)\nsession = Session()\n\n# Query to select people with 'marriage_status' not 'married' or NULL\nresults = session.query(people).filter(\n    or_(\n        people.marriage_status != 'married',\n        people.marriage_status.is_(None)  # Use is_() for NULL comparison\n    )\n).all()\n\n# Process the results\nfor person in results:\n    print(person.name, person.marriage_status)\n```\n\nHere, `people.marriage_status.is_(None)` translates to the SQL `IS NULL` clause, which checks for NULL values correctly. This should give you the expected results from your PostgreSQL database."
+    }
+]
