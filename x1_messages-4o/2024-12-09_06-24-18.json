@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I retrieve a Python module's version number programmatically? I want to store this version number in a variable."
+    },
+    {
+        "role": "assistant",
+        "content": "You can retrieve a Python module's version number programmatically by using the `importlib.metadata` module which is available in Python 3.8 and later. For earlier versions of Python, you can use the `pkg_resources` module from the `setuptools` package. Here's how you can do it using both methods:\n\n### Using `importlib.metadata` (Python 3.8+)\n\n```python\nimport importlib.metadata\n\n# Replace 'your_module_name' with the actual module name\nmodule_name = 'your_module_name'\ntry:\n    version = importlib.metadata.version(module_name)\n    print(f\"The version of {module_name} is {version}.\")\nexcept importlib.metadata.PackageNotFoundError:\n    print(f\"{module_name} is not installed.\")\n```\n\n### Using `pkg_resources` (Python 2.7 - 3.7)\n\nFirst, make sure you have `setuptools` installed. You can install it via pip if it's not already installed:\n\n```bash\npip install setuptools\n```\n\nThen, use the following code:\n\n```python\nimport pkg_resources\n\n# Replace 'your_module_name' with the actual module name\nmodule_name = 'your_module_name'\ntry:\n    version = pkg_resources.get_distribution(module_name).version\n    print(f\"The version of {module_name} is {version}.\")\nexcept pkg_resources.DistributionNotFound:\n    print(f\"{module_name} is not installed.\")\n```\n\nIn both methods, replace `'your_module_name'` with the actual name of the module whose version you want to retrieve. The version number will be stored in the variable `version`."
+    }
+]
