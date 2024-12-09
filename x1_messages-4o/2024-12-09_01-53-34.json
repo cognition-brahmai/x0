@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to read a csv file using Python's Pandas library. I want to skip a certain number of rows in the file but still keep the header which is in the first row. When I use the `skiprows` parameter, it considers the first row after the skipped rows as the header. How can I retain the original header while skipping rows?\n\nHere's the code I am currently using:\n\n```python\ndata = pd.read_csv('test.csv', sep='|', header=0, skiprows=10, nrows=10)\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To skip a certain number of rows while retaining the original header in a CSV file using Pandas, you can use the `skiprows` parameter in conjunction with specifying the `header` row explicitly. The `skiprows` parameter should be set to skip the rows you want, and the `header` parameter should be set to `0` to indicate that the first row (after skipping) is the header. Here\u2019s how you can modify your code:\n\n```python\ndata = pd.read_csv('test.csv', sep='|', skiprows=range(1, 11), nrows=10)\n```\n\nHere's what's happening in this code:\n\n- `sep='|'` specifies that the delimiter is a pipe.\n- `skiprows=range(1, 11)` skips rows from 1 to 10, but keeps the very first row (the header).\n- `nrows=10` reads 10 rows after the skipped rows.\n\nThis approach will skip the first 10 rows and still keep the original header row. Make sure that the range in `skiprows` starts from 1 to exclude the first row (header) from being skipped."
+    }
+]
