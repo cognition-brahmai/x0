@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How do I construct a Django filter to retrieve objects that satisfy an \"AND\" condition? Specifically, I want to retrieve a row which contains a combination of two words in a single field. The equivalent SQL query that I use on my MySQL database is:\n\n```sql\nselect * from myapp_question\nwhere ((question like '%software%') and (question like '%java%'))\n```\nHow can I achieve this in Django using filters?"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve the equivalent of your SQL query in Django, you can use the `Q` objects to construct complex queries with `AND`, `OR`, and `NOT` operations. In your case, you want to retrieve rows where a single field contains both \"software\" and \"java\". Here is how you can construct the filter using `Q` objects in Django:\n\n```python\nfrom django.db.models import Q\nfrom myapp.models import Question\n\n# Using Q objects to combine conditions\nquestions = Question.objects.filter(\n    Q(question__icontains='software') & Q(question__icontains='java')\n)\n```\n\nIn this example, `question__icontains='software'` is used to perform a case-insensitive search for \"software\" within the `question` field. Similarly, `question__icontains='java'` searches for \"java\". The `&` operator is used to combine these two conditions with an \"AND\" logic, meaning both conditions must be true for a row to be included in the result set.\n\nMake sure to adjust the field name `question` to match the actual field name in your model if it's different."
+    }
+]
