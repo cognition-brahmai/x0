@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using PyQt4 and Python 2.6 to create a QComboBox that provides a list of options. When an option is selected, a signal triggers a method. However, I am facing difficulties while trying to use the selected option. I need the selected contents of the QComboBox as a string. When I use the below code:\n\n```python\nprint combobox1.currentText()\n```\nI get the output as:\n```python\nPyQt4.QtCore.QString(u'Test Selection2')\n```\nAll I need is the 'Test Selection' part. How can I achieve this? Here is how I created my combo box:\n\n```python\ncombobox1 = qt.QComboBox()\ncombobox1.addItems(['Test Selection1', 'Test Selection2'])\nmainLayout.addWidget(combobox1, 0, 0)\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "In PyQt4, the `currentText()` method returns a `QString` object when working with Python 2.6. To convert this `QString` to a regular Python string, you can use the `str()` function or the `QString.toUtf8()` method and then decode it. Here's how you can achieve this:\n\n1. Using `str()` function:\n   ```python\n   selected_text = str(combobox1.currentText())\n   print(selected_text)\n   ```\n\n2. Using `toUtf8()` method:\n   ```python\n   selected_text = combobox1.currentText().toUtf8()\n   selected_text = str(selected_text)\n   print(selected_text)\n   ```\n\nBoth methods will give you a regular Python string with the selected option's text. You can choose either method based on your preference. If you encounter Unicode issues, ensure that your text is properly encoded and decoded as needed."
+    }
+]
