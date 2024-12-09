@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm trying to understand how bootstrapping is applied when calculating Random Forest estimators. I know that each tree (i) is built using data from sample(i), chosen with replacement but I'm struggling to figure out the size of the sample that sklearn RandomForestRegressor uses. The only related parameter I found is `bootstrap`, which is a boolean indicating whether bootstrap samples are used when building trees. However, there's no way to specify the size or proportion of the sample size, and the default size is not mentioned either. How can I find out what the default sample size is?"
+    },
+    {
+        "role": "assistant",
+        "content": "In scikit-learn's `RandomForestRegressor`, when you set the `bootstrap` parameter to `True` (which is the default setting), each decision tree in the forest is trained on a bootstrap sample of the training dataset. A bootstrap sample is created by randomly selecting observations from the original dataset with replacement. \n\nIn practice, the size of each bootstrap sample is equal to the size of the original dataset. This means if you have a dataset with `n` observations, each decision tree is trained on a dataset that also contains `n` observations, but some of these observations may be repeated while others may be absent. This approach inherently introduces variability among the trees, which is one of the key strengths of the Random Forest algorithm.\n\nIf you want to use a different sample size for each tree, you would need to manually implement this by creating your own bootstrapping logic, as `RandomForestRegressor` does not provide a parameter to specify a different sample size directly. \n\nTo summarize, the default behavior in `RandomForestRegressor` with `bootstrap=True` is to create bootstrap samples of the same size as the original dataset."
+    }
+]
