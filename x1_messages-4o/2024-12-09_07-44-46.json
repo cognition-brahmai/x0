@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a file called test.py that includes a pytest.mark.webtest decorator. When I run pytest -s test.py, although I pass all tests, I still get the warning message: \"PytestUnknownMarkWarning: Unknown pytest.mark.webtest - is this a typo? You can register custom marks to avoid this warning\". My environment is Python 3.7.3, pytest 5.2.4, anaconda3. How can I eliminate this warning?"
+    },
+    {
+        "role": "assistant",
+        "content": "The warning you're seeing is due to the fact that pytest does not recognize `webtest` as a registered marker. By default, pytest only recognizes a few built-in markers, and any custom markers need to be explicitly registered to avoid such warnings.\n\nTo eliminate this warning, you can register your custom marker in the `pytest.ini` configuration file. Here\u2019s how you can do it:\n\n1. **Create or Edit `pytest.ini`:**\n\n   If you don't already have a `pytest.ini` file in your project directory, create one. If it already exists, open it for editing.\n\n2. **Register the Custom Marker:**\n\n   Add the following lines to your `pytest.ini` file to register the `webtest` marker:\n\n   ```ini\n   [pytest]\n   markers =\n       webtest: mark a test as a webtest.\n   ```\n\n   This tells pytest that `webtest` is a valid marker, and it provides a short description of what the marker is used for.\n\n3. **Re-run the Tests:**\n\n   After making the change, run your tests again using the `pytest` command:\n\n   ```bash\n   pytest -s test.py\n   ```\n\nBy registering the `webtest` marker, you should no longer see the `PytestUnknownMarkWarning`. This approach is useful for maintaining clear and documented custom test markers, especially when working with larger teams or complex projects."
+    }
+]
