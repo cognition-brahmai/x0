@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I access a dictionary element in a Django template? I want to print out the number of votes that each choice got. I have the following code in my template:\n\n```\n{% for choice in choices %}\n    {{choice.choice}} - {{votes[choice.id]}} <br />\n{% endfor %}\n```\n`votes` is a dictionary and `choices` is a model object. However, I encounter an exception with the following message: \"Could not parse the remainder\". How can I resolve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Django templates, you can't use the dictionary-like syntax (i.e., `votes[choice.id]`) directly within the template. Instead, you should use the `dict.get` method or a custom template filter to access dictionary elements.\n\nHere's how you can modify your template code to use the `dict.get` method:\n\n```html\n{% for choice in choices %}\n    {{ choice.choice }} - {{ votes|get_item:choice.id }} <br />\n{% endfor %}\n```\n\nAnd you would need to define the `get_item` template filter in your `templatetags` file. Here's how you can create that:\n\n1. Create a directory named `templatetags` inside your app directory (if it doesn't already exist).\n\n2. Inside the `templatetags` directory, create a Python file, e.g., `custom_filters.py`.\n\n3. Define the `get_item` filter in `custom_filters.py`:\n\n```python\nfrom django import template\n\nregister = template.Library()\n\n@register.filter\ndef get_item(dictionary, key):\n    return dictionary.get(key)\n```\n\n4. In your template, load the custom filter at the top:\n\n```html\n{% load custom_filters %}\n```\n\nThis should allow you to access the dictionary elements in your template without encountering the \"Could not parse the remainder\" exception."
+    }
+]
