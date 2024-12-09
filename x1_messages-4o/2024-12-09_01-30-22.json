@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there a method to globally override the timeout setting in requests library? I have encountered a bug where the application freezes during a transaction and holds the connection open. I am looking for a way to set a timeout, preferably globally, so I don't have to find every single use and it prevents people from forgetting to add it in the future."
+    },
+    {
+        "role": "assistant",
+        "content": "To globally override the timeout setting in the `requests` library, you can create a custom wrapper around the `requests` methods that includes a default timeout. This way, you don't have to manually specify the timeout for each request, and it helps prevent future oversight.\n\nHere's a simple way to achieve this:\n\n1. Create a custom session class that inherits from `requests.Session`.\n2. Override the `request` method to include a default timeout.\n\nHere's an example implementation:\n\n```python\nimport requests\n\nclass TimeoutSession(requests.Session):\n    def __init__(self, timeout=None):\n        super().__init__()\n        self.timeout = timeout\n\n    def request(self, *args, **kwargs):\n        kwargs.setdefault('timeout', self.timeout)\n        return super().request(*args, **kwargs)\n\n# Usage\ntimeout_session = TimeoutSession(timeout=10)  # Set a default timeout of 10 seconds\n\n# Now, use `timeout_session` instead of `requests` directly\nresponse = timeout_session.get('https://example.com')\nprint(response.status_code)\n```\n\nBy using `TimeoutSession`, you ensure that all requests made using this session will have a default timeout unless explicitly overridden. You can replace instances of `requests.get`, `requests.post`, etc., with `timeout_session.get`, `timeout_session.post`, etc., throughout your application.\n\nIf you want to enforce this across your entire application without replacing every instance, you might consider monkey-patching, but this approach is generally not recommended because it can lead to maintenance challenges and unexpected behavior. The above approach provides a cleaner and more maintainable solution."
+    }
+]

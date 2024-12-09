@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I remove the relative shift in the matplotlib axis? For instance, when I plot a range with large numbers, like this:\n\n```python\nplot([1000, 1001, 1002], [1, 2, 3])\n```\n\nI get these ticks on the x-axis:\n\n```\n0.0     0.5     1.0     1.5     2.0\n                               +1e3\n```\n\nHowever, I want to remove the `+1e3` shift and just have the ticks display as:\n\n```\n1000.0  1000.5  1001.0  1001.5  1002.0\n```\n\nHow can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To remove the offset in the x-axis labels and display the full numbers without the `+1e3` shift in Matplotlib, you can adjust the tick formatter. You can use `FuncFormatter` from `matplotlib.ticker` to customize the format of the ticks. Here's how you can achieve this:\n\n```python\nimport matplotlib.pyplot as plt\nfrom matplotlib.ticker import FuncFormatter\n\n# Define a function to format the ticks\ndef format_func(value, tick_number):\n    return f'{value:.1f}'\n\n# Create the plot\nplt.plot([1000, 1001, 1002], [1, 2, 3])\n\n# Apply the custom formatter to the x-axis\nplt.gca().xaxis.set_major_formatter(FuncFormatter(format_func))\n\n# Show the plot\nplt.show()\n```\n\nThis code snippet uses `FuncFormatter` to format the x-axis ticks to show the full numbers with one decimal place. You can adjust the formatting within the `format_func` to suit your needs, such as changing the number of decimal places."
+    }
+]
