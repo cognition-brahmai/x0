@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there a way to add a documentation string or docstring to a namedtuple in Python? I tried the following code:\n\n```python\nfrom collections import namedtuple\n\nPoint = namedtuple(\"Point\", [\"x\", \"y\"])\n\"\"\"\nA point in 2D space\n\"\"\"\n\n# Yet another test\n\n\"\"\"\nA(nother) point in 2D space\n\"\"\"\nPoint2 = namedtuple(\"Point2\", [\"x\", \"y\"])\n\nprint(Point.__doc__) # -> \"Point(x, y)\"\nprint(Point2.__doc__) # -> \"Point2(x, y)\"\n```\n\nBut it does not work as expected. The docstrings are not being set. Is there a different way to do this?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, when you create a `namedtuple`, the `__doc__` attribute of the resulting class is automatically set to a string representation of its fields, which is why you're seeing \"Point(x, y)\" and \"Point2(x, y)\" as the docstrings. This behavior is built into how `namedtuple` works, and there's no direct way to assign a separate docstring through the `namedtuple` constructor itself.\n\nHowever, you can manually set the `__doc__` attribute of the `namedtuple` class after it's created. Here's how you can achieve this:\n\n```python\nfrom collections import namedtuple\n\nPoint = namedtuple(\"Point\", [\"x\", \"y\"])\nPoint.__doc__ = \"A point in 2D space\"\n\nPoint2 = namedtuple(\"Point2\", [\"x\", \"y\"])\nPoint2.__doc__ = \"A(nother) point in 2D space\"\n\nprint(Point.__doc__)  # -> \"A point in 2D space\"\nprint(Point2.__doc__) # -> \"A(nother) point in 2D space\"\n```\n\nBy setting the `__doc__` attribute explicitly after creating the `namedtuple`, you can provide your own documentation string. This approach gives you the flexibility to describe the purpose of the `namedtuple` class in a way that's meaningful for your application."
+    }
+]
