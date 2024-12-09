@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm working on an admin for Flask and SQLAlchemy and I'm trying to pass HTML for different inputs to my view using `render_template`. However, the templating framework appears to escape the HTML automatically, converting all `<\"'>` characters into HTML entities. How can I disable this feature so that the HTML renders correctly?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Flask, when using Jinja2 as the templating engine, HTML content is automatically escaped to prevent XSS (Cross-Site Scripting) vulnerabilities. However, if you are sure that the HTML content you are passing to the template is safe and you want to render it as raw HTML, you can use the `|safe` filter in your template to disable escaping for specific variables.\n\nHere's how you can do it:\n\n1. **Pass the HTML content to your template:**\n\n   In your Flask view, pass the HTML content as a variable to the `render_template` function:\n\n   ```python\n   from flask import Flask, render_template\n\n   app = Flask(__name__)\n\n   @app.route('/')\n   def index():\n       html_content = '<h1>Hello, World!</h1>'\n       return render_template('index.html', html_content=html_content)\n   ```\n\n2. **Use the `|safe` filter in your template:**\n\n   In your Jinja2 template file (`index.html`), apply the `|safe` filter to the variable containing HTML content:\n\n   ```html\n   <!DOCTYPE html>\n   <html lang=\"en\">\n   <head>\n       <meta charset=\"UTF-8\">\n       <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n       <title>Flask Template</title>\n   </head>\n   <body>\n       {{ html_content|safe }}\n   </body>\n   </html>\n   ```\n\nBy using the `|safe` filter, you instruct Jinja2 to render the HTML content as-is, without escaping it. However, it is crucial to ensure that the HTML content is sanitized and safe to prevent XSS attacks, especially if it includes user-generated content. Always validate and sanitize input data before marking it as safe."
+    }
+]
