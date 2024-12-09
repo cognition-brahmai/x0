@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In my Django site, I have an `Item` object with a boolean property `active`. I'm trying to toggle this property from False to True and vice versa. I tried to use the following code but it seems to be invalid in Python:\n\n```python\ndef toggle_active(item_id):\n    item = Item.objects.get(id=item_id)\n    item.active = !item.active\n    item.save()\n```\n\nThis syntax is valid in many C-based languages, but not in Python. Is there any other way to negate a boolean value assigned to a variable without using the following code?\n\n```python\nif item.active:\n    item.active = False\nelse:\n    item.active = True\nitem.save()\n```\n\nAlso, the built-in Python `neg()` method seems to only return the negation of an integer, not a boolean. Can anyone assist me on how to negate a boolean in Python?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, the logical negation of a boolean value can be achieved using the `not` operator. This is the most straightforward way to toggle a boolean variable. You can simplify your code by using this operator to toggle the `active` attribute of your `Item` object. Here's how you can do it:\n\n```python\ndef toggle_active(item_id):\n    item = Item.objects.get(id=item_id)\n    item.active = not item.active\n    item.save()\n```\n\nIn this code, `not item.active` will evaluate to `True` if `item.active` is `False`, and to `False` if `item.active` is `True`. This effectively toggles the boolean value.\n\nThe `not` operator is the correct and idiomatic way to achieve boolean negation in Python, unlike the `!` operator used in many other languages. This solution is concise and efficient for toggling a boolean attribute."
+    }
+]
