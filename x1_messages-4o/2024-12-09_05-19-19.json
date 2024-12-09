@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am currently using the glob module in Python to list files in the current folder which contain 'abc', '123' or 'a1b' in their names. The code I am using is as follows:\n\n```python\nimport glob\n\nlist = glob.glob(r'*abc*.txt') + glob.glob(r'*123*.txt') + glob.glob(r'*a1b*.txt')\n\nfor i in list:\n  print i\n```\nThis code works but it uses three separate glob calls. Is there a way to achieve the same result using just one glob call?"
+    },
+    {
+        "role": "assistant",
+        "content": "The `glob` module does not support using multiple patterns in a single call directly. However, you can achieve a similar result using regular expressions with the `os` and `re` modules to filter the files after listing all of them. Here is how you can do it:\n\n```python\nimport os\nimport re\n\n# List all files in the current directory\nall_files = os.listdir('.')\n\n# Filter files using a regular expression\npattern = re.compile(r'.*(abc|123|a1b).*\\.txt')\nfiltered_files = [f for f in all_files if pattern.match(f)]\n\n# Print the filtered files\nfor file_name in filtered_files:\n    print(file_name)\n```\n\nThis code first lists all files in the current directory and then filters them using a regular expression that matches any file name containing 'abc', '123', or 'a1b' and ending with '.txt'. This approach consolidates the search into a single pass over the files."
+    }
+]
