@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I convert a spreadsheet column number into a corresponding column letter in Python? For example, I want to convert number 127 into 'AA'. This is the opposite of converting column letter to its number."
+    },
+    {
+        "role": "assistant",
+        "content": "To convert a spreadsheet column number into its corresponding column letter in Python, you can use a simple algorithm that repeatedly divides the column number by 26 (the number of letters in the English alphabet) and adjusts for zero-based indexing. Here is a sample function to perform this conversion:\n\n```python\ndef number_to_column_letter(n):\n    result = []\n    while n > 0:\n        n, remainder = divmod(n - 1, 26)\n        result.append(chr(65 + remainder))\n    return ''.join(reversed(result))\n\n# Example usage\ncolumn_number = 127\ncolumn_letter = number_to_column_letter(column_number)\nprint(column_letter)  # Output: 'AA'\n```\n\n### Explanation:\n1. **Zero-Based Adjustment:** By subtracting 1 from the column number (`n - 1`), we adjust the number for zero-based indexing, which allows the use of `divmod` to correctly map numbers to letters.\n2. **Divmod Function:** `divmod(n - 1, 26)` provides both the quotient and the remainder when `n - 1` is divided by 26.\n3. **Character Conversion:** `chr(65 + remainder)` converts the remainder to the corresponding ASCII character, with `65` being the ASCII code for 'A'.\n4. **Building the Result:** We append each calculated character to the `result` list and reverse the list at the end to get the correct column letter.\n\nThis function will convert any valid column number into its corresponding Excel-style column letter."
+    }
+]
