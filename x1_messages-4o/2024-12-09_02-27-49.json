@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I determine if a URL is absolute or relative using Python? What is the most recommended method for achieving this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To determine if a URL is absolute or relative in Python, you can use the `urlparse` function from the `urllib.parse` module. An absolute URL typically includes a scheme (like `http`, `https`, `ftp`, etc.) and a network location (like `www.example.com`). A relative URL, on the other hand, lacks these components.\n\nHere is a recommended method to check if a URL is absolute:\n\n```python\nfrom urllib.parse import urlparse\n\ndef is_absolute_url(url):\n    parsed_url = urlparse(url)\n    return bool(parsed_url.scheme) and bool(parsed_url.netloc)\n\n# Example usage\nurl1 = \"https://www.example.com/path/to/resource\"\nurl2 = \"/path/to/resource\"\n\nprint(is_absolute_url(url1))  # Output: True\nprint(is_absolute_url(url2))  # Output: False\n```\n\nIn this function, `urlparse` breaks down the URL into components. If both the `scheme` and `netloc` are present, the URL is considered absolute. Otherwise, it is relative. This method is straightforward and leverages Python's built-in libraries for URL parsing."
+    }
+]
