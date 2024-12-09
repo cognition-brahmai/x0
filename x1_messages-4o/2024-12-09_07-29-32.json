@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working with a python pandas dataframe that has several columns taken from a CSV file. The dataframe, 'data', looks like this:\n\n    Day P1S1 P1S2 P1S3 P2S1 P2S2 P2S3\n    1   1    2    2    3    1    2\n    2   2    2    3    5    4    2\n\nI want to find a way to get the sum of all columns which name starts with 'P1'. I tried using a wildcard like so: `P1Sum = data[\"P1*\"]` but it gives an error. How can I achieve this using pandas?"
+    },
+    {
+        "role": "assistant",
+        "content": "To sum columns in a pandas DataFrame whose names start with a specific prefix, you can use the `filter` method to select the relevant columns and then use the `sum` method to compute the sum. Here's how you can do this for columns starting with 'P1':\n\n```python\nimport pandas as pd\n\n# Sample DataFrame\ndata = pd.DataFrame({\n    'Day': [1, 2],\n    'P1S1': [1, 2],\n    'P1S2': [2, 2],\n    'P1S3': [2, 3],\n    'P2S1': [3, 5],\n    'P2S2': [1, 4],\n    'P2S3': [2, 2]\n})\n\n# Filter columns that start with 'P1'\np1_columns = data.filter(like='P1')\n\n# Calculate the sum of these columns\np1_sum = p1_columns.sum(axis=1)\n\n# Add the result to the DataFrame if needed\ndata['P1Sum'] = p1_sum\n\nprint(data)\n```\n\nThis code will create a new column `P1Sum` in the DataFrame `data`, which contains the row-wise sum of all columns that start with 'P1'. The `filter` method is used with the `like` parameter to select columns whose names contain the specified string ('P1' in this case), and `sum(axis=1)` computes the sum across columns for each row."
+    }
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there an equivalent in Python to C#'s null-conditional operator? For instance, in C#, I can use the null-conditional operator as follows:\n\n```C#\nSystem.Text.StringBuilder sb = null;\nstring s = sb?.ToString(); // No error\n```\nHow can I achieve the same functionality in Python?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, you can achieve similar functionality to C#'s null-conditional operator using a simple conditional expression. Python doesn't have a direct equivalent to the null-conditional operator, but you can handle `None` (which is the equivalent of `null` in C#) using a conditional check or a try-except block.\n\nHere's how you can achieve the same functionality in Python:\n\n```python\nsb = None\ns = sb.toString() if sb is not None else None\n```\n\nIn this code, `sb.toString()` is only called if `sb` is not `None`. Otherwise, `s` is set to `None`.\n\nAlternatively, if you're dealing with more complex expressions or want to keep your code tidy, you could define a utility function to handle these cases:\n\n```python\ndef safe_call(obj, method_name, *args, **kwargs):\n    if obj is not None:\n        method = getattr(obj, method_name, None)\n        if callable(method):\n            return method(*args, **kwargs)\n    return None\n\nsb = None\ns = safe_call(sb, 'toString')\n```\n\nThis utility function `safe_call` will call the specified method on the object if the object is not `None` and the method exists, returning `None` otherwise."
+    }
+]
