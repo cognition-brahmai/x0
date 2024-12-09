@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am currently running a Flask server in standalone mode using `app.run()`. However, I would like to disable the console messages that are being displayed, such as `127.0.0.1 - - [15/Feb/2013 10:52:22] \"GET /index.html HTTP/1.1\" 200 -`. How can I turn off this verbose mode?"
+    },
+    {
+        "role": "assistant",
+        "content": "To disable the console messages in a Flask server, you can adjust the logger settings for the Flask application. By default, Flask uses the Werkzeug logging system, which outputs request logs to the console. You can modify the logging level to suppress these messages.\n\nHere is how you can do it:\n\n1. Import the `logging` module.\n2. Set the logger level for the Flask app's logger and the Werkzeug's logger to a higher level (e.g., `logging.ERROR`) to suppress the informational messages.\n\nHere's a sample code snippet on how to achieve this:\n\n```python\nfrom flask import Flask\nimport logging\n\napp = Flask(__name__)\n\n# Suppress the Flask and Werkzeug logs\nlog = logging.getLogger('werkzeug')\nlog.setLevel(logging.ERROR)  # Set this to ERROR or CRITICAL to suppress info and debug logs\n\n@app.route('/')\ndef hello_world():\n    return 'Hello, World!'\n\nif __name__ == '__main__':\n    app.run()\n```\n\nBy setting the logging level to `ERROR`, only error messages will be displayed, which suppresses the usual GET/POST request logs. You can further adjust the level to `CRITICAL` if you wish to suppress more messages."
+    }
+]
