@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I convert a Python datetime.datetime object into an Excel serial date number? I am currently trying to convert dates into Excel serial numbers for a script I am writing. I've deduced that '1-Jan 1899 00:00:00' maps to the number zero in Excel. I've attempted to write a function to perform this conversion:\n\n```python\ndef excel_date(date1):\n    temp=dt.datetime.strptime('18990101', '%Y%m%d')\n    delta=date1-temp\n    total_seconds = delta.days * 86400 + delta.seconds\n    return total_seconds\n```\n\nBut when I try some sample dates, the results do not match what I get when I format the date as a number in Excel (or OpenOffice Calc). For instance, '2009-03-20' gives 3478032000 in Python, while Excel renders the serial number as 39892. I am using Python 2.6.3, which does not have access to datetime.total_seconds(). What is wrong with the formula above?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue with your formula is that you're calculating the total number of seconds instead of the total number of days between the two dates. Excel's serial date number is based on the number of days since a base date, which is December 30, 1899, not January 1, 1899 (note that Excel's zero date is technically December 30, 1899, due to historical reasons and how Excel handles date systems). Here is a corrected version of your function:\n\n```python\nimport datetime as dt\n\ndef excel_date(date1):\n    # Set the base date to December 30, 1899\n    excel_base_date = dt.datetime(1899, 12, 30)\n    delta = date1 - excel_base_date\n    # Return the number of days as an integer\n    return float(delta.days) + (delta.seconds / 86400.0)\n\n# Test the function\ndate = dt.datetime(2009, 3, 20)\nprint(excel_date(date))  # This should print 39892.0\n```\n\nIn this function, we calculate the difference in days between the given date and Excel's base date, and then add the fraction of the day that has passed (based on the number of seconds). This will give you the correct Excel serial date number."
+    }
+]
