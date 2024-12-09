@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, what is the equivalent of Ruby's 'method_missing' method? I attempted to use '__getattr__' but this hook also applies to fields. How can I intercept only the method invocations in Python?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, the `__getattr__` method is used to intercept attribute access, including method calls, when the attribute is not found in the usual places (like the instance's `__dict__` or the class's `__dict__`). However, as you noted, `__getattr__` will be invoked for both fields and methods, which is different from Ruby's `method_missing`, which only applies to method calls.\n\nTo intercept only method invocations in Python, you can use a combination of `__getattr__` and a custom method. Here's a pattern you can use to specifically handle method calls:\n\n```python\nclass MethodMissing:\n    def __getattr__(self, name):\n        def method(*args, **kwargs):\n            print(f\"Method {name} was called with args: {args} and kwargs: {kwargs}\")\n            # You can add custom logic here\n            # For example, you can raise an AttributeError if you want to mimic Ruby's behavior\n            # raise AttributeError(f\"Method {name} is not defined.\")\n        return method\n\n# Example usage\nobj = MethodMissing()\nobj.some_method(1, 2, 3, foo='bar')\n```\n\nIn this example, if you try to call a method that doesn't exist, `__getattr__` is invoked, and it returns a function that takes arbitrary arguments and keyword arguments. This function can then handle the logic you want to implement for missing methods.\n\nThis approach intercepts only method calls while ignoring direct field accesses, as field accesses will not return a callable object and will not trigger the `method` function unless explicitly called like a method."
+    }
+]

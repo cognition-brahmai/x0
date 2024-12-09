@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I determine if Python is compiled with UCS-2 or UCS-4? I found the following in the official documentation: sys.maxunicode: An integer giving the largest supported code point for a Unicode character. The value of this depends on the configuration option that specifies whether Unicode characters are stored as UCS-2 or UCS-4. However, it's not clear which value(s) correspond to UCS-2 and UCS-4. I need the solution to be compatible with Python 2.6+."
+    },
+    {
+        "role": "assistant",
+        "content": "To determine if your Python build is using UCS-2 or UCS-4 for Unicode representation, you can indeed use the `sys.maxunicode` attribute. Here's what the values mean:\n\n- If `sys.maxunicode` is `65535`, your Python build is using UCS-2.\n- If `sys.maxunicode` is `1114111`, your Python build is using UCS-4.\n\nYou can check this by running a simple script:\n\n```python\nimport sys\n\nif sys.maxunicode == 65535:\n    print(\"Python is compiled with UCS-2.\")\nelif sys.maxunicode == 1114111:\n    print(\"Python is compiled with UCS-4.\")\nelse:\n    print(\"Unexpected maxunicode value:\", sys.maxunicode)\n```\n\nThis script will print out whether your Python environment is using UCS-2 or UCS-4. This method is compatible with Python 2.6 and later versions."
+    }
+]
