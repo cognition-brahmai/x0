@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm encountering an OSError: [Errno 18] Invalid cross-device link while working with Django 1.6.5 and Python 2.7. This error surfaces when I'm trying to import a feature in my app. The line of code that seems to be causing the problem is `os.rename(db_temp, settings.DATABASES['bookmat']['NAME'])` in my Django settings. How can I fix this error?\n\nHere are the code details:\n\n```python\nos.rename(db_temp, settings.DATABASES['bookmat']['NAME'])\n```\n\nIn my Django settings:\n\n```python\n'bookmat': {\n    'ENGINE': 'django.db.backends.sqlite3',\n    'NAME': '/my_projects/book/db/bookmat.sqlite3',\n},\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "The `OSError: [Errno 18] Invalid cross-device link` occurs when you attempt to use `os.rename()` to move a file across different file systems or disk partitions, which is not allowed. The `os.rename()` function only works for files on the same file system. To resolve this issue, you can use `shutil.move()` instead, which handles moving files across different file systems by copying and then removing the source file.\n\nHere's how you can modify your code to use `shutil.move()`:\n\nFirst, make sure you import the `shutil` module at the beginning of your file:\n\n```python\nimport shutil\n```\n\nThen, replace the `os.rename()` call with `shutil.move()`:\n\n```python\nshutil.move(db_temp, settings.DATABASES['bookmat']['NAME'])\n```\n\nThis should resolve the `OSError` and allow you to move the database file even if `db_temp` and the destination are on different file systems."
+    }
+]
