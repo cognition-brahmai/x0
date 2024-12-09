@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am creating lambda functions within a loop that iterates over a list of objects as shown below:\n```python\nlambdas_list = []\nfor obj in obj_list:\n   lambdas_list.append(lambda : obj.some_var)\n```\nBut when I iterate over this list of lambda functions and call them like this:\n```python\nfor f in lambdas_list:\n    print(f())\n```\nThe output I get is the same value for each lambda function. This value is the value of the last `obj` in `obj_list` because that was the last variable in the list iterator block. How can I rewrite this code in a pythonic way so that each lambda function stores the value of `obj.some_var` at the time of its creation?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering is due to the fact that lambda functions capture variables by reference, not by value. This means that when you iterate over `lambdas_list` and call each lambda, `obj` refers to the last value it was assigned during the loop. \n\nTo capture the value at the time of lambda creation, you can use a default argument in the lambda function to bind the current value of `obj.some_var`. Here's how you can do it:\n\n```python\nlambdas_list = []\nfor obj in obj_list:\n    lambdas_list.append(lambda obj=obj: obj.some_var)\n\nfor f in lambdas_list:\n    print(f())\n```\n\nIn this code snippet, `obj=obj` creates a default argument for the lambda function, which captures the current value of `obj` at each iteration. This way, each lambda function will have its own closure over the `obj` variable with its value at the time the lambda was created, thus providing the desired output when called."
+    }
+]

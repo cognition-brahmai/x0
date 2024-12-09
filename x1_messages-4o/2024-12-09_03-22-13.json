@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a Django model named `Sample` which has a ManyToManyField for users. How can I save multiple users, for instance `user1` and `user2`, in this model? Here's my current approach, which I believe is incorrect:\n\n```python\nclass Sample(models.Model):\n    users = models.ManyToManyField(User)\n\nuser1 = User.objects.get(pk=1)\nuser2 = User.objects.get(pk=2)\nsample_object = Sample(users=user1, users=user2)\nsample_object.save()\n```\n\nHow would you do it?"
+    },
+    {
+        "role": "assistant",
+        "content": "The approach you have is incorrect because you are trying to assign multiple users directly to the `users` field when creating the `Sample` object. Instead, you should first create the `Sample` object and then add the users to the `ManyToManyField` using the `add()` method. Here's how you can do it:\n\n```python\n# First, create the Sample object\nsample_object = Sample.objects.create()\n\n# Fetch the users you want to add\nuser1 = User.objects.get(pk=1)\nuser2 = User.objects.get(pk=2)\n\n# Add the users to the ManyToManyField\nsample_object.users.add(user1, user2)\n\n# Save the changes\nsample_object.save()\n```\n\nThis approach first creates an instance of the `Sample` model and then uses the `add()` method to associate multiple `User` instances with it. The `add()` method can take multiple arguments, which allows you to add multiple users at once."
+    }
+]
