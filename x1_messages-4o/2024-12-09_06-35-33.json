@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I add default parameters to functions in Python while using type hinting? I have a function as shown below:\n\n```python\ndef foo(name, opts={}):\n  pass\n```\n\nWhen I try to add type hints to the parameters like this, it gives me a syntax error:\n\n```python\ndef foo(name: str, opts={}: dict) -> str:\n  pass\n```\n\nThough the following code doesn't throw a syntax error, it doesn't seem like the intuitive way to handle this:\n\n```python\ndef foo(name: str, opts: dict={}) -> str:\n  pass\n```\n\nI've looked through the Python `typing` documentation and done a Google search, but haven't been able to find anything. \n\nFurthermore, I would like to mention that I was not aware of how default arguments worked in Python previously, but for the purposes of this question, I will keep the examples as they are. Generally, it's much better to do the following:\n\n```python\ndef foo(name: str, opts: dict=None) -> str:\n  if not opts:\n    opts={}\n  pass\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, when you want to use default parameters in conjunction with type hinting, you should place the type hint before the default value. The syntax you've used in the second example is correct:\n\n```python\ndef foo(name: str, opts: dict = {}) -> str:\n    pass\n```\n\nHowever, using mutable default arguments like a dictionary (or list) can lead to unexpected behavior because the default value is shared across all calls to the function. A more reliable approach is to use `None` as the default value and then initialize the dictionary inside the function if it's `None`. This is considered a best practice in Python:\n\n```python\ndef foo(name: str, opts: dict = None) -> str:\n    if opts is None:\n        opts = {}\n    pass\n```\n\nThis approach ensures that a new dictionary is created each time the function is called, preventing any unintended side-effects from modifying a shared object. It maintains the integrity and safety of your default mutable parameters."
+    }
+]
