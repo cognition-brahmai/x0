@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, I am trying to jsonify a dictionary in UTF-8. I have a list that I call 'my_list' and I'm appending unicode values to it like this: `my_list.append(u'\u10e2\u10d4\u10e1\u10e2')`. When I return the jsonify result, I get an output in this format: \n```\n{\n\"result\": [\n\"\\u10e2\\u10d4\\u10e1\\u10e2\",\n\"\\u10e2\\u10dd\\u10db\\u10d0\\u10e8\\u10d5\\u10d8\\u10da\\u10d8\"\n]\n}\n```\nHow can I get the JSON data to be in UTF-8?"
+    },
+    {
+        "role": "assistant",
+        "content": "When you convert a dictionary to JSON in Python using `json.dumps`, it automatically escapes non-ASCII characters using Unicode escape sequences. This is why you see the Unicode characters encoded as `\\uXXXX`.\n\nTo ensure the JSON data is output in UTF-8, you need to specify that non-ASCII characters should not be escaped by setting the `ensure_ascii` parameter to `False` in the `json.dumps` function.\n\nHere's how you can do it:\n\n```python\nimport json\n\n# Your list with Unicode values\nmy_list = []\nmy_list.append(u'\u10e2\u10d4\u10e1\u10e2')\nmy_list.append(u'\u10e2\u10dd\u10db\u10d0\u10e8\u10d5\u10d8\u10da\u10d8')\n\n# Creating a dictionary to jsonify\ndata = {\n    \"result\": my_list\n}\n\n# Convert to JSON with UTF-8 encoding\njson_data = json.dumps(data, ensure_ascii=False)\n\n# Normally, you'd return or write this JSON data to a file or response\nprint(json_data)\n```\n\nBy setting `ensure_ascii=False`, the `json.dumps` function will output the JSON data using the actual UTF-8 characters instead of the Unicode escape sequences. This should give you the desired output with readable Unicode characters."
+    }
+]
