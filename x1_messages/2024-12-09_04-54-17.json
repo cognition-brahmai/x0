@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Create a plan to answer the following question using the available tools. Each step in your plan should be followed by an evidence value that is generated from one of the available functions.\n\nHere are the tools you can use:\nSearchEngine[input]: A tool that allows users to search for information on the internet. The input should be a string related to the query.\nInfoExtractor[input]: This tool extracts specific pieces of information from a given text. The input must be a text and a query about the text.\nTextSummarizer[input]: Summarizes large texts into smaller, more manageable chunks. The input should be a lengthy piece of text.\nQA[input]: Tool that answers questions based on common sense and general world knowledge or from a given context.\n\nThe output format should be as follows:\nPlan: [First action]\n#E1 = [Function call with input parameter]\nPlan: [Next action based on #E1]\n#E2 = [Next function call with input parameter, which may include reference to previous evidence]\n...\nFinal Answer: #E[n]\n\nQuestion: What is the history of the Eiffel Tower and who designed it?"
+    },
+    {
+        "role": "assistant",
+        "content": "Plan: Start by searching for general information about the Eiffel Tower.\n#E1 = SearchEngine[\"history of the Eiffel Tower\"]\n\nPlan: Extract specific details about who designed the Eiffel Tower from the search results.\n#E2 = InfoExtractor[#E1, \"Who designed the Eiffel Tower?\"]\n\nPlan: Use the QA tool to confirm the designer's name and get additional context if necessary.\n#E3 = QA[\"Who designed the Eiffel Tower?\"]\n\nPlan: Search for more detailed history about the Eiffel Tower.\n#E4 = SearchEngine[\"detailed history of the Eiffel Tower\"]\n\nPlan: Summarize the key points from the detailed history.\n#E5 = TextSummarizer[#E4]\n\nPlan: Combine the information about the designer and the summarized history to form a comprehensive answer.\n#E6 = QA[\"Based on #E2, #E3, and #E5, what is the history of the Eiffel Tower and who designed it?\"]\n\nFinal Answer: #E6"
+    }
+]
