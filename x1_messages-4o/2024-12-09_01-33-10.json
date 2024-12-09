@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working with Django templates and whenever I use {{ var }}, Django treats it as a variable. How can I escape {{ var }}, {{ or }} in a Django template, such that Django does not interpret it as a variable? For example, how can I make sure that <p>\"{{ some text }}\"</p> prints exactly as is, without Django trying to interpret \"some text\" as a variable?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Django templates, if you want to display curly braces or text that looks like a variable without Django interpreting it as a variable, you can use the `{% verbatim %}` template tag. The `verbatim` block tells Django to ignore template tags within it.\n\nHere's how you can use it:\n\n```html\n{% verbatim %}\n<p>\"{{ some text }}\"</p>\n{% endverbatim %}\n```\n\nEverything inside the `{% verbatim %}` and `{% endverbatim %}` tags will be rendered exactly as it is, without Django trying to interpret any template tags inside it.\n\nIf you just need to escape a single occurrence of `{{` or `}}`, you can also use the `{{` and `}}` tags in combination with Django's `escape` filter, though this is less common for static text. For example:\n\n```html\n<p>\"{{ '{{' }} some text {{ '}}' }}\"</p>\n```\n\nThis would also render as `<p>\"{{ some text }}\"</p>`.\n\nThe `verbatim` block is generally more readable and preferred when dealing with larger blocks of text."
+    }
+]
