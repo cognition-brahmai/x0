@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there a listing or library in Python that includes a complete set of punctuation marks, not just ASCII ones? I typically use `string.punctuation`, but there are punctuation characters that are not included in it. For instance, when I try to check if the characters \"'\" and \"\u2019\" are in `string.punctuation`, the first one returns True but the second one returns False. How can I get a more comprehensive list of punctuation marks?\n\n```python\n>>> \"'\" in string.punctuation\nTrue\n>>> \"\u2019\" in string.punctuation\nFalse\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "The `string.punctuation` in Python only includes ASCII punctuation characters. If you want a more comprehensive list that includes Unicode punctuation characters, you can use the `unicodedata` module to identify punctuation characters from the Unicode standard.\n\nHere's a way to generate a more comprehensive list of punctuation characters using the `unicodedata` module:\n\n```python\nimport unicodedata\n\n# Create a set to store punctuation characters\npunctuation_chars = set()\n\n# Iterate over a range of Unicode code points\nfor codepoint in range(0x110000):  # This covers the entire Unicode range\n    char = chr(codepoint)\n    # Check if the character is categorized as a punctuation\n    if unicodedata.category(char).startswith('P'):\n        punctuation_chars.add(char)\n\n# Convert the set to a sorted list\npunctuation_list = sorted(punctuation_chars)\n\n# You can now use this comprehensive list of punctuation characters\nprint(punctuation_list)\n```\n\nThis script checks the Unicode category of each character and includes it in the list if it is categorized as a punctuation character (categories that start with 'P'). This will include a wide range of punctuation marks beyond the ASCII set.\n\nKeep in mind that the complete set of Unicode punctuation characters is quite large, and not all of them may be relevant for your use case. Depending on your needs, you might want to filter or customize this list further."
+    }
+]
