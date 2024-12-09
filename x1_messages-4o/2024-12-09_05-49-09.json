@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm exploring Pylons with SQLAlchemy and I'm finding it quite useful. However, I'm encountering an issue. Is there a way to print out the raw SQL `CREATE TABLE` data that is generated from `Table().create()` before it is executed?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, it's possible to see the raw SQL `CREATE TABLE` statement that SQLAlchemy generates. You can use the `compile` method to achieve this. Here's how you can do it:\n\n```python\nfrom sqlalchemy import create_engine, MetaData, Table, Column, Integer, String\nfrom sqlalchemy.dialects import postgresql  # or your specific dialect\n\n# Define your engine and metadata\nengine = create_engine('postgresql://username:password@localhost/testdb')\nmetadata = MetaData()\n\n# Define your table\nexample_table = Table('example', metadata,\n                      Column('id', Integer, primary_key=True),\n                      Column('name', String))\n\n# Compile the CREATE TABLE statement\ncreate_sql = example_table.compile(dialect=postgresql.dialect())\nprint(str(create_sql))\n```\n\nIn this code, replace `'postgresql://username:password@localhost/testdb'` with your actual database URL. The `postgresql` in `postgresql.dialect()` should be replaced with the dialect you're using (e.g., `mysql`, `sqlite`, etc.).\n\nThis will print out the raw SQL statement that would be used to create the table, without actually executing it. Adjust the dialect as necessary to match your database system."
+    }
+]
