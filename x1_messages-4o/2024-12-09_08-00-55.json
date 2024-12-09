@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I generate a unique ID per request in Django from a model field? I've attempted to do this but I keep getting the same ID. Here is the class I am working with:\n\n```python\nclass Paid(models.Model):\n     user=models.ForeignKey(User)\n     eyw_transactionref=models.CharField(max_length=100, null=True, blank=True, unique=True, default=uuid.uuid4()) #want to generate new unique id from this field\n\n     def __unicode__(self):\n        return self.user\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering is due to how the `default` argument in Django model fields works. When you set `default=uuid.uuid4()`, the UUID is generated once when the server starts and then reused for every new instance of the model. To generate a unique ID for each instance, you need to pass the `uuid.uuid4` function itself without calling it.\n\nHere's how you can update your model to generate a unique ID per request:\n\n```python\nimport uuid\nfrom django.db import models\nfrom django.contrib.auth.models import User\n\nclass Paid(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE)\n    eyw_transactionref = models.CharField(\n        max_length=100, null=True, blank=True, unique=True, default=uuid.uuid4\n    )\n\n    def __str__(self):\n        return str(self.user)\n```\n\n### Key Changes:\n1. **Function Reference**: Use `default=uuid.uuid4` without parentheses. This ensures the function is called each time a new instance is created, generating a new UUID each time.\n\n2. **`on_delete` Parameter**: Added `on_delete=models.CASCADE` to the `ForeignKey` field, which is a required argument in Django 2.0+.\n\n3. **`__str__` Method**: Replaced `__unicode__` with `__str__` for Python 3 compatibility.\n\nWith these changes, every time a new `Paid` instance is created, a unique UUID will be generated for `eyw_transactionref`."
+    }
+]
