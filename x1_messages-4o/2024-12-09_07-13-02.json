@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Is there a more succinct way to drop a column MultiIndex level (specifically, `basic_amt`) in a dataframe, other than transposing the dataframe twice? Below is the current code I am using:\n\n```python\ntest = ...\nprint(test)\n\n# Output:\n#            basic_amt               \n# Faculty          NSW  QLD  VIC  All\n# All                1    1    2    4\n# Full Time          0    1    0    1\n# Part Time          1    0    2    3\n\nprint(test.reset_index(level=0, drop=True))\n\n# Output:\n#         basic_amt               \n# Faculty        NSW  QLD  VIC  All\n# 0                1    1    2    4\n# 1                0    1    0    1\n# 2                1    0    2    3\n\nprint(test.transpose().reset_index(level=0, drop=True).transpose())\n\n# Output:\n# Faculty    NSW  QLD  VIC  All\n# All          1    1    2    4\n# Full Time    0    1    0    1\n# Part Time    1    0    2    3\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! You can achieve this more succinctly without transposing the dataframe twice by using the `droplevel` method, which is specifically designed for removing levels from a MultiIndex. Here's how you can do it:\n\n```python\nimport pandas as pd\n\n# Example DataFrame\ntest = pd.DataFrame({\n    ('basic_amt', 'NSW'): [1, 0, 1],\n    ('basic_amt', 'QLD'): [1, 1, 0],\n    ('basic_amt', 'VIC'): [2, 0, 2],\n    ('basic_amt', 'All'): [4, 1, 3],\n}, index=['All', 'Full Time', 'Part Time'])\n\n# Dropping the 'basic_amt' level\ntest.columns = test.columns.droplevel(0)\n\nprint(test)\n```\n\nThis will give you the desired output without the need to transpose the dataframe:\n\n```\n           NSW  QLD  VIC  All\nAll          1    1    2    4\nFull Time    0    1    0    1\nPart Time    1    0    2    3\n```\n\nBy using `droplevel`, you directly remove the specified level from the MultiIndex columns, making your code cleaner and more efficient."
+    }
+]
