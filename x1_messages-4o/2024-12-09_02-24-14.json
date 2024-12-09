@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, is there a straightforward way to convert a datetime object into an RFC 1123 (HTTP/1.1) date/time string, specifically in the format \"Sun, 06 Nov 1994 08:49:37 GMT\"? I've tried using strftime but it doesn't work because the strings are locale-dependent. Do I need to manually construct the string?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, there is a straightforward way to convert a `datetime` object into an RFC 1123 date/time string in Python without worrying about locale dependencies. You can use the `email.utils.format_datetime` function, which is designed to format a `datetime` object as an RFC 1123-compliant string.\n\nHere's an example of how you can achieve this:\n\n```python\nfrom datetime import datetime, timezone\nimport email.utils\n\n# Create a datetime object\ndt = datetime(1994, 11, 6, 8, 49, 37, tzinfo=timezone.utc)\n\n# Convert to RFC 1123 date/time string\nrfc1123_date = email.utils.format_datetime(dt)\n\nprint(rfc1123_date)\n```\n\nThis will output:\n\n```\nSun, 06 Nov 1994 08:49:37 GMT\n```\n\nThe `email.utils.format_datetime` function ensures that the output is correctly formatted according to the RFC 1123 specification, taking into account the correct day and month names, and ensuring the time is in GMT/UTC."
+    }
+]

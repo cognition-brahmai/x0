@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I use pytest.raises with multiple exceptions? I'm trying to test a code where one of two exceptions can be raised, MachineError or NotImplementedError. I want to use pytest.raises to ensure that at least one of these exceptions is raised when I run my test code. However, it seems that pytest.raises only accepts one exception type as an argument. This is the signature for pytest.raises: `raises(expected_exception, *args, **kwargs)`. I tried using the 'or' keyword inside a context manager like this:\n\n```python\nwith pytest.raises(MachineError) or pytest.raises(NotImplementedError):\n    verb = Verb(\"donner<IND><FUT><REL><SG><1>\")\n    verb.conjugate()\n```\n\nHowever, this doesn't seem to work as expected. Passing multiple exceptions as positional arguments doesn't work either, because pytest.raises uses its second argument as a callable. Similarly, passing the exceptions in a list results in a TypeError. Is there a workaround to test for multiple exceptions using pytest.raises?"
+    },
+    {
+        "role": "assistant",
+        "content": "To handle a scenario where you want to test for multiple possible exceptions using `pytest.raises`, you can use a tuple of exceptions. `pytest.raises` allows you to specify multiple exceptions by passing a tuple containing the exception types you want to check for. If any of the exceptions in the tuple are raised, the test will pass.\n\nHere's how you can modify your code to achieve this:\n\n```python\nimport pytest\n\ndef test_multiple_exceptions():\n    with pytest.raises((MachineError, NotImplementedError)):\n        verb = Verb(\"donner<IND><FUT><REL><SG><1>\")\n        verb.conjugate()\n```\n\nIn this example, if either `MachineError` or `NotImplementedError` is raised within the context manager, the test will pass. If no exception or an unexpected exception is raised, the test will fail.\n\nThis approach is more concise and allows you to handle multiple exceptions elegantly by leveraging the tuple feature in `pytest.raises`."
+    }
+]
