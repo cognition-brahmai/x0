@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I pass an asynchronous function as a target to a Thread in Python? I have the following code:\n\n```python\nasync def some_callback(args):\n    await some_function()\n```\n\nI need to give it to a Thread as a target like this:\n\n```python\n_thread = threading.Thread(target=some_callback, args=(\"some text\",))\n_thread.start()\n```\n\nBut I am encountering an error saying \"some_callback is never awaited\". How can I solve this problem?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, `async` functions (coroutines) need to be awaited within an event loop, and they can't be directly used as targets for a `threading.Thread` since the `Thread` class is designed to work with regular, synchronous functions. However, you can work around this limitation by creating a small synchronous wrapper function that will run the event loop and wait for the coroutine to complete.\n\nHere's how you can do it:\n\n```python\nimport threading\nimport asyncio\n\nasync def some_callback(args):\n    await some_function()\n\ndef run_async_function_in_thread(async_func, *args):\n    loop = asyncio.new_event_loop()\n    asyncio.set_event_loop(loop)\n    loop.run_until_complete(async_func(*args))\n    loop.close()\n\n_thread = threading.Thread(target=run_async_function_in_thread, args=(some_callback, \"some text\",))\n_thread.start()\n```\n\n### Explanation:\n- **`run_async_function_in_thread`:** This is a synchronous wrapper function that creates a new event loop and runs the asynchronous function within it. This allows you to execute an `async` function within a thread.\n- **`new_event_loop` and `set_event_loop`:** These functions are used to create and set a new event loop for the thread. Each thread should have its own event loop.\n- **`run_until_complete`:** This method runs the coroutine until it completes, effectively \"awaiting\" it in a synchronous context.\n\nBy using this approach, you can execute `async` functions within a thread while properly managing the asynchronous event loop."
+    }
+]

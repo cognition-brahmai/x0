@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I retrieve the field types of a dataclass in Python 3.7? I have a data class defined as follows:\n\n```python\nfrom dataclasses import dataclass\n\n@dataclass\nclass MyClass:\n    id: int = 0\n    name: str = ''\n```\n\nI've found that when using type hints in function parameters, I can easily retrieve the annotated types using the inspect module. However, I'm unsure of how to do this with a dataclass. How can I achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To retrieve the field types of a dataclass in Python 3.7, you can use the `__annotations__` attribute of the dataclass. This attribute is a dictionary that maps field names to their annotated types. Here's how you can do it for your `MyClass` dataclass:\n\n```python\nfrom dataclasses import dataclass\n\n@dataclass\nclass MyClass:\n    id: int = 0\n    name: str = ''\n\n# Retrieve the field types\nfield_types = MyClass.__annotations__\n\n# Print the field types\nfor field_name, field_type in field_types.items():\n    print(f\"Field '{field_name}' has type '{field_type}'\")\n```\n\nThis code will output:\n\n```\nField 'id' has type '<class 'int'>'\nField 'name' has type '<class 'str'>'\n```\n\nThis approach will give you a dictionary with the field names as keys and their corresponding types as values, allowing you to easily access and manipulate the type information of your dataclass."
+    }
+]
