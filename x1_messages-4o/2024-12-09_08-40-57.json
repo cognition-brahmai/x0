@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a string representation of a JSON object as shown below:\n\n```python\ndumped_dict = '{\"debug\": false, \"created_at\": \"2020-08-09T11:24:20\"}'\n```\n\nWhen I load this string using json.loads like this:\n\n```python\njson.loads(dumped_dict)\n```\n\nI get the following dictionary:\n\n```python\n{'created_at': '2020-08-09T11:24:20', 'debug': False}\n```\n\nThere is nothing wrong with this, however, I would like to convert this dictionary to have the 'created_at' key have a datetime object instead of a string. I'd like the result to be as follows:\n\n```python\n{'created_at': datetime.datetime(2020, 8, 9, 11, 24, 20), 'debug': False}\n```\n\nIs there a way to convert datetime strings to actual datetime.datetime objects while calling json.loads?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, you can achieve this by using a custom function with `json.loads` to convert the date string into a `datetime` object. You can accomplish this by using the `object_hook` parameter of `json.loads`. Here's how you can do it:\n\n```python\nimport json\nfrom datetime import datetime\n\n# Your JSON string\ndumped_dict = '{\"debug\": false, \"created_at\": \"2020-08-09T11:24:20\"}'\n\n# Custom function to parse the datetime string\ndef parse_datetime(json_dict):\n    # Check if 'created_at' is in the dictionary\n    if 'created_at' in json_dict:\n        # Convert the string to a datetime object\n        json_dict['created_at'] = datetime.strptime(json_dict['created_at'], '%Y-%m-%dT%H:%M:%S')\n    return json_dict\n\n# Load the JSON string with the custom object_hook\nloaded_dict = json.loads(dumped_dict, object_hook=parse_datetime)\n\nprint(loaded_dict)\n```\n\nIn this script, the `parse_datetime` function checks if the `created_at` key exists in the dictionary and converts its value from a string to a `datetime` object. This function is then passed to `json.loads` using the `object_hook` parameter, which applies it to each JSON object as it is decoded."
+    }
+]
