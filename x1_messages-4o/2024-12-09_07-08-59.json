@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm trying to return multiple groups in Python using RegEx. My regular expression is 'lun_q = 'Lun:\\s*(\\d+\\s?)*'' and my string is 's = '''Lun:                     0 1 2 3 295 296 297 298'''`. I receive a matched object and when I look at the groups, it only shows the last number (298): 'r.groups()  (u'298',)'. Why isn't it returning groups of 0,1,2,3,4 etc.?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue you're encountering is due to the way capturing groups work in regular expressions. When you use a capturing group with a quantifier like `*` or `+`, it captures only the last match of that group because the quantifier applies to the entire group, not just to the individual elements.\n\nIn your case, the regular expression `(\\d+\\s?)*` is capturing digits followed by an optional space, but since `*` allows for multiple occurrences, it captures the entire matched sequence, and only the last match is stored in the group.\n\nTo capture each number separately, you should use a pattern that matches each number individually and use the `re.findall()` function, which returns all non-overlapping matches of the pattern in the string as a list of strings. Here's how you can do it:\n\n```python\nimport re\n\ns = 'Lun:                     0 1 2 3 295 296 297 298'\npattern = r'Lun:\\s*((?:\\d+\\s*)+)'\n\n# Use re.search to find the whole matched sequence\nmatch = re.search(pattern, s)\nif match:\n    # Use re.findall to extract all numbers from the matched sequence\n    numbers = re.findall(r'\\d+', match.group(1))\n    print(numbers)\nelse:\n    print(\"No match found\")\n```\n\nThis code first uses `re.search()` to find the entire sequence of numbers after \"Lun:\", and then `re.findall()` to extract each individual number from that sequence. The `numbers` list will contain all the numbers as strings: `['0', '1', '2', '3', '295', '296', '297', '298']`."
+    }
+]
