@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "What is the code to determine if a given tree is a Binary Search Tree?"
+    },
+    {
+        "role": "assistant",
+        "content": "To determine if a given tree is a Binary Search Tree (BST), you need to ensure that for each node, all elements of the left subtree are less than the node and all elements of the right subtree are greater than the node. A common approach to verify this is using an in-order traversal, which should produce a sorted sequence for a BST.\n\nHere's a Python implementation to check if a binary tree is a BST:\n\n```python\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef is_valid_bst(root, low=float('-inf'), high=float('inf')):\n    if not root:\n        return True\n        \n    if root.val <= low or root.val >= high:\n        return False\n        \n    return (is_valid_bst(root.left, low, root.val) and\n            is_valid_bst(root.right, root.val, high))\n\n# Example usage:\n# Constructing a simple BST\n#       2\n#      / \\\n#     1   3\n\nroot = TreeNode(2)\nroot.left = TreeNode(1)\nroot.right = TreeNode(3)\n\nprint(is_valid_bst(root))  # Output: True\n```\n\nThis function `is_valid_bst` checks if a binary tree is a BST by recursively ensuring that each node value respects the BST properties within a given range (`low` and `high`). Initially, this range is set to negative and positive infinity, allowing any value for the root node. As you traverse down the tree, the range is narrowed based on the node values, ensuring the BST properties are maintained."
+    }
+]
