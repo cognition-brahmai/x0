@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python 3, I am attempting to print on the same line in a Jupyter notebook using the following script, which I use to understand the progress of my loop (i.e., how much time will be left). However, it doesn't work as expected in Jupyter; instead of printing on the same line, it prints on different lines. Turning off pretty print with `%pprint` doesn't resolve the issue, and I encounter the same problem when using `sys.stdout.write()`. How can I get this to work correctly in a Jupyter notebook?\n\nHere's the code I'm using:\n\n```python\nimport time\nfor f in range(10):\n    print(f, end='\\r', flush=True)\n    time.sleep(10)\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "Printing on the same line in a Jupyter notebook can be tricky due to how the notebook handles output. The issue you're encountering with the `end='\\r'` approach is that it behaves differently in Jupyter than it does in a standard terminal. In Jupyter, `\\r` (carriage return) might not work as intended for overwriting the previous output line.\n\nTo achieve the desired effect of updating the same line in a Jupyter notebook, you can use the `IPython.display` module to clear the output and then print the new output. Here's how you can modify your code:\n\n```python\nimport time\nfrom IPython.display import clear_output\n\nfor f in range(10):\n    clear_output(wait=True)\n    print(f)\n    time.sleep(1)\n```\n\n### Explanation:\n\n- **`clear_output(wait=True)`**: This function clears the current output cell in the Jupyter notebook. The `wait=True` parameter ensures that the output is only cleared after the next output is ready, preventing flickering.\n\n- **`print(f)`**: After clearing the previous output, the new value of `f` is printed.\n\nUsing this method, you will see the value of `f` being updated on the same line as expected. Adjust the `time.sleep(1)` duration as needed for your purposes."
+    }
+]
