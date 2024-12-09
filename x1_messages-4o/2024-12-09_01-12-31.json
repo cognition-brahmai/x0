@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm receiving an \"indirect fixture\" error when using pytest in Python 3.7 on Windows 10 64 bits. The error occurs when running the following code:\n\n```python\ndef fatorial(n):\n    if n <= 1:\n        return 1\n    else:\n        return n*fatorial(n - 1)\n\n\nimport pytest\n\n@pytest.mark.parametrize(\"entrada\",\"esperado\",[\n    (0,1),\n    (1,1),\n    (2,2),\n    (3,6),\n    (4,24),\n    (5,120)\n])\n\ndef testa_fatorial(entrada,esperado):\n    assert fatorial(entrada)  == esperado\n```\n\nThe error message I receive is: \n\n```\nERROR collecting Fatorial_pytest.py ____________________________________________________________________\nIn testa_fatorial: indirect fixture '(0, 1)' doesn't exist\n```\n\nWhat am I doing wrong that's causing this \"indirect fixture\" error?"
+    },
+    {
+        "role": "assistant",
+        "content": "The error you're encountering is due to a small mistake in the `@pytest.mark.parametrize` decorator. The issue is with the way you are passing arguments to the `@pytest.mark.parametrize` decorator. The correct syntax for `@pytest.mark.parametrize` is to provide two arguments: a string with the names of the parameters separated by commas, and a list of tuples with the values for those parameters. \n\nIn your code, you are missing an additional set of parentheses around the parameter names. Here's how you can fix it:\n\n```python\nimport pytest\n\ndef fatorial(n):\n    if n <= 1:\n        return 1\n    else:\n        return n * fatorial(n - 1)\n\n@pytest.mark.parametrize(\"entrada, esperado\", [\n    (0, 1),\n    (1, 1),\n    (2, 2),\n    (3, 6),\n    (4, 24),\n    (5, 120)\n])\ndef testa_fatorial(entrada, esperado):\n    assert fatorial(entrada) == esperado\n```\n\nYou'll notice that the parameter names in the `@pytest.mark.parametrize` decorator are now enclosed in a single string, separated by a comma: `\"entrada, esperado\"`. This should resolve the \"indirect fixture\" error you're experiencing."
+    }
+]
