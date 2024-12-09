@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I add a line comment for each line in a multi-line command in a Bash script? I have tried using the following format, but the comment after continuation character `\\` seems to break the command. \n\n```bash\nCommandName InputFiles      \\ # This is the comment for the 1st line\n            --option1 arg1  \\ # This is the comment for the 2nd line\n            --option2 arg2    # This is the comment for the 3rd line\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "In Bash, multiline commands can be tricky when it comes to adding comments. The backslash (`\\`) is used to indicate that the command continues on the next line, but if you place a comment after the backslash, it will break the command continuation. \n\nTo add comments to each line of a multiline command, you can use a workaround by placing the comments before the command on each line. Here's how you can do it:\n\n```bash\n# This is the comment for the 1st line\nCommandName InputFiles      \\\n# This is the comment for the 2nd line\n            --option1 arg1  \\\n# This is the comment for the 3rd line\n            --option2 arg2\n```\n\nAlternatively, if you really need to have comments at the end of each line, you can use an array to construct the command and then execute it. Here's an example:\n\n```bash\ncmd=(\n    CommandName InputFiles    # This is the comment for the 1st line\n    --option1 arg1            # This is the comment for the 2nd line\n    --option2 arg2            # This is the comment for the 3rd line\n)\n\n\"${cmd[@]}\"\n```\n\nWith this method, you can keep comments on the same line as their corresponding command parts without breaking the command."
+    }
+]
