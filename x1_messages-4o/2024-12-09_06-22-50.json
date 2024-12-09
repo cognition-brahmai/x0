@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, I know we can overload the behavior of instances of a class as follows:\n\n```python\nclass Sample(object):  \n    pass\ns = Sample()\nprint(s)  # Output: <__main__.Sample object at 0x026277D0>\nprint(Sample)  # Output: <class '__main__.Sample'>\n```\n\nWe can change the output of `print(s)` by doing this:\n\n```python\nclass Sample(object):\n    def __str__(self):\n        return \"Instance of Sample\"\ns = Sample()\nprint(s)  # Output: Instance of Sample\n```\n\nMy question is: Is it possible to change the output of `print(Sample)` as well?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, it is possible to change the output of `print(Sample)` by defining a special method in the class, specifically `__repr__`. However, since `Sample` is a class, you need to override the `__repr__` method of the class type itself, not the instance. Normally, special methods like `__repr__` are defined for instances of a class, but you can modify the metaclass to achieve this behavior for the class itself.\n\nHere's how you can do it:\n\n```python\nclass CustomMeta(type):\n    def __repr__(cls):\n        return \"Custom representation of Sample class\"\n\nclass Sample(metaclass=CustomMeta):\n    def __str__(self):\n        return \"Instance of Sample\"\n\ns = Sample()\nprint(s)       # Output: Instance of Sample\nprint(Sample)  # Output: Custom representation of Sample class\n```\n\nIn this example, `CustomMeta` is a metaclass that overrides the `__repr__` method. By setting `metaclass=CustomMeta` in the `Sample` class definition, `Sample` uses this custom metaclass, which allows you to change the output of `print(Sample)`."
+    }
+]
