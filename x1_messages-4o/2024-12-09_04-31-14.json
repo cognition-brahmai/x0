@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python 2.6, I am trying to open a binary file that doesn't exist, due to which the program exits with an error and prints an IOError. I have used a 'try-except' block to handle this situation, but I want to print a specific line of the error message without the program exiting. How can I achieve this?\n\n<pre><code>Traceback (most recent call last):\n  File \"C:\\Python_tests\\Exception_Handling\\src\\exception_handling.py\", \n  line 4, in &lt;module&gt;\n  pkl_file = open('monitor.dat', 'rb')\n  IOError: [Errno 2] No such file or directory: 'monitor.dat'\n\ntry:\n    pkl_file = open('monitor.dat', 'rb')\n    monitoring_pickle = pickle.load(pkl_file)\n    pkl_file.close()\nexcept Exception:\n    print 'No such file or directory'\n\nFile \"C:\\Python_tests\\Exception_Handling\\src\\exception_handling.py\", \nline 11, in &lt;module&gt;\npkl_file = open('monitor.dat', 'rb')\n</code></pre>"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python 2.6, you can handle the `IOError` and print a specific part of the error message without causing the program to exit. You can achieve this by catching the exception and accessing its attributes. Here's how you can modify your code to print a specific line of the error message:\n\n```python\nimport pickle\n\ntry:\n    pkl_file = open('monitor.dat', 'rb')\n    monitoring_pickle = pickle.load(pkl_file)\n    pkl_file.close()\nexcept IOError as e:\n    # This will print the specific error message\n    print('Error:', e)\n    # If you want to print just the error number or only the message, you can do:\n    # print('Error number:', e.errno)\n    # print('Error message:', e.strerror)\n```\n\nIn the `except` block, catching `IOError` as `e` allows you to access the error attributes such as `e.errno` for the error number and `e.strerror` for the error message. This way, you can print a specific line of the error message as needed."
+    }
+]
