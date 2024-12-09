@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I split a list into sublists based on a specific delimiter word in Python? For example, if I have the list ['A', 'WORD', 'B' , 'C' , 'WORD' , 'D'], I want the split result to be [['A'], ['WORD','B','C'],['WORD','D']]. I tried using a for loop to achieve this but it doesn't work as expected. The delimiter 'WORD' gets placed in a different list than it should be. Here's the code I have tried:\n\n```python\ndef split_excel_cells(delimiter, cell_data):\n    result = []\n    temp = []\n    for cell in cell_data:\n        if cell == delimiter:\n            temp.append(cell)\n            result.append(temp)\n            temp = []\n        else:\n            temp.append(cell)\n    return result\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue with your code is that you are appending the delimiter 'WORD' to the `temp` list before adding it to the `result` list, but you want to keep it at the start of the new sublist. You can modify your code to check if the `temp` list is empty before appending the delimiter, ensuring that it starts a new sublist. Here's a revised version of your function:\n\n```python\ndef split_excel_cells(delimiter, cell_data):\n    result = []\n    temp = []\n\n    for cell in cell_data:\n        if cell == delimiter:\n            if temp:  # Check if temp is not empty\n                result.append(temp)\n            temp = [cell]  # Start a new sublist with the delimiter\n        else:\n            temp.append(cell)\n    \n    if temp:  # Append the last accumulated sublist if not empty\n        result.append(temp)\n    \n    return result\n\n# Example usage\ncell_data = ['A', 'WORD', 'B', 'C', 'WORD', 'D']\ndelimiter = 'WORD'\nprint(split_excel_cells(delimiter, cell_data))\n```\n\nThis will give you the desired output: `[['A'], ['WORD', 'B', 'C'], ['WORD', 'D']]`. The function now correctly handles the delimiter and ensures it starts each new sublist."
+    }
+]
