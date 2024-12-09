@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using Python Requests to create a http connection. In httplib, I am familiar with using HTTPConnection.close() to close a connection. However, I am unsure how to achieve the same with Requests. Here's a snippet of my current code:\n\n```\nr = requests.post(\"https://stream.twitter.com/1/statuses/filter.json\", data={'track':toTrack}, auth=('username', 'passwd'))\nfor line in r.iter_lines():\n    if line:\n        self.mongo['db'].tweets.insert(json.loads(line))\n```\n\nHow can I close this connection?"
+    },
+    {
+        "role": "assistant",
+        "content": "In the Python `requests` library, you don't explicitly need to close the connection like you do with `httplib`. The `requests` library manages connections for you using a connection pool, and it will automatically release the connection back to the pool when the response object is deleted or when the block of code using the response object is exited.\n\nHowever, if you want to explicitly close the connection, you can use the `Response.close()` method. This is particularly useful for streaming requests where you want to stop processing the stream before it ends naturally.\n\nHere's how you can modify your code to close the connection:\n\n```python\nimport requests\nimport json\n\ntry:\n    r = requests.post(\"https://stream.twitter.com/1/statuses/filter.json\", data={'track': toTrack}, auth=('username', 'passwd'), stream=True)\n    for line in r.iter_lines():\n        if line:\n            self.mongo['db'].tweets.insert(json.loads(line))\nfinally:\n    r.close()\n```\n\nBy enclosing your code in a `try` block and using `finally`, you ensure that `r.close()` is called to explicitly close the connection, even if an exception is raised during the processing of the response. This is a good practice to ensure that resources are released properly."
+    }
+]
