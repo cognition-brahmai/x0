@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I prevent scientific notation in matplotlib.pyplot when plotting a range of values? I've tried several solutions without success, including the following:\n```python\nplt.plot(range(2003,2012,1),range(200300,201200,100))\n# several solutions from other questions have not worked, including\n# plt.ticklabel_format(style='sci', axis='x', scilimits=(-1000000,1000000))\n# ax.get_xaxis().get_major_formatter().set_useOffset(False)\nplt.show()\n```\nHere is the plot generated: ![plot](https://i.stack.imgur.com/ueL08.png)"
+    },
+    {
+        "role": "assistant",
+        "content": "To prevent scientific notation in your matplotlib plot, particularly when dealing with large numbers on the axes, you can use `plt.ticklabel_format()` with the appropriate parameters. However, in your case, you might need to also ensure that you're applying these settings to the correct axis. Here's how you can achieve this:\n\n```python\nimport matplotlib.pyplot as plt\n\n# Your data\nx_values = range(2003, 2012, 1)\ny_values = range(200300, 201200, 100)\n\nplt.plot(x_values, y_values)\n\n# Disable scientific notation on both axes\nplt.ticklabel_format(style='plain', axis='both')\n\n# Alternatively, you can apply it to each axis separately\n# plt.ticklabel_format(style='plain', axis='x')\n# plt.ticklabel_format(style='plain', axis='y')\n\nplt.show()\n```\n\nIn this code, `plt.ticklabel_format(style='plain', axis='both')` is used to ensure that neither the x-axis nor the y-axis uses scientific notation. You can also specify 'x' or 'y' for the `axis` parameter if you only want to disable scientific notation on one axis. This should solve the issue and display the numbers in their standard numeric form."
+    }
+]
