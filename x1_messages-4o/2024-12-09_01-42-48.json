@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am working with a pandas DataFrame where I need to split a column on a single space. I am using the `DataFrame.str.split(' ')` operation to perform this task. However, after performing this operation, I am getting a list of arrays and I am unable to create a new column from the last entry of each array. For instance, consider this example where each entry in the column contains 'symbol data price':\n\n```python\nimport pandas as pd\ntemp = pd.DataFrame({'ticker' : ['spx 5/25/2001 p500', 'spx 5/25/2001 p600', 'spx 5/25/2001 p700']})\ntemp2 = temp.ticker.str.split(' ')\n```\nThis yields:\n```python\n0    ['spx', '5/25/2001', 'p500']\n1    ['spx', '5/25/2001', 'p600']\n2    ['spx', '5/25/2001', 'p700']\n```\nIf I try to access the first list entry's array using `temp2[0]`, it works. But when I try to use `temp2[:][-1]`, it fails. How can I convert the last entry in each array to a new column in my DataFrame?"
+    },
+    {
+        "role": "assistant",
+        "content": "To create a new column in your DataFrame with the last entry from each array resulting from the `str.split(' ')` operation, you can use the `apply` method along with a lambda function. Here's how you can do it:\n\n```python\nimport pandas as pd\n\n# Create the initial DataFrame\ntemp = pd.DataFrame({'ticker': ['spx 5/25/2001 p500', 'spx 5/25/2001 p600', 'spx 5/25/2001 p700']})\n\n# Split the 'ticker' column on spaces\ntemp2 = temp.ticker.str.split(' ')\n\n# Extract the last element from each list and create a new column\ntemp['last_entry'] = temp2.apply(lambda x: x[-1])\n\nprint(temp)\n```\n\nThis will give you the following DataFrame:\n\n```\n              ticker last_entry\n0  spx 5/25/2001 p500       p500\n1  spx 5/25/2001 p600       p600\n2  spx 5/25/2001 p700       p700\n```\n\nExplanation:\n- `temp.ticker.str.split(' ')` splits each string in the `ticker` column into a list of strings.\n- `apply(lambda x: x[-1])` applies a lambda function to each list, extracting the last element.\n- The result is then assigned to a new column named `last_entry` in the original DataFrame."
+    }
+]
