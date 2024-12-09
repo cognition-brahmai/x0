@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I remove the title from my seaborn lineplot legend? I have tried using the solution given in this reply, but it doesn't seem to work. When I run the following code:\n\n```python\nimport matplotlib.pyplot as plt\nimport seaborn as sns; sns.set()\nfmri = sns.load_dataset(\"fmri\")\nfig, ax = plt.subplots()\ng = sns.lineplot(x=\"timepoint\", y=\"signal\", hue=\"event\", data=fmri, ax=ax)\nax.legend().set_title('')\n```\nI still see the title in my lineplot. I get the same result when I try to set the title to `None`. However, when I try setting the title to something else, it seems to prepend to the existing title. It almost looks like seaborn is treating the title as a hidden legend entry. How can I resolve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "It seems like you're encountering a common issue with Seaborn's handling of legend titles. In Seaborn, when you use the `hue` parameter, it automatically creates a legend with a title corresponding to the name of the hue variable, in this case, \"event\". To remove the title completely, you can use a slightly different approach by accessing the legend after it's created and setting the title to an empty string directly. Here's how you can do it:\n\n```python\nimport matplotlib.pyplot as plt\nimport seaborn as sns; sns.set()\n\n# Load the dataset\nfmri = sns.load_dataset(\"fmri\")\n\n# Create the plot\nfig, ax = plt.subplots()\ng = sns.lineplot(x=\"timepoint\", y=\"signal\", hue=\"event\", data=fmri, ax=ax)\n\n# Get the legend and set the title to an empty string\nlegend = ax.get_legend()\nlegend.set_title('')  # Set the legend title to an empty string\n```\n\nIn this code, `ax.get_legend()` retrieves the legend object, and `legend.set_title('')` effectively removes the title by setting it to an empty string. This should resolve the issue and remove the title from your legend."
+    }
+]
