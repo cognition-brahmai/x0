@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How do I add vertical lines to a combined distribution plot in Seaborn? I am currently able to produce a combined distribution plot with the code provided. However, I would like to add vertical lines to illustrate thresholds, similar to how it's done with Matplotlib. Is there a way to do this while keeping the simplicity of Seaborn plots?\n\nCode:\n\n```python\nimport pandas as pd\nimport numpy as np\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\n# some settings\nsns.set_style(\"darkgrid\")\n\n# Create some data\ndata = np.random.multivariate_normal([0, 0], [[5, 2], [2, 2]], size=2000)\ndata = pd.DataFrame(data, columns=['x', 'y'])\n\n# Combined distributionplot\nsns.distplot(data['x'])\nsns.distplot(data['y'])\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To add vertical lines to a combined distribution plot in Seaborn, you can use the `axvline` function from Matplotlib. You can do this by getting the current Axes object and then adding the vertical lines to it. Here's how you can modify your code to include vertical lines at specific thresholds:\n\n```python\nimport pandas as pd\nimport numpy as np\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\n# some settings\nsns.set_style(\"darkgrid\")\n\n# Create some data\ndata = np.random.multivariate_normal([0, 0], [[5, 2], [2, 2]], size=2000)\ndata = pd.DataFrame(data, columns=['x', 'y'])\n\n# Create a combined distribution plot\nsns.distplot(data['x'], label='x')\nsns.distplot(data['y'], label='y')\n\n# Add vertical lines at specific thresholds\nthresholds = [-2, 0, 2]\nfor threshold in thresholds:\n    plt.axvline(x=threshold, color='red', linestyle='--', linewidth=1)\n\n# Add a legend\nplt.legend()\n\n# Show the plot\nplt.show()\n```\n\nIn this example, vertical lines are added at `-2`, `0`, and `2`. You can customize the `color`, `linestyle`, and `linewidth` to suit your preferences. Adjust the `thresholds` list to add vertical lines at different values."
+    }
+]
