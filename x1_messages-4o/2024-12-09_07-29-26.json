@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I determine the number of rows affected by the following SQL statement executed in Python using `cursor.execute()`?\n\n```python\ncursor.execute(\"SELECT COUNT(*) from result where server_state='2' AND name LIKE '\"+digest+\"_\"+charset+\"_%'\")\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "The SQL statement you've provided is a `SELECT COUNT(*)` query, which returns the number of rows that match the specified conditions, rather than affecting rows in the sense of an `INSERT`, `UPDATE`, or `DELETE` operation. To retrieve the number of rows counted by your query, you can do the following:\n\n1. Execute the query using `cursor.execute()`.\n2. Fetch the result using `cursor.fetchone()`, which will give you a tuple containing the count as its first element.\n\nHere's how you can do it in Python:\n\n```python\n# Execute the SQL query\ncursor.execute(\"SELECT COUNT(*) FROM result WHERE server_state='2' AND name LIKE '\"+digest+\"_\"+charset+\"_%'\")\n\n# Fetch the result\nrow_count = cursor.fetchone()[0]\n\nprint(\"Number of rows:\", row_count)\n```\n\nIn this code:\n\n- `cursor.execute()` runs your SQL query.\n- `cursor.fetchone()` retrieves the first row of the result set, which contains the count.\n- `[0]` extracts the count from the tuple returned by `fetchone()`.\n\nEnsure that `digest` and `charset` are properly sanitized or parameterized to prevent SQL injection vulnerabilities. Using parameterized queries with placeholders is a good practice to avoid such issues. Here\u2019s an example using parameterized queries:\n\n```python\nquery = \"SELECT COUNT(*) FROM result WHERE server_state=%s AND name LIKE %s\"\nlike_pattern = f\"{digest}_{charset}_%\"\ncursor.execute(query, ('2', like_pattern))\n\nrow_count = cursor.fetchone()[0]\n\nprint(\"Number of rows:\", row_count)\n```\n\nThis approach helps protect against SQL injection by using placeholders (`%s`) and passing the parameters as a tuple."
+    }
+]

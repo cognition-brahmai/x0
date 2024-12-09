@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, is there a method to search for a specific string within a larger string and retrieve the entire line containing the searched string? For instance, if I have a string as follows:\n\n<pre>\nstring = \n    qwertyuiop\n    asdfghjkl\n\n    zxcvbnm\n    token qwerty\n\n    asdfghjkl\u00f1\n</pre>\n\nI would like to have a function `retrieve_line(\"token\")` that would return the line containing the token, in this case \"token qwerty\". How can I do this?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! You can achieve this by splitting the string into lines and then searching each line for the specified substring. Here's how you can implement the `retrieve_line` function in Python:\n\n```python\ndef retrieve_line(search_string, text):\n    # Split the text into lines\n    lines = text.splitlines()\n    \n    # Iterate over each line\n    for line in lines:\n        # Check if the search string is in the current line\n        if search_string in line:\n            return line\n    \n    # Return None if the search string is not found in any line\n    return None\n\n# Define your string\nstring = \"\"\"qwertyuiop\nasdfghjkl\n\nzxcvbnm\ntoken qwerty\n\nasdfghjkl\u00f1\"\"\"\n\n# Use the function to retrieve the line containing \"token\"\nresult = retrieve_line(\"token\", string)\n\n# Print the result\nprint(result)\n```\n\nIn this code:\n\n- The `splitlines()` method is used to split the string into individual lines.\n- The function iterates over each line, checking if the `search_string` is present.\n- If the `search_string` is found in a line, that line is returned.\n- If the `search_string` is not found in any line, the function returns `None`.\n\nWhen you run this code with the provided string, it will output:\n\n```\ntoken qwerty\n```\n\nThis indicates that the function successfully found and returned the line containing the search string \"token\"."
+    }
+]
