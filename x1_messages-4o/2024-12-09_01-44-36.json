@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to merge 1000+ pdf files into one pdf using `PyPDF2` in Python. The code I am using is as follows:\n\n```python\nfrom PyPDF2 import PdfReader, PdfWriter\n\nwriter = PdfWriter()\n\nfor i in range(1000):\n    filepath = f\"my/pdfs/{i}.pdf\"\n    reader = PdfReader(open(filepath, \"rb\"))\n    for page in reader.pages:\n        writer.add_page(page)\n\nwith open(\"document-output.pdf\", \"wb\") as fh:\n    writer.write(fh)\n```\nWhen executing the above code, I receive an IOError when it reaches `reader = PdfReader(open(filepath, \"rb\"))`. The error message is `IOError: [Errno 24] Too many open files`. Is this a bug or is there something I can do to fix this?"
+    },
+    {
+        "role": "assistant",
+        "content": "The `IOError: [Errno 24] Too many open files` error occurs because the operating system has a limit on the number of file descriptors that can be open at the same time. In your code, you are opening each PDF file and not closing it, which eventually leads to hitting this limit.\n\nTo fix this issue, you should ensure that each file is closed after processing. You can achieve this by using the `with` statement to handle file opening, which will automatically close the file when you are done processing it. Here's how you can modify your code:\n\n```python\nfrom PyPDF2 import PdfReader, PdfWriter\n\nwriter = PdfWriter()\n\nfor i in range(1000):\n    filepath = f\"my/pdfs/{i}.pdf\"\n    with open(filepath, \"rb\") as file:\n        reader = PdfReader(file)\n        for page in reader.pages:\n            writer.add_page(page)\n\nwith open(\"document-output.pdf\", \"wb\") as fh:\n    writer.write(fh)\n```\n\nBy using the `with` statement, each file is opened, processed, and then closed immediately, avoiding the accumulation of open file descriptors and preventing the error. This should resolve the issue you are facing with merging the PDF files."
+    }
+]
