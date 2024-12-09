@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "What is a cleaner way in Python to bring a specific element to the front of a list without changing the order of the remaining elements? Currently, I'm using the below code, but I believe it's not the most efficient way to do it as it's an N log N operation when an N operation could suffice.\n\n```python\nmylist = sorted(mylist,\n                key=lambda x: x == targetvalue,\n                reverse=True)\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To bring a specific element to the front of a list while maintaining the order of the remaining elements, you can use a more efficient approach that operates in linear time, O(N). You can achieve this by removing the target element from its current position and inserting it at the beginning of the list. Here\u2019s a cleaner and more efficient way to do it:\n\n```python\ndef bring_to_front(lst, target_value):\n    if target_value in lst:\n        lst.remove(target_value)\n        lst.insert(0, target_value)\n    return lst\n\n# Example usage:\nmylist = [1, 2, 3, 4, 5]\ntarget_value = 3\nmylist = bring_to_front(mylist, target_value)\nprint(mylist)  # Output: [3, 1, 2, 4, 5]\n```\n\nThis code first checks if the target value is in the list. If it is, it removes the first occurrence of the target value and then inserts it at the beginning of the list. This method efficiently maintains the order of the other elements and performs the operation in linear time."
+    }
+]
