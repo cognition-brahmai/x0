@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I insert a variable into a Python docstring? I have a list, ANIMAL_TYPES, and a function, func, that accepts an argument, animalType. I want the docstring for @param animalType to display the contents of ANIMAL_TYPES so that if the list is modified, the docstring will automatically update. Here is my current code:\n\n```python\nANIMAL_TYPES = [\"mammals\", \"reptiles\", \"other\"]\n\ndef func(animalType):\n    \"\"\" This is a sample function.\n\n        @param animalType: \"It takes one of these animal types %s\" % ANIMAL_TYPES\n    \"\"\"\n```\n\nHowever, this does not seem to work. Is there any way to accomplish this?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, docstrings are static strings that are stored in the `__doc__` attribute of a function, class, or module. They are evaluated only once when the function is defined, which means you can't directly use dynamic variables like `ANIMAL_TYPES` in the way you're trying to.\n\nHowever, you can achieve similar functionality by programmatically setting the docstring after the function is defined. Here's how you can do it:\n\n```python\nANIMAL_TYPES = [\"mammals\", \"reptiles\", \"other\"]\n\ndef func(animalType):\n    \"\"\" This is a sample function.\n\n        @param animalType: It takes one of these animal types\n    \"\"\"\n    # Function logic goes here\n    pass\n\n# Programmatically update the docstring\nfunc.__doc__ = func.__doc__ % \", \".join(ANIMAL_TYPES)\n\n# Now, when you access the docstring, it will include the updated list\nprint(func.__doc__)\n```\n\nBy updating the `__doc__` attribute after defining the function, you can insert the contents of `ANIMAL_TYPES` into the docstring. This way, if `ANIMAL_TYPES` changes, you only need to run the code that updates `func.__doc__` to reflect those changes."
+    }
+]
