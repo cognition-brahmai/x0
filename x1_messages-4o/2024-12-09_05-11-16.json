@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using Flask and Flask-WTForms to create a contact form and am facing an issue. When I loop through my form to render it, the csrf token is hidden but its label is still displayed. I am currently using the following code to render my form:\n```\n{% for field in form %}\n    {{ field.label }}\n    {{ field }}\n{% endfor %}\n```\nI would like to hide the 'Csrf Token' label. I was considering using a logical check in the for loop or label declaration as a solution, but I haven't found a solution that works in the documentation. I have managed to \"fix\" the problem with the following code, but it feels like a hack. Is there a cleaner solution?\n```\n{% if not loop.first %}\n    {{ field.label }}\n{% endif %}\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "To hide the CSRF token label in your Flask-WTForms template rendering loop, you can implement a more explicit check to exclude the CSRF token field from being rendered with a label. Instead of relying on `loop.first`, which is not very explicit and could lead to issues if the order of fields changes, you can directly check for the field type or name. Here's a cleaner and more explicit solution:\n\n```html\n{% for field in form %}\n    {% if field.name != 'csrf_token' %}\n        {{ field.label }}\n    {% endif %}\n    {{ field }}\n{% endfor %}\n```\n\nIn this code, the `field.name` is checked against `'csrf_token'`. This makes it clear that you're intentionally skipping the label for the CSRF token field, and it won't affect other fields even if the order changes.\n\nThis approach is more maintainable and self-explanatory, making it easier for others (or yourself in the future) to understand why the CSRF token's label is being omitted."
+    }
+]
