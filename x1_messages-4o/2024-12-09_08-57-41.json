@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "Can someone help me write a SQL query to retrieve the most recent order placed by each customer? I want to get the customer ID and the date of their most recent order."
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! To retrieve the most recent order placed by each customer, you can use a Common Table Expression (CTE) along with the `ROW_NUMBER()` window function to rank orders for each customer and then filter out the most recent one. Here's a sample SQL query that demonstrates this:\n\n```sql\nWITH RankedOrders AS (\n    SELECT \n        customer_id,\n        order_date,\n        ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date DESC) AS rn\n    FROM \n        orders\n)\nSELECT \n    customer_id,\n    order_date\nFROM \n    RankedOrders\nWHERE \n    rn = 1;\n```\n\nHere's what this query does:\n\n1. **Common Table Expression (CTE) `RankedOrders`:** This part of the query assigns a row number to each order for each customer, ordered by the `order_date` in descending order. The `ROW_NUMBER()` function is used here to rank each order per customer.\n\n2. **Main Query:** The main query selects the `customer_id` and `order_date` from the CTE where the row number (`rn`) is 1, which corresponds to the most recent order for each customer.\n\nMake sure to replace `orders`, `customer_id`, and `order_date` with the actual table name and column names as per your database schema."
+    }
+]
