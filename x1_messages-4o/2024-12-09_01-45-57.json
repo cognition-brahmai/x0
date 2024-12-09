@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to extend an Enum type in Python 3.4. For instance, I have a base Enum class 'EventStatus' with members 'success' and 'failure'. I want to use this base class in another Enum class 'BookingStatus' with additional members 'duplicate' and 'unknown'. However, I am encountering a TypeError that says \"Cannot extend enumerations\". Is there a good practice for extending Enum type in Python 3.4 and is it even possible?\n\nHere is the code I currently have:\n\n```python\nfrom enum import Enum\n\nclass EventStatus(Enum):\n   success = 0\n   failure = 1\n\nclass BookingStatus(EventStatus):\n   duplicate = 2\n   unknown = 3\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python 3.4, the `enum` module does not support extending enumerations directly. The error you're encountering, \"Cannot extend enumerations,\" is because Python's `Enum` type is designed to be immutable and not extensible in the way you're attempting.\n\nHowever, you can achieve a similar effect by creating a new `Enum` that includes the members of the base enum along with any additional members you need. Here\u2019s one way to do it:\n\n```python\nfrom enum import Enum\n\nclass EventStatus(Enum):\n    success = 0\n    failure = 1\n\nclass BookingStatus(Enum):\n    success = EventStatus.success.value\n    failure = EventStatus.failure.value\n    duplicate = 2\n    unknown = 3\n\n# Example usage:\nprint(BookingStatus.success)  # Output: BookingStatus.success\nprint(BookingStatus.failure)  # Output: BookingStatus.failure\nprint(BookingStatus.duplicate)  # Output: BookingStatus.duplicate\nprint(BookingStatus.unknown)  # Output: BookingStatus.unknown\n```\n\nIn this approach:\n- You manually copy the values from `EventStatus` into `BookingStatus`.\n- This allows you to use the same values while defining additional members.\n\nThis approach maintains the semantic meaning of your status codes and provides a way to work around the limitation of not being able to directly extend enums in Python 3.4."
+    }
+]
