@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I match a parenthesis within another parenthesis using Python regular expressions? I have a string: \"TEMPLATES = ( ('index.html', 'home'), ('base.html', 'base'))\". I tried using re.match(\"\\(w*\\)\", string) but it didn't work. I need to match the parentheses and the content inside the second one."
+    },
+    {
+        "role": "assistant",
+        "content": "To match nested parentheses using Python's regular expressions, you can use a combination of a non-greedy match and a group. Unfortunately, Python's regular expressions do not support recursive patterns directly. However, you can achieve this using a more complex pattern.\n\nHere's a way to extract the content inside the second level of parentheses:\n\n```python\nimport re\n\nstring = \"TEMPLATES = ( ('index.html', 'home'), ('base.html', 'base'))\"\n\n# This pattern uses a non-greedy match to capture the content inside the second level of parentheses\npattern = r\"\\(\\s*'[^']*',\\s*'[^']*'\\s*\\)\"\n\nmatches = re.findall(pattern, string)\n\nprint(matches)\n```\n\nExplanation of the regular expression pattern:\n- `\\(` and `\\)`: Match the literal parentheses.\n- `\\s*`: Matches any whitespace (spaces, tabs, etc.) zero or more times.\n- `'[^']*'`: Matches a quoted string, which is a sequence starting and ending with a single quote and containing any character except a single quote.\n- `,`: Matches the comma separating the two quoted strings inside the parentheses.\n\nThe `re.findall()` function will return a list of all matches found in the string. In this case, it will match and capture the content inside the second level of parentheses: `('index.html', 'home')` and `('base.html', 'base')`."
+    }
+]
