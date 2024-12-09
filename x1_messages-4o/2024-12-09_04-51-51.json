@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I check in Python whether a string contains only numbers? I have attempted to solve this problem but my solution isn't working as expected. Here is my code:\n\n```python\nimport string\n\ndef main():\n    isbn = input(\"Enter your 10 digit ISBN number: \")\n    if len(isbn) == 10 and string.digits == True:\n        print (\"Works\")\n    else:\n        print(\"Error, 10 digit number was not inputted and/or letters were inputted.\")\n        main()\n\nif __name__ == \"__main__\":\n    main()\n    input(\"Press enter to exit: \")\n```\n\nWhat is the simplest way to accomplish this?"
+    },
+    {
+        "role": "assistant",
+        "content": "The issue with your current approach is that `string.digits == True` is not a valid way to check if a string contains only numbers. Instead, you should use the `str.isdigit()` method, which is specifically designed for this purpose. Here's how you can modify your code to check if the input string contains only digits:\n\n```python\ndef main():\n    isbn = input(\"Enter your 10 digit ISBN number: \")\n    if len(isbn) == 10 and isbn.isdigit():\n        print(\"Works\")\n    else:\n        print(\"Error, 10 digit number was not inputted and/or letters were inputted.\")\n        main()\n\nif __name__ == \"__main__\":\n    main()\n    input(\"Press enter to exit: \")\n```\n\nHere's what the changes do:\n\n- `isbn.isdigit()` checks if all characters in the string `isbn` are digits. This function returns `True` if the string contains only numeric characters and `False` otherwise.\n- By combining `len(isbn) == 10` with `isbn.isdigit()`, you ensure that the input is exactly 10 characters long and consists entirely of digits.\n\nThis should work as expected for checking if the input is a valid 10-digit ISBN number."
+    }
+]
