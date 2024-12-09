@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I replace the nth occurrence of a substring in a string in Python? I am looking for a solution that is simple and Pythonic, and does not involve the use of regular expressions. Ideally, I would like to use a method similar to `mystring.replace(\"substring\", 2nd)`."
+    },
+    {
+        "role": "assistant",
+        "content": "To replace the nth occurrence of a substring in a string in Python without using regular expressions, you can define a simple function. Here's a Pythonic way to achieve this:\n\n```python\ndef replace_nth_occurrence(string, substring, replacement, n):\n    # Find the start index of the nth occurrence\n    start = -1\n    for _ in range(n):\n        start = string.find(substring, start + 1)\n        if start == -1:\n            return string  # If the occurrence is not found, return the original string\n\n    # Replace the substring at the nth occurrence\n    return string[:start] + replacement + string[start + len(substring):]\n\n# Example usage:\nmystring = \"hello world, hello universe, hello galaxy\"\nresult = replace_nth_occurrence(mystring, \"hello\", \"hi\", 2)\nprint(result)  # Output: \"hello world, hi universe, hello galaxy\"\n```\n\nIn this function, `replace_nth_occurrence`, we:\n1. Use a loop to find the starting index of the nth occurrence of the substring.\n2. If the nth occurrence is found, we construct a new string by slicing and concatenating parts of the original string with the replacement.\n3. If the nth occurrence is not found, we simply return the original string."
+    }
+]
