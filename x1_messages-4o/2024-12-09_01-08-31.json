@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I create a Pandas DataFrame from a string? I have a string of test data like the following:\n\n```python\nTESTDATA=\"\"\"col1;col2;col3\n1;4.4;99\n2;4.5;200\n3;4.7;65\n4;3.2;140\n\"\"\"\n```\nWhat is the simplest way to read this data into a Pandas DataFrame?"
+    },
+    {
+        "role": "assistant",
+        "content": "To create a Pandas DataFrame from a string, you can use the `pd.read_csv()` function along with the `io.StringIO` module, which allows you to treat a string as a file object. This is particularly useful for parsing strings formatted as delimited data. Here's how you can do it with your test data:\n\n```python\nimport pandas as pd\nfrom io import StringIO\n\nTESTDATA = \"\"\"col1;col2;col3\n1;4.4;99\n2;4.5;200\n3;4.7;65\n4;3.2;140\n\"\"\"\n\n# Use StringIO to convert the string into a file-like object\ndata = StringIO(TESTDATA)\n\n# Read the data into a DataFrame\ndf = pd.read_csv(data, sep=';')\n\n# Display the DataFrame\nprint(df)\n```\n\nThis code snippet will output the following DataFrame:\n\n```\n   col1  col2  col3\n0     1   4.4    99\n1     2   4.5   200\n2     3   4.7    65\n3     4   3.2   140\n```\n\nIn this example, `sep=';'` specifies that the columns in the string are separated by semicolons. Adjust the `sep` parameter if your data uses a different delimiter."
+    }
+]
