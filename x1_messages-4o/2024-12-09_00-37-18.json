@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I append a column from one pandas DataFrame to another pandas DataFrame? In my current situation, I have two dataframes:\nDataFrame 1:\n```\nindex dat1\n0     9\n1     5\n```\nDataFrame 2:\n```\nindex dat2\n0     7\n1     6\n```\nI want to combine these two dataframes to get the following result:\n```\nindex dat1  dat2\n0     9     7\n1     5     6\n```\nI've tried using the `append` method, but I get a cross join (also known as a cartesian product). What is the correct way to achieve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To combine two pandas DataFrames by appending columns, you should use the `pd.concat()` function along the appropriate axis. In your case, you want to concatenate the DataFrames along the columns (axis=1). Here's how you can do it:\n\n```python\nimport pandas as pd\n\n# Create DataFrame 1\ndf1 = pd.DataFrame({\n    'dat1': [9, 5]\n})\n\n# Create DataFrame 2\ndf2 = pd.DataFrame({\n    'dat2': [7, 6]\n})\n\n# Concatenate DataFrame 1 and DataFrame 2 along the columns\nresult = pd.concat([df1, df2], axis=1)\n\nprint(result)\n```\n\nThe `pd.concat()` function with `axis=1` will concatenate the DataFrames column-wise, resulting in the desired output:\n\n```\n   dat1  dat2\n0     9     7\n1     5     6\n```\n\nThis method works well when both DataFrames share the same index or are aligned as you desire. If the indexes are not aligned, you may need to reset or adjust the index before concatenation."
+    }
+]

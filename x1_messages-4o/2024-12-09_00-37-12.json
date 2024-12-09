@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I change the value of a variable declared outside a loop within a loop in Jinja2? Currently, when I try to change the value, it keeps the initial value set outside the loop. Here is the code I am trying:\n\n```jinja2\n{% set foo = False %}\n\n{% for item in items %}\n  {% set foo = True %}\n  {% if foo %} Ok(1)! {% endif %}\n{% endfor %}\n\n{% if foo %} Ok(2)! {% endif %}\n```\n\nBut it only renders \"Ok(1)!\" and not \"Ok(2)!\". The only workaround I've found so far is the following:\n\n```jinja2\n{% set foo = [] %}\n\n{% for item in items %}\n  {% if foo.append(True) %} {% endif %}\n  {% if foo %} Ok(1)! {% endif %}\n{% endfor %}\n\n{% if foo %} Ok(2)! {% endif %}\n```\n\nThis does render \"Ok(1)!\" and \"Ok(2)!\", but the solution seems very ugly. Is there a more elegant solution?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Jinja2, variables set inside a loop are local to the loop's scope, which is why your initial attempt didn't work as expected. You can use a combination of a namespace object to maintain a mutable state across iterations within the loop. Here's how you can achieve this:\n\n```jinja2\n{% set ns = namespace(foo=False) %}\n\n{% for item in items %}\n  {% set ns.foo = True %}\n  {% if ns.foo %} Ok(1)! {% endif %}\n{% endfor %}\n\n{% if ns.foo %} Ok(2)! {% endif %}\n```\n\nBy using a namespace object (`ns`), you can change the value of `foo` within the loop, and it will persist outside the loop. This is a more elegant solution compared to using a list to track the state."
+    }
+]
