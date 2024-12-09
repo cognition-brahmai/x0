@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I use Python 3's functools.lru_cache to cache a function that takes a list as a parameter? When I try to do so, I encounter a TypeError: unhashable type: 'list'. For example, when I run the following code:\n\n```python\nimport functools\n\n@functools.lru_cache()\ndef example_func(lst):\n    return sum(lst) + max(lst) + min(lst)\n\nprint(example_func([1, 2]))\n```\n\nI get the mentioned error. How can I solve this?"
+    },
+    {
+        "role": "assistant",
+        "content": "The `functools.lru_cache` decorator in Python requires that all function arguments be hashable. Lists, however, are mutable and therefore unhashable, which is why you're encountering a `TypeError` when trying to use a list as an argument to a function decorated with `lru_cache`.\n\nTo work around this, you can convert the list to a tuple, which is hashable, before passing it to the function. Here's how you can modify your code to achieve this:\n\n```python\nimport functools\n\n@functools.lru_cache()\ndef example_func(lst):\n    # Convert the tuple back to a list if needed\n    lst = list(lst)\n    return sum(lst) + max(lst) + min(lst)\n\n# Convert the input list to a tuple before calling the function\nprint(example_func(tuple([1, 2])))\n```\n\nIn this modified version, the input list is converted to a tuple before being passed to `example_func`. Inside the function, you can convert the tuple back to a list if you need to perform list-specific operations. This way, you can effectively cache the results of the function using `lru_cache` without encountering the `TypeError`."
+    }
+]
