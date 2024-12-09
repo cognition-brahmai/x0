@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I list all currently available GPUs using Pytorch? I am aware that we can access the current GPU using the command `torch.cuda.current_device()`, but I need assistance in getting a list of all the currently available GPUs."
+    },
+    {
+        "role": "assistant",
+        "content": "In PyTorch, you can list all currently available GPUs using the `torch.cuda` module. To achieve this, you can iterate through the available devices using `torch.cuda.device_count()` and get details for each device with `torch.cuda.get_device_name()`. Here's a simple code snippet to list all available GPUs:\n\n```python\nimport torch\n\ndef list_available_gpus():\n    num_gpus = torch.cuda.device_count()\n    available_gpus = []\n    \n    for i in range(num_gpus):\n        gpu_name = torch.cuda.get_device_name(i)\n        available_gpus.append((i, gpu_name))\n    \n    return available_gpus\n\navailable_gpus = list_available_gpus()\nfor gpu_id, gpu_name in available_gpus:\n    print(f\"GPU {gpu_id}: {gpu_name}\")\n```\n\nThis code will print the ID and name of each available GPU on your system. You can modify or extend this code to include more details like memory usage if needed."
+    }
+]
