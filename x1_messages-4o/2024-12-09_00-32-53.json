@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "When is the hash of a Python object computed? Does the computation occur during an instance's `__init__` time, the first time when `__hash__()` is called, every time `__hash__()` is called, or is there any other opportunity that I might be missing? Additionally, does this vary depending on the type of the object? Finally, why does `hash(-1) == -2` while other integers are equal to their hash?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, the hash of an object is computed when the `__hash__()` method is called. It does not necessarily occur during an instance's `__init__` method or the first time `__hash__()` is called; instead, it's computed every time `__hash__()` is called unless the object has some form of caching implemented to store the hash value. The computation of a hash value can vary depending on the type of the object, especially for immutable built-in types like integers, strings, and tuples, where Python has optimized hash computations.\n\nFor mutable objects or custom objects, if you define a `__hash__()` method, you can control when and how the hash is computed. However, if the object is mutable, it is generally not advisable to make it hashable because the hash should remain constant during the lifetime of the object.\n\nRegarding `hash(-1) == -2`, this behavior is due to the way Python handles hash values for integers. Python has an internal mechanism to ensure that the hash of an integer is suitable for its hashing strategy, which involves ensuring that hash values are not equal to `-1` because `-1` is used internally as a special flag value in some hash table implementations. Therefore, Python adjusts the hash of `-1` to `-2` to avoid this conflict. For most other integers, the hash value is the integer itself."
+    }
+]
