@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I list all the functions, classes, and methods available in a Python module installed on my system? In Ruby, I can use 'ClassName.methods' to get a list of all the methods available on a class. Is there a similar function in Python? For instance, is there a way to do something like this:\n\n```python\nfrom somemodule import foo\nprint(foo.methods)  # or whatever is the correct method to call\n```"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python, you can use the built-in `dir()` function to list the attributes (including functions, classes, and methods) of a module or an object. Here's how you can use it:\n\n1. **Listing all attributes of a module:**\n\n   ```python\n   import somemodule\n\n   print(dir(somemodule))\n   ```\n\n   This will print a list of all the attributes of `somemodule`, including functions, classes, and any other variables.\n\n2. **Listing all methods of a class or functions of an object:**\n\n   If you want to list all methods of a class or functions available in an object, you can do the following:\n\n   ```python\n   from somemodule import SomeClass\n\n   print(dir(SomeClass))\n   ```\n\n   This will list all the methods and attributes of `SomeClass`.\n\n3. **Filtering only methods:**\n\n   If you want to filter out and list only the methods, you can use the `inspect` module:\n\n   ```python\n   import inspect\n   from somemodule import SomeClass\n\n   methods = [func for func in dir(SomeClass) if callable(getattr(SomeClass, func))]\n   print(methods)\n   ```\n\n   Alternatively, if you're interested in instance methods, you can do:\n\n   ```python\n   methods = inspect.getmembers(SomeClass, predicate=inspect.isfunction)\n   print(methods)\n   ```\n\nThe `inspect` module provides several useful functions to get information about live objects, including classes, methods, and functions. It can be very handy when you need more detailed introspection."
+    }
+]

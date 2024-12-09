@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I rename a single column in a pandas DataFrame based on its index, without knowing its name? I've tried using the rename function as shown below, but it doesn't seem to work as there's no '1' entry in the DataFrame.columns dictionary. Here's what I've tried:\n\n```python\ndrugInfo.rename(columns = {'col_1': 'col_1_new_name'}, inplace = True)\n```\n\nI would like to rename the first column like this:\n\n```python\ndrugInfo.rename(columns = {1: 'col_1_new_name'}, inplace = True)\n```\n\nBut it's not renaming the column as expected. Can someone provide a solution?"
+    },
+    {
+        "role": "assistant",
+        "content": "To rename a column in a pandas DataFrame based on its index position rather than its name, you can first retrieve the column name using its index, and then use the `rename` method. Here's how you can do it:\n\n```python\n# Assuming 'drugInfo' is your DataFrame and you want to rename the first column\n# Get the column name using the index\nfirst_column_name = drugInfo.columns[0]\n\n# Rename the column using the retrieved column name\ndrugInfo.rename(columns={first_column_name: 'col_1_new_name'}, inplace=True)\n```\n\nThis way, you are dynamically determining the column name based on its index position and renaming it accordingly. Make sure to replace `0` with the appropriate index if you wish to rename a different column."
+    }
+]
