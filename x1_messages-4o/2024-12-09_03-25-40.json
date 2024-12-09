@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I replace all non-ASCII characters in a Python string with a single space?"
+    },
+    {
+        "role": "assistant",
+        "content": "To replace all non-ASCII characters in a Python string with a single space, you can use the `re` module, which provides support for regular expressions. Here's a simple way to do it:\n\n```python\nimport re\n\ndef replace_non_ascii(text):\n    # Use a regular expression to match all non-ASCII characters\n    # ASCII characters have codes from 0 to 127\n    return re.sub(r'[^\\x00-\\x7F]+', ' ', text)\n\n# Example usage\ninput_string = \"Caf\u00e9 M\u00fcnchner Freiheit\"\noutput_string = replace_non_ascii(input_string)\nprint(output_string)  # Output: \"Caf  M nchner Freiheit\"\n```\n\nIn this code:\n\n- `re.sub(r'[^\\x00-\\x7F]+', ' ', text)` is used to replace all sequences of non-ASCII characters (those with codes outside the range 0 to 127) with a single space.\n- The `+` in the regular expression ensures that sequences of one or more non-ASCII characters are replaced by a single space."
+    }
+]
