@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am trying to override the `bool()` method for a custom class in Python 2.6. My goal is for `bool(myInstance)` to return `False` and for `myInstance` to evaluate to `False` when used in a conditional statement like if/or/and. Here is my current code:\n\n```python\nclass test:\n    def __bool__(self):\n        return False\n\nmyInst = test()\nprint bool(myInst) #prints \"True\"\nprint myInst.__bool__() #prints \"False\"\n```\n\nAs you can see, `bool(myInst)` is returning `True` when I want it to return `False`. However, `myInst.__bool__()` is correctly returning `False`. Why is this discrepancy occurring and how can I rectify it?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Python 2.6, the method to override when you want to change the truth value of an instance in conditional statements or when using `bool()` is `__nonzero__()` rather than `__bool__()`. The `__bool__()` method is used in Python 3, but in Python 2.x, `__nonzero__()` is the method you need.\n\nHere's how you can modify your class to achieve the desired behavior:\n\n```python\nclass test:\n    def __nonzero__(self):\n        return False\n\nmyInst = test()\nprint bool(myInst)  # prints \"False\"\nprint myInst.__nonzero__()  # prints \"False\"\n```\n\nWith this change, `bool(myInst)` will correctly return `False`, and `myInst` will evaluate to `False` in conditional statements as well. This is because Python 2.6 uses `__nonzero__()` to determine the truthiness of an object."
+    }
+]
