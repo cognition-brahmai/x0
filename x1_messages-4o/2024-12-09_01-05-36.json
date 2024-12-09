@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I retrieve the label of a choice in a Django forms ChoiceField? I have a ChoiceField in my form class, as shown below:\n```python\nclass ContactForm(forms.Form):\n     reason = forms.ChoiceField(choices=[(\"feature\", \"A feature\"),\n                                         (\"order\", \"An order\")],\n                                widget=forms.RadioSelect)\n```\nCurrently, when I use form.cleaned_data[\"reason\"], it only gives me the values \"feature\" or \"order\". How can I get the corresponding labels \"A feature\" or \"An order\"?"
+    },
+    {
+        "role": "assistant",
+        "content": "To retrieve the label corresponding to the selected choice in a Django `ChoiceField`, you can define a method in your form class that maps the cleaned data value to its corresponding label. Here's how you can do it:\n\n```python\nclass ContactForm(forms.Form):\n    reason = forms.ChoiceField(choices=[(\"feature\", \"A feature\"),\n                                        (\"order\", \"An order\")],\n                               widget=forms.RadioSelect)\n\n    def get_reason_label(self):\n        # Get the cleaned data value\n        reason_value = self.cleaned_data.get(\"reason\")\n        # Create a dictionary from the choices for easy lookup\n        choices_dict = dict(self.fields[\"reason\"].choices)\n        # Return the corresponding label or None if not found\n        return choices_dict.get(reason_value)\n```\n\nWhen you process the form, you can call this method to get the label:\n\n```python\nform = ContactForm(request.POST)\nif form.is_valid():\n    # Get the reason label\n    reason_label = form.get_reason_label()\n    print(reason_label)  # Outputs 'A feature' or 'An order' based on the selection\n```\n\nThis approach creates a dictionary from the `choices` tuple, allowing you to easily retrieve the label using the value from `cleaned_data`."
+    }
+]
