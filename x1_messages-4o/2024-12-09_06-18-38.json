@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I am using matplotlib to create a plot with multiple vertical lines, each representing a value in my list, 'xvalues'. When I use 'plt.axvline' in a loop to plot these lines and assign a label, the legend ends up repeating the label for each line. Here is my code:\n\n```python\nxvalues = [2,3,4,6]\n\nfor x in xvalues:\n    plt.axvline(x,color='b',label='xvalues')\n\nplt.legend()\n```\nThe result is a legend showing 'xvalues' as a blue line 4 times. I can fix this by using an 'if' condition in the loop to only assign the label to the first line, like so:\n\n```python\nfor i,x in enumerate(xvalues):\n    if not i:\n        plt.axvline(x,color='b',label='xvalues')\n    else:\n        plt.axvline(x,color='b')\n```\nBut I was wondering if there is a more elegant solution to prevent matplotlib from repeating labels in the legend?"
+    },
+    {
+        "role": "assistant",
+        "content": "Certainly! A more elegant solution to prevent matplotlib from repeating labels in the legend is to handle the label assignment outside the loop, by creating a separate line object that can be used solely for the legend. This way, you avoid having the label applied to each individual line. Here\u2019s how you can achieve that:\n\n```python\nimport matplotlib.pyplot as plt\n\nxvalues = [2, 3, 4, 6]\n\n# Plot all vertical lines without labels\nfor x in xvalues:\n    plt.axvline(x, color='b')\n\n# Add a single line for the legend with the label\nplt.axvline(xvalues[0], color='b', label='xvalues')\n\nplt.legend()\nplt.show()\n```\n\nIn this approach, you draw all the vertical lines as usual, but without a label. Then, you add one additional vertical line (or any other proxy object) just for the legend with the desired label. This way, the legend will show the label only once, regardless of how many lines you have plotted."
+    }
+]
