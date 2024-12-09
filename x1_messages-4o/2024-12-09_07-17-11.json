@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In OpenCV, I am trying to find out the width and height of an image. Currently, I am trying to do this with the following code:\n\n```\nMat src = imread(\"path_to_image\");\ncout << src.width;\n```\n\nHowever, I am unsure if this is the correct method. How can I properly get the image width and height in OpenCV?"
+    },
+    {
+        "role": "assistant",
+        "content": "In OpenCV, the `Mat` object does not have direct `width` or `height` attributes. Instead, you can use the `cols` and `rows` properties of the `Mat` object to get the width and height of the image, respectively. Here's how you can do it:\n\n```cpp\n#include <opencv2/opencv.hpp>\n#include <iostream>\n\nusing namespace cv;\nusing namespace std;\n\nint main() {\n    Mat src = imread(\"path_to_image\");\n    if (src.empty()) {\n        cout << \"Could not open or find the image\" << endl;\n        return -1;\n    }\n\n    int width = src.cols;\n    int height = src.rows;\n\n    cout << \"Width: \" << width << endl;\n    cout << \"Height: \" << height << endl;\n\n    return 0;\n}\n```\n\nIn this code:\n\n- `src.cols` gives you the width of the image.\n- `src.rows` gives you the height of the image.\n\nMake sure to include error checking to ensure that the image is loaded successfully with `imread()` by checking if the `Mat` object is empty."
+    }
+]
