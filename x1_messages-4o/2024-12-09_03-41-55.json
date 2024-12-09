@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Django, I have an empty queryset of the model 'Student' as shown below:\n\n```python\nstudents = Students.objects.all()\n```\nIf this queryset happens to be empty, how can I retrieve the model's class name? Additionally, how can I obtain the app name from the queryset?"
+    },
+    {
+        "role": "assistant",
+        "content": "In Django, you can retrieve the model's class name and the app name even if the queryset is empty. Here's how you can do both:\n\n1. **Retrieve the model's class name:**\n\n   You can access the model class from the queryset and get its name using the `__name__` attribute.\n\n   ```python\n   model_name = students.model.__name__\n   print(\"Model's class name:\", model_name)\n   ```\n\n2. **Retrieve the app name:**\n\n   To get the app name, you can use the `_meta` attribute of the model, which provides metadata about the model, including the app label.\n\n   ```python\n   app_name = students.model._meta.app_label\n   print(\"App name:\", app_name)\n   ```\n\nThese methods will work regardless of whether the queryset is empty or not, as they directly query the model class associated with the queryset."
+    }
+]

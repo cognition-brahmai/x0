@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "How can I set a fixed 1:1 aspect ratio in matplotlib.pyplot? I have a set of polygon coordinates, polygon = [(x1, y1), (x2, y2), ...], and I'm using the following code to display the polygon:\n\n```python\nimport matplotlib.pyplot as plt\nplt.fill(*zip(*polygon))\nplt.show()\n```\n\nThe problem is that by default, matplotlib.pyplot is adjusting the aspect ratio to fit the polygon or any diagram within the window, and it maintains this fit even when the window is resized. While this feature is useful in many cases, it can cause distortion that makes visual estimation difficult. Is there a way to keep the aspect ratio strictly 1:1 for both the X and Y axes so that a point at (0, 1) on both axes occupies the same amount of screen space, regardless of how the window is resized?"
+    },
+    {
+        "role": "assistant",
+        "content": "To maintain a fixed 1:1 aspect ratio in a Matplotlib plot, you can use the `set_aspect` method of the axes object. Specifically, you want to set the aspect ratio to `'equal'`. This ensures that one unit on the x-axis is equal to one unit on the y-axis, keeping the plot square and preventing distortion.\n\nHere's how you can modify your code to achieve this:\n\n```python\nimport matplotlib.pyplot as plt\n\n# Define your polygon coordinates\npolygon = [(x1, y1), (x2, y2), ...]\n\n# Create a plot\nplt.fill(*zip(*polygon))\n\n# Set the aspect ratio to 1:1\nplt.gca().set_aspect('equal', adjustable='datalim')\n\n# Optionally, auto-scale the view to fit the data\nplt.autoscale()\n\n# Display the plot\nplt.show()\n```\n\nIn this code:\n- `plt.gca()` gets the current axes.\n- `set_aspect('equal', adjustable='datalim')` sets the aspect ratio to be equal, and `adjustable='datalim'` ensures that the data limits are adjusted to preserve the aspect ratio.\n- `plt.autoscale()` automatically adjusts the axis limits to fit the data.\n\nThis setup ensures that your plot has a 1:1 aspect ratio, preventing any distortion regardless of the window size."
+    }
+]
