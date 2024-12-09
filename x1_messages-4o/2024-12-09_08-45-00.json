@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I have a Python script that I'd like to work on both Python 3.2 and 2.7. I'm trying to use unicode literals, for example, `#coding: utf-8 whatever = '\u05e9\u05dc\u05d5\u05dd'`. However, it seems that Python 2.x requires a unicode string (`u''`) and in Python 3.x, the `u` prefix causes a syntax error. How can I have unicode literals that work in both Python 3.2 and 2.7?"
+    },
+    {
+        "role": "assistant",
+        "content": "To write a Python script that uses Unicode literals and is compatible with both Python 2.7 and Python 3.2, you need to employ a few techniques to bridge the differences between the two versions. Here are some strategies to consider:\n\n1. **Use `__future__` import**: In Python 2.7, you can use the `unicode_literals` feature from the `__future__` module to make string literals behave like Unicode strings by default, similar to Python 3.x.\n\n   Add the following line at the top of your script:\n\n   ```python\n   from __future__ import unicode_literals\n   ```\n\n   This way, you can write strings like `'\u05e9\u05dc\u05d5\u05dd'` without the `u` prefix, and they will be treated as Unicode in both Python 2.7 and Python 3.x.\n\n2. **Conditional Prefixing**: If you need to differentiate between byte strings and Unicode strings, you can use a conditional approach:\n\n   ```python\n   import sys\n\n   if sys.version_info[0] < 3:\n       text = u'\u05e9\u05dc\u05d5\u05dd'  # Python 2.7\n   else:\n       text = '\u05e9\u05dc\u05d5\u05dd'   # Python 3.x\n   ```\n\n3. **Six Library**: Consider using the `six` library, which provides utilities for writing code that is compatible with both Python 2 and Python 3. You can install it via pip:\n\n   ```sh\n   pip install six\n   ```\n\n   Usage example:\n\n   ```python\n   import six\n\n   text = six.u('\u05e9\u05dc\u05d5\u05dd')\n   ```\n\n   This ensures that the string is treated as Unicode in both versions.\n\nBy using these methods, you can maintain compatibility between Python 2.7 and Python 3.2 while working with Unicode strings."
+    }
+]
