@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "In Python, how can I print the memory size of all variables in my current scope simultaneously? I would like to have each variable name printed before its size so I can identify which variables may need to be deleted or split into batches. Currently, I am using the following code:\n\n```python\nfor obj in locals().values():\n    print sys.getsizeof(obj)\n```\n\nHowever, this only prints the sizes without the corresponding variable names. How can I modify this to include the variable names?"
+    },
+    {
+        "role": "assistant",
+        "content": "To print both the variable names and their corresponding memory sizes, you can iterate over the items in the dictionary returned by `locals()`. Here's how you can modify your code to achieve this:\n\n```python\nimport sys\n\nfor var_name, obj in locals().items():\n    print(f\"{var_name}: {sys.getsizeof(obj)} bytes\")\n```\n\nThis code uses `locals().items()` to get both the variable names and their values. Then, it prints each variable name along with its size in bytes using `sys.getsizeof()`. This way, you can easily identify which variables are taking up more memory and consider deleting or optimizing them as needed."
+    }
+]
