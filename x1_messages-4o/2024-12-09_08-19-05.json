@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm working on a project in Django 1.4 and I'm attempting to route a request to two different view functions based on the HTTP method (GET, POST, DELETE, or PUT). This concept is usually seen in REST APIs where the same URL has different meanings based on the HTTP method. However, I am not able to find a way to do this in Django's urls.py file. Ideally, I would like to use something similar to the following code:\n\n```python\nurl(r'^tasks$', 'app.views.get_tasks', method='get'),\nurl(r'^tasks$', 'app.views.create_task', method='post'),\n```\n\nCan someone please assist me in achieving this?"
+    },
+    {
+        "role": "assistant",
+        "content": "Django doesn't natively support routing based on HTTP methods directly in the `urls.py` file. Instead, you can handle this within a single view function by checking the request method and then calling the appropriate function. Here's how you can achieve this:\n\n1. Define a single URL pattern in `urls.py`:\n\n```python\nfrom django.conf.urls import url\nfrom app.views import task_handler\n\nurlpatterns = [\n    url(r'^tasks$', task_handler),\n]\n```\n\n2. In your `views.py`, define the `task_handler` function to dispatch requests based on the HTTP method:\n\n```python\nfrom django.http import JsonResponse, HttpResponseNotAllowed\n\ndef get_tasks(request):\n    # Your logic for handling GET requests\n    return JsonResponse({'message': 'Handling GET request'})\n\ndef create_task(request):\n    # Your logic for handling POST requests\n    return JsonResponse({'message': 'Handling POST request'})\n\ndef task_handler(request):\n    if request.method == 'GET':\n        return get_tasks(request)\n    elif request.method == 'POST':\n        return create_task(request)\n    else:\n        return HttpResponseNotAllowed(['GET', 'POST'])\n```\n\nThis approach involves defining a single URL route and then using a dispatch function to route requests to the appropriate view function based on the HTTP method. This is a common pattern in Django for handling REST-like behavior."
+    }
+]
