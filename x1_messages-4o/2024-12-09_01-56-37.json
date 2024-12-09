@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "I'm working with Jinja templates and passing in three lists from a Python file. The lists are as follows:\n\n```python\nlist1 = [1,2,3,4]\nlist2 = ['a','b','c','d']\nlist3 = [5,6,7,8]\n```\n\nEach list's elements correspond with each other, so 1 from list1 matches with 'a' from list2 and 5 from list3, and so on. I need to print them out on the same line in the template using numerical indexing. I'm familiar with directly accessing the object through the loop like this:\n\n```html\n{%for item in list%}\n    {{item}}\n{% endfor %}\n```\nBut I'm unsure how to use numerical indexing to achieve the desired format:\n```\n1 a 5\n2 b 6\n3 c 7\n```\nHow can I accomplish this?"
+    },
+    {
+        "role": "assistant",
+        "content": "To achieve the desired format using numerical indexing in Jinja templates, you can utilize the `range` function along with the `length` filter to iterate over the indices of your lists. Here's how you can do it:\n\n```html\n{% for i in range(list1|length) %}\n    {{ list1[i] }} {{ list2[i] }} {{ list3[i] }}<br>\n{% endfor %}\n```\n\n### Explanation:\n- **`range(list1|length)`**: This creates a range object from 0 to the length of `list1` minus one. It assumes all lists are of the same length.\n- **`{{ list1[i] }} {{ list2[i] }} {{ list3[i] }}`**: This accesses the i-th element from each list, aligning them on the same line.\n- **`<br>`**: This adds a line break between each set of elements.\n\nEnsure that the lists you pass to the template have the same length to avoid index errors. This way, you will get the desired output:\n\n```\n1 a 5\n2 b 6\n3 c 7\n4 d 8\n```"
+    }
+]
